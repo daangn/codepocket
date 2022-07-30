@@ -5,7 +5,6 @@
     "type": "git",
     "url": "https://github.com/daangn/codepocket.git"
   },
-  "type": "module",
   "exports": {
     ".": {
       "require": "./dist/index.cjs",
@@ -19,7 +18,7 @@
   },
   "scripts": {
     "build": "nanobundle build",
-    "pocket": "NODE_ENV=development node --experimental-specifier-resolution=node --loader ts-node/esm ./lib/index.ts",
+    "pocket": "NODE_ENV=development yarn node -r tsm ./lib/index.ts",
     "prepublish": "yarn build",
     "test": "NODE_ENV=development jest --silent --verbose",
     "test:log": "NODE_ENV=development jest"
@@ -40,7 +39,7 @@
     "jest": "^28.1.2",
     "msw": "^0.43.1",
     "nanobundle": "^0.0.28",
-    "ts-node": "^10.8.2"
+    "tsm": "^2.2.2"
   },
   "packageManager": "yarn@3.2.1",
   "publishConfig": {

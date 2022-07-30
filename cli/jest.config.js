@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   testEnvironment: 'node',
   setupFilesAfterEnv: ['<rootDir>/lib/setupTests.ts'],
   testMatch: ['**/lib/**/*.test.ts'],
