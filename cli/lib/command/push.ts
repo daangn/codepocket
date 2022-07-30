@@ -15,8 +15,8 @@ export default async (filePath: string, option: { name?: string }) => {
   const [error] = await to(
     (async () => {
       const isExistPath = fs.existsSync(filePath);
-      const isPathIsFile = isExistPath && !fs.lstatSync(filePath).isFile();
-      if (!isExistPath || isPathIsFile) throw Error('🚨 올바른 파일 경로를 입력해주세요');
+      const isPathIsDir = isExistPath && !fs.lstatSync(filePath).isFile();
+      if (!isExistPath || isPathIsDir) throw Error('🚨 올바른 파일 경로를 입력해주세요');
 
       const currentCommandPath = process.env.INIT_CWD || '';
       const code = fs.readFileSync(path.resolve(currentCommandPath, filePath), {
