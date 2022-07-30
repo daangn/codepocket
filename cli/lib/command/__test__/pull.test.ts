@@ -19,7 +19,7 @@ const consoleErrorSpy = jest.spyOn(console, 'error');
 const consoleLogSpy = jest.spyOn(console, 'log');
 
 const author = 'author';
-const fileName = 'test.txt';
+const fileName = 'pull-test.txt';
 const folderName = 'testfolder';
 const filePath = `${process.env.INIT_CWD}/${fileName}`;
 const folderPath = `${process.env.INIT_CWD}/${folderName}`;

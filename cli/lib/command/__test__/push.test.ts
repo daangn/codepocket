@@ -17,7 +17,7 @@ chalkGreenMock.mockImplementation((value: unknown) => value as string);
 
 const consoleErrorSpy = jest.spyOn(console, 'error');
 const consoleLogSpy = jest.spyOn(console, 'log');
-const testFilePath = `${process.env.INIT_CWD}/test.txt`;
+const testFilePath = `${process.env.INIT_CWD}/push-test.txt`;
 
 beforeEach(() => {
   consoleErrorSpy.mockClear();
