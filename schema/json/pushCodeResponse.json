@@ -1,0 +1,13 @@
+{
+  "title": "pushCodeResponse",
+  "type": "object",
+  "properties": {
+    "message": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "message"
+  ]
+}

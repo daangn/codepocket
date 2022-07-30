@@ -1,0 +1,30 @@
+{
+  "title": "pushCodeRequest",
+  "type": "object",
+  "properties": {
+    "body": {
+      "type": "object",
+      "properties": {
+        "pocketToken": {
+          "type": "string"
+        },
+        "codeName": {
+          "type": "string"
+        },
+        "code": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "pocketToken",
+        "codeName",
+        "code"
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "body"
+  ]
+}

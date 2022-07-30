@@ -1,0 +1,137 @@
+import { colors } from '@karrotmarket/design-token';
+import * as u from '@shared/styles/utils.css';
+import { style } from '@vanilla-extract/css';
+import { recipe } from '@vanilla-extract/recipes';
+import { rem } from 'polished';
+
+export const codeItem = style([
+  u.fullWidth,
+  u.borderRadius2,
+  {
+    marginTop: rem(50),
+    position: 'relative',
+  },
+]);
+
+export const codeItemHeader = style([
+  u.fullWidth,
+  u.flex,
+  u.flexAlignCenter,
+  { height: rem(50), justifyContent: 'space-between' },
+]);
+
+export const codeItemHeaderInfo = style([
+  u.flex,
+  u.flexAlignCenter,
+  { fontWeight: 'bold', columnGap: rem(7), fontSize: rem(20), padding: rem(5) },
+]);
+
+export const codeItemHeaderButtons = style([
+  u.flex,
+  {
+    columnGap: rem(5),
+  },
+]);
+
+export const codeItemButtonBase = style([
+  u.borderRadius,
+  u.cursorPointer,
+  u.flex,
+  u.flexAlignCenter,
+  {
+    width: rem(100),
+    height: rem(32),
+    backgroundColor: 'white',
+    fontWeight: 'bold',
+    transition: 'background 0.3s ease',
+    justifyContent: 'space-evenly',
+  },
+]);
+
+export const codeItemHeaderCopyButton = style([
+  codeItemButtonBase,
+  {
+    width: rem(70),
+    border: `1px solid ${colors.light.scheme.$gray700}`,
+    color: colors.light.scheme.$gray700,
+
+    ':hover': {
+      backgroundColor: colors.light.scheme.$gray100,
+    },
+  },
+]);
+
+export const codeItemHeaderDetailButton = style([
+  codeItemButtonBase,
+  {
+    border: `1px solid ${colors.light.scheme.$blue800}`,
+    color: colors.light.scheme.$blue800,
+
+    ':hover': {
+      backgroundColor: colors.light.scheme.$blue50,
+    },
+  },
+]);
+
+export const codeItemCode = recipe({
+  base: [
+    u.borderRadius2,
+    u.border,
+    {
+      position: 'relative',
+      transition: 'all 0.3s ease',
+      overflowY: 'hidden',
+    },
+  ],
+  variants: {
+    haveManyCode: {
+      true: {
+        height: rem(250),
+        ':after': {
+          position: 'absolute',
+          content: '',
+          bottom: rem(0),
+          height: '10%',
+          width: '100%',
+          background: `linear-gradient(transparent, rgba(0, 0, 0, 0.1))`,
+          pointerEvents: 'none',
+        },
+        ':hover': {
+          border: `1px solid ${colors.light.scheme.$blue800}`,
+          cursor: 'pointer',
+        },
+      },
+      false: { height: '100%' },
+    },
+    toggled: {
+      // TODO: height의 변경 단위가 다르면 애니메이션이 동작하지 않음
+      // % -> %, rem -> rem 이런식이 아니면 애니메이션이 동작하지 않음
+      true: {
+        height: '100%',
+        ':after': {
+          background: 'none',
+        },
+      },
+    },
+  },
+});
+
+export const toggler = style([
+  u.fullWidth,
+  u.flexCenter,
+  u.cursorPointer,
+  {
+    position: 'absolute',
+    height: rem(20),
+    bottom: rem(0),
+    backgroundColor: 'transparent',
+    fontSize: rem(20),
+  },
+]);
+
+export const rightChevronIcon = style({
+  color: colors.light.scheme.$blue800,
+  transform: 'scale(0.7)',
+  width: rem(12),
+  height: rem(20),
+});

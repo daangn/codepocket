@@ -1,0 +1,34 @@
+{
+  "title": "GetStoryCodeRequest",
+  "type": "object",
+  "properties": {
+    "query": {
+      "type": "object",
+      "properties": {
+        "codeAuthor": {
+          "type": "string"
+        },
+        "codeName": {
+          "type": "string"
+        },
+        "storyAuthor": {
+          "type": "string"
+        },
+        "storyName": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "codeAuthor",
+        "codeName",
+        "storyAuthor",
+        "storyName"
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "query"
+  ]
+}

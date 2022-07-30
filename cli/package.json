@@ -1,0 +1,49 @@
+{
+  "name": "@pocket/cli",
+  "version": "0.1.5",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/daangn/codepocket.git"
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "source": "./bin/index.ts",
+  "bin": {
+    "pocket": "./dist/index.mjs"
+  },
+  "scripts": {
+    "build": "nanobundle build",
+    "pocket": "NODE_ENV=development node --experimental-specifier-resolution=node --loader ts-node/esm ./lib/index.ts",
+    "prepublish": "yarn build",
+    "test": "NODE_ENV=development jest --silent --verbose",
+    "test:log": "NODE_ENV=development jest"
+  },
+  "dependencies": {
+    "@pocket/schema": "workspace:^",
+    "await-to-js": "^3.0.0",
+    "axios": "^0.27.2",
+    "chalk": "^5.0.1",
+    "commander": "^9.3.0",
+    "dotenv": "^16.0.1"
+  },
+  "devDependencies": {
+    "@swc/core": "^1.2.211",
+    "@swc/jest": "^0.2.21",
+    "@types/jest": "^28.1.4",
+    "@types/node": "^18.0.3",
+    "jest": "^28.1.2",
+    "msw": "^0.43.1",
+    "nanobundle": "^0.0.28",
+    "ts-node": "^10.8.2"
+  },
+  "packageManager": "yarn@3.2.1",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  }
+}

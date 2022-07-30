@@ -1,0 +1,28 @@
+{
+  "name": "@pocket/server",
+  "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/daangn/codepocket.git"
+  },
+  "scripts": {
+    "dev": "NODE_ENV=development nodemon --exec ts-node --files ./src/index.ts"
+  },
+  "dependencies": {
+    "@fastify/cors": "^8.0.0",
+    "@fastify/mongodb": "^6.0.1",
+    "@pocket/schema": "workspace:^",
+    "await-to-js": "^3.0.0",
+    "dotenv": "^16.0.1",
+    "fastify": "^4.3.0",
+    "fastify-plugin": "^4.0.0",
+    "mongoose": "^6.4.6",
+    "node-fetch": "2"
+  },
+  "devDependencies": {
+    "@types/node": "^18.0.6",
+    "nodemon": "^2.0.19",
+    "ts-node": "^10.9.1"
+  },
+  "packageManager": "yarn@3.2.1"
+}

@@ -1,0 +1,9 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "types": ["node", "jest"],
+    "baseUrl": ".",
+    "outDir": "dist"
+  },
+  "include": ["./lib"]
+}

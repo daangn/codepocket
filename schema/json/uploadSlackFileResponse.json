@@ -1,0 +1,52 @@
+{
+  "title": "uploadSlackFileResponse",
+  "type": "object",
+  "properties": {
+    "file": {
+      "type": "object",
+      "properties": {
+        "channels": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "shares": {
+          "type": "object",
+          "properties": {
+            "public": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "array",
+                "items": {
+                  "properties": {
+                    "ts": {
+                      "type": "string"
+                    }
+                  },
+                  "additionalProperties": false,
+                  "required": [
+                    "ts"
+                  ]
+                }
+              }
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "public"
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "channels",
+        "shares"
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "file"
+  ]
+}

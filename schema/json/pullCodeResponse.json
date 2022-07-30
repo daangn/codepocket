@@ -1,0 +1,13 @@
+{
+  "title": "pullCodeResponse",
+  "type": "object",
+  "properties": {
+    "code": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "code"
+  ]
+}

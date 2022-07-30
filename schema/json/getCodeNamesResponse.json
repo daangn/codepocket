@@ -1,0 +1,23 @@
+{
+  "title": "getCodeNamesResponse",
+  "type": "object",
+  "properties": {
+    "codeNames": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "authors": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "codeNames",
+    "authors"
+  ]
+}

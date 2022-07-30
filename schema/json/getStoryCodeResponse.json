@@ -1,0 +1,20 @@
+{
+  "title": "getStoryCodeResponse",
+  "type": "object",
+  "properties": {
+    "message": {
+      "type": "string"
+    },
+    "codes": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "message",
+    "codes"
+  ]
+}

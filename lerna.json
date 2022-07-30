@@ -1,0 +1,14 @@
+{
+  "packages": [
+    "cli/*",
+    "server/*",
+    "client/*",
+    "schema/*"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "version": "independent",
+  "npmClient": "yarn",
+  "useWorkspaces": true
+}

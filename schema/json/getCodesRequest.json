@@ -1,0 +1,30 @@
+{
+  "title": "getCodesRequest",
+  "type": "object",
+  "properties": {
+    "query": {
+      "type": "object",
+      "properties": {
+        "search": {
+          "type": "string"
+        },
+        "limit": {
+          "type": "number"
+        },
+        "offset": {
+          "type": "number"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "search",
+        "limit",
+        "offset"
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "query"
+  ]
+}

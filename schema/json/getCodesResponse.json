@@ -1,0 +1,47 @@
+{
+  "title": "getCodesResponse",
+  "type": "object",
+  "properties": {
+    "isLast": {
+      "type": "boolean"
+    },
+    "codes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "codeAuthor": {
+            "type": "string"
+          },
+          "codeName": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date"
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "codeAuthor",
+          "codeName",
+          "createdAt",
+          "updatedAt"
+        ]
+      }
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "codes",
+    "isLast"
+  ]
+}

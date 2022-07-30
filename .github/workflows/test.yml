@@ -1,0 +1,35 @@
+name: Testing
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  Test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: yarn
+        run: yarn
+      - name: generate .env
+        run: |
+          echo "BASE_SERVER_URL_DEV=$BASE_SERVER_URL_DEV" >> .env
+        env:
+          BASE_SERVER_URL_DEV: ${{ secrets.BASE_SERVER_URL_DEV }}
+      - name: test all
+        run: yarn test
+      - name: if fail
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{github.token}}
+          script: |
+            const ref = "${{github.ref}}"
+            const pull_number = Number(ref.split("/")[2])
+            await github.pulls.createReview({
+              ...context.repo,
+              pull_number,
+              body:"테스트 코드를 다시 확인해주세요",
+              event: "REQUEST_CHANGES"
+            })
+        if: failure()

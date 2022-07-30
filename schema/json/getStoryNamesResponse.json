@@ -1,0 +1,20 @@
+{
+  "title": "getStoryNamesResponse",
+  "type": "object",
+  "properties": {
+    "message": {
+      "type": "string"
+    },
+    "storyNames": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "message",
+    "storyNames"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "title": "VerifyUserResponse",
+  "type": "object",
+  "properties": {
+    "validUser": {
+      "type": "boolean"
+    },
+    "message": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "validUser",
+    "message"
+  ]
+}

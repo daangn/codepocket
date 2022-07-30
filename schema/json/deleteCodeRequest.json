@@ -1,0 +1,26 @@
+{
+  "title": "deleteCodeRequest",
+  "type": "object",
+  "properties": {
+    "body": {
+      "type": "object",
+      "properties": {
+        "pocketToken": {
+          "type": "string"
+        },
+        "codeName": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "pocketToken",
+        "codeName"
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "body"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "title": "VerifyUserRequest",
+  "type": "object",
+  "properties": {
+    "body": {
+      "type": "object",
+      "properties": {
+        "pocketToken": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "pocketToken"
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "body"
+  ]
+}
