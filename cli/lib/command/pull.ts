@@ -4,7 +4,7 @@ import fs from 'fs';
 import path from 'path';
 
 import { pullCodeAPI } from '../api';
-import { checkaServerEnv } from './utils';
+import { checkaServerEnv, logger } from '../utils';
 
 export default async (codeAuthor: string, codeName: string, option: { path?: string }) => {
   const [error] = await to(
@@ -27,6 +27,6 @@ export default async (codeAuthor: string, codeName: string, option: { path?: str
       fs.writeFileSync(newPath, code);
     })(),
   );
-  if (error) return console.error(chalk.yellow(error.message));
-  return console.log(chalk.green('🌟 코드를 성공적으로 가져왔어요!'));
+  if (error) return logger.error(chalk.yellow(error.message));
+  return logger.info(chalk.green('🌟 코드를 성공적으로 가져왔어요!'));
 };

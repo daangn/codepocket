@@ -4,7 +4,7 @@ import fs from 'fs';
 import path from 'path';
 
 import { pushCodeAPI } from '../api';
-import { checkaServerEnv } from './utils';
+import { checkaServerEnv, logger } from '../utils';
 
 const getFileName = (filePath: string) =>
   filePath
@@ -33,6 +33,6 @@ export default async (filePath: string, option: { name?: string }) => {
       await pushCodeAPI({ code, codeName, pocketToken });
     })(),
   );
-  if (error) return console.error(chalk.yellow(error.message));
-  return console.log(chalk.green('🌟 기여해주셔서 고마워요!'));
+  if (error) return logger.error(chalk.yellow(error.message));
+  return logger.info(chalk.green('🌟 기여해주셔서 고마워요!'));
 };
