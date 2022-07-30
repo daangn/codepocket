@@ -9,7 +9,7 @@ export default async (codeName: string) => {
     (async () => {
       checkaServerEnv();
       const pocketToken = process.env.POCKET_TOKEN || '';
-      await to(deleteCodeAPI({ codeName, pocketToken }));
+      await deleteCodeAPI({ codeName, pocketToken });
     })(),
   );
 

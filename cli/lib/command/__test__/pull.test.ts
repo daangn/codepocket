@@ -3,6 +3,7 @@ import fs from 'fs';
 
 import { pullCodeHandler } from '../../__mocks__/handlers';
 import server from '../../__mocks__/server';
+import { logger } from '../../utils';
 import pullCommand from '../pull';
 
 jest.mock('chalk', () => ({
@@ -15,8 +16,8 @@ const chalkGreenMock = chalk.green as jest.MockedFunction<typeof chalk.green>;
 chalkYellowMock.mockImplementation((value: unknown) => value as string);
 chalkGreenMock.mockImplementation((value: unknown) => value as string);
 
-const consoleErrorSpy = jest.spyOn(console, 'error');
-const consoleLogSpy = jest.spyOn(console, 'log');
+const consoleErrorSpy = jest.spyOn(logger, 'error');
+const consoleLogSpy = jest.spyOn(logger, 'info');
 
 const author = 'author';
 const fileName = 'pull-test.txt';

@@ -3,6 +3,7 @@ import fs from 'fs';
 
 import { pushCodeHandler } from '../../__mocks__/handlers';
 import server from '../../__mocks__/server';
+import { logger } from '../../utils';
 import pushCommand from '../push';
 
 jest.mock('chalk', () => ({
@@ -15,8 +16,8 @@ const chalkGreenMock = chalk.green as jest.MockedFunction<typeof chalk.green>;
 chalkYellowMock.mockImplementation((value: unknown) => value as string);
 chalkGreenMock.mockImplementation((value: unknown) => value as string);
 
-const consoleErrorSpy = jest.spyOn(console, 'error');
-const consoleLogSpy = jest.spyOn(console, 'log');
+const consoleErrorSpy = jest.spyOn(logger, 'error');
+const consoleLogSpy = jest.spyOn(logger, 'info');
 const testFilePath = `${process.env.INIT_CWD}/push-test.txt`;
 
 beforeEach(() => {
