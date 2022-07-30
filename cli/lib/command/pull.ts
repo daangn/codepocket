@@ -4,10 +4,12 @@ import fs from 'fs';
 import path from 'path';
 
 import { pullCodeAPI } from '../api';
+import { checkaServerEnv } from './utils';
 
 export default async (codeAuthor: string, codeName: string, option: { path?: string }) => {
   const [error] = await to(
     (async () => {
+      checkaServerEnv();
       const optionPath = option.path || '.';
       const currentCommandPath = process.env.INIT_CWD || '';
 
