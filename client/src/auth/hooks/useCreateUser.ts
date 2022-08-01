@@ -1,5 +1,6 @@
 import { CreateUserResponse } from '@pocket/schema';
 import useCustomMutation from '@shared/hooks/useCustomMutation';
+import { setUserTokenToLocalStorage } from '@shared/utils/localStorage';
 import { useNavigate } from 'react-router-dom';
 
 import { generateTokenPath } from '../../routes';
@@ -19,7 +20,11 @@ const useCreateUser = ({ userName, email }: CreateUserProps) => {
   >({
     url: createUserUrl,
     method: 'POST',
-    onSuccess: async (response) => navigate(generateTokenPath({ token: response.pocketToken })),
+    onSuccess: async (response) => {
+      const { pocketToken: token } = response;
+      setUserTokenToLocalStorage(token);
+      navigate(generateTokenPath({ token }));
+    },
   });
 
   const createUser = () => {

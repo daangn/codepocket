@@ -1,6 +1,6 @@
 import { VerifyUserRequest, VerifyUserResponse } from '@pocket/schema';
 import useCustomMutation from '@shared/hooks/useCustomMutation';
-import { getUserNameFormLocalStorage, setUserNameToLocalStorage } from '@shared/utils/localStorage';
+import { getUserTokenToLocalStorage, setUserTokenToLocalStorage } from '@shared/utils/localStorage';
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -15,7 +15,9 @@ const useAuth = ({ path }: UseVerifyUserMutationProps) => {
   const navigate = useNavigate();
 
   const onSuccess = (_: VerifyUserResponse, vars: VerifyUserBodyType) => {
-    setUserNameToLocalStorage(vars.pocketToken);
+    setUserTokenToLocalStorage(vars.pocketToken);
+    console.log('성공');
+
     navigate(path);
   };
 
@@ -30,10 +32,10 @@ const useAuth = ({ path }: UseVerifyUserMutationProps) => {
   });
 
   const verifyUser = useCallback(async () => {
-    const userName = getUserNameFormLocalStorage();
-    if (!userName) return;
+    const token = getUserTokenToLocalStorage();
+    if (!token) return;
 
-    verifyUserMutate({ pocketToken: userName });
+    verifyUserMutate({ pocketToken: token });
   }, [verifyUserMutate]);
 
   return { verifyUser };
