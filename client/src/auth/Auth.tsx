@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { pocketPath } from '../routes';
+import { LoginButton } from './components';
 import useAuth from './hooks/useAuth';
 import useTyping from './hooks/useTyping';
 import * as style from './style.css';
@@ -47,6 +48,7 @@ const AuthPage: React.FC = () => {
         <button className={style.button}>인증하기</button>
         <span className={style.error}>{error}</span>
       </form>
+      <LoginButton />
     </div>
   );
 };
