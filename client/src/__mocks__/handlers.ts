@@ -7,6 +7,6 @@ export const verifyUserHandler = () =>
   rest.post(`${BASE_LOCAL_SERVER_URL}/user/auth`, (_, res, ctx) => {
     return res(
       ctx.status(200),
-      ctx.json<VerifyUserResponse>({ validUser: true, message: 'success' }),
+      ctx.json<VerifyUserResponse>({ validUser: true, userName: 'shell', message: 'success' }),
     );
   });
