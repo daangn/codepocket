@@ -1,6 +1,8 @@
 /// <reference types="vitest" />
 import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin';
 import react from '@vitejs/plugin-react';
+import jotaiDebugLabel from 'jotai/babel/plugin-debug-label';
+import jotaiReactRefresh from 'jotai/babel/plugin-react-refresh';
 import path from 'path';
 import { defineConfig } from 'vite';
 import checker from 'vite-plugin-checker';
@@ -14,7 +16,7 @@ export default defineConfig({
     },
   },
   plugins: [
-    react(),
+    react({ babel: { plugins: [jotaiDebugLabel, jotaiReactRefresh] } }),
     pluginRewriteAll(),
     vanillaExtractPlugin(),
     checker({
