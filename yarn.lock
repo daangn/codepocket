@@ -4259,6 +4259,7 @@ __metadata:
     "@fastify/mongodb": ^6.0.1
     "@pocket/schema": "workspace:^"
     "@types/node": ^18.0.6
+    "@types/string-hash": ^1
     await-to-js: ^3.0.0
     dotenv: ^16.0.1
     fastify: ^4.3.0
@@ -4266,6 +4267,7 @@ __metadata:
     mongoose: ^6.4.6
     node-fetch: 2
     nodemon: ^2.0.19
+    string-hash: ^1.1.3
     ts-node: ^10.9.1
   languageName: unknown
   linkType: soft
@@ -6443,6 +6445,13 @@ __metadata:
   version: 2.0.1
   resolution: "@types/stack-utils@npm:2.0.1"
   checksum: 205fdbe3326b7046d7eaf5e494d8084f2659086a266f3f9cf00bccc549c8e36e407f88168ad4383c8b07099957ad669f75f2532ed4bc70be2b037330f7bae019
+  languageName: node
+  linkType: hard
+
+"@types/string-hash@npm:^1":
+  version: 1.1.1
+  resolution: "@types/string-hash@npm:1.1.1"
+  checksum: e7cdba66dc1cfd88033d66a0fd301abd1434f8e3fc22826443073e5c33a26e5c53a26ef4e062d0ebf3f8590f506dec2351c4b952df1d04ba188bc0a48f411f17
   languageName: node
   linkType: hard
 
@@ -21037,6 +21046,13 @@ eslint-config-airbnb-base@latest:
   version: 2.0.0
   resolution: "strict-uri-encode@npm:2.0.0"
   checksum: eaac4cf978b6fbd480f1092cab8b233c9b949bcabfc9b598dd79a758f7243c28765ef7639c876fa72940dac687181b35486ea01ff7df3e65ce3848c64822c581
+  languageName: node
+  linkType: hard
+
+"string-hash@npm:^1.1.3":
+  version: 1.1.3
+  resolution: "string-hash@npm:1.1.3"
+  checksum: 104b8667a5e0dc71bfcd29fee09cb88c6102e27bfb07c55f95535d90587d016731d52299380052e514266f4028a7a5172e0d9ac58e2f8f5001be61dc77c0754d
   languageName: node
   linkType: hard
 

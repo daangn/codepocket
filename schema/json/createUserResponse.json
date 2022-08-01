@@ -1,8 +1,8 @@
 {
-  "title": "pullCodeResponse",
+  "title": "createUserResponse",
   "type": "object",
   "properties": {
-    "code": {
+    "pocketToken": {
       "type": "string"
     },
     "message": {
@@ -11,7 +11,7 @@
   },
   "additionalProperties": false,
   "required": [
-    "code",
+    "pocketToken",
     "message"
   ]
 }
