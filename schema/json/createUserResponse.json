@@ -1,0 +1,13 @@
+{
+  "title": "createUserResponse",
+  "type": "object",
+  "properties": {
+    "pocketToken": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "pocketToken"
+  ]
+}

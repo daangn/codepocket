@@ -1,0 +1,26 @@
+{
+  "title": "createUserRequest",
+  "type": "object",
+  "properties": {
+    "body": {
+      "type": "object",
+      "properties": {
+        "userName": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "userName",
+        "email"
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "body"
+  ]
+}
