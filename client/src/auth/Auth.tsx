@@ -3,8 +3,9 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 import { pocketPath } from '../routes';
 import { SubTitle } from './components';
+import useCreateUser from './hooks/useCreateUser';
 import useCustomAuth0 from './hooks/useCustomAuth0';
-import useVerifyUserMutation from './hooks/useVerifyUserMutation';
+import useVerifyUser from './hooks/useVerifyUser';
 import * as style from './style.css';
 
 interface UseLocation {
@@ -14,9 +15,13 @@ interface UseLocation {
 const AuthPage: React.FC = () => {
   const { state: location } = useLocation() as UseLocation;
   const navigate = useNavigate();
-  const { verifyUser } = useVerifyUserMutation({ path: location?.path || pocketPath });
+  const { verifyUser } = useVerifyUser({ path: location?.path || pocketPath });
   const { isAuthenticated, user, logout, loginWithPopup, isValidEmailDomain } = useCustomAuth0({
     domain: 'daangn.com',
+  });
+  const { createUser } = useCreateUser({
+    userName: user?.nickname,
+    email: user?.email,
   });
 
   useEffect(() => {
@@ -30,9 +35,9 @@ const AuthPage: React.FC = () => {
       alert('당근 유저가 아니에요!');
       logout();
     } else {
-      navigate('/token', { state: { userName: user?.nickname, email: user?.email } });
+      createUser();
     }
-  }, [isValidEmailDomain, isAuthenticated, logout, navigate, user?.email, user?.nickname]);
+  }, [isValidEmailDomain, isAuthenticated, logout, navigate, createUser]);
 
   return (
     <div className={style.wrapper}>
