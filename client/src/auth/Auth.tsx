@@ -26,7 +26,7 @@ const AuthPage: React.FC = () => {
 
   const verifyUser = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    verifyUserFromServer({ pocketToken: username });
+    verifyUserFromServer(username);
   };
 
   return (
@@ -65,6 +65,16 @@ if (import.meta.vitest) {
   it('렌더링 테스트', () => {
     render(<AuthPage />);
     screen.getByText(/Codepocket/);
+  });
+
+  it('input에 아무것도 없을 경우', () => {
+    render(<AuthPage />);
+
+    const button = screen.getByLabelText(/submit-button/);
+    fireEvent.click(button);
+
+    // NOTE: 검사를 문자까지 하는 것이 아닌 에러가 발생했는지로 체크해야할까? > 의존성
+    screen.getByText('토큰을 입력해주세요');
   });
 
   it('api 테스트', () => {

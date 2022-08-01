@@ -43,6 +43,11 @@ const useAuth = ({ path }: UseAuthProps) => {
     onSuccess,
   });
 
+  const verifyUserFromServer = (pocketToken: string) => {
+    if (!pocketToken.length) return setError('토큰을 입력해주세요');
+    return verifyUserMutate({ pocketToken });
+  };
+
   const checkValidUser = useCallback(async () => {
     const username = getUsernameFormLocalStorage();
     if (!username) return;
@@ -54,7 +59,7 @@ const useAuth = ({ path }: UseAuthProps) => {
     checkValidUser();
   }, [checkValidUser]);
 
-  return { shake, error, verifyUserFromServer: verifyUserMutate };
+  return { shake, error, verifyUserFromServer };
 };
 
 export default useAuth;
