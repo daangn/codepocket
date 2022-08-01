@@ -5,13 +5,13 @@
     "validUser": {
       "type": "boolean"
     },
-    "message": {
+    "userName": {
       "type": "string"
     }
   },
   "additionalProperties": false,
   "required": [
     "validUser",
-    "message"
+    "userName"
   ]
 }
