@@ -21,7 +21,7 @@ export const wrapper = style([
   },
 ]);
 
-export const form = style([
+export const buttonWrapper = style([
   u.flexColumn,
   u.flexAlignCenter,
   u.positionRelative,
@@ -52,10 +52,24 @@ export const title = style([
   }),
 ]);
 
-export const error = style([
-  u.positionRelative,
+export const button = style([
+  u.fullWidth,
+  u.borderNone,
+  u.borderRadius2,
+  u.cursorPointer,
   {
-    color: colors.light.scheme.$red800,
-    height: rem(20),
+    height: rem(52),
+    fontSize: rem(16),
+    backgroundColor: colors.light.scheme.$blue800,
+    color: 'white',
+    fontWeight: 'bold',
+    transition: 'background 0.2s ease',
+
+    ':hover': {
+      backgroundColor: '#0A86B766',
+    },
   },
+  m.small({
+    width: '90vw',
+  }),
 ]);
