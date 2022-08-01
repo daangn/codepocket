@@ -2,6 +2,7 @@ import {
   addAsConst,
   alignFormat,
   capitalizeFront,
+  changeToUpperCaseFirstChar,
   changeTypeName,
   go,
   injectObject,
@@ -35,7 +36,9 @@ const generateType = (fileName: string) => {
 
 const generateIndexText = (acc: string, fileName: string) => {
   generateType(fileName);
-  return `${acc}export * from '${TYPE_DIR}/${removeFileExtension(fileName)}';\n`;
+  return `${acc}export * from '${TYPE_DIR}/${changeToUpperCaseFirstChar(
+    removeFileExtension(fileName),
+  )}';\n`;
 };
 
 (() => {
