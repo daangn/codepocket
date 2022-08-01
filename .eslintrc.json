@@ -52,6 +52,7 @@
   },
   "ignorePatterns": [
     "**/dist/**/*",
-    "**/bin/**/*"
+    "**/bin/**/*",
+    "./scheme/index.ts"
   ]
 }
