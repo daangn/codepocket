@@ -1,3 +1,4 @@
+import { act, fireEvent, render, screen } from '@shared/utils/test-utils';
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
@@ -36,7 +37,8 @@ const AuthPage: React.FC = () => {
       </div>
       <form className={style.form} onSubmit={verifyUser}>
         <input
-          name="username"
+          aria-label="token-input"
+          name="token"
           className={style.input({
             shake,
           })}
@@ -44,11 +46,38 @@ const AuthPage: React.FC = () => {
           value={username}
           onChange={changeUsername}
         />
-        <button className={style.button}>인증하기</button>
+        <button aria-label="submit-button" className={style.button}>
+          인증하기
+        </button>
         <span className={style.error}>{error}</span>
       </form>
     </div>
   );
 };
+
+if (import.meta.vitest) {
+  const { it } = import.meta.vitest;
+
+  Object.defineProperty(window, 'location', {
+    value: { pathname: '/shell' },
+  });
+
+  it('렌더링 테스트', () => {
+    render(<AuthPage />);
+    screen.getByText(/Codepocket/);
+  });
+
+  it('api 테스트', () => {
+    render(<AuthPage />);
+    act(() => {
+      const input = screen.getByLabelText(/token-input/);
+      fireEvent.change(input, { target: { value: 'shell' } });
+
+      const button = screen.getByLabelText(/submit-button/);
+      fireEvent.click(button);
+    });
+    // TODO: add check path
+  });
+}
 
 export default AuthPage;
