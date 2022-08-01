@@ -10,6 +10,7 @@
     "compile": "node --experimental-specifier-resolution=node --loader ts-node/esm ./compile.ts"
   },
   "dependencies": {
+    "ajv": "^8.11.0",
     "prettier": "^2.7.1"
   },
   "devDependencies": {
