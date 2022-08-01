@@ -27,7 +27,7 @@
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",
     "import/extensions": [
-      "error",
+      "warn",
       "ignorePackages",
       {
         "js": "never",
