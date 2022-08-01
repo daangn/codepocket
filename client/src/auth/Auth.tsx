@@ -12,7 +12,7 @@ interface UseLocation {
 
 const AuthPage: React.FC = () => {
   const { state: location } = useLocation() as UseLocation;
-  const { error, verifyUserFromServer } = useAuth({ path: location?.path || pocketPath });
+  const { error, shake, verifyUserFromServer } = useAuth({ path: location?.path || pocketPath });
 
   const verifyUser = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -26,10 +26,9 @@ const AuthPage: React.FC = () => {
         <SubTitle content="함께 공유해서 중복 노력이 없는 개발환경을 만들어요." startDelay={1000} />
       </div>
       <form className={style.form} onSubmit={verifyUser}>
-        <button className={style.button}>인증하기</button>
+        <LoginButton isShaking={shake} />
         <span className={style.error}>{error}</span>
       </form>
-      <LoginButton />
     </div>
   );
 };
