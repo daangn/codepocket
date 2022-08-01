@@ -12,9 +12,9 @@ interface UseLocation {
 }
 
 const AuthPage: React.FC = () => {
-  const { state } = useLocation() as UseLocation;
+  const { state: location } = useLocation() as UseLocation;
   const [username, setUsername] = useState('');
-  const { error, shake, verifyUserFromServer } = useAuth({ path: state?.path || pocketPath });
+  const { error, shake, verifyUserFromServer } = useAuth({ path: location?.path || pocketPath });
   const { text } = useTyping({
     content: '함께 공유해서 중복 노력이 없는 개발환경을 만들어요.',
     startDelay: 1000,
