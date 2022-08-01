@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { pocketPath } from '../routes';
-import { LoginButton } from './components';
+import { LoginButton, SubTitle } from './components';
 import useAuth from './hooks/useAuth';
-import useTyping from './hooks/useTyping';
 import * as style from './style.css';
 
 interface UseLocation {
@@ -15,10 +14,6 @@ const AuthPage: React.FC = () => {
   const { state: location } = useLocation() as UseLocation;
   const [username, setUsername] = useState('');
   const { error, shake, verifyUserFromServer } = useAuth({ path: location?.path || pocketPath });
-  const { text } = useTyping({
-    content: '함께 공유해서 중복 노력이 없는 개발환경을 만들어요.',
-    startDelay: 1000,
-  });
 
   const changeUsername = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(event.target.value);
@@ -33,7 +28,7 @@ const AuthPage: React.FC = () => {
     <div className={style.wrapper}>
       <div className={style.titleWrapper}>
         <h1 className={style.title}>Codepocket</h1>
-        <h2 className={style.subtitle}>{text || ' '}</h2>
+        <SubTitle content="함께 공유해서 중복 노력이 없는 개발환경을 만들어요." startDelay={1000} />
       </div>
       <form className={style.form} onSubmit={verifyUser}>
         <input

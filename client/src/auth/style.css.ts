@@ -53,17 +53,6 @@ export const title = style([
   }),
 ]);
 
-export const subtitle = style([
-  u.positionRelative,
-  {
-    color: colors.light.scheme.$gray900,
-    fontSize: rem(17),
-  },
-  m.small({
-    fontSize: rem(14),
-  }),
-]);
-
 const shake = keyframes({
   '0%': { transform: 'translateX(-12px)' },
   '10%': { transform: 'translateX(12px)' },
