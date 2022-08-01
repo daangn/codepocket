@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { pocketPath } from '../routes';
@@ -12,16 +12,11 @@ interface UseLocation {
 
 const AuthPage: React.FC = () => {
   const { state: location } = useLocation() as UseLocation;
-  const [username, setUsername] = useState('');
-  const { error, shake, verifyUserFromServer } = useAuth({ path: location?.path || pocketPath });
-
-  const changeUsername = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUsername(event.target.value);
-  };
+  const { error, verifyUserFromServer } = useAuth({ path: location?.path || pocketPath });
 
   const verifyUser = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    verifyUserFromServer({ pocketToken: username });
+    verifyUserFromServer({ pocketToken: '' });
   };
 
   return (
@@ -31,15 +26,6 @@ const AuthPage: React.FC = () => {
         <SubTitle content="함께 공유해서 중복 노력이 없는 개발환경을 만들어요." startDelay={1000} />
       </div>
       <form className={style.form} onSubmit={verifyUser}>
-        <input
-          name="username"
-          className={style.input({
-            shake,
-          })}
-          placeholder="토큰을 입력해주세요"
-          value={username}
-          onChange={changeUsername}
-        />
         <button className={style.button}>인증하기</button>
         <span className={style.error}>{error}</span>
       </form>
