@@ -13,11 +13,15 @@
       "items": {
         "type": "string"
       }
+    },
+    "message": {
+      "type": "string"
     }
   },
   "additionalProperties": false,
   "required": [
     "codeNames",
-    "authors"
+    "authors",
+    "message"
   ]
 }

@@ -5,6 +5,9 @@
     "isLast": {
       "type": "boolean"
     },
+    "message": {
+      "type": "string"
+    },
     "codes": {
       "type": "array",
       "items": {
@@ -42,6 +45,7 @@
   "additionalProperties": false,
   "required": [
     "codes",
-    "isLast"
+    "isLast",
+    "message"
   ]
 }

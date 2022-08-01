@@ -4,10 +4,14 @@
   "properties": {
     "pocketToken": {
       "type": "string"
+    },
+    "message": {
+      "type": "string"
     }
   },
   "additionalProperties": false,
   "required": [
-    "pocketToken"
+    "pocketToken",
+    "message"
   ]
 }

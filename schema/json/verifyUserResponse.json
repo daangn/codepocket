@@ -7,11 +7,15 @@
     },
     "userName": {
       "type": "string"
+    },
+    "message": {
+      "type": "string"
     }
   },
   "additionalProperties": false,
   "required": [
     "validUser",
-    "userName"
+    "userName",
+    "message"
   ]
 }
