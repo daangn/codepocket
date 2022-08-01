@@ -2,6 +2,7 @@ import { Schema } from 'mongoose';
 
 export interface User {
   userName: string;
+  email: string;
   token: string;
   createdAt: Date;
   updatedAt: Date;
@@ -29,6 +30,11 @@ export interface Story {
 
 export const UserSchema = new Schema<User>({
   userName: {
+    type: String,
+    index: true,
+    unique: true,
+  },
+  email: {
     type: String,
     index: true,
     unique: true,

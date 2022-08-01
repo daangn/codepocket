@@ -1,4 +1,5 @@
 export { default as createStory } from './createStory';
+export { default as createUser } from './createUser';
 export { default as deleteCode } from './deleteCode';
 export { default as getCodeNames } from './getCodeNames';
 export { default as getCodes } from './getCodes';

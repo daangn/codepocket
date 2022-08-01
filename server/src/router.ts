@@ -5,6 +5,10 @@ import * as connectDB from './connectDB';
 import responseHandler from './utils/responseHandler';
 
 export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
+  server.post('/user', (req, reply) =>
+    responseHandler(() => connectDB.createUser(server, req), reply),
+  );
+
   server.post('/user/auth', (req, reply) =>
     responseHandler(() => connectDB.verifyUser(server, req), reply),
   );
