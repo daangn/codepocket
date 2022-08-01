@@ -8,7 +8,8 @@
     "dev": "NODE_ENV=development vite",
     "preview": "vite preview",
     "storybook": "start-storybook -p 6006",
-    "test": "vitest"
+    "test": "vitest",
+    "test-ui": "vitest --ui"
   },
   "dependencies": {
     "@codesandbox/sandpack-react": "^1.2.4",
@@ -54,6 +55,7 @@
     "@types/react": "^18.0.14",
     "@types/react-dom": "^18.0.6",
     "@types/react-syntax-highlighter": "^15",
+    "@vitest/ui": "^0.20.2",
     "babel-loader": "^8.2.5",
     "eslint-plugin-react-hooks": "^4.6.0",
     "jest": "^28.1.3",
