@@ -2,6 +2,7 @@ import chalk from 'chalk';
 
 import { deleteCodeHandler } from '../../__mocks__/handlers';
 import server from '../../__mocks__/server';
+import { logger } from '../../utils';
 import deleteCommand from '../delete';
 
 jest.mock('chalk', () => ({
@@ -9,8 +10,8 @@ jest.mock('chalk', () => ({
   green: jest.fn(),
 }));
 
-const consoleErrorSpy = jest.spyOn(console, 'error');
-const consoleLogSpy = jest.spyOn(console, 'log');
+const consoleErrorSpy = jest.spyOn(logger, 'error');
+const consoleLogSpy = jest.spyOn(logger, 'info');
 
 beforeEach(() => {
   consoleErrorSpy.mockClear();

@@ -3,6 +3,7 @@ import chalk from 'chalk';
 import { listCodeHandler } from '../../__mocks__/handlers';
 import { generateListCodeResponseMock } from '../../__mocks__/mockup';
 import server from '../../__mocks__/server';
+import { logger } from '../../utils';
 import listCommand from '../list';
 
 jest.mock('chalk', () => ({
@@ -15,8 +16,8 @@ const chalkGreenMock = chalk.green as jest.MockedFunction<typeof chalk.green>;
 chalkYellowMock.mockImplementation((value: unknown) => value as string);
 chalkGreenMock.mockImplementation((value: unknown) => value as string);
 
-const consoleErrorSpy = jest.spyOn(console, 'error');
-const consoleLogSpy = jest.spyOn(console, 'log');
+const consoleErrorSpy = jest.spyOn(logger, 'error');
+const consoleLogSpy = jest.spyOn(logger, 'info');
 
 beforeEach(() => {
   consoleErrorSpy.mockClear();
@@ -40,7 +41,7 @@ it('작성자만 설정했을 경우(author option을 주었을 때), 정상 출
   const author = authors.join(', ');
   const expectedLog = `${author}의 코드들입니다🥕\n${names}`;
 
-  await listCommand({ author: 'shell' });
+  await listCommand({ codeAuthor: 'shell', codeName: 'code' });
   expect(consoleLogSpy).toBeCalledWith(expectedLog);
   expect(consoleLogSpy).toBeCalledTimes(1);
 });
@@ -50,7 +51,7 @@ it('파일명만 설정했을 경우(fileName option을 주었을 때), 정상 �
   const names = fileNames.join('\n');
   const expectedLog = `모두의 코드들입니다🥕\n${names}`;
 
-  await listCommand({ author: 'shell' });
+  await listCommand({ codeAuthor: 'shell', codeName: 'code' });
   expect(consoleLogSpy).toBeCalledWith(expectedLog);
   expect(consoleLogSpy).toBeCalledTimes(1);
 });

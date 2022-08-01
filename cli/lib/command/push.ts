@@ -4,6 +4,7 @@ import fs from 'fs';
 import path from 'path';
 
 import { pushCodeAPI } from '../api';
+import { checkaServerEnv, logger } from '../utils';
 
 const getFileName = (filePath: string) =>
   filePath
@@ -14,9 +15,10 @@ const getFileName = (filePath: string) =>
 export default async (filePath: string, option: { name?: string }) => {
   const [error] = await to(
     (async () => {
+      checkaServerEnv();
       const isExistPath = fs.existsSync(filePath);
-      const isPathIsFile = isExistPath && !fs.lstatSync(filePath).isFile();
-      if (!isExistPath || isPathIsFile) throw Error('🚨 올바른 파일 경로를 입력해주세요');
+      const isPathIsDir = isExistPath && !fs.lstatSync(filePath).isFile();
+      if (!isExistPath || isPathIsDir) throw Error('🚨 올바른 파일 경로를 입력해주세요');
 
       const currentCommandPath = process.env.INIT_CWD || '';
       const code = fs.readFileSync(path.resolve(currentCommandPath, filePath), {
@@ -31,6 +33,6 @@ export default async (filePath: string, option: { name?: string }) => {
       await pushCodeAPI({ code, codeName, pocketToken });
     })(),
   );
-  if (error) return console.error(chalk.yellow(error.message));
-  return console.log(chalk.green('🌟 기여해주셔서 고마워요!'));
+  if (error) return logger.error(chalk.yellow(error.message));
+  return logger.info(chalk.green('🌟 기여해주셔서 고마워요!'));
 };
