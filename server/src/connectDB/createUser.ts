@@ -12,13 +12,17 @@ export default async (server: FastifyInstance, request: FastifyRequest) => {
 
   if (!userName || email) throw new CustomResponse({ customStatus: 4000 });
 
+  const token = String(stringHash(userName));
   const [error, isExistUser] = await to(
     (async () => await server.store.User.findOne({ userName, email }))(),
   );
   if (error) throw new CustomResponse({ customStatus: 5000 });
-  if (isExistUser) throw new CustomResponse({ customStatus: 5000 });
+  if (isExistUser)
+    return new CustomResponse<CreateUserResponse>({
+      customStatus: 2003,
+      body: { pocketToken: token },
+    });
 
-  const token = String(stringHash(userName));
   const [createError] = await to(
     (async () => await server.store.User.create({ userName, email, token }))(),
   );
