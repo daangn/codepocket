@@ -1,6 +1,6 @@
 import { colors } from '@karrotmarket/design-token';
 import Icon from '@shared/components/Icon';
-import to from 'await-to-js';
+import useClipboard from '@shared/hooks/useClipboard';
 import { useMemo, useRef, useState } from 'react';
 import SyntaxHighlighter, { SyntaxHighlighterProps } from 'react-syntax-highlighter';
 import { githubGist } from 'react-syntax-highlighter/dist/esm/styles/hljs';
@@ -14,10 +14,9 @@ export interface CodeblockProps {
   code: string;
 }
 
-const Codeblock: React.FC<CodeblockProps> = (props) => {
-  const { codeAuthor, codeName, code }: CodeblockProps = props;
+const Codeblock: React.FC<CodeblockProps> = ({ codeAuthor, codeName, code }: CodeblockProps) => {
   const [toggled, setToggled] = useState<boolean>(false);
-  const [isCopied, setIsCopied] = useState<boolean>(false);
+  const { isCopied, copyToClipboard } = useClipboard({ text: code });
   const syntaxHighlighterRef = useRef<React.Component<SyntaxHighlighterProps>>(null);
 
   const toggle = () => setToggled((prev) => !prev);
@@ -26,17 +25,6 @@ const Codeblock: React.FC<CodeblockProps> = (props) => {
     const MANY_CODE_STANDARD_LINE = 500;
     return code.length > MANY_CODE_STANDARD_LINE;
   }, [code.length]);
-
-  const copyToClipboard = async () => {
-    const [error] = await to(navigator.clipboard.writeText(code));
-    if (error) setIsCopied(false);
-    else {
-      setIsCopied(true);
-      setTimeout(() => {
-        setIsCopied(false);
-      }, 2000);
-    }
-  };
 
   return (
     <li className={style.codeItem}>

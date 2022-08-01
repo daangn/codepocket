@@ -5,6 +5,7 @@ import DetailPage from './detail/Detail';
 import PocketPage from './pocket/Pocket';
 import * as routes from './routes';
 import PrivateRoute from './shared/components/PrivateRoute';
+import TokenPage from './token/Token';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         path={routes.pocketPath}
         element={<PrivateRoute path={routes.generatePocketPath} element={<PocketPage />} />}
       />
+      <Route path={routes.tokenPath} element={<TokenPage />} />
       <Route path="*" element={<Navigate to={routes.authPath} replace />} />
     </Routes>
   );

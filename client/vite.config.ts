@@ -8,7 +8,10 @@ import pluginRewriteAll from 'vite-plugin-rewrite-all';
 
 export default defineConfig({
   test: {
+    globals: true,
     environment: 'jsdom',
+    setupFiles: ['./src/setupTests.ts'],
+    includeSource: ['src/**/*.ts', 'src/**/*.tsx'],
     deps: {
       fallbackCJS: true,
     },
