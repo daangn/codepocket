@@ -16,11 +16,7 @@ const isDev = process.env.NODE_ENV === 'development';
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <BrowserRouter>
-      <Auth0Provider
-        domain={AUTH0_DOMAIN}
-        clientId={AUTH0_CLIENT_ID}
-        redirectUri={window.location.origin}
-      >
+      <Auth0Provider domain={AUTH0_DOMAIN} clientId={AUTH0_CLIENT_ID}>
         <QueryClientProvider client={queryClient}>
           <App />
           {isDev && <ReactQueryDevtools initialIsOpen={false} />}
