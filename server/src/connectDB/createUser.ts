@@ -10,7 +10,7 @@ export default async (server: FastifyInstance, request: FastifyRequest) => {
     body: { userName, email },
   } = request as CreateUserRequest;
 
-  if (!userName || email) throw new CustomResponse({ customStatus: 4000 });
+  if (!userName || email) throw new CustomResponse({ customStatus: 4001 });
 
   const token = String(stringHash(userName));
   const [error, isExistUser] = await to(
@@ -19,7 +19,7 @@ export default async (server: FastifyInstance, request: FastifyRequest) => {
   if (error) throw new CustomResponse({ customStatus: 5000 });
   if (isExistUser)
     return new CustomResponse<CreateUserResponse>({
-      customStatus: 2003,
+      customStatus: 2007,
       body: { pocketToken: token },
     });
 
@@ -29,7 +29,7 @@ export default async (server: FastifyInstance, request: FastifyRequest) => {
   if (createError) throw new CustomResponse({ customStatus: 5000 });
 
   return new CustomResponse<CreateUserResponse>({
-    customStatus: 2002,
+    customStatus: 2007,
     body: { pocketToken: token },
   });
 };
