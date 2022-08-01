@@ -1,5 +1,4 @@
-import to from 'await-to-js';
-import { useState } from 'react';
+import useClipboard from '@shared/hooks/useClipboard';
 import { Link } from 'react-router-dom';
 
 import { pocketPath } from '../routes';
@@ -8,19 +7,8 @@ import * as style from './style.css';
 
 function TokenPage() {
   const token = useQuery().get('token');
-  const [isCopied, setIsCopied] = useState<boolean>(false);
   const textToCopied = `export POCKET_TOKEN=${token}`;
-
-  const copyToClipboard = async () => {
-    const [error] = await to(navigator.clipboard.writeText(textToCopied));
-    if (error) setIsCopied(false);
-    else {
-      setIsCopied(true);
-      setTimeout(() => {
-        setIsCopied(false);
-      }, 2000);
-    }
-  };
+  const { isCopied, copyToClipboard } = useClipboard({ text: textToCopied });
 
   return (
     <div className={style.wrapper}>
