@@ -4219,7 +4219,7 @@ __metadata:
     ajv: ^8.11.0
     json-schema-to-ts: ^2.5.5
     prettier: ^2.7.1
-    ts-node: ^10.9.1
+    tsm: ^2.2.2
   languageName: unknown
   linkType: soft
 
