@@ -13,14 +13,9 @@
         }
       },
       "additionalProperties": false,
-      "required": [
-        "codeAuthor",
-        "codeName"
-      ]
+      "required": ["codeAuthor", "codeName"]
     }
   },
   "additionalProperties": false,
-  "required": [
-    "query"
-  ]
+  "required": ["query"]
 }

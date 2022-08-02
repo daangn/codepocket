@@ -1,15 +1,14 @@
-import { PullCodeRequest, PullCodeResponse } from '@pocket/schema';
+import { pullCodeRequestValidate, PullCodeResponse } from '@pocket/schema';
 import to from 'await-to-js';
 import { FastifyInstance, FastifyRequest } from 'fastify';
 
 import { CustomResponse } from '../utils/responseHandler';
 
 export default async (server: FastifyInstance, request: FastifyRequest) => {
+  if (!pullCodeRequestValidate(request)) throw new CustomResponse({ customStatus: 4001 });
   const {
     query: { codeName, codeAuthor },
-  } = request as PullCodeRequest;
-
-  if (!codeName || !codeAuthor) throw new CustomResponse({ customStatus: 4005 });
+  } = request;
 
   const [codeFindOneError, codeFindOneResponse] = await to(
     (async () => await server.store.Code.findOne({ codeName, codeAuthor }))(),
