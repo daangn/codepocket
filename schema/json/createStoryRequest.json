@@ -34,7 +34,7 @@
       ]
     }
   },
-  "additionalProperties": false,
+  "additionalProperties": true,
   "required": [
     "body"
   ]

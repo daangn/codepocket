@@ -14,11 +14,12 @@
       },
       "additionalProperties": false,
       "required": [
-        "codeAuthor, codeName"
+        "codeAuthor",
+        " codeName"
       ]
     }
   },
-  "additionalProperties": false,
+  "additionalProperties": true,
   "required": [
     "query"
   ]
