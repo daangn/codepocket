@@ -3,6 +3,7 @@ import {
   alignFormat,
   capitalizeFront,
   changeTypeName,
+  changeValidatorName,
   go,
   injectObject,
   makeDir,
@@ -28,6 +29,7 @@ const generateType = (fileName: string) => {
     template,
     injectObject(go(json, removeBlank, addAsConst)),
     changeTypeName(go(fileName, removeFileExtension, capitalizeFront)),
+    changeValidatorName(go(fileName, removeFileExtension)),
     alignFormat,
     writeFile(typeFileName),
   );

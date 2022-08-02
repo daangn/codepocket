@@ -1,7 +1,11 @@
 import fs from 'fs';
 import prettier from 'prettier';
 
-const TEMPLATE_TYPE_NAME = 'self';
+const TEMPLATE_TYPE_NAME = 'Self';
+const TEMPLATE_VALIDATOR_NAME = 'self';
+
+const typeRegex = new RegExp(TEMPLATE_TYPE_NAME, 'g');
+const typeValidator = new RegExp(TEMPLATE_VALIDATOR_NAME, 'g');
 
 export const removeFileExtension = (fileName: string) => fileName.split('.')[0];
 export const capitalizeFront = (text: string) => text[0].toUpperCase() + text.slice(1);
@@ -11,8 +15,9 @@ export const replaceExtension = (fileName: string, extension: string) =>
 export const removeBlank = (text: string) => text.replace(/\s/g, '');
 export const addAsConst = (text: string) => `${text}as const`;
 export const injectObject = (target: string) => (text: string) => text.replace(/\{\}/, target);
-export const changeTypeName = (name: string) => (text: string) =>
-  text.replace(TEMPLATE_TYPE_NAME, name);
+export const changeTypeName = (name: string) => (text: string) => text.replace(typeRegex, name);
+export const changeValidatorName = (name: string) => (text: string) =>
+  text.replace(typeValidator, name);
 export const writeFile = (fileName: string) => (text: string) => fs.writeFileSync(fileName, text);
 
 export const makeDir = (path: string) => fs.mkdirSync(path);

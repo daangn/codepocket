@@ -1,8 +1,13 @@
+import Ajv, { JSONSchemaType } from 'ajv';
 import { FromSchema } from 'json-schema-to-ts';
 
+const ajv = new Ajv({ formats: { date: true, time: true } });
+
+// schema로 바뀝니다
 const t = {};
 
-export type self = FromSchema<
+// api이름으로 바뀝니다
+export type Self = FromSchema<
   typeof t,
   {
     deserialize: [
@@ -16,3 +21,6 @@ export type self = FromSchema<
     ];
   }
 >;
+
+// validate이름으로 바뀝니다
+export const selfValidate = ajv.compile(t as unknown as JSONSchemaType<Self>);
