@@ -18,12 +18,6 @@ jobs:
           echo "POCKET_DEV_SERVER=$POCKET_DEV_SERVER" >> .env
         env:
           POCKET_DEV_SERVER: ${{ secrets.POCKET_DEV_SERVER }}
-      
-      - name: generate .env.example
-        run: |
-          echo "POCKET_DEV_SERVER=" >> .env.example
-        env:
-          POCKET_DEV_SERVER: ${{ secrets.POCKET_DEV_SERVER }}
 
       - name: test all
         run: yarn test
