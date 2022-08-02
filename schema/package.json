@@ -2,20 +2,20 @@
   "name": "@pocket/schema",
   "version": "0.0.0",
   "private": true,
-  "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "yarn compile && tsc",
-    "compile": "node --experimental-specifier-resolution=node --loader ts-node/esm ./compile.ts"
+    "compile": "yarn node -r tsm ./compile.ts"
   },
   "dependencies": {
+    "ajv": "^8.11.0",
     "prettier": "^2.7.1"
   },
   "devDependencies": {
     "@types/prettier": "^2",
     "json-schema-to-ts": "^2.5.5",
-    "ts-node": "^10.9.1"
+    "tsm": "^2.2.2"
   },
   "packageManager": "yarn@3.2.1"
 }

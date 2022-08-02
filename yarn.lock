@@ -4245,9 +4245,10 @@ __metadata:
   resolution: "@pocket/schema@workspace:schema"
   dependencies:
     "@types/prettier": ^2
+    ajv: ^8.11.0
     json-schema-to-ts: ^2.5.5
     prettier: ^2.7.1
-    ts-node: ^10.9.1
+    tsm: ^2.2.2
   languageName: unknown
   linkType: soft
 
@@ -7373,7 +7374,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ajv@npm:^8.0.0, ajv@npm:^8.10.0":
+"ajv@npm:^8.0.0, ajv@npm:^8.10.0, ajv@npm:^8.11.0":
   version: 8.11.0
   resolution: "ajv@npm:8.11.0"
   dependencies:
