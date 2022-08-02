@@ -12,13 +12,16 @@ jobs:
       - uses: actions/checkout@v2
       - name: yarn
         run: yarn
+
       - name: generate .env
         run: |
           echo "POCKET_DEV_SERVER=$POCKET_DEV_SERVER" >> .env
         env:
           POCKET_DEV_SERVER: ${{ secrets.POCKET_DEV_SERVER }}
+
       - name: test all
         run: yarn test
+
       - name: if fail
         uses: actions/github-script@v6
         with:

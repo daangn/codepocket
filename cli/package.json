@@ -29,11 +29,12 @@
     "axios": "^0.27.2",
     "chalk": "^5.0.1",
     "commander": "^9.3.0",
-    "dotenv": "^16.0.1"
+    "dotenv-safe": "^8.2.0"
   },
   "devDependencies": {
     "@swc/core": "^1.2.211",
     "@swc/jest": "^0.2.21",
+    "@types/dotenv-safe": "^8",
     "@types/jest": "^28.1.4",
     "@types/node": "^18.0.3",
     "jest": "^28.1.2",

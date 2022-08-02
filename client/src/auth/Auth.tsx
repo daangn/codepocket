@@ -1,3 +1,4 @@
+import { EMAIL_DOMAIN_NAME } from '@shared/constant';
 import React, { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -17,7 +18,7 @@ const AuthPage: React.FC = () => {
   const navigate = useNavigate();
   const { verifyUser } = useVerifyUser({ path: location?.path || pocketPath });
   const { isAuthenticated, user, logout, loginWithPopup, isValidEmailDomain } = useCustomAuth0({
-    domain: 'daangn.com',
+    domain: EMAIL_DOMAIN_NAME,
   });
   const { createUser } = useCreateUser({
     userName: user?.nickname,
