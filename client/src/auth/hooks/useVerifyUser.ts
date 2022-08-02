@@ -11,13 +11,11 @@ interface UseVerifyUserMutationProps {
   path: string;
 }
 
-const useAuth = ({ path }: UseVerifyUserMutationProps) => {
+const useVerifyUser = ({ path }: UseVerifyUserMutationProps) => {
   const navigate = useNavigate();
 
   const onSuccess = (_: VerifyUserResponse, vars: VerifyUserBodyType) => {
     setUserTokenToLocalStorage(vars.pocketToken);
-    console.log('성공');
-
     navigate(path);
   };
 
@@ -41,4 +39,4 @@ const useAuth = ({ path }: UseVerifyUserMutationProps) => {
   return { verifyUser };
 };
 
-export default useAuth;
+export default useVerifyUser;
