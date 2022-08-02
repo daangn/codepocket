@@ -8,6 +8,8 @@ on:
 jobs:
   Test:
     runs-on: ubuntu-latest
+    env:
+      GITHUB_ACTION_CI: true
     steps:
       - uses: actions/checkout@v2
       - name: yarn
