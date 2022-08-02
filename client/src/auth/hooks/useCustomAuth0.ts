@@ -9,10 +9,10 @@ const useCustomAuth0 = ({ domain }: UseCustomAuth0Props) => {
   const { isAuthenticated, user, logout, loginWithPopup } = useAuth0();
 
   const isValidEmailDomain = useCallback(() => {
-    if (!user?.email) return false;
+    if (!user || !user.email) return false;
     const userDomain = user?.email.split('@')[1];
     return userDomain === domain;
-  }, [domain, user?.email]);
+  }, [domain, user]);
 
   return {
     user,
