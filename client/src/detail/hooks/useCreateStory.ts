@@ -1,6 +1,6 @@
 import { CreateStoryRequest, CreateStoryResponse } from '@pocket/schema';
 import useCustomMutation from '@shared/hooks/useCustomMutation';
-import { getUsernameFormLocalStorage } from '@shared/utils/localStorage';
+import { getUserNameFormLocalStorage } from '@shared/utils/localStorage';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { createStoryUrl, getStoryNamesUrl, StoryFullName } from '../api';
@@ -23,14 +23,14 @@ const useCreateStory = ({ codeAuthor, codeName, selectStory }: UseCreateStory) =
     method: 'POST',
     onSuccess: async (_, vars) => {
       await queryClient.invalidateQueries([getStoryNamesUrl]);
-      const storyAuth = getUsernameFormLocalStorage();
+      const storyAuth = getUserNameFormLocalStorage();
       const storyName = `${storyAuth}-${vars.storyName}` as StoryFullName;
       selectStory(`${codeAuthor}/${codeName}_${storyName}`);
     },
   });
 
   const createStory = ({ codes, storyName }: Pick<CreateStoryBodyType, 'codes' | 'storyName'>) => {
-    const storyAuthor = getUsernameFormLocalStorage();
+    const storyAuthor = getUserNameFormLocalStorage();
     if (!storyAuthor || !storyName || !codeName || !codeAuthor) return;
 
     createStoryMutate({

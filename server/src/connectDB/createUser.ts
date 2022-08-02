@@ -10,7 +10,7 @@ export default async (server: FastifyInstance, request: FastifyRequest) => {
     body: { userName, email },
   } = request as CreateUserRequest;
 
-  if (!userName || email) throw new CustomResponse({ customStatus: 4001 });
+  if (!userName || !email) throw new CustomResponse({ customStatus: 4001 });
 
   const token = String(stringHash(userName));
   const [error, isExistUser] = await to(
