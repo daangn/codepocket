@@ -4147,13 +4147,14 @@ __metadata:
     "@pocket/schema": "workspace:^"
     "@swc/core": ^1.2.211
     "@swc/jest": ^0.2.21
+    "@types/dotenv-safe": ^8
     "@types/jest": ^28.1.4
     "@types/node": ^18.0.3
     await-to-js: ^3.0.0
     axios: ^0.27.2
     chalk: ^5.0.1
     commander: ^9.3.0
-    dotenv: ^16.0.1
+    dotenv-safe: ^8.2.0
     jest: ^28.1.2
     msw: ^0.43.1
     nanobundle: ^0.0.28
@@ -4258,10 +4259,11 @@ __metadata:
     "@fastify/cors": ^8.0.0
     "@fastify/mongodb": ^6.0.1
     "@pocket/schema": "workspace:^"
+    "@types/dotenv-safe": ^8
     "@types/node": ^18.0.6
     "@types/string-hash": ^1
     await-to-js: ^3.0.0
-    dotenv: ^16.0.1
+    dotenv-safe: ^8.2.0
     fastify: ^4.3.0
     fastify-plugin: ^4.0.0
     mongoose: ^6.4.6
@@ -6076,6 +6078,15 @@ __metadata:
   dependencies:
     "@types/ms": "*"
   checksum: 0a7b89d8ed72526858f0b61c6fd81f477853e8c4415bb97f48b1b5545248d2ae389931680b94b393b993a7cfe893537a200647d93defe6d87159b96812305adc
+  languageName: node
+  linkType: hard
+
+"@types/dotenv-safe@npm:^8":
+  version: 8.1.2
+  resolution: "@types/dotenv-safe@npm:8.1.2"
+  dependencies:
+    dotenv: ^8.2.0
+  checksum: 753a12921f9c3a199b66150d82062f13f008be33f6d004825be405a5af70920ff0ee2eb374a7616c1b73ee9d3bd5e124fbb936e8aa0f999c403b648c3c653e86
   languageName: node
   linkType: hard
 
@@ -10428,14 +10439,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dotenv@npm:^16.0.1":
-  version: 16.0.1
-  resolution: "dotenv@npm:16.0.1"
-  checksum: f459ffce07b977b7f15d8cc4ee69cdff77d4dd8c5dc8c85d2d485ee84655352c2415f9dd09d42b5b5985ced3be186130871b34e2f3e2569ebc72fbc2e8096792
+"dotenv-safe@npm:^8.2.0":
+  version: 8.2.0
+  resolution: "dotenv-safe@npm:8.2.0"
+  dependencies:
+    dotenv: ^8.2.0
+  checksum: 8b73770330528d77630009afa44239127c44d634b0fa7d7545932a8e72686d774ceadea62d381ed7c911e0facac4ee1489132e44b746f36eb8f2e3ee6929eb78
   languageName: node
   linkType: hard
 
-"dotenv@npm:^8.0.0":
+"dotenv@npm:^8.0.0, dotenv@npm:^8.2.0":
   version: 8.6.0
   resolution: "dotenv@npm:8.6.0"
   checksum: 38e902c80b0666ab59e9310a3d24ed237029a7ce34d976796349765ac96b8d769f6df19090f1f471b77a25ca391971efde8a1ea63bb83111bd8bec8e5cc9b2cd
