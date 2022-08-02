@@ -1,16 +1,13 @@
-import { CreateUserRequest, CreateUserResponse } from '@pocket/schema';
+import { createUserRequestValidate, CreateUserResponse } from '@pocket/schema';
 import to from 'await-to-js';
-import { FastifyInstance, FastifyRequest } from 'fastify';
+import { FastifyInstance } from 'fastify';
 import stringHash from 'string-hash';
 
 import { CustomResponse } from '../utils/responseHandler';
 
-export default async (server: FastifyInstance, request: FastifyRequest) => {
-  const {
-    body: { userName, email },
-  } = request as CreateUserRequest;
-
-  if (!userName || !email) throw new CustomResponse({ customStatus: 4001 });
+export default async <T>(server: FastifyInstance, request: T) => {
+  if (!createUserRequestValidate(request)) throw new CustomResponse({ customStatus: 4001 });
+  const { userName, email } = request.body;
 
   const token = String(stringHash(userName));
   const [error, isExistUser] = await to(

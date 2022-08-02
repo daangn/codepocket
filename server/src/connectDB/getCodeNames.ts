@@ -1,14 +1,13 @@
-import { GetCodeNamesRequest, GetCodeNamesResponse } from '@pocket/schema';
+import { getCodeNamesRequestValidate, GetCodeNamesResponse } from '@pocket/schema';
 import to from 'await-to-js';
-import { FastifyInstance, FastifyRequest } from 'fastify';
+import { FastifyInstance } from 'fastify';
 
 import { CustomResponse } from '../utils/responseHandler';
 import { filterDuplicate } from '../utils/string';
 
-export default async (server: FastifyInstance, request: FastifyRequest) => {
-  const {
-    query: { codeAuthor, codeName },
-  } = request as GetCodeNamesRequest;
+export default async <T>(server: FastifyInstance, request: T) => {
+  if (!getCodeNamesRequestValidate(request)) throw new CustomResponse({ customStatus: 4001 });
+  const { codeAuthor, codeName } = request.query;
 
   const codeNameRegex = new RegExp(codeName, 'gi');
   const codeAuthorRegex = new RegExp(codeAuthor, 'gi');

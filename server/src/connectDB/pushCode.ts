@@ -1,6 +1,6 @@
-import { PushCodeRequest, PushCodeResponse, UploadSlackFileResponse } from '@pocket/schema';
+import { pushCodeRequestValidate, PushCodeResponse, UploadSlackFileResponse } from '@pocket/schema';
 import to from 'await-to-js';
-import { FastifyInstance, FastifyRequest } from 'fastify';
+import { FastifyInstance } from 'fastify';
 
 import { postMessageToSlack } from '../api/postMessageToSlack';
 import { uploadCodeToSlack } from '../api/uploadCodeToSlack';
@@ -8,12 +8,9 @@ import { env } from '../utils/env';
 import { CustomResponse } from '../utils/responseHandler';
 import { changeFirstToUpperCase } from '../utils/string';
 
-export default async (server: FastifyInstance, request: FastifyRequest) => {
-  const {
-    body: { pocketToken, codeName, code },
-  } = request as PushCodeRequest;
-
-  if (!pocketToken) throw new CustomResponse({ customStatus: 4000 });
+export default async <T>(server: FastifyInstance, request: T) => {
+  if (!pushCodeRequestValidate(request)) throw new CustomResponse({ customStatus: 4000 });
+  const { pocketToken, codeName, code } = request.body;
 
   const [findAuthorError, findAuthorResponse] = await to(
     (async () => await server.store.User.findOne({ token: pocketToken }))(),

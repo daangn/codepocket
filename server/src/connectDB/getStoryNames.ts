@@ -1,15 +1,12 @@
-import { GetStoryNamesRequest, GetStoryNamesResponse } from '@pocket/schema';
+import { getStoryNamesRequestValidate, GetStoryNamesResponse } from '@pocket/schema';
 import { to } from 'await-to-js';
-import { FastifyInstance, FastifyRequest } from 'fastify';
+import { FastifyInstance } from 'fastify';
 
 import { CustomResponse } from '../utils/responseHandler';
 
-export default async (server: FastifyInstance, request: FastifyRequest) => {
-  const {
-    query: { codeAuthor, codeName },
-  } = request as GetStoryNamesRequest;
-
-  if (!codeAuthor || !codeName) throw new CustomResponse({ customStatus: 4001 });
+export default async <T>(server: FastifyInstance, request: T) => {
+  if (!getStoryNamesRequestValidate(request)) throw new CustomResponse({ customStatus: 4001 });
+  const { codeAuthor, codeName } = request.query;
 
   const [err, stories] = await to(
     (async () => await server.store.Story.find({ codeAuthor, codeName }))(),

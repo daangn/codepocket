@@ -1,19 +1,15 @@
 /* eslint-disable no-underscore-dangle */
-import { DeleteCodeRequest, DeleteCodeResponse } from '@pocket/schema';
+import { deleteCodeRequestValidate, DeleteCodeResponse } from '@pocket/schema';
 import to from 'await-to-js';
-import { FastifyInstance, FastifyRequest } from 'fastify';
+import { FastifyInstance } from 'fastify';
 
 import { postMessageToSlack } from '../api/postMessageToSlack';
 import { env } from '../utils/env';
 import { CustomResponse } from '../utils/responseHandler';
 
-export default async (server: FastifyInstance, request: FastifyRequest) => {
-  const {
-    body: { pocketToken, codeName },
-  } = request as DeleteCodeRequest;
-
-  if (!pocketToken) throw new CustomResponse({ customStatus: 4000 });
-  if (!codeName) throw new CustomResponse({ customStatus: 4005 });
+export default async <T>(server: FastifyInstance, request: T) => {
+  if (!deleteCodeRequestValidate(request)) throw new CustomResponse({ customStatus: 4001 });
+  const { pocketToken, codeName } = request.body;
 
   const [findAuthorError, findAuthorResponse] = await to(
     (async () => await server.store.User.findOne({ token: pocketToken }))(),
