@@ -10,8 +10,6 @@ export const replaceExtension = (fileName: string, extension: string) =>
 
 export const removeBlank = (text: string) => text.replace(/\s/g, '');
 export const addAsConst = (text: string) => `${text}as const`;
-export const changeToUpperCaseFirstChar = (text: string) =>
-  text.charAt(0).toUpperCase() + text.slice(1);
 export const injectObject = (target: string) => (text: string) => text.replace(/\{\}/, target);
 export const changeTypeName = (name: string) => (text: string) =>
   text.replace(TEMPLATE_TYPE_NAME, name);
