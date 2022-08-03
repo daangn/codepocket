@@ -1,6 +1,6 @@
 import { VerifyUserRequest, VerifyUserResponse } from '@pocket/schema';
 import useCustomMutation from '@shared/hooks/useCustomMutation';
-import { getUserTokenToLocalStorage, setUserTokenToLocalStorage } from '@shared/utils/localStorage';
+import { localStorage } from '@shared/utils/localStorage';
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -15,7 +15,7 @@ const useVerifyUser = ({ path }: UseVerifyUserMutationProps) => {
   const navigate = useNavigate();
 
   const onSuccess = (_: VerifyUserResponse, vars: VerifyUserBodyType) => {
-    setUserTokenToLocalStorage(vars.pocketToken);
+    localStorage.setUserToken(vars.pocketToken);
     navigate(path);
   };
 
@@ -32,7 +32,7 @@ const useVerifyUser = ({ path }: UseVerifyUserMutationProps) => {
   });
 
   const verifyUser = useCallback(async () => {
-    const token = getUserTokenToLocalStorage();
+    const token = localStorage.getUserToken();
     if (!token) return;
 
     verifyUserMutate({ pocketToken: token });

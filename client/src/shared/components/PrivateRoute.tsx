@@ -5,7 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { verifyUserUrl } from '../../auth/api';
 import { authPath } from '../../routes';
-import { getUserTokenToLocalStorage } from '../utils/localStorage';
+import { localStorage } from '../utils/localStorage';
 
 type VerifyUserBodyType = VerifyUserRequest['body'];
 interface PrivateRoutProps {
@@ -33,7 +33,7 @@ const PrivateRoute: React.FC<PrivateRoutProps> = (props) => {
   });
 
   const authenticateUser = useCallback(async () => {
-    const token = getUserTokenToLocalStorage();
+    const token = localStorage.getUserToken();
     if (!token) return navigateAuthPage();
 
     return verifyUserMutate({ pocketToken: token });
