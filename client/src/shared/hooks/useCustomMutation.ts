@@ -4,7 +4,7 @@ import { axiosInstance } from '../lib/axios';
 
 export type MethodType = 'POST' | 'DELETE' | 'PUT' | 'UPDATE';
 
-type CustomUseQueryOptions<Response, Error, Variable, Context> = Omit<
+type CustomUseMutationOptions<Response, Error, Variable, Context> = Omit<
   UseMutationOptions<Response, Error, Variable, Context>,
   'mutationKey'
 >;
@@ -12,7 +12,7 @@ type CustomUseQueryOptions<Response, Error, Variable, Context> = Omit<
 interface CustomMutationInterface<Response, Error, Variable, Context> {
   url: string;
   method: MethodType;
-  options?: CustomUseQueryOptions<Response, Error, Variable, Context>;
+  options?: CustomUseMutationOptions<Response, Error, Variable, Context>;
 }
 
 const fetcher =

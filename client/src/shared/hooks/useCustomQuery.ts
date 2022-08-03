@@ -10,7 +10,7 @@ type CustomUseQueryOptions<Response> = UseQueryOptions<
   QueryKey
 >;
 
-type QueryOptionType<Response> = Omit<
+type QueryOptions<Response> = Omit<
   CustomUseQueryOptions<Response>,
   'queryKey' | 'queryFn' | 'initialData'
 >;
@@ -18,7 +18,7 @@ type QueryOptionType<Response> = Omit<
 interface CustomQueryInterface<Response> {
   url: string;
   params?: { [param: string]: string };
-  options?: QueryOptionType<Response>;
+  options?: QueryOptions<Response>;
 }
 
 const fetcher = async <T>({ queryKey }: QueryFunctionContext): Promise<T> => {
@@ -27,13 +27,13 @@ const fetcher = async <T>({ queryKey }: QueryFunctionContext): Promise<T> => {
   return data;
 };
 
-const useCustomQuery = <Response, ErrorType = { message: string }>({
+const useCustomQuery = <Response, Error = { message: string }>({
   url,
   params,
   options,
 }: CustomQueryInterface<Response>) => {
-  const commonOptions: QueryOptionType<Response> = { staleTime: 1000000, cacheTime: 1000000 };
-  return useQuery<Response, ErrorType, Response, QueryKey>(
+  const commonOptions: QueryOptions<Response> = { staleTime: 1000000, cacheTime: 1000000 };
+  return useQuery<Response, Error, Response, QueryKey>(
     [url!, params],
     ({ queryKey, meta }) => fetcher({ queryKey, meta }),
     {
