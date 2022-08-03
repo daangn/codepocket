@@ -2,7 +2,9 @@ import { QueryFunctionContext, QueryKey, useQuery, UseQueryOptions } from '@tans
 
 import { axiosInstance } from '../lib/axios';
 
-type QueryOptions<TResponse> = UseQueryOptions<TResponse, Error, TResponse, QueryKey>;
+type QueryOptions<TResponse> = Omit<UseQueryOptions<TResponse, Error, TResponse, QueryKey>, ''> & {
+  initialData?: () => undefined;
+};
 
 interface CustomQueryInterface<TResponse> {
   url: string;
