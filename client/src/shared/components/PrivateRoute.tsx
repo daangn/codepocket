@@ -5,7 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { verifyUserUrl } from '../../auth/api';
 import { authPath } from '../../routes';
-import localStorage from '../utils/localStorage';
+import { localStorage } from '../utils/localStorage';
 
 type VerifyUserBodyType = VerifyUserRequest['body'];
 interface PrivateRoutProps {

@@ -4,18 +4,24 @@ const keys = {
 
 const store = {
   set<T>(key: string, value: T) {
-    localStorage.setItem(key, JSON.stringify(value));
+    window.localStorage.setItem(key, JSON.stringify(value));
   },
-  get<T>(key: string): T {
-    const item = localStorage.getItem(key);
-    return item ? JSON.parse(item) : '';
+  get<T>(key: string): T | null {
+    const item = window.localStorage.getItem(key);
+    if (!item) return null;
+
+    try {
+      return JSON.parse(item);
+    } catch {
+      return item as unknown as T;
+    }
   },
   remove(key: string) {
-    localStorage.removeItem(key);
+    window.localStorage.removeItem(key);
   },
 } as const;
 
-export default {
+export const localStorage = {
   setUserToken: (userToken: string) => store.set<string>(keys.USER_TOKEN_KEY, userToken),
   getUserToken: () => store.get<string>(keys.USER_TOKEN_KEY),
 } as const;

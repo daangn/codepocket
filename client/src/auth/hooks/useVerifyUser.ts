@@ -1,6 +1,6 @@
 import { VerifyUserRequest, VerifyUserResponse } from '@pocket/schema';
 import useCustomMutation from '@shared/hooks/useCustomMutation';
-import localStorage from '@shared/utils/localStorage';
+import { localStorage } from '@shared/utils/localStorage';
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 

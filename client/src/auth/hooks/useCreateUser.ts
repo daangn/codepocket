@@ -1,6 +1,6 @@
 import { CreateUserResponse } from '@pocket/schema';
 import useCustomMutation from '@shared/hooks/useCustomMutation';
-import localStorage from '@shared/utils/localStorage';
+import { localStorage } from '@shared/utils/localStorage';
 import { useNavigate } from 'react-router-dom';
 
 import { generateTokenPath } from '../../routes';
