@@ -1,0 +1,22 @@
+type: v1/appservice
+
+images:
+  apiservice:
+    dockerfile: server/Dockerfile
+
+services:
+  app:
+    image: app
+    class: k1.small
+    ports:
+      - name: http
+        port: 8080
+
+routes:
+  - name: http
+    protocol: http
+    host:
+      - scope: internal
+    backend:
+      - service: server
+        port: http

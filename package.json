@@ -10,6 +10,7 @@
   ],
   "scripts": {
     "build": "ultra -r build",
+    "dev": "ultra -r dev",
     "format": "eslint --fix . --ext .ts,.tsx,.json",
     "lint": "eslint . --ext .ts,.tsx,.json",
     "test": "ultra -r test"
