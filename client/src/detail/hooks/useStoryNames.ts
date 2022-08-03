@@ -12,8 +12,10 @@ const useStoryNames = ({ codeAuthor, codeName }: UseStoryNames) =>
   useCustomQuery<GetStoryNamesResponse>({
     url: getStoryNamesUrl,
     params: { codeAuthor: `${codeAuthor}`, codeName: `${codeName}` },
-    suspense: true,
-    useErrorBoundary: true,
+    options: {
+      suspense: true,
+      useErrorBoundary: true,
+    },
   });
 
 export default useStoryNames;

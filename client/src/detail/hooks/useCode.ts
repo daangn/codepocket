@@ -12,8 +12,10 @@ const useCode = ({ codeAuthor, codeName }: UseCode) =>
   useCustomQuery<PullCodeResponse>({
     url: getCodeUrl,
     params: { codeAuthor: `${codeAuthor}`, codeName: `${codeName}` },
-    suspense: true,
-    useErrorBoundary: true,
+    options: {
+      suspense: true,
+      useErrorBoundary: true,
+    },
   });
 
 export default useCode;
