@@ -1,14 +1,8 @@
 import { QueryFunctionContext, QueryKey, useQuery, UseQueryOptions } from '@tanstack/react-query';
-import { AxiosError, AxiosResponse } from 'axios';
 
 import { axiosInstance } from '../lib/axios';
 
-type CustomUseQueryOptions<Response> = UseQueryOptions<
-  AxiosResponse<Response>,
-  AxiosError<Error>,
-  AxiosResponse<Response>,
-  QueryKey
->;
+type CustomUseQueryOptions<Response> = UseQueryOptions<Response, Error, Response, QueryKey>;
 
 type QueryOptions<Response> = Omit<
   CustomUseQueryOptions<Response>,
