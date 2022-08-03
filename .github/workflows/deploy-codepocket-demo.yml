@@ -1,7 +1,7 @@
 on:
   push:
-    # branches:
-    #   - main
+    branches:
+      - main
 
 name: codepocket demo 배포
 
@@ -22,15 +22,11 @@ jobs:
         run: yarn install
 
       - name: schema 프로젝트를 빌드해요
-        # env:
-        #   VITE_STAGE: ${{ secrets.VITE_STAGE }}
         working-directory: ./schema
         run: |
           yarn build
 
       - name: client 프로젝트를 빌드해요
-        # env:
-        #   VITE_STAGE: ${{ secrets.VITE_STAGE }}
         working-directory: ./client
         run: |
           yarn build
