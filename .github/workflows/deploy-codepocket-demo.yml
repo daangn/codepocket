@@ -37,8 +37,7 @@ jobs:
 
       - name: 서비스를 Cloudflare pages에 배포해요
         uses: cloudflare/wrangler-action@2.0.0
-        working-directory: ./client
         with:
           accountId: ${{ secrets.CF_ACCOUNT_ID }}
           apiToken: ${{ secrets.CF_API_TOKEN }}
-          command: pages publish ./dist --project-name=codepocket-demo
+          command: pages publish ./client/dist --project-name=codepocket-demo
