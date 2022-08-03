@@ -4,8 +4,8 @@
     "types": ["node", "jest"],
     "baseUrl": ".",
     "outDir": "dist",
-    "skipLibCheck": true
+    "skipLibCheck": true,
   },
-  "include": ["./index.ts", "./types/**/*"],
+  "include": ["./index.ts"],
   "exclude": ["**.test.ts"]
 }

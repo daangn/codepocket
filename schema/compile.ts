@@ -37,7 +37,7 @@ const generateType = (fileName: string) => {
 
 const generateIndexText = (acc: string, fileName: string) => {
   generateType(fileName);
-  return `${acc}export * from '${TYPE_DIR}/${removeFileExtension(fileName)}';\n`;
+  return `${acc}export * from '${TYPE_DIR}/${capitalizeFront(removeFileExtension(fileName))}';\n`;
 };
 
 (() => {
