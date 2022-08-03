@@ -16,20 +16,12 @@ const fetcher = async <T>({ queryKey }: QueryFunctionContext): Promise<T> => {
   return data;
 };
 
-const useCustomQuery = <TResponse, Error = { message: string }>({
-  url,
-  params,
-  options,
-}: CustomQueryInterface<TResponse>) => {
+const useCustomQuery = <TResponse>({ url, params, options }: CustomQueryInterface<TResponse>) => {
   const commonOptions: QueryOptions<TResponse> = { staleTime: 1000000, cacheTime: 1000000 };
-  return useQuery<TResponse, Error, TResponse, QueryKey>(
-    [url!, params],
-    ({ queryKey, meta }) => fetcher({ queryKey, meta }),
-    {
-      ...commonOptions,
-      ...options,
-    },
-  );
+  return useQuery([url!, params], ({ queryKey, meta }) => fetcher({ queryKey, meta }), {
+    ...commonOptions,
+    ...options,
+  });
 };
 
 export default useCustomQuery;
