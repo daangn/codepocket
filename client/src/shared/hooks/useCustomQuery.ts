@@ -20,7 +20,9 @@ const useCustomQuery = <TResponse>({ url, params, options }: CustomQueryInterfac
   const commonOptions: QueryOptions<TResponse> = { staleTime: 1000000, cacheTime: 1000000 };
   console.log(commonOptions, options);
 
-  return useQuery([url!, params], ({ queryKey, meta }) => fetcher({ queryKey, meta }));
+  return useQuery<TResponse, Error, TResponse, QueryKey>([url!, params], ({ queryKey, meta }) =>
+    fetcher({ queryKey, meta }),
+  );
 };
 
 export default useCustomQuery;
