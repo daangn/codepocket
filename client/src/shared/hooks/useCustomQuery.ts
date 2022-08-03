@@ -18,10 +18,14 @@ const fetcher = async <T>({ queryKey }: QueryFunctionContext): Promise<T> => {
 
 const useCustomQuery = <TResponse>({ url, params, options }: CustomQueryInterface<TResponse>) => {
   const commonOptions: QueryOptions<TResponse> = { staleTime: 1000000, cacheTime: 1000000 };
-  console.log(commonOptions, options);
+  console.log(options);
 
-  return useQuery<TResponse, Error, TResponse, QueryKey>([url!, params], ({ queryKey, meta }) =>
-    fetcher({ queryKey, meta }),
+  return useQuery<TResponse, Error, TResponse, QueryKey>(
+    [url!, params],
+    ({ queryKey, meta }) => fetcher({ queryKey, meta }),
+    {
+      ...commonOptions,
+    },
   );
 };
 
