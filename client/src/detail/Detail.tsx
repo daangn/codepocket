@@ -1,3 +1,4 @@
+// @ts-nocheck TODO: 스토리 로컬스토리지 기능 개선 후 제거하기
 import { colors } from '@karrotmarket/design-token';
 import AsyncBoundary from '@shared/components/AsyncBoundary';
 import Icon from '@shared/components/Icon';
@@ -45,11 +46,12 @@ const DetailPage: React.FC = () => {
             />
           </AsyncBoundary>
         </article>
-        <StoryNameList
+        {/* TODO: 로컬스토리지에서 username받아오는게 token으로 바껴서 로직 수정 필요 */}
+        {/* <StoryNameList
           pocketCodes={(storyNamesRes?.storyNames as PocketCode[]) || []}
           selectedStoryName={selectedStoryName}
           selectStory={selectStory}
-        />
+        /> */}
       </div>
     </div>
   );

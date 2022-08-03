@@ -16,8 +16,10 @@ const useCodes = () => {
       limit: `${5}`,
       offset: `${offset}`,
     },
-    suspense: false,
-    useErrorBoundary: true,
+    options: {
+      suspense: false,
+      useErrorBoundary: true,
+    },
   });
 
   const isLast = useMemo(() => data?.isLast, [data?.isLast]);

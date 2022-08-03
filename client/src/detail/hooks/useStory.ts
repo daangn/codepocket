@@ -21,9 +21,11 @@ const useStory = ({ codeAuthor, codeName }: UseStory) => {
       storyAuthor: `${selectedStoryName?.split('-')[0]}`,
       storyName: `${selectedStoryName?.split('-')[1]}`,
     },
-    suspense: true,
-    useErrorBoundary: true,
-    enabled: false,
+    options: {
+      suspense: true,
+      useErrorBoundary: true,
+      enabled: false,
+    },
   });
 
   const selectStory = async (name: StoryFullName) => {

@@ -1,3 +1,4 @@
+// @ts-nocheck TODO: 스토리 로컬스토리지 기능 개선 후 제거하기
 import * as Sandpack from '@codesandbox/sandpack-react';
 import * as theme from '@codesandbox/sandpack-themes';
 import { rem } from 'polished';
@@ -77,7 +78,8 @@ const SandpackComponent: React.FC<SandpackComponentProps> = (props) => {
           <Sandpack.SandpackPreview style={{ height: '100%' }} />
         </Sandpack.SandpackLayout>
       </div>
-      <form className={style.storyCreatingForm} onSubmit={createNewStory}>
+      {/* TODO: 로컬스토리지에서 username받아오는게 token으로 바껴서 로직 수정 필요 */}
+      {/* <form className={style.storyCreatingForm} onSubmit={createNewStory}>
         <input
           className={style.storyNameInput({ enable: !props.isStory })}
           placeholder="스토리 이름"
@@ -88,7 +90,7 @@ const SandpackComponent: React.FC<SandpackComponentProps> = (props) => {
         <button disabled={props.isStory} className={style.submitButton({ enable: !props.isStory })}>
           스토리 생성하기
         </button>
-      </form>
+      </form> */}
     </>
   );
 };

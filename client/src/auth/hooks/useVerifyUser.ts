@@ -26,7 +26,9 @@ const useVerifyUser = ({ path }: UseVerifyUserMutationProps) => {
   >({
     url: verifyUserUrl,
     method: 'POST',
-    onSuccess,
+    options: {
+      onSuccess,
+    },
   });
 
   const verifyUser = useCallback(async () => {
