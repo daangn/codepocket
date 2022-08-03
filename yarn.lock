@@ -4250,6 +4250,7 @@ __metadata:
     json-schema-to-ts: ^2.5.5
     prettier: ^2.7.1
     tsm: ^2.2.2
+    typescript: ^4.7.4
   languageName: unknown
   linkType: soft
 

@@ -15,7 +15,8 @@
   "devDependencies": {
     "@types/prettier": "^2",
     "json-schema-to-ts": "^2.5.5",
-    "tsm": "^2.2.2"
+    "tsm": "^2.2.2",
+    "typescript": "^4.7.4"
   },
   "packageManager": "yarn@3.2.1"
 }
