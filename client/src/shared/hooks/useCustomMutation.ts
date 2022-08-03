@@ -1,35 +1,34 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, UseMutationOptions } from '@tanstack/react-query';
 
-import { APIErrorType, axiosInstance } from '../lib/axios';
+import { axiosInstance } from '../lib/axios';
 
 export type MethodType = 'POST' | 'DELETE' | 'PUT' | 'UPDATE';
 
-interface UseCustomMutation<ResData, ErrorType, VarType> {
+type CustomUseQueryOptions<Response, Error, Variable, Context> = Omit<
+  UseMutationOptions<Response, Error, Variable, Context>,
+  'mutationKey'
+>;
+
+interface CustomMutationInterface<Response, Error, Variable, Context> {
   url: string;
   method: MethodType;
-  useErrorBoundary?: boolean;
-  onSuccess?: (data: ResData, variable: VarType) => void;
-  onError?: (data: APIErrorType<ErrorType>, variable: VarType) => void;
+  options?: CustomUseQueryOptions<Response, Error, Variable, Context>;
 }
 
 const fetcher =
-  <VarType>(url: string, method: MethodType) =>
-  async (data: VarType) => {
+  <Variable>(url: string, method: MethodType) =>
+  async (data: Variable) => {
     const response = await axiosInstance({ url, method, data });
     return response.data;
   };
 
-const useCustomMutation = <ResData, ErrorType, VarType>({
+const useCustomMutation = <Response, Error, Variable, Context = unknown>({
   url,
   method,
-  onError,
-  onSuccess,
-  ...mutationProps
-}: UseCustomMutation<ResData, ErrorType, VarType>) =>
-  useMutation<ResData, APIErrorType<ErrorType>, VarType>(fetcher<VarType>(url, method), {
-    onError,
-    onSuccess,
-    ...mutationProps,
+  options,
+}: CustomMutationInterface<Response, Error, Variable, Context>) =>
+  useMutation<Response, Error, Variable, Context>(fetcher<Variable>(url, method), {
+    ...options,
   });
 
 export default useCustomMutation;

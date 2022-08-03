@@ -20,10 +20,12 @@ const useCreateUser = ({ userName, email }: CreateUserProps) => {
   >({
     url: createUserUrl,
     method: 'POST',
-    onSuccess: async (response) => {
-      const { pocketToken: token } = response;
-      setUserTokenToLocalStorage(token);
-      navigate(generateTokenPath({ token }));
+    options: {
+      onSuccess: async (response) => {
+        const { pocketToken: token } = response;
+        setUserTokenToLocalStorage(token);
+        navigate(generateTokenPath({ token }));
+      },
     },
   });
 

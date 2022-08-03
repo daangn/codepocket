@@ -27,7 +27,9 @@ const PrivateRoute: React.FC<PrivateRoutProps> = (props) => {
   >({
     url: verifyUserUrl,
     method: 'POST',
-    onError: navigateAuthPage,
+    options: {
+      onError: navigateAuthPage,
+    },
   });
 
   const authenticateUser = useCallback(async () => {

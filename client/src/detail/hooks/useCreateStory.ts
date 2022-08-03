@@ -21,11 +21,13 @@ const useCreateStory = ({ codeAuthor, codeName, selectStory }: UseCreateStory) =
   >({
     url: createStoryUrl,
     method: 'POST',
-    onSuccess: async (_, vars) => {
-      await queryClient.invalidateQueries([getStoryNamesUrl]);
-      const storyAuth = getUserNameFormLocalStorage();
-      const storyName = `${storyAuth}-${vars.storyName}` as StoryFullName;
-      selectStory(`${codeAuthor}/${codeName}_${storyName}`);
+    options: {
+      onSuccess: async (_, vars) => {
+        await queryClient.invalidateQueries([getStoryNamesUrl]);
+        const storyAuth = getUserNameFormLocalStorage();
+        const storyName = `${storyAuth}-${vars.storyName}` as StoryFullName;
+        selectStory(`${codeAuthor}/${codeName}_${storyName}`);
+      },
     },
   });
 
