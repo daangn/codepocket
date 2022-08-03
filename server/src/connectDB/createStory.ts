@@ -1,16 +1,12 @@
-import { CreateStoryRequest, CreateStoryResponse } from '@pocket/schema';
+import { createStoryRequestValidate, CreateStoryResponse } from '@pocket/schema';
 import { to } from 'await-to-js';
-import { FastifyInstance, FastifyRequest } from 'fastify';
+import { FastifyInstance } from 'fastify';
 
 import { CustomResponse } from '../utils/responseHandler';
 
-export default async (server: FastifyInstance, request: FastifyRequest) => {
-  const {
-    body: { pocketToken, codeAuthor, codeName, storyName, codes },
-  } = request as CreateStoryRequest;
-
-  if (!pocketToken || !codeAuthor || !codeName || !storyName || !codes)
-    throw new CustomResponse({ customStatus: 4001 });
+export default async <T>(server: FastifyInstance, request: T) => {
+  if (!createStoryRequestValidate(request)) throw new CustomResponse({ customStatus: 4001 });
+  const { pocketToken, codeAuthor, codeName, storyName, codes } = request.body;
 
   const [findAuthorError, storyAuthor] = await to(
     (async () => await server.store.User.findOne({ token: pocketToken }))(),

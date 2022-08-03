@@ -1,13 +1,12 @@
-import { GetCodesRequest, GetCodesResponse } from '@pocket/schema';
+import { getCodesRequestValidate, GetCodesResponse } from '@pocket/schema';
 import to from 'await-to-js';
-import { FastifyInstance, FastifyRequest } from 'fastify';
+import { FastifyInstance } from 'fastify';
 
 import { CustomResponse } from '../utils/responseHandler';
 
-export default async (server: FastifyInstance, request: FastifyRequest) => {
-  const {
-    query: { limit = 5, offset = 0, search },
-  } = request as GetCodesRequest;
+export default async <T>(server: FastifyInstance, request: T) => {
+  if (!getCodesRequestValidate(request)) throw new CustomResponse({ customStatus: 4000 });
+  const { limit = 5, offset = 0, search } = request.query;
 
   const searchRegex = new RegExp(search, 'gi');
 
