@@ -4,9 +4,8 @@
     "types": ["node", "jest"],
     "baseUrl": ".",
     "outDir": "dist",
-    "skipLibCheck": true,
-    "resolveJsonModule": true,
+    "skipLibCheck": true
   },
-  "include": ["./index.ts"],
+  "include": ["./index.ts", "./types/**/*"],
   "exclude": ["**.test.ts"]
 }
