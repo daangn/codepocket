@@ -2,11 +2,9 @@ import { QueryFunctionContext, QueryKey, useQuery, UseQueryOptions } from '@tans
 
 import { axiosInstance } from '../lib/axios';
 
-type CustomUseQueryOptions<Response> = UseQueryOptions<Response, Error, Response, QueryKey>;
-
 type QueryOptions<Response> = Omit<
-  CustomUseQueryOptions<Response>,
-  'queryKey' | 'queryFn' | 'initialData'
+  UseQueryOptions<Response, Error, Response>,
+  'queryKey' | 'initialData'
 >;
 
 interface CustomQueryInterface<Response> {
