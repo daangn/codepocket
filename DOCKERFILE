@@ -1,11 +1,20 @@
-FROM node:16-alpine
+FROM ubuntu:18.04
 
-ENV NODE_ENV=development
+RUN apt-get -qq update
+RUN apt-get -qq upgrade --yes
+RUN apt-get -qq install curl --yes
+RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -
+RUN apt-get -qq install nodejs --yes
+RUN apt-get -qq install git --yes
+RUN npm i -g yarn
+
 WORKDIR "/app"
+
+RUN yarn global add typescript
 
 COPY . .
 
-RUN yarn install
+RUN yarn
 RUN yarn build
 
 CMD ["yarn", "dev"]

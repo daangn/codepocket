@@ -6,7 +6,7 @@
     "url": "https://github.com/daangn/codepocket.git"
   },
   "scripts": {
-    "dev": "NODE_ENV=development nodemon --exec ts-node --files ./src/index.ts"
+    "dev": "NODE_ENV=development ts-node --files ./src/index.ts"
   },
   "dependencies": {
     "@fastify/cors": "^8.0.0",
