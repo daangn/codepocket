@@ -12,7 +12,7 @@ type CustomUseMutationOptions<Response, Error, Variable, Context> = Omit<
 interface CustomMutationInterface<Response, Error, Variable, Context> {
   url: string;
   method: MethodType;
-  validator: (res: Response | undefined) => boolean;
+  validator: (res: Response | undefined) => res is Response;
   options?: CustomUseMutationOptions<Response, Error, Variable, Context>;
 }
 
