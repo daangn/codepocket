@@ -1,26 +1,21 @@
 import { getStoryNamesRequestValidate, GetStoryNamesResponse } from '@pocket/schema';
-import { to } from 'await-to-js';
-import { FastifyInstance } from 'fastify';
 
-import { CustomResponse } from '../utils/responseHandler';
+export interface GetStoryParam {
+  codeAuthor: string;
+  codeName: string;
+}
 
-export default async <T>(server: FastifyInstance, request: T) => {
-  if (!getStoryNamesRequestValidate(request)) throw new CustomResponse({ customStatus: 4001 });
+interface GetStoryNamesType<Response> {
+  validateErrorFunc: () => Response;
+  successResponseFunc: (body: GetStoryNamesResponse) => Response;
+  getStoryNames: ({ codeAuthor, codeName }: GetStoryParam) => Promise<string[]>;
+}
+
+export default async <T, Response>(request: T, modules: GetStoryNamesType<Response>) => {
+  if (!getStoryNamesRequestValidate(request)) throw modules.validateErrorFunc();
   const { codeAuthor, codeName } = request.query;
 
-  const [err, stories] = await to(
-    (async () => await server.store.Story.find({ codeAuthor, codeName }))(),
-  );
-  if (err) throw new CustomResponse({ customStatus: 5000 });
-  if (!stories) throw new CustomResponse({ customStatus: 4002 });
+  const storyNames = await modules.getStoryNames({ codeAuthor, codeName });
 
-  // FIXME: string반환에서 객체 반환으로 바꾸기
-  const storyNames = stories.map(
-    ({ codeAuthor, codeName, storyAuthor, storyName }) =>
-      `${codeAuthor}/${codeName}_${storyAuthor}-${storyName}`,
-  );
-  return new CustomResponse<Omit<GetStoryNamesResponse, 'message'>>({
-    customStatus: 2001,
-    body: { storyNames },
-  });
+  return modules.successResponseFunc({ storyNames, message: '' });
 };

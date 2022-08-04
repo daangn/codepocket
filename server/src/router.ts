@@ -1,10 +1,16 @@
-import { PullCodeResponse, PushCodeResponse, VerifyUserResponse } from '@pocket/schema';
+import {
+  GetStoryNamesResponse,
+  PullCodeResponse,
+  PushCodeResponse,
+  VerifyUserResponse,
+} from '@pocket/schema';
 import { FastifyInstance, FastifyPluginOptions } from 'fastify';
 import fp from 'fastify-plugin';
 
 import * as connectDB from './connectDB';
 import * as CodeModule from './dbModule/code';
 import * as SlackModule from './dbModule/slack';
+import * as StoryModule from './dbModule/story';
 import * as UserModule from './dbModule/user';
 import responseHandler, { CustomResponse } from './utils/responseHandler';
 
@@ -31,7 +37,16 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
   );
 
   server.get('/story/names', (req, reply) =>
-    responseHandler(() => connectDB.getStoryNames(server, req), reply),
+    responseHandler(
+      () =>
+        connectDB.getStoryNames(req, {
+          validateErrorFunc: () => new CustomResponse({ customStatus: 4001 }),
+          successResponseFunc: (body) =>
+            new CustomResponse<GetStoryNamesResponse>({ customStatus: 2001, body }),
+          getStoryNames: StoryModule.getStoryFullNames(server),
+        }),
+      reply,
+    ),
   );
 
   server.post('/story', (req, reply) =>
