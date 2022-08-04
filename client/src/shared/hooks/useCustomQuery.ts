@@ -2,14 +2,15 @@ import { QueryFunctionContext, QueryKey, useQuery, UseQueryOptions } from '@tans
 
 import { axiosInstance } from '../lib/axios';
 
-type QueryOptions<TResponse> = Omit<UseQueryOptions<TResponse, Error, TResponse, QueryKey>, ''> & {
+type QueryOptions<Response> = Omit<UseQueryOptions<Response, Error, Response, QueryKey>, ''> & {
   initialData?: () => undefined;
 };
 
-interface CustomQueryInterface<TResponse> {
+interface CustomQueryInterface<Response> {
   url: string;
   params?: { [param: string]: string };
-  options?: QueryOptions<TResponse>;
+  validator: (res: Response | undefined) => res is Response;
+  options?: QueryOptions<Response>;
 }
 
 const fetcher = async <T>({ queryKey }: QueryFunctionContext): Promise<T> => {
@@ -18,9 +19,9 @@ const fetcher = async <T>({ queryKey }: QueryFunctionContext): Promise<T> => {
   return data;
 };
 
-const useCustomQuery = <TResponse>({ url, params, options }: CustomQueryInterface<TResponse>) => {
-  const commonOptions: QueryOptions<TResponse> = { staleTime: 1000000, cacheTime: 1000000 };
-  return useQuery<TResponse, Error, TResponse, QueryKey>(
+const useCustomQuery = <Response>({ url, params, options }: CustomQueryInterface<Response>) => {
+  const commonOptions: QueryOptions<Response> = { staleTime: 1000000, cacheTime: 1000000 };
+  return useQuery<Response, Error, Response, QueryKey>(
     [url!, params],
     ({ queryKey, meta }) => fetcher({ queryKey, meta }),
     {

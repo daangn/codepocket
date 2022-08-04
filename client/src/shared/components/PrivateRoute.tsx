@@ -1,4 +1,4 @@
-import { VerifyUserRequest, VerifyUserResponse } from '@pocket/schema';
+import { VerifyUserRequest, VerifyUserResponse, verifyUserResponseValidate } from '@pocket/schema';
 import useCustomMutation from '@shared/hooks/useCustomMutation';
 import { ReactElement, useCallback, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -26,6 +26,7 @@ const PrivateRoute: React.FC<PrivateRoutProps> = (props) => {
     VerifyUserBodyType
   >({
     url: verifyUserUrl,
+    validator: verifyUserResponseValidate,
     method: 'POST',
     options: {
       onError: navigateAuthPage,

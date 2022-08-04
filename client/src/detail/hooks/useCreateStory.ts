@@ -1,4 +1,8 @@
-import { CreateStoryRequest, CreateStoryResponse } from '@pocket/schema';
+import {
+  CreateStoryRequest,
+  CreateStoryResponse,
+  createStoryResponseValidate,
+} from '@pocket/schema';
 import useCustomMutation from '@shared/hooks/useCustomMutation';
 import { localStorage } from '@shared/utils/localStorage';
 import { useQueryClient } from '@tanstack/react-query';
@@ -21,6 +25,7 @@ const useCreateStory = ({ codeAuthor, codeName, selectStory }: UseCreateStory) =
   >({
     url: createStoryUrl,
     method: 'POST',
+    validator: createStoryResponseValidate,
     options: {
       onSuccess: async (_, vars) => {
         await queryClient.invalidateQueries([getStoryNamesUrl]);

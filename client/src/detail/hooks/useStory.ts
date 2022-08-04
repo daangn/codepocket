@@ -1,4 +1,4 @@
-import { GetStoryCodeResponse } from '@pocket/schema';
+import { GetStoryCodeResponse, getStoryCodeResponseValidate } from '@pocket/schema';
 import useCustomQuery from '@shared/hooks/useCustomQuery';
 import { useCallback, useEffect, useState } from 'react';
 
@@ -15,6 +15,7 @@ const useStory = ({ codeAuthor, codeName }: UseStory) => {
   const [selectedStoryName, setSelectedStoryName] = useState<StoryFullName>();
   const { refetch: getStory } = useCustomQuery<GetStoryCodeResponse>({
     url: getStoryCodeUrl,
+    validator: getStoryCodeResponseValidate,
     params: {
       codeAuthor: `${codeAuthor}`,
       codeName: `${codeName}`,

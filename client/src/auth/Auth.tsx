@@ -20,25 +20,21 @@ const AuthPage: React.FC = () => {
   const { isAuthenticated, user, logout, loginWithPopup, isValidEmailDomain } = useCustomAuth0({
     domain: EMAIL_DOMAIN_NAME,
   });
-  const { createUser } = useCreateUser({
-    userName: user?.nickname,
-    email: user?.email,
-  });
+  const { createUser } = useCreateUser();
 
   useEffect(() => {
     verifyUser();
   }, [verifyUser]);
 
   useEffect(() => {
-    if (!isAuthenticated) return;
-
+    if (!isAuthenticated || !user || !user.nickname || !user.email) return;
     if (!isValidEmailDomain()) {
-      alert('당근 유저가 아니에요!');
+      window.alert('당근 유저가 아니에요!');
       logout();
-    } else {
-      createUser();
+      return;
     }
-  }, [isValidEmailDomain, isAuthenticated, logout, navigate, createUser]);
+    createUser({ userName: user.nickname, email: user.email });
+  }, [user, isValidEmailDomain, isAuthenticated, logout, navigate, createUser]);
 
   return (
     <div className={style.wrapper}>
