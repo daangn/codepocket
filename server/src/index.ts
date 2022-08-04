@@ -21,20 +21,16 @@ server.register(cors, () => {
 });
 server.register(route);
 server.register(async () => {
-  console.log('point---1', env.MONGO_DB_URI, env.MONGO_DB_NAME);
   const [err, connection] = await to(
     mongoose.connect(env.MONGO_DB_URI || '', { dbName: env.MONGO_DB_NAME }),
   );
-  console.log('point---2');
   if (err) throw err;
-  console.log('point---3');
   server.decorate('store', {
     User: connection.model('User', UserSchema),
     Code: connection.model('Code', CodeSchema),
     Story: connection.model('Story', StorySchema),
     db: connection,
   });
-  console.log('point---4');
 });
 
 const start = async () => {
