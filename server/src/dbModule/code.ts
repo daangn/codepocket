@@ -1,6 +1,7 @@
 import { to } from 'await-to-js';
 import { FastifyInstance } from 'fastify';
 
+import { IsExistCodeParams, PushCodeParams } from '../connectDB/pushCode';
 import { CustomResponse } from '../utils/responseHandler';
 
 export const findCode =
@@ -18,21 +19,22 @@ export const findCode =
   };
 
 export const isExistCode =
-  (server: FastifyInstance) => async (codeName: string, codeAuthor: string) => {
+  (server: FastifyInstance) =>
+  async ({ codeName, codeAuthor }: IsExistCodeParams) => {
     const codeInDB = await findCode(server)(codeName, codeAuthor);
     return !!codeInDB?.code || codeInDB?.code === '';
   };
 
 export const pushCode =
   (server: FastifyInstance) =>
-  async (
-    isAlreadyPushedCode: boolean,
-    codeAuthor: string,
-    codeName: string,
-    code: string,
-    uploadedChatChannel?: string,
-    uploadedChatTimeStamp?: any,
-  ) => {
+  async ({
+    code,
+    codeName,
+    codeAuthor,
+    isAlreadyPushedCode,
+    slackChatChannel,
+    slackChatTimeStamp,
+  }: PushCodeParams) => {
     const [pushCodeError] = await to(
       isAlreadyPushedCode
         ? (async () =>
@@ -43,8 +45,8 @@ export const pushCode =
               },
               {
                 code,
-                uploadedChatChannel,
-                uploadedChatTimeStamp,
+                uploadedChatChannel: slackChatChannel,
+                uploadedChatTimeStamp: slackChatTimeStamp,
                 updatedAt: new Date(),
               },
             ))()
@@ -53,8 +55,8 @@ export const pushCode =
               code,
               codeName,
               codeAuthor,
-              uploadedChatChannel,
-              uploadedChatTimeStamp,
+              uploadedChatChannel: slackChatChannel,
+              uploadedChatTimeStamp: slackChatTimeStamp,
               createdAt: new Date(),
               updatedAt: new Date(),
             }))(),

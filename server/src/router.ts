@@ -1,8 +1,12 @@
+import { PushCodeResponse } from '@pocket/schema';
 import { FastifyInstance, FastifyPluginOptions } from 'fastify';
 import fp from 'fastify-plugin';
 
 import * as connectDB from './connectDB';
-import responseHandler from './utils/responseHandler';
+import * as CodeModule from './dbModule/code';
+import * as SlackModule from './dbModule/slack';
+import * as UserModule from './dbModule/user';
+import responseHandler, { CustomResponse } from './utils/responseHandler';
 
 export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
   server.post('/user', (req, reply) =>
@@ -26,7 +30,18 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
   );
 
   server.post('/code', (req, reply) =>
-    responseHandler(() => connectDB.pushCode(server, req), reply),
+    responseHandler(
+      () =>
+        connectDB.pushCode(req, {
+          ValidateError: new CustomResponse({ customStatus: 4000 }),
+          SuccessResponse: new CustomResponse<PushCodeResponse>({ customStatus: 2006 }),
+          slackIsAvailable: SlackModule.isSlackAvailable,
+          getAuthorName: UserModule.getAuthorName(server),
+          isExistCode: CodeModule.isExistCode(server),
+          pushCode: CodeModule.pushCode(server),
+        }),
+      reply,
+    ),
   );
 
   server.get('/code', (req, reply) =>

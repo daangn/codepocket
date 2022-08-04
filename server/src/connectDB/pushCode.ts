@@ -1,20 +1,41 @@
-import { pushCodeRequestValidate, PushCodeResponse } from '@pocket/schema';
-import { FastifyInstance } from 'fastify';
+import { pushCodeRequestValidate } from '@pocket/schema';
 
-import * as CodeModule from '../dbModule/code';
 import * as SlackModule from '../dbModule/slack';
-import * as UserModule from '../dbModule/user';
-import { CustomResponse } from '../utils/responseHandler';
 
-export default async <T>(server: FastifyInstance, request: T) => {
-  if (!pushCodeRequestValidate(request)) throw new CustomResponse({ customStatus: 4000 });
+export interface PushCodeParams {
+  code: string;
+  codeName: string;
+  codeAuthor: string;
+  isAlreadyPushedCode: boolean;
+  slackChatChannel?: string;
+  slackChatTimeStamp?: any;
+}
+
+export interface GetAuthorNameParams {
+  pocketToken: string;
+}
+
+export interface IsExistCodeParams {
+  codeName: string;
+  codeAuthor: string;
+}
+
+interface PushCodeType<Response> {
+  ValidateError: Response;
+  SuccessResponse: Response;
+  slackIsAvailable: boolean;
+  getAuthorName: ({ pocketToken }: GetAuthorNameParams) => Promise<string>;
+  isExistCode: ({ codeName, codeAuthor }: IsExistCodeParams) => Promise<boolean>;
+  pushCode: (obj: PushCodeParams) => Promise<void>;
+}
+
+export default async <T, Response>(request: T, modules: PushCodeType<Response>) => {
+  if (!pushCodeRequestValidate(request)) throw modules.ValidateError;
   const { pocketToken, codeName, code } = request.body;
 
-  const author = await UserModule.findAuthor(server)(pocketToken);
+  const codeAuthor = await modules.getAuthorName({ pocketToken });
 
-  const { userName: codeAuthor } = author;
-
-  const isAlreadyPushedCode = await CodeModule.isExistCode(server)(codeName, codeAuthor);
+  const isAlreadyPushedCode = await modules.isExistCode({ codeName, codeAuthor });
 
   const slackInfo = SlackModule.isSlackAvailable
     ? await SlackModule.uploadCodeToSlack(code, codeName, codeAuthor, isAlreadyPushedCode)
@@ -24,16 +45,16 @@ export default async <T>(server: FastifyInstance, request: T) => {
         uploadedChatURL: undefined,
       };
 
-  await CodeModule.pushCode(server)(
-    isAlreadyPushedCode,
-    codeAuthor,
-    codeName,
+  await modules.pushCode({
     code,
-    slackInfo.uploadedChatChannel,
-    slackInfo.uploadedChatTimeStamp,
-  );
+    codeName,
+    codeAuthor,
+    isAlreadyPushedCode,
+    slackChatChannel: slackInfo.uploadedChatChannel,
+    slackChatTimeStamp: slackInfo.uploadedChatTimeStamp,
+  });
 
   await SlackModule.uploadCodeToSlack(code, codeName, codeAuthor, isAlreadyPushedCode);
 
-  return new CustomResponse<PushCodeResponse>({ customStatus: isAlreadyPushedCode ? 2006 : 2005 });
+  return modules.SuccessResponse;
 };
