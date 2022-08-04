@@ -1,4 +1,4 @@
-import { pushCodeRequestValidate } from '@pocket/schema';
+import { pushCodeRequestValidate, PushCodeResponse } from '@pocket/schema';
 
 import * as SlackModule from '../dbModule/slack';
 
@@ -21,8 +21,8 @@ export interface IsExistCodeParams {
 }
 
 interface PushCodeType<Response> {
-  ValidateError: Response;
-  SuccessResponse: Response;
+  validateErrorFunc: () => Response;
+  successResponseFunc: (body: PushCodeResponse) => Response;
   slackIsAvailable: boolean;
   getAuthorName: ({ pocketToken }: GetAuthorNameParams) => Promise<string>;
   isExistCode: ({ codeName, codeAuthor }: IsExistCodeParams) => Promise<boolean>;
@@ -30,7 +30,7 @@ interface PushCodeType<Response> {
 }
 
 export default async <T, Response>(request: T, modules: PushCodeType<Response>) => {
-  if (!pushCodeRequestValidate(request)) throw modules.ValidateError;
+  if (!pushCodeRequestValidate(request)) throw modules.validateErrorFunc();
   const { pocketToken, codeName, code } = request.body;
 
   const codeAuthor = await modules.getAuthorName({ pocketToken });
@@ -56,5 +56,5 @@ export default async <T, Response>(request: T, modules: PushCodeType<Response>) 
 
   await SlackModule.uploadCodeToSlack(code, codeName, codeAuthor, isAlreadyPushedCode);
 
-  return modules.SuccessResponse;
+  return modules.successResponseFunc({ message: '' });
 };

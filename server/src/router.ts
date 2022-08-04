@@ -79,8 +79,8 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
     responseHandler(
       () =>
         connectDB.pushCode(req, {
-          ValidateError: new CustomResponse({ customStatus: 4000 }),
-          SuccessResponse: new CustomResponse<PushCodeResponse>({ customStatus: 2006 }),
+          validateErrorFunc: () => new CustomResponse({ customStatus: 4000 }),
+          successResponseFunc: () => new CustomResponse<PushCodeResponse>({ customStatus: 2006 }),
           slackIsAvailable: SlackModule.isSlackAvailable,
           getAuthorName: UserModule.getAuthorName(server),
           isExistCode: CodeModule.isExistCode(server),
