@@ -6,21 +6,21 @@ images:
 
 services:
   app:
-    class: k1.small
+    class: k1.nano
     image: apiservice
     ports:
       - name: http
-        port: 8080
+        port: 8000
     healthcheck:
       type: http
       port: 8000
-      httpPath: /
+      httpPath: /healthz
 
 routes:
-  - name: all
+  - name: backend
     protocol: http
     host:
       - scope: internal
     backend:
-      - service: app
-        port: http
+      - port: http
+        service: app
