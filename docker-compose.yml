@@ -13,7 +13,7 @@ services:
     expose:
       - '27017'
 
-  wow:
+  app:
     build:
       dockerfile: DOCKERFILE
       context: ./

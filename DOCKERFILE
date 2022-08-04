@@ -8,7 +8,7 @@ RUN apt-get -qq install nodejs --yes
 RUN apt-get -qq install git --yes
 RUN npm i -g yarn
 
-WORKDIR "/app"
+WORKDIR /app
 
 RUN yarn global add typescript
 
