@@ -10,7 +10,7 @@ interface PostMessageToSlack {
   threadTs?: string;
 }
 
-export const postMessageToSlack = async ({
+export const postMessageToSlackAPI = async ({
   text,
   slackBotToken,
   channelId,
