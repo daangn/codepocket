@@ -7,7 +7,7 @@ import { env } from '../utils/env';
 import { CustomResponse } from '../utils/responseHandler';
 import { changeFirstToUpperCase } from '../utils/string';
 
-export const isSlackAvailable = env.SLACK_BOT_TOKEN && env.CODEPOCKET_CHANNEL_ID;
+export const isSlackAvailable = !!(env.SLACK_BOT_TOKEN && env.CODEPOCKET_CHANNEL_ID) || false;
 
 export const postMessageToSlack = async (
   isAlreadyPushedCode: boolean,

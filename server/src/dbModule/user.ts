@@ -1,6 +1,7 @@
 import { to } from 'await-to-js';
 import { FastifyInstance } from 'fastify';
 
+import { GetAuthorNameParams } from '../connectDB/pushCode';
 import { CustomResponse } from '../utils/responseHandler';
 
 export const findAuthor = (server: FastifyInstance) => async (token: string) => {
@@ -12,3 +13,10 @@ export const findAuthor = (server: FastifyInstance) => async (token: string) => 
   if (!author) throw new CustomResponse({ customStatus: 4000 });
   return author;
 };
+
+export const getAuthorName =
+  (server: FastifyInstance) =>
+  async ({ pocketToken }: GetAuthorNameParams) => {
+    const author = await findAuthor(server)(pocketToken);
+    return author.userName;
+  };
