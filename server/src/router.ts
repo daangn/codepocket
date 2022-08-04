@@ -1,4 +1,5 @@
 import {
+  GetStoryCodeResponse,
   GetStoryNamesResponse,
   PullCodeResponse,
   PushCodeResponse,
@@ -33,7 +34,16 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
   );
 
   server.get('/story/code', (req, reply) =>
-    responseHandler(() => connectDB.getStoryCode(server, req), reply),
+    responseHandler(
+      () =>
+        connectDB.getStoryCode(req, {
+          validateErrorFunc: () => new CustomResponse({ customStatus: 4001 }),
+          successResponseFunc: (body) =>
+            new CustomResponse<GetStoryCodeResponse>({ customStatus: 2001, body }),
+          getStoryCode: StoryModule.getStoryCode(server),
+        }),
+      reply,
+    ),
   );
 
   server.get('/story/names', (req, reply) =>

@@ -1,23 +1,22 @@
 import { getStoryCodeRequestValidate, GetStoryCodeResponse } from '@pocket/schema';
-import { to } from 'await-to-js';
-import { FastifyInstance } from 'fastify';
 
-import { CustomResponse } from '../utils/responseHandler';
+export interface GetStoryCodeParam {
+  codeAuthor: string;
+  codeName: string;
+  storyAuthor: string;
+  storyName: string;
+}
 
-export default async <T>(server: FastifyInstance, request: T) => {
-  if (!getStoryCodeRequestValidate(request)) throw new CustomResponse({ customStatus: 4001 });
+interface GetStoryCode<Response> {
+  validateErrorFunc: () => Response;
+  successResponseFunc: (body: GetStoryCodeResponse) => Response;
+  getStoryCode: (param: GetStoryCodeParam) => Promise<{ [x: string]: string }>;
+}
+
+export default async <T, Response>(request: T, modules: GetStoryCode<Response>) => {
+  if (!getStoryCodeRequestValidate(request)) throw modules.validateErrorFunc();
   const { codeAuthor, codeName, storyAuthor, storyName } = request.query;
 
-  const [err, story] = await to(
-    (async () =>
-      await server.store.Story.findOne({ codeAuthor, codeName, storyAuthor, storyName }))(),
-  );
-  if (err) throw new CustomResponse({ customStatus: 5000 });
-  if (!story) throw new CustomResponse({ customStatus: 4002 });
-
-  const { codes } = story;
-  return new CustomResponse<Omit<GetStoryCodeResponse, 'message'>>({
-    customStatus: 2001,
-    body: { codes: JSON.parse(codes) },
-  });
+  const codes = await modules.getStoryCode({ codeAuthor, codeName, storyAuthor, storyName });
+  return modules.successResponseFunc({ codes, message: '' });
 };
