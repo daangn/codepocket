@@ -2,7 +2,7 @@ type: v1/appservice
 
 images:
   apiservice:
-    dockerfile: Dockerfile
+    dockerfile: DOCKERFILE
 
 services:
   app:
