@@ -1,4 +1,4 @@
-import { GetCodesResponse } from '@pocket/schema';
+import { GetCodesResponse, getCodesResponseValidate } from '@pocket/schema';
 import ussCustomQuery from '@shared/hooks/useCustomQuery';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
@@ -11,6 +11,7 @@ const useCodes = () => {
 
   const { data, refetch, isLoading } = ussCustomQuery<GetCodesResponse>({
     url: getCodesUrl,
+    validator: getCodesResponseValidate,
     params: {
       search: `${searchText}`,
       limit: `${5}`,

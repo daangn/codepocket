@@ -1,4 +1,4 @@
-import { GetStoryNamesResponse } from '@pocket/schema';
+import { GetStoryNamesResponse, getStoryNamesResponseValidate } from '@pocket/schema';
 import useCustomQuery from '@shared/hooks/useCustomQuery';
 
 import { getStoryNamesUrl } from '../api';
@@ -11,6 +11,7 @@ interface UseStoryNames {
 const useStoryNames = ({ codeAuthor, codeName }: UseStoryNames) =>
   useCustomQuery<GetStoryNamesResponse>({
     url: getStoryNamesUrl,
+    validator: getStoryNamesResponseValidate,
     params: { codeAuthor: `${codeAuthor}`, codeName: `${codeName}` },
     options: {
       suspense: true,

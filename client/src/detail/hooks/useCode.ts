@@ -1,4 +1,4 @@
-import { PullCodeResponse } from '@pocket/schema';
+import { PullCodeResponse, pullCodeResponseValidate } from '@pocket/schema';
 import useCustomQuery from '@shared/hooks/useCustomQuery';
 
 import { getCodeUrl } from '../api';
@@ -11,6 +11,7 @@ interface UseCode {
 const useCode = ({ codeAuthor, codeName }: UseCode) =>
   useCustomQuery<PullCodeResponse>({
     url: getCodeUrl,
+    validator: pullCodeResponseValidate,
     params: { codeAuthor: `${codeAuthor}`, codeName: `${codeName}` },
     options: {
       suspense: true,
