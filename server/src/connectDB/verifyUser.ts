@@ -1,17 +1,20 @@
 import { verifyUserRequestValidate, VerifyUserResponse } from '@pocket/schema';
-import { FastifyInstance } from 'fastify';
 
-import { CustomResponse } from '../utils/responseHandler';
+export interface GetUserNameParams {
+  pocketToken: string;
+}
 
-export default async <T>(server: FastifyInstance, request: T) => {
-  if (!verifyUserRequestValidate(request)) throw new CustomResponse({ customStatus: 4000 });
+interface VerifyUserType<Response> {
+  validateErrorFunc: () => Response;
+  successResponseFunc: (body: VerifyUserResponse) => Response;
+  getUserName: ({ pocketToken }: GetUserNameParams) => Promise<string>;
+}
+
+export default async <T, Response>(request: T, modules: VerifyUserType<Response>) => {
+  if (!verifyUserRequestValidate(request)) throw modules.validateErrorFunc();
   const { pocketToken } = request.body;
 
-  const author = await server.store.User.findOne({ token: pocketToken });
-  if (!author) throw new CustomResponse({ customStatus: 4000 });
+  const userName = await modules.getUserName({ pocketToken });
 
-  return new CustomResponse<VerifyUserResponse>({
-    customStatus: 2000,
-    body: { validUser: true, userName: author.userName },
-  });
+  return modules.successResponseFunc({ validUser: true, userName, message: '' });
 };

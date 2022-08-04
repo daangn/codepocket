@@ -46,9 +46,9 @@ export default async <T>(fn: () => Promise<CustomResponse<T>>, reply: FastifyRep
   if (error) {
     const { customStatus, body } = error as CustomResponse<T>;
     const { message, status } = CustomResponseStatuses[customStatus];
-    return reply.code(status).send({ message, ...body });
+    return reply.code(status).send({ ...body, message });
   }
   const { customStatus, body } = response;
   const { message, status } = CustomResponseStatuses[customStatus];
-  return reply.code(status).send({ message, ...body });
+  return reply.code(status).send({ ...body, message });
 };

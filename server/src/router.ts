@@ -1,4 +1,4 @@
-import { PushCodeResponse } from '@pocket/schema';
+import { PushCodeResponse, VerifyUserResponse } from '@pocket/schema';
 import { FastifyInstance, FastifyPluginOptions } from 'fastify';
 import fp from 'fastify-plugin';
 
@@ -14,7 +14,16 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
   );
 
   server.post('/user/auth', (req, reply) =>
-    responseHandler(() => connectDB.verifyUser(server, req), reply),
+    responseHandler(
+      () =>
+        connectDB.verifyUser(req, {
+          validateErrorFunc: () => new CustomResponse({ customStatus: 4000 }),
+          successResponseFunc: (body) =>
+            new CustomResponse<VerifyUserResponse>({ customStatus: 2000, body }),
+          getUserName: UserModule.getAuthorName(server),
+        }),
+      reply,
+    ),
   );
 
   server.get('/story/code', (req, reply) =>
