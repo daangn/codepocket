@@ -34,7 +34,7 @@ server.register(async () => {
 });
 
 const start = async () => {
-  const [err] = await to(server.listen({ port: PORT }));
+  const [err] = await to(server.listen({ port: PORT, host: '0.0.0.0' }));
   if (err) {
     server.log.error(err);
     process.exit(1);
