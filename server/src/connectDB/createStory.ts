@@ -1,43 +1,40 @@
 import { createStoryRequestValidate, CreateStoryResponse } from '@pocket/schema';
-import { to } from 'await-to-js';
-import { FastifyInstance } from 'fastify';
 
-import { CustomResponse } from '../utils/responseHandler';
+export interface CreateStoryParams {
+  codeName: string;
+  codeAuthor: string;
+  storyName: string;
+  storyAuthor: string;
+  codes: { [x: string]: string };
+}
 
-export default async <T>(server: FastifyInstance, request: T) => {
-  if (!createStoryRequestValidate(request)) throw new CustomResponse({ customStatus: 4001 });
+export interface IsStoryExistParams {
+  codeName: string;
+  codeAuthor: string;
+  storyName: string;
+  storyAuthor: string;
+}
+
+export interface GetStoryNameParams {
+  pocketToken: string;
+}
+
+interface CreateStoryType<Response> {
+  validateErrorFunc: () => Response;
+  successResponseFunc: (body: CreateStoryResponse) => Response;
+  isStoryExist: (param: IsStoryExistParams) => Promise<boolean>;
+  getUserName: (params: GetStoryNameParams) => Promise<string>;
+  createStory: (params: CreateStoryParams) => Promise<void>;
+}
+
+export default async <T, Response>(request: T, modules: CreateStoryType<Response>) => {
+  if (!createStoryRequestValidate(request)) throw modules.validateErrorFunc();
   const { pocketToken, codeAuthor, codeName, storyName, codes } = request.body;
 
-  const [findAuthorError, storyAuthor] = await to(
-    (async () => await server.store.User.findOne({ token: pocketToken }))(),
-  );
-  if (findAuthorError) throw new CustomResponse({ customStatus: 5000 });
-  if (!storyAuthor) throw new CustomResponse({ customStatus: 4000 });
+  const storyAuthor = await modules.getUserName({ pocketToken });
 
-  const [findStoryError, existStory] = await to(
-    (async () =>
-      await server.store.Story.findOne({
-        codeName,
-        codeAuthor,
-        storyName,
-        storyAuthor: storyAuthor.userName,
-      }))(),
-  );
-  if (findStoryError) throw new CustomResponse({ customStatus: 5000 });
-  if (existStory) throw new CustomResponse({ customStatus: 4004 });
+  await modules.isStoryExist({ codeAuthor, codeName, storyAuthor, storyName });
+  await modules.createStory({ codeAuthor, codeName, storyAuthor, storyName, codes });
 
-  const [createError] = await to(
-    (async () =>
-      await server.store.Story.create({
-        codeName,
-        codeAuthor,
-        storyName,
-        storyAuthor: storyAuthor.userName,
-        codes: JSON.stringify(codes),
-      }))(),
-  );
-
-  if (createError) throw new CustomResponse({ customStatus: 5000 });
-
-  return new CustomResponse<CreateStoryResponse>({ customStatus: 2001 });
+  return modules.successResponseFunc({ message: '' });
 };

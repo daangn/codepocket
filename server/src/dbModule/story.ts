@@ -1,6 +1,7 @@
 import { to } from 'await-to-js';
 import { FastifyInstance } from 'fastify';
 
+import { CreateStoryParams } from '../connectDB/createStory';
 import { GetStoryCodeParam } from '../connectDB/getStoryCode';
 import { GetStoryParam } from '../connectDB/getStoryNames';
 import { CustomResponse } from '../utils/responseHandler';
@@ -30,6 +31,13 @@ export const getStory =
     return story;
   };
 
+export const existStory =
+  (server: FastifyInstance) =>
+  async ({ codeAuthor, codeName, storyAuthor, storyName }: GetStoryCodeParam) => {
+    const story = await getStory(server)({ codeAuthor, codeName, storyAuthor, storyName });
+    return !!story;
+  };
+
 export const getStoryFullNames =
   (server: FastifyInstance) =>
   async ({ codeAuthor, codeName }: GetStoryParam) => {
@@ -48,4 +56,21 @@ export const getStoryCode =
   async ({ codeAuthor, codeName, storyAuthor, storyName }: GetStoryCodeParam) => {
     const story = await getStory(server)({ codeAuthor, codeName, storyAuthor, storyName });
     return JSON.parse(story.codes) as { [x: string]: string };
+  };
+
+export const createStory =
+  (server: FastifyInstance) =>
+  async ({ codeAuthor, codeName, storyAuthor, storyName, codes }: CreateStoryParams) => {
+    const [createError] = await to(
+      (async () =>
+        await server.store.Story.create({
+          codeName,
+          codeAuthor,
+          storyName,
+          storyAuthor,
+          codes: JSON.stringify(codes),
+        }))(),
+    );
+
+    if (createError) throw new CustomResponse({ customStatus: 5000 });
   };

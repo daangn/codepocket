@@ -1,4 +1,5 @@
 import {
+  CreateStoryResponse,
   GetStoryCodeResponse,
   GetStoryNamesResponse,
   PullCodeResponse,
@@ -60,7 +61,18 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
   );
 
   server.post('/story', (req, reply) =>
-    responseHandler(() => connectDB.createStory(server, req), reply),
+    responseHandler(
+      () =>
+        connectDB.createStory(req, {
+          validateErrorFunc: () => new CustomResponse({ customStatus: 4001 }),
+          successResponseFunc: () =>
+            new CustomResponse<CreateStoryResponse>({ customStatus: 2001 }),
+          isStoryExist: StoryModule.existStory(server),
+          getUserName: UserModule.getAuthorName(server),
+          createStory: StoryModule.createStory(server),
+        }),
+      reply,
+    ),
   );
 
   server.post('/code', (req, reply) =>
