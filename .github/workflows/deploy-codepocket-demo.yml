@@ -1,0 +1,39 @@
+on:
+  push:
+    branches:
+      - main
+
+name: codepocket demo 배포
+
+jobs:
+  deploy-codepocket-demo:
+    name: codepocket demo 배포
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+
+      - name: 의존성을 설치해요
+        if: steps.yarn-cache.outputs.cache-hit != 'true'
+        run: yarn install
+
+      - name: schema 프로젝트를 빌드해요
+        working-directory: ./schema
+        run: |
+          yarn build
+
+      - name: client 프로젝트를 빌드해요
+        working-directory: ./client
+        run: |
+          yarn build
+
+      - name: 서비스를 Cloudflare pages에 배포해요
+        uses: cloudflare/wrangler-action@2.0.0
+        with:
+          accountId: ${{ secrets.CF_ACCOUNT_ID }}
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          command: pages publish ./client/dist --project-name=codepocket-demo
