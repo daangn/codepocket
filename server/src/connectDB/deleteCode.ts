@@ -3,7 +3,7 @@ import { deleteCodeRequestValidate, DeleteCodeResponse } from '@pocket/schema';
 import to from 'await-to-js';
 import { FastifyInstance } from 'fastify';
 
-import { postMessageToSlack } from '../api/postMessageToSlack';
+import { postMessageToSlackAPI } from '../api/postMessageToSlack';
 import { env } from '../utils/env';
 import { CustomResponse } from '../utils/responseHandler';
 
@@ -35,7 +35,7 @@ export default async <T>(server: FastifyInstance, request: T) => {
   if (!deleteCodeResponse.deletedCount) throw new CustomResponse({ customStatus: 4006 });
 
   const [postMessageError] = await to(
-    postMessageToSlack({
+    postMessageToSlackAPI({
       slackBotToken: env.SLACK_BOT_TOKEN || '',
       channelId: existsCodeResponse._id?.uploadedChatChannel || '',
       threadTs: existsCodeResponse._id?.uploadedChatTimeStamp || '',
