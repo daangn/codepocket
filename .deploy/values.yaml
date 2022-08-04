@@ -2,21 +2,25 @@ type: v1/appservice
 
 images:
   apiservice:
-    dockerfile: server/Dockerfile
+    dockerfile: Dockerfile
 
 services:
   app:
-    image: app
     class: k1.small
+    image: apiservice
     ports:
       - name: http
         port: 8080
+    healthcheck:
+      type: http
+      port: 8000
+      httpPath: /
 
 routes:
-  - name: http
+  - name: all
     protocol: http
     host:
       - scope: internal
     backend:
-      - service: server
+      - service: app
         port: http
