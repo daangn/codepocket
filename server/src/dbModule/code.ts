@@ -1,6 +1,7 @@
 import { to } from 'await-to-js';
 import { FastifyInstance } from 'fastify';
 
+import { GetCodeParams } from '../connectDB/pullCode';
 import { IsExistCodeParams, PushCodeParams } from '../connectDB/pushCode';
 import { CustomResponse } from '../utils/responseHandler';
 
@@ -15,6 +16,8 @@ export const findCode =
     );
 
     if (codeFindOneError) throw new CustomResponse({ customStatus: 5000 });
+    if (!code) throw new CustomResponse({ customStatus: 4003 });
+
     return code;
   };
 
@@ -23,6 +26,13 @@ export const isExistCode =
   async ({ codeName, codeAuthor }: IsExistCodeParams) => {
     const codeInDB = await findCode(server)(codeName, codeAuthor);
     return !!codeInDB?.code || codeInDB?.code === '';
+  };
+
+export const getCodeCode =
+  (server: FastifyInstance) =>
+  async ({ codeAuthor, codeName }: GetCodeParams) => {
+    const code = await findCode(server)(codeName, codeAuthor);
+    return code.code;
   };
 
 export const pushCode =
