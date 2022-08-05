@@ -9,4 +9,4 @@ COPY . .
 RUN yarn install --immutable
 RUN yarn build
 
-CMD ["yarn", "dev"]
+CMD ["yarn", "workspace", "@contentweaver/web", "dev"]
