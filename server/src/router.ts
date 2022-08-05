@@ -1,5 +1,6 @@
 import {
   CreateStoryResponse,
+  CreateUserResponse,
   GetStoryCodeResponse,
   GetStoryNamesResponse,
   PullCodeResponse,
@@ -18,7 +19,17 @@ import responseHandler, { CustomResponse } from './utils/responseHandler';
 
 export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
   server.post('/user', (req, reply) =>
-    responseHandler(() => connectDB.createUser(server, req), reply),
+    responseHandler(
+      () =>
+        connectDB.createUser(req, {
+          validateErrorFunc: () => new CustomResponse({ customStatus: 4001 }),
+          successResponseFunc: (body) =>
+            new CustomResponse<CreateUserResponse>({ customStatus: 2007, body }),
+          checkExistUser: UserModule.checkExistUser(server),
+          createUser: UserModule.createUser(server),
+        }),
+      reply,
+    ),
   );
 
   server.post('/user/auth', (req, reply) =>
