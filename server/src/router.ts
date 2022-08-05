@@ -13,11 +13,10 @@ import {
 import { FastifyInstance, FastifyPluginOptions } from 'fastify';
 import fp from 'fastify-plugin';
 
-import * as connectDB from './core';
 import * as CodeModule from './dbModule/code';
-import * as SlackModule from './dbModule/slack';
 import * as StoryModule from './dbModule/story';
 import * as UserModule from './dbModule/user';
+import { env } from './utils/env';
 import responseHandler, { CustomResponse } from './utils/responseHandler';
 
 export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
@@ -92,10 +91,14 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
   server.post('/code', (req, reply) =>
     responseHandler(
       () =>
-        connectDB.pushCode(req, {
+        core.pushCode(req, {
           validateErrorFunc: () => new CustomResponse({ customStatus: 4000 }),
           successResponseFunc: () => new CustomResponse<PushCodeResponse>({ customStatus: 2006 }),
-          slackIsAvailable: SlackModule.isSlackAvailable,
+          slackConfig: {
+            SLACK_BOT_TOKEN: env.SLACK_BOT_TOKEN,
+            CHAPTER_FRONTED_CHANNEL_ID: env.CHAPTER_FRONTED_CHANNEL_ID,
+            CODEPOCKET_CHANNEL_ID: env.CODEPOCKET_CHANNEL_ID,
+          },
           getAuthorName: UserModule.getAuthorName(server),
           isExistCode: CodeModule.isExistCode(server),
           pushCode: CodeModule.pushCode(server),

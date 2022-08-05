@@ -5,9 +5,9 @@ import { postMessageToSlackAPI, uploadCodeToSlackAPI } from './api';
 import { changeFirstToUpperCase } from './utils';
 
 export interface SlackConfig {
-  SLACK_BOT_TOKEN: string;
-  CHAPTER_FRONTED_CHANNEL_ID: string;
-  CODEPOCKET_CHANNEL_ID: string;
+  SLACK_BOT_TOKEN?: string;
+  CHAPTER_FRONTED_CHANNEL_ID?: string;
+  CODEPOCKET_CHANNEL_ID?: string;
 }
 
 interface PoseMessageToSlack {
