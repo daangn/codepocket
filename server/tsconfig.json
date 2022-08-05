@@ -5,6 +5,7 @@
     "lib": ["es2021"],
     "module": "commonjs",
     "moduleResolution": "node",
+    "noImplicitAny": false,
     "typeRoots": ["types"],
     "resolveJsonModule": true,
     "allowJs": true,
