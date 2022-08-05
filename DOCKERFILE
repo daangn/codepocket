@@ -26,7 +26,7 @@ RUN apt-get -qq install git --yes
 
 WORKDIR /app
 
-COPY package.json yarn.lock .yarnrc.yml tsconfig.json  /app/
+COPY package.json yarn.lock .yarnrc.yml tsconfig.base.json  /app/
 
 COPY schema/ /app/schema/
 COPY server/ /app/server/
