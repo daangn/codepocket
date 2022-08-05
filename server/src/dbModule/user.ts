@@ -1,8 +1,7 @@
+import { CreateUserType, PushCodeType } from '@pocket/core-server';
 import { to } from 'await-to-js';
 import { FastifyInstance } from 'fastify';
 
-import { CheckExistUserParams, CreateUserParams } from '../core/createUser';
-import { GetAuthorNameParams } from '../core/pushCode';
 import { CustomResponse } from '../utils/responseHandler';
 
 export const findAuthor = (server: FastifyInstance) => async (token: string) => {
@@ -17,14 +16,14 @@ export const findAuthor = (server: FastifyInstance) => async (token: string) => 
 
 export const getAuthorName =
   (server: FastifyInstance) =>
-  async ({ pocketToken }: GetAuthorNameParams) => {
+  async ({ pocketToken }: PushCodeType.GetAuthorNameParams) => {
     const author = await findAuthor(server)(pocketToken);
     return author.userName;
   };
 
 export const checkExistUser =
   (server: FastifyInstance) =>
-  async ({ userName, email }: CheckExistUserParams) => {
+  async ({ userName, email }: CreateUserType.CheckExistUserParams) => {
     const [findAuthorError, author] = await to(
       (async () => await server.store.User.findOne({ userName, email }))(),
     );
@@ -35,7 +34,7 @@ export const checkExistUser =
 
 export const createUser =
   (server: FastifyInstance) =>
-  async ({ userName, email, pocketToken }: CreateUserParams) => {
+  async ({ userName, email, pocketToken }: CreateUserType.CreateUserParams) => {
     const [createUserError] = await to(
       (async () => await server.store.User.create({ userName, email, token: pocketToken }))(),
     );
