@@ -1,6 +1,7 @@
 import {
   CreateStoryResponse,
   CreateUserResponse,
+  GetCodeNamesResponse,
   GetStoryCodeResponse,
   GetStoryNamesResponse,
   PullCodeResponse,
@@ -115,7 +116,16 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
   );
 
   server.get('/code/list', (req, reply) =>
-    responseHandler(() => connectDB.getCodeNames(server, req), reply),
+    responseHandler(
+      () =>
+        connectDB.getCodeNames(req, {
+          validateErrorFunc: () => new CustomResponse({ customStatus: 4001 }),
+          successResponseFunc: (body) =>
+            new CustomResponse<GetCodeNamesResponse>({ customStatus: 2003, body }),
+          findCodeInfoUsingRegex: CodeModule.findCodeInfoUsingRegex(server),
+        }),
+      reply,
+    ),
   );
 
   server.post('/code/delete', (req, reply) =>

@@ -1,6 +1,7 @@
 import { to } from 'await-to-js';
 import { FastifyInstance } from 'fastify';
 
+import { FindCodeInfoUsingRegexParams } from '../connectDB/getCodeNames';
 import { GetCodeParams } from '../connectDB/pullCode';
 import { IsExistCodeParams, PushCodeParams } from '../connectDB/pushCode';
 import { CustomResponse } from '../utils/responseHandler';
@@ -19,6 +20,26 @@ export const findCode =
     if (!code) throw new CustomResponse({ customStatus: 4003 });
 
     return code;
+  };
+
+export const findCodeInfoUsingRegex =
+  (server: FastifyInstance) =>
+  async ({ codeAuthorRegex, codeNameRegex }: FindCodeInfoUsingRegexParams) => {
+    const [error, codes] = await to(
+      (async () =>
+        await server.store.Code.find({ codeName: codeNameRegex, codeAuthor: codeAuthorRegex }).sort(
+          {
+            updatedAt: 'desc',
+          },
+        ))(),
+    );
+
+    if (error) throw new CustomResponse({ customStatus: 5000 });
+
+    // TODO: reduce 사용해서 한 번으로 뽑아내기
+    const codeNames = codes.map(({ codeName }) => codeName); // eslint-disable-line no-shadow
+    const codeAuthors = codes.map(({ codeAuthor }) => codeAuthor); // eslint-disable-line no-shadow
+    return { codeNames, codeAuthors };
   };
 
 export const isExistCode =
