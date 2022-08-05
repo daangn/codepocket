@@ -26,9 +26,14 @@ RUN apt-get -qq install git --yes
 
 WORKDIR /app
 
-COPY . .
+COPY package.json yarn.lock .yarnrc.yml tsconfig.json  /app/
+
+COPY schema/ /app/schema/
+COPY server/ /app/server/
 
 RUN yarn install --immutable
-RUN yarn build
+RUN yarn workspace @pocket/schema build
+
+COPY . .
 
 CMD ["yarn", "workspace", "@pocket/server", "dev"]
