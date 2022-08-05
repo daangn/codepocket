@@ -1,3 +1,4 @@
+import * as core from '@pocket/core-server';
 import {
   CreateStoryResponse,
   CreateUserResponse,
@@ -23,7 +24,7 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
   server.post('/user', (req, reply) =>
     responseHandler(
       () =>
-        connectDB.createUser(req, {
+        core.createUser(req, {
           validateErrorFunc: () => new CustomResponse({ customStatus: 4001 }),
           successResponseFunc: (body) =>
             new CustomResponse<CreateUserResponse>({ customStatus: 2007, body }),
@@ -37,7 +38,7 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
   server.post('/user/auth', (req, reply) =>
     responseHandler(
       () =>
-        connectDB.verifyUser(req, {
+        core.verifyUser(req, {
           validateErrorFunc: () => new CustomResponse({ customStatus: 4001 }),
           successResponseFunc: (body) =>
             new CustomResponse<VerifyUserResponse>({ customStatus: 2000, body }),
@@ -50,7 +51,7 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
   server.get('/story/code', (req, reply) =>
     responseHandler(
       () =>
-        connectDB.getStoryCode(req, {
+        core.getStoryCode(req, {
           validateErrorFunc: () => new CustomResponse({ customStatus: 4001 }),
           successResponseFunc: (body) =>
             new CustomResponse<GetStoryCodeResponse>({ customStatus: 2001, body }),
@@ -63,7 +64,7 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
   server.get('/story/names', (req, reply) =>
     responseHandler(
       () =>
-        connectDB.getStoryNames(req, {
+        core.getStoryNames(req, {
           validateErrorFunc: () => new CustomResponse({ customStatus: 4001 }),
           successResponseFunc: (body) =>
             new CustomResponse<GetStoryNamesResponse>({ customStatus: 2001, body }),
@@ -76,7 +77,7 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
   server.post('/story', (req, reply) =>
     responseHandler(
       () =>
-        connectDB.createStory(req, {
+        core.createStory(req, {
           validateErrorFunc: () => new CustomResponse({ customStatus: 4001 }),
           successResponseFunc: () =>
             new CustomResponse<CreateStoryResponse>({ customStatus: 2001 }),
@@ -106,7 +107,7 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
   server.get('/code', (req, reply) =>
     responseHandler(
       () =>
-        connectDB.pullCode(req, {
+        core.pullCode(req, {
           validateErrorFunc: () => new CustomResponse({ customStatus: 4001 }),
           successResponseFunc: (body) =>
             new CustomResponse<PullCodeResponse>({ customStatus: 2004, body }),
@@ -119,7 +120,7 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
   server.get('/code/list', (req, reply) =>
     responseHandler(
       () =>
-        connectDB.getCodeNames(req, {
+        core.getCodeNames(req, {
           validateErrorFunc: () => new CustomResponse({ customStatus: 4001 }),
           successResponseFunc: (body) =>
             new CustomResponse<GetCodeNamesResponse>({ customStatus: 2003, body }),
@@ -132,7 +133,7 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
   server.post('/code/delete', (req, reply) =>
     responseHandler(
       () =>
-        connectDB.deleteCode(req, {
+        core.deleteCode(req, {
           validateErrorFunc: () => new CustomResponse({ customStatus: 4001 }),
           existCodeErrorFunc: () => new CustomResponse({ customStatus: 4006 }),
           successResponseFunc: () => new CustomResponse<DeleteCodeResponse>({ customStatus: 2002 }),
@@ -147,7 +148,7 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
   server.get('/codes', (req, reply) =>
     responseHandler(
       () =>
-        connectDB.getCodes(req, {
+        core.getCodes(req, {
           validateErrorFunc: () => new CustomResponse({ customStatus: 4001 }),
           successResponseFunc: (body) => new CustomResponse({ customStatus: 2003, body }),
           searchCodes: CodeModule.searchCodes(server),
