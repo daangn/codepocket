@@ -31,9 +31,9 @@ COPY package.json yarn.lock .yarnrc.yml tsconfig.base.json  /app/
 COPY schema/ /app/schema/
 COPY server/ /app/server/
 
+COPY . .
+
 RUN yarn install --immutable
 RUN yarn workspace @pocket/schema build
-
-COPY . .
 
 CMD ["yarn", "workspace", "@pocket/server", "dev"]
