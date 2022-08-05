@@ -1,37 +1,25 @@
 import { getCodesRequestValidate, GetCodesResponse } from '@pocket/schema';
-import to from 'await-to-js';
-import { FastifyInstance } from 'fastify';
 
-import { CustomResponse } from '../utils/responseHandler';
+export interface SearchCodesParam {
+  searchRegex: RegExp;
+  limit: number;
+  offset: number;
+}
 
-export default async <T>(server: FastifyInstance, request: T) => {
-  if (!getCodesRequestValidate(request)) throw new CustomResponse({ customStatus: 4000 });
+interface GetCodes<Response> {
+  validateErrorFunc: () => Response;
+  successResponseFunc: (body: GetCodesResponse) => Response;
+  searchCodes: (params: SearchCodesParam) => Promise<GetCodesResponse['codes']>;
+}
+
+export default async <T, Response>(request: T, modules: GetCodes<Response>) => {
+  if (!getCodesRequestValidate(request)) throw modules.validateErrorFunc();
   const { limit = 5, offset = 0, search } = request.query;
 
   const searchRegex = new RegExp(search, 'gi');
+  const codes = await modules.searchCodes({ searchRegex, offset, limit });
 
-  const [error, getCodes] = await to(
-    (async () =>
-      await server.store.Code.find({ codeName: searchRegex })
-        .sort({ updatedAt: 'desc' })
-        .skip(limit * offset)
-        .limit(limit))(),
-  );
+  const isLast = codes.length < limit;
 
-  if (error) throw new CustomResponse({ customStatus: 5000 });
-
-  const codes = getCodes.map(({ code, codeName, codeAuthor, createdAt, updatedAt }) => ({
-    code,
-    codeName,
-    codeAuthor,
-    createdAt,
-    updatedAt,
-  }));
-
-  const isLast = getCodes.length < limit;
-
-  return new CustomResponse<GetCodesResponse>({
-    customStatus: 2003,
-    body: { codes, isLast },
-  });
+  return modules.successResponseFunc({ message: '', codes, isLast });
 };

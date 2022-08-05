@@ -145,6 +145,14 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
   );
 
   server.get('/codes', (req, reply) =>
-    responseHandler(() => connectDB.getCodes(server, req), reply),
+    responseHandler(
+      () =>
+        connectDB.getCodes(req, {
+          validateErrorFunc: () => new CustomResponse({ customStatus: 4001 }),
+          successResponseFunc: (body) => new CustomResponse({ customStatus: 2003, body }),
+          searchCodes: CodeModule.searchCodes(server),
+        }),
+      reply,
+    ),
   );
 });
