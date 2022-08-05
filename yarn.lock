@@ -4224,6 +4224,8 @@ __metadata:
 "@pocket/core-server@workspace:core/server":
   version: 0.0.0-use.local
   resolution: "@pocket/core-server@workspace:core/server"
+  dependencies:
+    "@pocket/schema": "workspace:^"
   languageName: unknown
   linkType: soft
 
