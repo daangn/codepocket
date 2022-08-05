@@ -12,7 +12,7 @@ import {
 import { FastifyInstance, FastifyPluginOptions } from 'fastify';
 import fp from 'fastify-plugin';
 
-import * as connectDB from './connectDB';
+import * as connectDB from './core';
 import * as CodeModule from './dbModule/code';
 import * as SlackModule from './dbModule/slack';
 import * as StoryModule from './dbModule/story';

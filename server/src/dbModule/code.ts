@@ -1,11 +1,11 @@
 import { to } from 'await-to-js';
 import { FastifyInstance } from 'fastify';
 
-import { DeleteCodeParams } from '../connectDB/deleteCode';
-import { FindCodeInfoUsingRegexParams } from '../connectDB/getCodeNames';
-import { SearchCodesParam } from '../connectDB/getCodes';
-import { GetCodeParams } from '../connectDB/pullCode';
-import { IsExistCodeParams, PushCodeParams } from '../connectDB/pushCode';
+import { DeleteCodeParams } from '../core/deleteCode';
+import { FindCodeInfoUsingRegexParams } from '../core/getCodeNames';
+import { SearchCodesParam } from '../core/getCodes';
+import { GetCodeParams } from '../core/pullCode';
+import { IsExistCodeParams, PushCodeParams } from '../core/pushCode';
 import { CustomResponse } from '../utils/responseHandler';
 
 export const findCode =

@@ -1,9 +1,9 @@
 import { to } from 'await-to-js';
 import { FastifyInstance } from 'fastify';
 
-import { CreateStoryParams } from '../connectDB/createStory';
-import { GetStoryCodeParam } from '../connectDB/getStoryCode';
-import { GetStoryParam } from '../connectDB/getStoryNames';
+import { CreateStoryParams } from '../core/createStory';
+import { GetStoryCodeParam } from '../core/getStoryCode';
+import { GetStoryParam } from '../core/getStoryNames';
 import { CustomResponse } from '../utils/responseHandler';
 
 export const getStories =
