@@ -33,7 +33,7 @@ COPY server/ /app/server/
 
 COPY . .
 
-RUN yarn install --immutable
+RUN yarn install --immutable --silent
 RUN yarn workspace @pocket/schema build
 
 CMD ["yarn", "workspace", "@pocket/server", "dev"]
