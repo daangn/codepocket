@@ -1,8 +1,8 @@
 import { to } from 'await-to-js';
 import { FastifyInstance } from 'fastify';
 
-import { CheckExistUserParams, CreateUserParams } from '../connectDB/createUser';
-import { GetAuthorNameParams } from '../connectDB/pushCode';
+import { CheckExistUserParams, CreateUserParams } from '../core/createUser';
+import { GetAuthorNameParams } from '../core/pushCode';
 import { CustomResponse } from '../utils/responseHandler';
 
 export const findAuthor = (server: FastifyInstance) => async (token: string) => {
