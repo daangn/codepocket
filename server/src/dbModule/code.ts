@@ -3,6 +3,7 @@ import { FastifyInstance } from 'fastify';
 
 import { DeleteCodeParams } from '../connectDB/deleteCode';
 import { FindCodeInfoUsingRegexParams } from '../connectDB/getCodeNames';
+import { SearchCodesParam } from '../connectDB/getCodes';
 import { GetCodeParams } from '../connectDB/pullCode';
 import { IsExistCodeParams, PushCodeParams } from '../connectDB/pushCode';
 import { CustomResponse } from '../utils/responseHandler';
@@ -106,4 +107,28 @@ export const deleteCode =
 
     if (deleteCodeError) throw new CustomResponse({ customStatus: 5000 });
     if (!deleteCodeResponse.deletedCount) throw new CustomResponse({ customStatus: 4006 });
+  };
+
+export const searchCodes =
+  (server: FastifyInstance) =>
+  async ({ searchRegex, limit, offset }: SearchCodesParam) => {
+    const [error, getCodes] = await to(
+      (async () =>
+        await server.store.Code.find({ codeName: searchRegex })
+          .sort({ updatedAt: 'desc' })
+          .skip(limit * offset)
+          .limit(limit))(),
+    );
+
+    if (error) throw new CustomResponse({ customStatus: 5000 });
+
+    const codes = getCodes.map(({ code, codeName, codeAuthor, createdAt, updatedAt }) => ({
+      code,
+      codeName,
+      codeAuthor,
+      createdAt,
+      updatedAt,
+    }));
+
+    return codes;
   };
