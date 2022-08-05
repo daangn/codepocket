@@ -32,6 +32,7 @@ COPY . /app/
 COPY schema/ schema/
 COPY server/ server/
 
+ENV CI=true
 RUN yarn install --immutable --silent
 RUN yarn workspace @pocket/schema build
 
