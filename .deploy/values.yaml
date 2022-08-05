@@ -8,7 +8,7 @@ images:
 
 services:
   app:
-    class: k1.medium
+    class: k1.small
     image: server
     ports:
       - name: http
