@@ -22,7 +22,7 @@ routes:
   - name: backend
     protocol: http
     host:
-      - scope: internal
+      - scope: public
     backend:
       - port: http
         service: app
