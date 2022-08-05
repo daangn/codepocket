@@ -4140,12 +4140,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pocker/core-server@workspace:core-server":
-  version: 0.0.0-use.local
-  resolution: "@pocker/core-server@workspace:core-server"
-  languageName: unknown
-  linkType: soft
-
 "@pocket/cli@workspace:cli":
   version: 0.0.0-use.local
   resolution: "@pocket/cli@workspace:cli"
@@ -4224,6 +4218,12 @@ __metadata:
     vite-plugin-checker: ^0.4.8
     vite-plugin-rewrite-all: ^0.1.2
     vitest: ^0.19.1
+  languageName: unknown
+  linkType: soft
+
+"@pocket/core-server@workspace:core/server":
+  version: 0.0.0-use.local
+  resolution: "@pocket/core-server@workspace:core/server"
   languageName: unknown
   linkType: soft
 

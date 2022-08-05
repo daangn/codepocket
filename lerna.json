@@ -4,7 +4,7 @@
     "server/*",
     "client/*",
     "schema/*",
-    "core-server/*"
+    "core/*"
   ],
   "publishConfig": {
     "access": "public"
