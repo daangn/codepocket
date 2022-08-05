@@ -1,6 +1,7 @@
 import {
   CreateStoryResponse,
   CreateUserResponse,
+  DeleteCodeResponse,
   GetCodeNamesResponse,
   GetStoryCodeResponse,
   GetStoryNamesResponse,
@@ -129,7 +130,18 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
   );
 
   server.post('/code/delete', (req, reply) =>
-    responseHandler(() => connectDB.deleteCode(server, req), reply),
+    responseHandler(
+      () =>
+        connectDB.deleteCode(req, {
+          validateErrorFunc: () => new CustomResponse({ customStatus: 4001 }),
+          existCodeErrorFunc: () => new CustomResponse({ customStatus: 4006 }),
+          successResponseFunc: () => new CustomResponse<DeleteCodeResponse>({ customStatus: 2002 }),
+          getUserName: UserModule.getAuthorName(server),
+          isExistCode: CodeModule.isExistCode(server),
+          deleteCode: CodeModule.deleteCode(server),
+        }),
+      reply,
+    ),
   );
 
   server.get('/codes', (req, reply) =>

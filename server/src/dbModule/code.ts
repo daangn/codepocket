@@ -1,6 +1,7 @@
 import { to } from 'await-to-js';
 import { FastifyInstance } from 'fastify';
 
+import { DeleteCodeParams } from '../connectDB/deleteCode';
 import { FindCodeInfoUsingRegexParams } from '../connectDB/getCodeNames';
 import { GetCodeParams } from '../connectDB/pullCode';
 import { IsExistCodeParams, PushCodeParams } from '../connectDB/pushCode';
@@ -94,4 +95,15 @@ export const pushCode =
     );
 
     if (pushCodeError) throw new CustomResponse({ customStatus: 5000 });
+  };
+
+export const deleteCode =
+  (server: FastifyInstance) =>
+  async ({ codeAuthor, codeName }: DeleteCodeParams) => {
+    const [deleteCodeError, deleteCodeResponse] = await to(
+      (async () => await server.store.Code.deleteOne({ codeAuthor, codeName }))(),
+    );
+
+    if (deleteCodeError) throw new CustomResponse({ customStatus: 5000 });
+    if (!deleteCodeResponse.deletedCount) throw new CustomResponse({ customStatus: 4006 });
   };
