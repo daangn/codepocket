@@ -14,7 +14,7 @@ RUN yarn global add typescript
 
 COPY . .
 
-RUN yarn
+RUN yarn install --immutable
 RUN yarn build
 
 CMD ["yarn", "dev"]
