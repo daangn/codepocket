@@ -8,7 +8,7 @@ images:
 
 services:
   app:
-    class: k1.nano
+    class: k1.micro
     image: server
     ports:
       - name: http
