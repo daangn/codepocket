@@ -1,13 +1,15 @@
 type: v1/appservice
 
 images:
-  apiservice:
-    buildCommand: kontrol.sh
+  server:
+    dockerfile: DOCKERFILE
+  db:
+    buildCommand: docker-compose up -d
 
 services:
   app:
     class: k1.nano
-    image: apiservice
+    image: server
     ports:
       - name: http
         port: 8000
