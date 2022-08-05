@@ -3,8 +3,8 @@ type: v1/appservice
 images:
   server:
     dockerfile: DOCKERFILE
-  db:
-    buildCommand: docker-compose up -d
+  mongo:
+    dockerfile: Dockerfile.mongo
 
 services:
   app:
