@@ -6,4 +6,5 @@ export { default as getCodes } from './getCodes';
 export { default as getStoryCode } from './getStoryCode';
 export { default as getStoryNames } from './getStoryNames';
 export { default as pullCode } from './pullCode';
+export { default as pushCode } from './pushCode';
 export { default as verifyUser } from './verifyUser';
