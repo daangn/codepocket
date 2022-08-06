@@ -1,22 +1,12 @@
 import { createUserRequestValidate, CreateUserResponse } from '@pocket/schema';
 import stringHash from 'string-hash';
-
-export interface CheckExistUserParams {
-  userName: string;
-  email: string;
-}
-
-export interface CreateUserParams {
-  userName: string;
-  email: string;
-  pocketToken: string;
-}
+import { UserInfo, UserInfoWithToken } from 'types';
 
 interface CreateUserType<Response> {
   validateErrorFunc: () => Response;
   successResponseFunc: (body: CreateUserResponse) => Response;
-  checkExistUser: (params: CheckExistUserParams) => Promise<boolean>;
-  createUser: (params: CreateUserParams) => Promise<void>;
+  checkExistUser: (params: UserInfo) => Promise<boolean>;
+  createUser: (params: UserInfoWithToken) => Promise<void>;
 }
 
 export default async <T, Response>(request: T, modules: CreateUserType<Response>) => {

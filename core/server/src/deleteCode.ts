@@ -1,26 +1,13 @@
 import { deleteCodeRequestValidate, DeleteCodeResponse } from '@pocket/schema';
-
-export interface GetUserNameParams {
-  pocketToken: string;
-}
-
-export interface IsExistCodeParams {
-  codeName: string;
-  codeAuthor: string;
-}
-
-export interface DeleteCodeParams {
-  codeName: string;
-  codeAuthor: string;
-}
+import { CodeInfo, PocketToken } from 'types';
 
 interface DeleteCode<Response> {
   validateErrorFunc: () => Response;
   existCodeErrorFunc: () => Response;
   successResponseFunc: (body: DeleteCodeResponse) => Response;
-  getUserName: (params: GetUserNameParams) => Promise<string>;
-  isExistCode: (params: IsExistCodeParams) => Promise<boolean>;
-  deleteCode: (params: DeleteCodeParams) => Promise<void>;
+  getUserName: (params: PocketToken) => Promise<string>;
+  isExistCode: (params: CodeInfo) => Promise<boolean>;
+  deleteCode: (params: CodeInfo) => Promise<void>;
 }
 
 export default async <T, Response>(request: T, modules: DeleteCode<Response>) => {

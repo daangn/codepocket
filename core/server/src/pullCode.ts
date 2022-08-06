@@ -1,14 +1,10 @@
 import { pullCodeRequestValidate, PullCodeResponse } from '@pocket/schema';
-
-export interface GetCodeParams {
-  codeName: string;
-  codeAuthor: string;
-}
+import { CodeInfo } from 'types';
 
 interface PullCodeType<Response> {
   validateErrorFunc: () => Response;
   successResponseFunc: (body: PullCodeResponse) => Response;
-  getCode: (params: GetCodeParams) => Promise<string>;
+  getCode: (params: CodeInfo) => Promise<string>;
 }
 
 export default async <T, Response>(request: T, modules: PullCodeType<Response>) => {

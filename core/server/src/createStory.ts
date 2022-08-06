@@ -1,30 +1,12 @@
 import { createStoryRequestValidate, CreateStoryResponse } from '@pocket/schema';
-
-export interface CreateStoryParams {
-  codeName: string;
-  codeAuthor: string;
-  storyName: string;
-  storyAuthor: string;
-  codes: { [x: string]: string };
-}
-
-export interface IsStoryExistParams {
-  codeName: string;
-  codeAuthor: string;
-  storyName: string;
-  storyAuthor: string;
-}
-
-export interface GetStoryNameParams {
-  pocketToken: string;
-}
+import { PocketToken, StoryInfo, StoryInfoWithCode } from 'types';
 
 interface CreateStoryType<Response> {
   validateErrorFunc: () => Response;
   successResponseFunc: (body: CreateStoryResponse) => Response;
-  isStoryExist: (param: IsStoryExistParams) => Promise<boolean>;
-  getUserName: (params: GetStoryNameParams) => Promise<string>;
-  createStory: (params: CreateStoryParams) => Promise<void>;
+  isStoryExist: (param: StoryInfo) => Promise<boolean>;
+  getUserName: (params: PocketToken) => Promise<string>;
+  createStory: (params: StoryInfoWithCode) => Promise<void>;
 }
 
 export default async <T, Response>(request: T, modules: CreateStoryType<Response>) => {

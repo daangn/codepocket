@@ -1,14 +1,10 @@
 import { getStoryNamesRequestValidate, GetStoryNamesResponse } from '@pocket/schema';
-
-export interface GetStoryParam {
-  codeAuthor: string;
-  codeName: string;
-}
+import { CodeInfo } from 'types';
 
 interface GetStoryNamesType<Response> {
   validateErrorFunc: () => Response;
   successResponseFunc: (body: GetStoryNamesResponse) => Response;
-  getStoryNames: ({ codeAuthor, codeName }: GetStoryParam) => Promise<string[]>;
+  getStoryNames: ({ codeAuthor, codeName }: CodeInfo) => Promise<string[]>;
 }
 
 export default async <T, Response>(request: T, modules: GetStoryNamesType<Response>) => {

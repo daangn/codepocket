@@ -1,9 +1,5 @@
 import { getCodeNamesRequestValidate, GetCodeNamesResponse } from '@pocket/schema';
-
-export interface FindCodeInfoUsingRegexParams {
-  codeNameRegex: RegExp;
-  codeAuthorRegex: RegExp;
-}
+import { FindCodeInfoUsingRegexParams } from 'types';
 
 interface GetCodeNames<Response> {
   validateErrorFunc: () => Response;
