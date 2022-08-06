@@ -1,5 +1,5 @@
 import { GetCodesResponse, getCodesResponseValidate } from '@pocket/schema';
-import ussCustomQuery from '@shared/hooks/useCustomQuery';
+import useCustomQuery from '@shared/hooks/useCustomQuery';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { CodeType, getCodesUrl } from '../api';
@@ -9,17 +9,19 @@ const useCodes = () => {
   const [offset, setOffset] = useState<number>(0);
   const [searchText, setSearchText] = useState<string>('');
 
-  const { data, refetch, isLoading } = ussCustomQuery<GetCodesResponse>({
+  const { data, refetch, isLoading } = useCustomQuery<GetCodesResponse>({
     url: getCodesUrl,
     validator: getCodesResponseValidate,
     params: {
       search: `${searchText}`,
-      limit: `${5}`,
+      limit: `5`,
       offset: `${offset}`,
     },
     options: {
       suspense: false,
       useErrorBoundary: true,
+      staleTime: 0,
+      cacheTime: 0,
     },
   });
 

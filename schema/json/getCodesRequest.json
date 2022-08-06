@@ -9,15 +9,14 @@
           "type": "string"
         },
         "limit": {
-          "type": "number"
+          "type": "string"
         },
         "offset": {
-          "type": "number"
+          "type": "string"
         }
       },
       "additionalProperties": false,
       "required": [
-        "search",
         "limit",
         "offset"
       ]
