@@ -36,7 +36,8 @@ const useCustomMutation = <Response, Error, Variable, Context = unknown>({
     },
   );
 
-  if (!validator(data)) throw new Error('에러 발생');
+  // if (!validator(data)) throw new Error('에러 발생');
+  if (!validator(data)) return { data, ...others };
   return { data, ...others };
 };
 

@@ -1,22 +1,28 @@
 type: v1/appservice
 
 images:
-  apiservice:
-    dockerfile: server/Dockerfile
+  server:
+    dockerfile: DOCKERFILE.kontrol
+
+configs:
+  env:
+    name: env
 
 services:
   app:
-    image: app
     class: k1.small
+    image: server
     ports:
       - name: http
         port: 8080
+    configs:
+      - env
 
 routes:
-  - name: http
+  - name: backend
     protocol: http
     host:
-      - scope: internal
+      - scope: public
     backend:
-      - service: server
-        port: http
+      - port: http
+        service: app
