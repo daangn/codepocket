@@ -1,10 +1,4 @@
-import {
-  DeleteCodeType,
-  GetCodeNamesType,
-  GetCodesType,
-  PullCodeType,
-  PushCodeType,
-} from '@pocket/core-server';
+import { Types } from '@pocket/core-server';
 import { to } from 'await-to-js';
 import { FastifyInstance } from 'fastify';
 
@@ -28,7 +22,7 @@ export const findCode =
 
 export const findCodeInfoUsingRegex =
   (server: FastifyInstance) =>
-  async ({ codeAuthorRegex, codeNameRegex }: GetCodeNamesType.FindCodeInfoUsingRegexParams) => {
+  async ({ codeAuthorRegex, codeNameRegex }: Types.FindCodeInfoUsingRegexParams) => {
     const [error, codes] = await to(
       (async () =>
         await server.store.Code.find({ codeName: codeNameRegex, codeAuthor: codeAuthorRegex }).sort(
@@ -48,14 +42,14 @@ export const findCodeInfoUsingRegex =
 
 export const isExistCode =
   (server: FastifyInstance) =>
-  async ({ codeName, codeAuthor }: PushCodeType.IsExistCodeParams) => {
+  async ({ codeName, codeAuthor }: Types.CodeInfo) => {
     const codeInDB = await findCode(server)(codeName, codeAuthor);
     return !!codeInDB?.code || codeInDB?.code === '';
   };
 
 export const getCodeCode =
   (server: FastifyInstance) =>
-  async ({ codeAuthor, codeName }: PullCodeType.GetCodeParams) => {
+  async ({ codeAuthor, codeName }: Types.CodeInfo) => {
     const code = await findCode(server)(codeName, codeAuthor);
     return code.code;
   };
@@ -69,7 +63,7 @@ export const pushCode =
     isAlreadyPushedCode,
     slackChatChannel,
     slackChatTimeStamp,
-  }: PushCodeType.PushCodeParams) => {
+  }: Types.PushCodeParams) => {
     const [pushCodeError] = await to(
       isAlreadyPushedCode
         ? (async () =>
@@ -102,7 +96,7 @@ export const pushCode =
 
 export const deleteCode =
   (server: FastifyInstance) =>
-  async ({ codeAuthor, codeName }: DeleteCodeType.DeleteCodeParams) => {
+  async ({ codeAuthor, codeName }: Types.CodeInfo) => {
     const [deleteCodeError, deleteCodeResponse] = await to(
       (async () => await server.store.Code.deleteOne({ codeAuthor, codeName }))(),
     );
@@ -113,7 +107,7 @@ export const deleteCode =
 
 export const searchCodes =
   (server: FastifyInstance) =>
-  async ({ searchRegex, limit, offset }: GetCodesType.SearchCodesParam) => {
+  async ({ searchRegex, limit, offset }: Types.SearchCodesParam) => {
     const [error, getCodes] = await to(
       (async () =>
         await server.store.Code.find({ codeName: searchRegex })
