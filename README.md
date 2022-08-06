@@ -16,6 +16,10 @@ cli를 통해서 Codepocket에 코드를 올리고 내려받을 수 있어요.
 
 [여기](https://github.com/daangn/codepocket/blob/main/cli/README.md)에 cli사용법에 대해서 기술되어있어요.
 
+## 기여하기
+
+[기여문서](https://github.com/daangn/codepocket/blob/main/CONTRIBUTING.md)를 참고해주세요!
+
 ## License
 
 Codepocket은 [Apache 2.0](https://github.com/daangn/codepocket/blob/main/LICENSE)을 따르고 있어요.
