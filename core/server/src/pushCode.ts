@@ -1,31 +1,14 @@
 import { pushCodeRequestValidate, PushCodeResponse } from '@pocket/schema';
+import { CodeInfo, PocketToken, PushCodeParams } from 'types';
 
 import { SlackConfig, uploadCodeToSlack } from './slack';
-
-export interface PushCodeParams {
-  code: string;
-  codeName: string;
-  codeAuthor: string;
-  isAlreadyPushedCode: boolean;
-  slackChatChannel?: string;
-  slackChatTimeStamp?: any;
-}
-
-export interface GetAuthorNameParams {
-  pocketToken: string;
-}
-
-export interface IsExistCodeParams {
-  codeName: string;
-  codeAuthor: string;
-}
 
 interface PushCodeType<Response> {
   validateErrorFunc: () => Response;
   successResponseFunc: (body: PushCodeResponse) => Response;
   slackConfig?: SlackConfig;
-  getAuthorName: ({ pocketToken }: GetAuthorNameParams) => Promise<string>;
-  isExistCode: ({ codeName, codeAuthor }: IsExistCodeParams) => Promise<boolean>;
+  getAuthorName: ({ pocketToken }: PocketToken) => Promise<string>;
+  isExistCode: ({ codeName, codeAuthor }: CodeInfo) => Promise<boolean>;
   pushCode: (obj: PushCodeParams) => Promise<void>;
 }
 

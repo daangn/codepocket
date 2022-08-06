@@ -1,13 +1,10 @@
 import { verifyUserRequestValidate, VerifyUserResponse } from '@pocket/schema';
-
-export interface GetUserNameParams {
-  pocketToken: string;
-}
+import { PocketToken } from 'types';
 
 interface VerifyUserType<Response> {
   validateErrorFunc: () => Response;
   successResponseFunc: (body: VerifyUserResponse) => Response;
-  getUserName: ({ pocketToken }: GetUserNameParams) => Promise<string>;
+  getUserName: ({ pocketToken }: PocketToken) => Promise<string>;
 }
 
 export default async <T, Response>(request: T, modules: VerifyUserType<Response>) => {

@@ -1,10 +1,5 @@
 import { getCodesRequestValidate, GetCodesResponse } from '@pocket/schema';
-
-export interface SearchCodesParam {
-  searchRegex?: RegExp;
-  limit: string;
-  offset: string;
-}
+import { SearchCodesParam } from 'types';
 
 interface GetCodes<Response> {
   validateErrorFunc: () => Response;
