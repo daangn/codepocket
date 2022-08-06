@@ -118,8 +118,8 @@ export const searchCodes =
       (async () =>
         await server.store.Code.find({ codeName: searchRegex })
           .sort({ updatedAt: 'desc' })
-          .skip(limit * offset)
-          .limit(limit))(),
+          .skip(+limit * +offset)
+          .limit(+limit))(),
     );
 
     if (error) throw new CustomResponse({ customStatus: 5000 });
