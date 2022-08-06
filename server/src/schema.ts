@@ -12,8 +12,8 @@ export interface Code {
   code: string;
   codeName: string;
   codeAuthor: string;
-  uploadedChatChannel: string;
-  uploadedChatTimeStamp: string;
+  uploadedChatChannel?: string;
+  uploadedChatTimeStamp?: string;
   createdAt: Date;
   updatedAt: Date;
 }

@@ -16,7 +16,7 @@ interface UploadCodeToSlack {
 const isLanguageExtType = (ext: string): ext is keyof typeof Languages =>
   Object.keys(Languages).includes(ext);
 
-export const uploadCodeToSlack = async ({
+export const uploadCodeToSlackAPI = async ({
   codeName,
   code,
   language,
