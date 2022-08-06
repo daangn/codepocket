@@ -3,7 +3,8 @@
     "cli/*",
     "server/*",
     "client/*",
-    "schema/*"
+    "schema/*",
+    "core/*"
   ],
   "publishConfig": {
     "access": "public"

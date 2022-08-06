@@ -1,6 +1,6 @@
 import { pushCodeRequestValidate, PushCodeResponse } from '@pocket/schema';
 
-import * as SlackModule from '../dbModule/slack';
+import { SlackConfig, uploadCodeToSlack } from './slack';
 
 export interface PushCodeParams {
   code: string;
@@ -23,7 +23,7 @@ export interface IsExistCodeParams {
 interface PushCodeType<Response> {
   validateErrorFunc: () => Response;
   successResponseFunc: (body: PushCodeResponse) => Response;
-  slackIsAvailable: boolean;
+  slackConfig?: SlackConfig;
   getAuthorName: ({ pocketToken }: GetAuthorNameParams) => Promise<string>;
   isExistCode: ({ codeName, codeAuthor }: IsExistCodeParams) => Promise<boolean>;
   pushCode: (obj: PushCodeParams) => Promise<void>;
@@ -37,8 +37,14 @@ export default async <T, Response>(request: T, modules: PushCodeType<Response>) 
 
   const isAlreadyPushedCode = await modules.isExistCode({ codeName, codeAuthor });
 
-  const slackInfo = SlackModule.isSlackAvailable
-    ? await SlackModule.uploadCodeToSlack(code, codeName, codeAuthor, isAlreadyPushedCode)
+  const slackInfo = modules.slackConfig
+    ? await uploadCodeToSlack({
+        code,
+        codeName,
+        codeAuthor,
+        isAlreadyPushedCode,
+        config: modules.slackConfig,
+      })
     : {
         uploadedChatChannel: undefined,
         uploadedChatTimeStamp: undefined,
@@ -54,7 +60,14 @@ export default async <T, Response>(request: T, modules: PushCodeType<Response>) 
     slackChatTimeStamp: slackInfo.uploadedChatTimeStamp,
   });
 
-  await SlackModule.uploadCodeToSlack(code, codeName, codeAuthor, isAlreadyPushedCode);
+  if (modules.slackConfig)
+    await uploadCodeToSlack({
+      code,
+      codeName,
+      codeAuthor,
+      isAlreadyPushedCode,
+      config: modules.slackConfig,
+    });
 
   return modules.successResponseFunc({ message: '' });
 };

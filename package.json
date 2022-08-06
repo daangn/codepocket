@@ -6,7 +6,8 @@
     "server",
     "cli",
     "client",
-    "schema"
+    "schema",
+    "core/*"
   ],
   "scripts": {
     "build": "ultra -r build",

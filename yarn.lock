@@ -4221,6 +4221,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@pocket/core-server@workspace:^, @pocket/core-server@workspace:core/server":
+  version: 0.0.0-use.local
+  resolution: "@pocket/core-server@workspace:core/server"
+  dependencies:
+    "@pocket/schema": "workspace:^"
+    typescript: ^4.7.4
+  languageName: unknown
+  linkType: soft
+
 "@pocket/monorepo@workspace:.":
   version: 0.0.0-use.local
   resolution: "@pocket/monorepo@workspace:."
@@ -4260,6 +4269,7 @@ __metadata:
   dependencies:
     "@fastify/cors": ^8.0.0
     "@fastify/mongodb": ^6.0.1
+    "@pocket/core-server": "workspace:^"
     "@pocket/schema": "workspace:^"
     "@types/dotenv-safe": ^8
     "@types/node": ^18.0.6

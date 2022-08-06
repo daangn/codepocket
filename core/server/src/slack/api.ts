@@ -1,8 +1,15 @@
 import to from 'await-to-js';
 import fetch from 'node-fetch';
 
-import { Languages, SLACK_POST_FILE_UPLOAD_URL } from '../constants';
-import { getExtensionFromFileName } from '../utils/string';
+import { Languages, SLACK_POST_FILE_UPLOAD_URL, SLACK_POST_MESSAGE_URL } from './constants';
+import { getExtensionFromFileName } from './utils';
+
+interface PostMessageToSlack {
+  slackBotToken: string;
+  channelId: string;
+  text: string;
+  threadTs?: string;
+}
 
 interface UploadCodeToSlack {
   slackBotToken: string;
@@ -12,6 +19,30 @@ interface UploadCodeToSlack {
   initialComment: string;
   language?: Languages;
 }
+
+export const postMessageToSlackAPI = async ({
+  text,
+  slackBotToken,
+  channelId,
+  threadTs,
+}: PostMessageToSlack) => {
+  const [error, response] = await to(
+    fetch(SLACK_POST_MESSAGE_URL, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${slackBotToken}`,
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        channel: channelId,
+        thread_ts: threadTs || '',
+        text,
+      }),
+    }),
+  );
+
+  return { error, response };
+};
 
 const isLanguageExtType = (ext: string): ext is keyof typeof Languages =>
   Object.keys(Languages).includes(ext);

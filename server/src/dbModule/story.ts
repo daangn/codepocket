@@ -1,14 +1,12 @@
+import { CreateStoryType, GetStoryCodeType, GetStoryNamesType } from '@pocket/core-server';
 import { to } from 'await-to-js';
 import { FastifyInstance } from 'fastify';
 
-import { CreateStoryParams } from '../core/createStory';
-import { GetStoryCodeParam } from '../core/getStoryCode';
-import { GetStoryParam } from '../core/getStoryNames';
 import { CustomResponse } from '../utils/responseHandler';
 
 export const getStories =
   (server: FastifyInstance) =>
-  async ({ codeAuthor, codeName }: GetStoryParam) => {
+  async ({ codeAuthor, codeName }: GetStoryNamesType.GetStoryParam) => {
     const [err, stories] = await to(
       (async () => await server.store.Story.find({ codeAuthor, codeName }))(),
     );
@@ -20,7 +18,7 @@ export const getStories =
 
 export const getStory =
   (server: FastifyInstance) =>
-  async ({ codeAuthor, codeName, storyAuthor, storyName }: GetStoryCodeParam) => {
+  async ({ codeAuthor, codeName, storyAuthor, storyName }: GetStoryCodeType.GetStoryCodeParam) => {
     const [err, story] = await to(
       (async () =>
         await server.store.Story.findOne({ codeAuthor, codeName, storyAuthor, storyName }))(),
@@ -33,14 +31,14 @@ export const getStory =
 
 export const existStory =
   (server: FastifyInstance) =>
-  async ({ codeAuthor, codeName, storyAuthor, storyName }: GetStoryCodeParam) => {
+  async ({ codeAuthor, codeName, storyAuthor, storyName }: GetStoryCodeType.GetStoryCodeParam) => {
     const story = await getStory(server)({ codeAuthor, codeName, storyAuthor, storyName });
     return !!story;
   };
 
 export const getStoryFullNames =
   (server: FastifyInstance) =>
-  async ({ codeAuthor, codeName }: GetStoryParam) => {
+  async ({ codeAuthor, codeName }: GetStoryNamesType.GetStoryParam) => {
     const stories = await getStories(server)({ codeAuthor, codeName });
 
     // FIXME: string반환에서 객체 반환으로 바꾸기
@@ -53,14 +51,20 @@ export const getStoryFullNames =
 
 export const getStoryCode =
   (server: FastifyInstance) =>
-  async ({ codeAuthor, codeName, storyAuthor, storyName }: GetStoryCodeParam) => {
+  async ({ codeAuthor, codeName, storyAuthor, storyName }: GetStoryCodeType.GetStoryCodeParam) => {
     const story = await getStory(server)({ codeAuthor, codeName, storyAuthor, storyName });
     return JSON.parse(story.codes) as { [x: string]: string };
   };
 
 export const createStory =
   (server: FastifyInstance) =>
-  async ({ codeAuthor, codeName, storyAuthor, storyName, codes }: CreateStoryParams) => {
+  async ({
+    codeAuthor,
+    codeName,
+    storyAuthor,
+    storyName,
+    codes,
+  }: CreateStoryType.CreateStoryParams) => {
     const [createError] = await to(
       (async () =>
         await server.store.Story.create({
