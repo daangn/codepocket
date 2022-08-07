@@ -43,7 +43,11 @@ export const findCodeInfoUsingRegex =
 export const isExistCode =
   (server: FastifyInstance) =>
   async ({ codeName, codeAuthor }: Types.CodeInfo) => {
-    const codeInDB = await findCode(server)(codeName, codeAuthor);
+    const [codeFindOneError, codeInDB] = await to(
+      (async () => await server.store.Code.findOne({ codeName, codeAuthor }))(),
+    );
+
+    if (codeFindOneError) throw new CustomResponse({ customStatus: 5000 });
     return !!codeInDB?.code || codeInDB?.code === '';
   };
 
@@ -110,7 +114,8 @@ export const searchCodes =
   async ({ searchRegex, limit, offset }: Types.SearchCodesParam) => {
     const [error, getCodes] = await to(
       (async () =>
-        await server.store.Code.find({ codeName: searchRegex })
+        await server.store.Code.find()
+          .or([{ codeName: searchRegex }, { codeAuthor: searchRegex }])
           .sort({ updatedAt: 'desc' })
           .skip(+limit * +offset)
           .limit(+limit))(),

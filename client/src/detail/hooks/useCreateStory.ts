@@ -1,3 +1,4 @@
+import { useAuth0 } from '@auth0/auth0-react';
 import {
   CreateStoryRequest,
   CreateStoryResponse,
@@ -18,6 +19,7 @@ interface UseCreateStory {
 
 const useCreateStory = ({ codeAuthor, codeName, selectStory }: UseCreateStory) => {
   const queryClient = useQueryClient();
+  const { user } = useAuth0();
   const { mutate: createStoryMutate } = useCustomMutation<
     CreateStoryResponse,
     CreateStoryResponse,
@@ -28,27 +30,19 @@ const useCreateStory = ({ codeAuthor, codeName, selectStory }: UseCreateStory) =
     validator: createStoryResponseValidate,
     options: {
       onSuccess: async (_, vars) => {
+        if (!user) return;
         await queryClient.invalidateQueries([getStoryNamesUrl]);
-        // TODO: 로컬스토리지에서 username받아오는게 token으로 바껴서 로직 수정 필요
-        const storyAuth = localStorage.getUserToken();
-        const storyName = `${storyAuth}-${vars.storyName}` as StoryFullName;
+        const storyName = `${user.nickname}-${vars.storyName}` as StoryFullName;
         selectStory(`${codeAuthor}/${codeName}_${storyName}`);
       },
     },
   });
 
   const createStory = ({ codes, storyName }: Pick<CreateStoryBodyType, 'codes' | 'storyName'>) => {
-    // TODO: 로컬스토리지에서 username받아오는게 token으로 바껴서 로직 수정 필요
-    const storyAuthor = localStorage.getUserToken();
-    if (!storyAuthor || !storyName || !codeName || !codeAuthor) return;
+    const pocketToken = localStorage.getUserToken();
+    if (!pocketToken || !storyName || !codeName || !codeAuthor) return;
 
-    createStoryMutate({
-      codes,
-      storyName,
-      codeName,
-      codeAuthor,
-      pocketToken: storyAuthor,
-    });
+    createStoryMutate({ codes, storyName, codeName, codeAuthor, pocketToken });
   };
 
   return {

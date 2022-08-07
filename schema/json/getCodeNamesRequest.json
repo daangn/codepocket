@@ -12,11 +12,7 @@
           "type": "string"
         }
       },
-      "additionalProperties": false,
-      "required": [
-        "codeAuthor",
-        "codeName"
-      ]
+      "additionalProperties": false
     }
   },
   "additionalProperties": true,

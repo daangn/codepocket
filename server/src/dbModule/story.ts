@@ -32,7 +32,11 @@ export const getStory =
 export const existStory =
   (server: FastifyInstance) =>
   async ({ codeAuthor, codeName, storyAuthor, storyName }: Types.StoryInfo) => {
-    const story = await getStory(server)({ codeAuthor, codeName, storyAuthor, storyName });
+    const [err, story] = await to(
+      (async () =>
+        await server.store.Story.findOne({ codeAuthor, codeName, storyAuthor, storyName }))(),
+    );
+    if (err) throw new CustomResponse({ customStatus: 5000 });
     return !!story;
   };
 

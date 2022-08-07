@@ -25,8 +25,8 @@ beforeEach(() => {
 });
 
 it('작성자를 설정하지 않았을 경우(author option을 주지 않았을 때), 정상 출력 테스트', async () => {
-  const { fileNames } = generateListCodeResponseMock({ isAuthor: false });
-  const names = fileNames.reduce((acc, cur) => `${acc}\n${cur}`);
+  const { codeNames } = generateListCodeResponseMock({ isAuthor: false });
+  const names = codeNames.reduce((acc, cur) => `${acc}\n${cur}`);
   const expectedLog = `모두의 코드들입니다🥕\n${names}`;
 
   await listCommand({});
@@ -36,22 +36,22 @@ it('작성자를 설정하지 않았을 경우(author option을 주지 않았을
 
 it('작성자만 설정했을 경우(author option을 주었을 때), 정상 출력 테스트', async () => {
   server.use(listCodeHandler('NO', true));
-  const { fileNames, authors } = generateListCodeResponseMock({ isAuthor: true });
-  const names = fileNames.join('\n');
+  const { codeNames, authors } = generateListCodeResponseMock({ isAuthor: true });
+  const names = codeNames.join('\n');
   const author = authors.join(', ');
   const expectedLog = `${author}의 코드들입니다🥕\n${names}`;
 
-  await listCommand({ codeAuthor: 'shell', codeName: 'code' });
+  await listCommand({ author: 'shell', fileName: 'code' });
   expect(consoleLogSpy).toBeCalledWith(expectedLog);
   expect(consoleLogSpy).toBeCalledTimes(1);
 });
 
 it('파일명만 설정했을 경우(fileName option을 주었을 때), 정상 출력 테스트', async () => {
-  const { fileNames } = generateListCodeResponseMock({ isAuthor: true });
-  const names = fileNames.join('\n');
+  const { codeNames } = generateListCodeResponseMock({ isAuthor: true });
+  const names = codeNames.join('\n');
   const expectedLog = `모두의 코드들입니다🥕\n${names}`;
 
-  await listCommand({ codeAuthor: 'shell', codeName: 'code' });
+  await listCommand({ author: 'shell', fileName: 'code' });
   expect(consoleLogSpy).toBeCalledWith(expectedLog);
   expect(consoleLogSpy).toBeCalledTimes(1);
 });

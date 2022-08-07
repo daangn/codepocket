@@ -1,6 +1,7 @@
 import {
   DeleteCodeRequest,
   GetCodeNamesRequest,
+  GetCodeNamesResponse,
   PullCodeRequest,
   PushCodeRequest,
 } from '@pocket/schema';
@@ -15,7 +16,6 @@ interface ResponseType<T> extends AxiosResponse {
 }
 export type DefaultResponseData = { message: string };
 export type PullCodeAPIResponseData = { code: string };
-export type ListCodeAPIResponseData = { fileNames: string[]; authors: string[] };
 
 // Error
 interface ErrorType<T> extends AxiosResponse {
@@ -54,7 +54,7 @@ export const pullCodeAPI = async (query: PullCodeRequest['query']) => {
 };
 
 export const listCodeAPI = async (body: GetCodeNamesRequest['query']) => {
-  const [err, res] = await to<ResponseType<ListCodeAPIResponseData>, ResponseError>(
+  const [err, res] = await to<ResponseType<GetCodeNamesResponse>, ResponseError>(
     axiosInstance.get(`/code/list?codeAuthor=${body.codeAuthor}&codeName=${body.codeName}`),
   );
   if (err) throw new Error(isNetworkError(err) ? err.response.data : err.response.data.message);
