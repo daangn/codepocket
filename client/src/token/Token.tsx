@@ -1,3 +1,5 @@
+import { colors } from '@karrotmarket/design-token';
+import Icon from '@shared/components/Icon';
 import useClipboard from '@shared/hooks/useClipboard';
 import { act, fireEvent, render, screen } from '@shared/utils/test-utils';
 import { Link } from 'react-router-dom';
@@ -17,14 +19,20 @@ function TokenPage() {
         토큰이 발급되었어요!
       </h1>
       <p className={style.description}>아래 문구를 복사해 cli 환경변수로 등록해주세요!</p>
-      <span className={style.clipBoard}>{textToCopied}</span>
       <button
         type="button"
         aria-label="코드 복사 버튼"
-        className={style.codeItemHeaderCopyButton}
         onClick={copyToClipboard}
+        className={style.clipBoardContainer({ isCopied })}
       >
-        {isCopied ? 'COPIED!' : 'COPY'}
+        <span className={style.clipBoardText}>{textToCopied}</span>
+        <span className={style.clipBoardIconBox}>
+          {isCopied ? (
+            <Icon icon="check" color={colors.light.scheme.$blue800} />
+          ) : (
+            <Icon icon="clip" />
+          )}
+        </span>
       </button>
       <Link to={pocketPath}>
         <button aria-label="메인으로 이동하기" className={style.linkButton}>
