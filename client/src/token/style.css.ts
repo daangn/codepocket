@@ -3,12 +3,14 @@ import * as m from '@shared/styles/media.css';
 import * as t from '@shared/styles/token.css';
 import * as u from '@shared/styles/utils.css';
 import { style } from '@vanilla-extract/css';
+import { recipe } from '@vanilla-extract/recipes';
 import { rem } from 'polished';
 
 export const wrapper = style([
   u.positionAbsolute,
   u.flexColumn,
   {
+    width: rem(500),
     gap: rem(10),
     top: '50%',
     left: '50%',
@@ -16,46 +18,43 @@ export const wrapper = style([
   },
 ]);
 
-export const title = style([t.typography.heading3]);
+export const title = style([t.typography.heading4]);
 
-export const description = style({
-  textAlign: 'center',
-});
-
-export const clipBoard = style([
-  u.borderRadius,
+export const description = style([
+  t.typography.caption1,
   {
-    padding: rem(5),
-    backgroundColor: colors.light.scheme.$gray400,
-  },
-]);
-
-export const codeItemButtonBase = style([
-  u.borderRadius,
-  u.cursorPointer,
-  u.flex,
-  u.flexAlignCenter,
-  u.fullWidth,
-  {
-    height: rem(32),
-    backgroundColor: 'white',
-    fontWeight: 'bold',
-    transition: 'background 0.3s ease',
-    justifyContent: 'space-evenly',
-  },
-]);
-
-export const codeItemHeaderCopyButton = style([
-  codeItemButtonBase,
-  {
-    border: `1px solid ${colors.light.scheme.$gray700}`,
     color: colors.light.scheme.$gray700,
+  },
+]);
 
-    ':hover': {
+export const clipBoardText = style([t.typography.body2, { fontWeight: 'bold' }]);
+export const clipBoardIconBox = style({ paddingTop: rem(4) });
+export const clipBoardContainer = recipe({
+  base: [
+    u.borderRadius2,
+    u.flex,
+    u.flexAlignCenter,
+    u.cursorPointer,
+    {
+      border: 'none',
+      padding: rem(10),
+      height: rem(52),
       backgroundColor: colors.light.scheme.$gray100,
+      justifyContent: 'space-between',
+      transition: 'background 0.2s ease, border 0.2s ease',
+
+      ':hover': {
+        backgroundColor: colors.light.scheme.$gray400,
+      },
+    },
+  ],
+  variants: {
+    isCopied: {
+      true: { border: `${rem(2)} solid ${colors.light.scheme.$blue800}` },
+      false: { border: `${rem(2)} solid white` },
     },
   },
-]);
+});
 
 export const linkButton = style([
   u.fullWidth,
@@ -71,7 +70,7 @@ export const linkButton = style([
     transition: 'background 0.2s ease',
 
     ':hover': {
-      backgroundColor: '#0A86B766',
+      backgroundColor: '#0A86B799',
     },
   },
   m.small({

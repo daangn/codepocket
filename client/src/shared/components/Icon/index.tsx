@@ -1,3 +1,5 @@
+import Check, { CheckType } from './Check';
+import Clip from './Clip';
 import Code from './Code';
 import Information from './Information';
 import LeftChevron, { LeftChevronType } from './LeftChevron';
@@ -17,7 +19,9 @@ type IconType =
   | AddIconName<RightChevronType, 'rightChevron'>
   | AddIconName<{}, 'information'>
   | AddIconName<{}, 'search'>
-  | AddIconName<{}, 'code'>;
+  | AddIconName<{}, 'code'>
+  | AddIconName<{}, 'clip'>
+  | AddIconName<CheckType, 'check'>;
 
 const mapping = {
   leftChevron: (param: LeftChevronType) => LeftChevron(param),
@@ -25,6 +29,8 @@ const mapping = {
   information: () => Information(),
   search: () => Search(),
   code: () => Code(),
+  clip: () => Clip(),
+  check: (param: RightChevronType) => Check(param),
 } as const;
 
 const Icon = <T extends keyof typeof mapping>({ icon, ...props }: LookUp<IconType, T>) =>
