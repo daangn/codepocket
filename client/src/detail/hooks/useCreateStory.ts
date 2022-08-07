@@ -1,14 +1,13 @@
+import { useAuth0 } from '@auth0/auth0-react';
 import {
   CreateStoryRequest,
   CreateStoryResponse,
   createStoryResponseValidate,
 } from '@pocket/schema';
-import { EMAIL_DOMAIN_NAME } from '@shared/constant';
 import useCustomMutation from '@shared/hooks/useCustomMutation';
 import { localStorage } from '@shared/utils/localStorage';
 import { useQueryClient } from '@tanstack/react-query';
 
-import useCustomAuth0 from '../../auth/hooks/useCustomAuth0';
 import { createStoryUrl, getStoryNamesUrl, StoryFullName } from '../api';
 
 type CreateStoryBodyType = CreateStoryRequest['body'];
@@ -20,7 +19,7 @@ interface UseCreateStory {
 
 const useCreateStory = ({ codeAuthor, codeName, selectStory }: UseCreateStory) => {
   const queryClient = useQueryClient();
-  const { user } = useCustomAuth0({ domain: EMAIL_DOMAIN_NAME });
+  const { user } = useAuth0();
   const { mutate: createStoryMutate } = useCustomMutation<
     CreateStoryResponse,
     CreateStoryResponse,
@@ -42,6 +41,7 @@ const useCreateStory = ({ codeAuthor, codeName, selectStory }: UseCreateStory) =
   const createStory = ({ codes, storyName }: Pick<CreateStoryBodyType, 'codes' | 'storyName'>) => {
     const pocketToken = localStorage.getUserToken();
     if (!pocketToken || !storyName || !codeName || !codeAuthor) return;
+
     createStoryMutate({ codes, storyName, codeName, codeAuthor, pocketToken });
   };
 
