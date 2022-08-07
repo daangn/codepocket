@@ -16,6 +16,12 @@ export const wrapper = style([
     left: '50%',
     transform: 'translate(-50%, -50%)',
   },
+  m.medium({
+    width: rem(360),
+  }),
+  m.small({
+    width: '88vw',
+  }),
 ]);
 
 export const title = style([t.typography.heading4]);
@@ -73,7 +79,4 @@ export const linkButton = style([
       backgroundColor: '#0A86B799',
     },
   },
-  m.small({
-    width: '90vw',
-  }),
 ]);

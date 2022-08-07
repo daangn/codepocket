@@ -1,4 +1,5 @@
 import { colors } from '@karrotmarket/design-token';
+import * as m from '@shared/styles/media.css';
 import * as u from '@shared/styles/utils.css';
 import { style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
@@ -18,6 +19,12 @@ export const codeItemHeader = style([
   u.flex,
   u.flexAlignCenter,
   { height: rem(50), justifyContent: 'space-between' },
+  m.small({
+    height: rem(70),
+    flexDirection: 'column',
+    alignItems: 'start',
+    marginBottom: rem(10),
+  }),
 ]);
 
 export const codeItemHeaderInfo = style([
@@ -46,6 +53,10 @@ export const codeItemButtonBase = style([
     transition: 'background 0.3s ease',
     justifyContent: 'space-evenly',
   },
+  m.medium({
+    width: rem(62),
+    fontSize: rem(12),
+  }),
 ]);
 
 export const codeItemHeaderCopyButton = style([
@@ -59,6 +70,9 @@ export const codeItemHeaderCopyButton = style([
       backgroundColor: colors.light.scheme.$gray100,
     },
   },
+  m.medium({
+    width: rem(50),
+  }),
 ]);
 
 export const codeItemHeaderDetailButton = style([
