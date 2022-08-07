@@ -1,1 +1,9 @@
 dist
+
+lib/
+.DS_Store
+.bsb.lock
+.merlin
+
+*.bs.js
+*.gen.ts

@@ -4226,6 +4226,8 @@ __metadata:
   resolution: "@pocket/core-server@workspace:core/server"
   dependencies:
     "@pocket/schema": "workspace:^"
+    gentype: ^4.5.0
+    rescript: ^9.1.4
     typescript: ^4.7.4
   languageName: unknown
   linkType: soft
@@ -12787,6 +12789,15 @@ eslint-config-airbnb-base@latest:
   languageName: node
   linkType: hard
 
+"gentype@npm:^4.5.0":
+  version: 4.5.0
+  resolution: "gentype@npm:4.5.0"
+  bin:
+    gentype: gentype.exe
+  checksum: 982241d3046cb681db6e3196019059d2d450d902a94255bcc18dceff7f27f422839aaddf6605c851337b61aeda8afa534049e68e60213012c4bd05954129d34d
+  languageName: node
+  linkType: hard
+
 "get-caller-file@npm:^2.0.5":
   version: 2.0.5
   resolution: "get-caller-file@npm:2.0.5"
@@ -20000,6 +20011,18 @@ eslint-config-airbnb-base@latest:
   version: 0.1.2
   resolution: "require-like@npm:0.1.2"
   checksum: edb8331f05fd807381a75b76f6cca9f0ce8acaa2e910b7e116541799aa970bfbc64fde5fd6adb3a6917dba346f8386ebbddb81614c24e8dad1b4290c7af9535e
+  languageName: node
+  linkType: hard
+
+"rescript@npm:^9.1.4":
+  version: 9.1.4
+  resolution: "rescript@npm:9.1.4"
+  bin:
+    bsc: bsc
+    bsrefmt: bsrefmt
+    bstracing: lib/bstracing
+    rescript: rescript
+  checksum: 3c503580f968b4d4409830093c57f85b5590f7372250345427b3a7c1f5ccb08009e1edd89b4a3dcbb3ee95ee4dcad9c337ece4d1f8fdaa10e22ed04b8a7495c0
   languageName: node
   linkType: hard
 
