@@ -1,4 +1,5 @@
 import { Types } from '@pocket/core-server';
+import { CodeName } from '@pocket/core-server/dist/types';
 import { to } from 'await-to-js';
 import { FastifyInstance } from 'fastify';
 
@@ -18,6 +19,17 @@ export const findCode =
     if (!code) throw new CustomResponse({ customStatus: 4003 });
 
     return code;
+  };
+
+export const findCodeAuthors =
+  (server: FastifyInstance) =>
+  async ({ codeName }: CodeName) => {
+    const [findCodeError, code] = await to(
+      (async () => await server.store.Code.find({ codeName }))(),
+    );
+
+    if (findCodeError) throw new CustomResponse({ customStatus: 5000 });
+    return code.map((code) => code.codeAuthor);
   };
 
 export const findCodeInfoUsingRegex =
