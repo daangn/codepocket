@@ -8,7 +8,20 @@
     "codeAuthors": {
       "type": "array",
       "items": {
-        "type": "string"
+        "type": "object",
+        "properties": {
+          "codeAuthor": {
+            "type": "string"
+          },
+          "isAnonymous": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "codeAuthor",
+          "isAnonymous"
+        ]
       }
     }
   },

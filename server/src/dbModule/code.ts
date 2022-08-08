@@ -29,7 +29,8 @@ export const findCodeAuthors =
     );
 
     if (findCodeError) throw new CustomResponse({ customStatus: 5000 });
-    return code.map((code) => code.codeAuthor);
+    if (!code.length) throw new CustomResponse({ customStatus: 4007 });
+    return code.map((code) => ({ codeAuthor: code.codeAuthor, isAnonymous: code.isAnonymous }));
   };
 
 export const findCodeInfoUsingRegex =
