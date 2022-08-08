@@ -10,6 +10,10 @@ export interface CodeInfo {
   codeAuthor: string;
 }
 
+export interface CodeInfoWithAnonymous extends CodeInfo {
+  isAnonymous: boolean;
+}
+
 export interface StoryInfo extends CodeInfo {
   storyName: string;
   storyAuthor: string;
@@ -48,4 +52,5 @@ export interface SearchCodesParam {
 export interface FindCodeInfoUsingRegexParams {
   codeNameRegex: RegExp;
   codeAuthorRegex: RegExp;
+  isCodeAuthorExist: boolean;
 }

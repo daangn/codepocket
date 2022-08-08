@@ -1,3 +1,4 @@
+// TODO: mocking로직 수정이 필요할 듯
 import chalk from 'chalk';
 
 import { listCodeHandler } from '../../__mocks__/handlers';
@@ -25,8 +26,10 @@ beforeEach(() => {
 });
 
 it('작성자를 설정하지 않았을 경우(author option을 주지 않았을 때), 정상 출력 테스트', async () => {
-  const { codeNames } = generateListCodeResponseMock({ isAuthor: false });
-  const names = codeNames.reduce((acc, cur) => `${acc}\n${cur}`);
+  const { codeInfos } = generateListCodeResponseMock();
+  const names = codeInfos
+    .map((code) => `${code.isAnonymous ? '' : code.codeAuthor}/${code.codeName}`)
+    .join('\r\n');
   const expectedLog = `모두의 코드들입니다🥕\n${names}`;
 
   await listCommand({});
@@ -36,9 +39,13 @@ it('작성자를 설정하지 않았을 경우(author option을 주지 않았을
 
 it('작성자만 설정했을 경우(author option을 주었을 때), 정상 출력 테스트', async () => {
   server.use(listCodeHandler('NO', true));
-  const { codeNames, authors } = generateListCodeResponseMock({ isAuthor: true });
-  const names = codeNames.join('\n');
-  const author = authors.join(', ');
+  const { codeInfos } = generateListCodeResponseMock({ isAuthor: true });
+  const [author] = [
+    ...new Set(codeInfos.filter((code) => !code.isAnonymous).map((code) => code.codeAuthor)),
+  ];
+  const names = codeInfos
+    .map((code) => `${code.isAnonymous ? '' : code.codeAuthor}/${code.codeName}`)
+    .join('\r\n');
   const expectedLog = `${author}의 코드들입니다🥕\n${names}`;
 
   await listCommand({ author: 'shell', fileName: 'code' });
@@ -47,8 +54,10 @@ it('작성자만 설정했을 경우(author option을 주었을 때), 정상 출
 });
 
 it('파일명만 설정했을 경우(fileName option을 주었을 때), 정상 출력 테스트', async () => {
-  const { codeNames } = generateListCodeResponseMock({ isAuthor: true });
-  const names = codeNames.join('\n');
+  const { codeInfos } = generateListCodeResponseMock();
+  const names = codeInfos
+    .map((code) => `${code.isAnonymous ? '' : code.codeAuthor}/${code.codeName}`)
+    .join('\r\n');
   const expectedLog = `모두의 코드들입니다🥕\n${names}`;
 
   await listCommand({ author: 'shell', fileName: 'code' });

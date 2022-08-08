@@ -1,13 +1,12 @@
 import { getCodeNamesRequestValidate, GetCodeNamesResponse } from '@pocket/schema';
-import { FindCodeInfoUsingRegexParams } from 'types';
+import { CodeInfoWithAnonymous, FindCodeInfoUsingRegexParams } from 'types';
 
 interface GetCodeNames<Response> {
   validateErrorFunc: () => Response;
   successResponseFunc: (body: GetCodeNamesResponse) => Response;
-  findCodeInfoUsingRegex: (params: FindCodeInfoUsingRegexParams) => Promise<{
-    codeNames: string[];
-    codeAuthors: string[];
-  }>;
+  findCodeInfoUsingRegex: (
+    params: FindCodeInfoUsingRegexParams,
+  ) => Promise<CodeInfoWithAnonymous[]>;
 }
 
 export default async <T, Response>(request: T, modules: GetCodeNames<Response>) => {
@@ -17,10 +16,11 @@ export default async <T, Response>(request: T, modules: GetCodeNames<Response>) 
   const codeNameRegex = new RegExp(codeName || '', 'gi');
   const codeAuthorRegex = new RegExp(codeAuthor || '', 'gi');
 
-  const { codeAuthors, codeNames } = await modules.findCodeInfoUsingRegex({
+  const codeInfos = await modules.findCodeInfoUsingRegex({
     codeAuthorRegex,
     codeNameRegex,
+    isCodeAuthorExist: !!codeAuthor,
   });
 
-  return modules.successResponseFunc({ message: '', codeNames, authors: codeAuthors });
+  return modules.successResponseFunc({ message: '', codeInfos });
 };

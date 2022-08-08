@@ -2,16 +2,27 @@
   "title": "getCodeNamesResponse",
   "type": "object",
   "properties": {
-    "codeNames": {
+    "codeInfos": {
       "type": "array",
       "items": {
-        "type": "string"
-      }
-    },
-    "authors": {
-      "type": "array",
-      "items": {
-        "type": "string"
+        "type": "object",
+        "properties": {
+          "codeName": {
+            "type": "string"
+          },
+          "codeAuthor": {
+            "type": "string"
+          },
+          "isAnonymous": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "codeName",
+          "codeAuthor",
+          "isAnonymous"
+        ]
       }
     },
     "message": {
@@ -20,8 +31,7 @@
   },
   "additionalProperties": false,
   "required": [
-    "codeNames",
-    "authors",
+    "codeInfos",
     "message"
   ]
 }

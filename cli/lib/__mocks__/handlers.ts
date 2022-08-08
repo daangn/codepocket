@@ -1,8 +1,8 @@
+import { GetCodeNamesResponse } from '@pocket/schema';
 import { rest } from 'msw';
 
 import {
   DefaultResponseData,
-  ListCodeAPIResponseData,
   NetworkResponseData,
   PullCodeAPIResponseData,
   ServerResponseData,
@@ -38,7 +38,7 @@ export const listCodeHandler = (error: Error = 'NO', isAuthor = false) =>
       return res(ctx.status(404), ctx.json<NetworkResponseData>('네트워크 에러 발생'));
     return res(
       ctx.status(200),
-      ctx.json<ListCodeAPIResponseData>(generateListCodeResponseMock({ isAuthor })),
+      ctx.json<GetCodeNamesResponse>(generateListCodeResponseMock({ isAuthor })),
     );
   });
 
