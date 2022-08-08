@@ -126,7 +126,7 @@ export const searchCodes =
     const [error, getCodes] = await to(
       (async () =>
         await server.store.Code.find()
-          .or([{ codeName: searchRegex }, { codeAuthor: searchRegex }])
+          .or([{ codeName: searchRegex }, { codeAuthor: searchRegex, isAnonymous: false }])
           .sort({ updatedAt: 'desc' })
           .skip(+limit * +offset)
           .limit(+limit))(),
