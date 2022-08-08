@@ -12,6 +12,7 @@ export interface Code {
   code: string;
   codeName: string;
   codeAuthor: string;
+  isAnonymous: boolean;
   uploadedChatChannel?: string;
   uploadedChatTimeStamp?: string;
   createdAt: Date;
