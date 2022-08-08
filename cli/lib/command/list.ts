@@ -22,7 +22,6 @@ export default async ({ fileName, author }: { fileName?: string; author?: string
   ];
 
   const codeInfoList = result.codeInfos
-    .sort()
     .map((code) => `${code.isAnonymous ? '' : code.codeAuthor}/${code.codeName}`)
     .join('\r\n');
   return logger.info(
