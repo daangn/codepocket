@@ -37,10 +37,13 @@ const Codeblock: React.FC<CodeblockProps> = ({
       <header className={style.codeItemHeader}>
         <div className={style.codeItemHeaderInfo}>
           <Icon icon="code" />
-          <span>
-            {isAnonymous && `${codeAuthor}/`}
-            {codeName}
-          </span>
+          <span>{codeName}</span>
+          {!isAnonymous && (
+            <>
+              <Icon icon="profile" />
+              <span>{codeAuthor}</span>
+            </>
+          )}
         </div>
 
         <div className={style.codeItemHeaderButtons}>
