@@ -34,10 +34,11 @@ export const findCodeInfoUsingRegex =
 
     if (error) throw new CustomResponse({ customStatus: 5000 });
 
-    // TODO: reduce 사용해서 한 번으로 뽑아내기
-    const codeNames = codes.map(({ codeName }) => codeName); // eslint-disable-line no-shadow
-    const codeAuthors = codes.map(({ codeAuthor }) => codeAuthor); // eslint-disable-line no-shadow
-    return { codeNames, codeAuthors };
+    return codes.map((code) => ({
+      codeName: code.codeName,
+      codeAuthor: code.codeAuthor,
+      // isAnonymous: code.isAnonymous,
+    }));
   };
 
 export const isExistCode =
