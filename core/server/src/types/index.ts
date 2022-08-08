@@ -30,9 +30,6 @@ export interface UserInfo {
 
 export type UserInfoWithToken = UserInfo & PocketToken;
 
-/**
- *
- */
 export interface PushCodeParams {
   code: string;
   codeName: string;
