@@ -1,5 +1,7 @@
 import {
   DeleteCodeRequest,
+  GetCodeAuthorsRequest,
+  GetCodeAuthorsResponse,
   GetCodeNamesRequest,
   GetCodeNamesResponse,
   PullCodeRequest,
@@ -51,6 +53,14 @@ export const pullCodeAPI = async (query: PullCodeRequest['query']) => {
   );
   if (err) throw new Error(isNetworkError(err) ? err.response.data : err.response.data.message);
   return res.data.code;
+};
+
+export const getCodeAuthors = async (query: GetCodeAuthorsRequest['query']) => {
+  const [err, res] = await to<ResponseType<GetCodeAuthorsResponse>, ResponseError>(
+    axiosInstance.get(`/code/authors?codeName=${query.codeName}`),
+  );
+  if (err) throw new Error(isNetworkError(err) ? err.response.data : err.response.data.message);
+  return res.data.codeAuthors;
 };
 
 export const listCodeAPI = async (body: GetCodeNamesRequest['query']) => {
