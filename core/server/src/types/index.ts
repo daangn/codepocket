@@ -52,4 +52,5 @@ export interface SearchCodesParam {
 export interface FindCodeInfoUsingRegexParams {
   codeNameRegex: RegExp;
   codeAuthorRegex: RegExp;
+  isCodeAuthorExist: boolean;
 }

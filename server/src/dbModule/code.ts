@@ -22,7 +22,11 @@ export const findCode =
 
 export const findCodeInfoUsingRegex =
   (server: FastifyInstance) =>
-  async ({ codeAuthorRegex, codeNameRegex }: Types.FindCodeInfoUsingRegexParams) => {
+  async ({
+    codeAuthorRegex,
+    codeNameRegex,
+    isCodeAuthorExist,
+  }: Types.FindCodeInfoUsingRegexParams) => {
     const [error, codes] = await to(
       (async () =>
         await server.store.Code.find({ codeName: codeNameRegex, codeAuthor: codeAuthorRegex }).sort(
@@ -33,12 +37,15 @@ export const findCodeInfoUsingRegex =
     );
 
     if (error) throw new CustomResponse({ customStatus: 5000 });
+    const codeInfos = codes
+      .map((code) => ({
+        codeName: code.codeName,
+        codeAuthor: code.codeAuthor,
+        isAnonymous: code.isAnonymous,
+      }))
+      .filter((code) => !isCodeAuthorExist || !code.isAnonymous);
 
-    return codes.map((code) => ({
-      codeName: code.codeName,
-      codeAuthor: code.codeAuthor,
-      // isAnonymous: code.isAnonymous,
-    }));
+    return codeInfos;
   };
 
 export const isExistCode =

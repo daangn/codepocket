@@ -19,6 +19,7 @@ export default async <T, Response>(request: T, modules: GetCodeNames<Response>) 
   const codeInfos = await modules.findCodeInfoUsingRegex({
     codeAuthorRegex,
     codeNameRegex,
+    isCodeAuthorExist: !!codeAuthor,
   });
 
   return modules.successResponseFunc({ message: '', codeInfos });
