@@ -15,7 +15,13 @@ export const wrapper = style([
   }),
 ]);
 
-export const title = style([t.mt50, t.typography.heading2, { textAlign: 'center' }]);
+export const title = style([
+  t.mt50,
+  t.typography.heading2,
+  { textAlign: 'center' },
+  m.medium({ fontSize: rem(40) }),
+  m.small({ fontSize: rem(34) }),
+]);
 
 export const codeList = style([u.fullWidth]);
 

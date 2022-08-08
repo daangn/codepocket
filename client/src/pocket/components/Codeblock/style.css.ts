@@ -14,79 +14,32 @@ export const codeItem = style([
   },
 ]);
 
-export const codeItemHeader = style([
-  u.fullWidth,
-  u.flexAlignCenter,
-  { height: rem(50), justifyContent: 'space-between' },
-  m.small({
-    height: rem(70),
-    flexDirection: 'column',
-    alignItems: 'start',
-    marginBottom: rem(10),
-  }),
-]);
-
 export const codeItemHeaderInfo = style([
   u.flexAlignCenter,
-  { fontWeight: 'bold', columnGap: rem(30), fontSize: rem(20), padding: rem(5) },
+  {
+    justifyContent: 'space-between',
+    fontWeight: 'bold',
+    columnGap: rem(30),
+    fontSize: rem(20),
+    marginBottom: rem(10),
+  },
+  m.medium({
+    flexDirection: 'column-reverse',
+    alignItems: 'start',
+    rowGap: rem(5),
+  }),
+  m.small({
+    fontSize: rem(16),
+  }),
 ]);
 
-export const codeItemHeaderCodeName = style([u.flexCenter, { columnGap: rem(7) }]);
+export const codeItemHeaderCodeName = style([
+  u.flexCenter,
+  { columnGap: rem(7) },
+  m.medium({ marginLeft: rem(2) }),
+]);
 
 export const codeItemHeaderCodeAuthor = style([u.flexCenter, { columnGap: rem(7) }]);
-
-export const codeItemHeaderButtons = style([
-  u.flex,
-  {
-    columnGap: rem(5),
-  },
-]);
-
-export const codeItemButtonBase = style([
-  u.borderRadius,
-  u.cursorPointer,
-  u.flexAlignCenter,
-  {
-    width: rem(100),
-    height: rem(32),
-    backgroundColor: 'white',
-    fontWeight: 'bold',
-    transition: 'background 0.3s ease',
-    justifyContent: 'space-evenly',
-  },
-  m.medium({
-    width: rem(62),
-    fontSize: rem(12),
-  }),
-]);
-
-export const codeItemHeaderCopyButton = style([
-  codeItemButtonBase,
-  {
-    width: rem(70),
-    border: `1px solid ${colors.light.scheme.$gray700}`,
-    color: colors.light.scheme.$gray700,
-
-    ':hover': {
-      backgroundColor: colors.light.scheme.$gray100,
-    },
-  },
-  m.medium({
-    width: rem(50),
-  }),
-]);
-
-export const codeItemHeaderDetailButton = style([
-  codeItemButtonBase,
-  {
-    border: `1px solid ${colors.light.scheme.$blue800}`,
-    color: colors.light.scheme.$blue800,
-
-    ':hover': {
-      backgroundColor: colors.light.scheme.$blue50,
-    },
-  },
-]);
 
 export const codeItemCode = recipe({
   base: [
@@ -150,3 +103,64 @@ export const rightChevronIcon = style({
   width: rem(12),
   height: rem(20),
 });
+
+export const codeItemBottom = style([
+  u.flex,
+  {
+    marginTop: rem(10),
+    justifyContent: 'flex-end',
+  },
+]);
+
+export const codeItemHeaderButtons = style([
+  u.flex,
+  {
+    columnGap: rem(5),
+  },
+]);
+
+export const codeItemButtonBase = style([
+  u.borderRadius,
+  u.cursorPointer,
+  u.flexAlignCenter,
+  {
+    width: rem(100),
+    height: rem(30),
+    backgroundColor: 'white',
+    fontWeight: 'bold',
+    transition: 'background 0.3s ease',
+    justifyContent: 'space-evenly',
+  },
+  m.medium({
+    width: rem(62),
+    fontSize: rem(12),
+  }),
+]);
+
+export const codeItemHeaderCopyButton = style([
+  codeItemButtonBase,
+  {
+    width: rem(70),
+    border: `1px solid ${colors.light.scheme.$gray700}`,
+    color: colors.light.scheme.$gray700,
+
+    ':hover': {
+      backgroundColor: colors.light.scheme.$gray100,
+    },
+  },
+  m.medium({
+    width: rem(50),
+  }),
+]);
+
+export const codeItemHeaderDetailButton = style([
+  codeItemButtonBase,
+  {
+    border: `1px solid ${colors.light.scheme.$blue800}`,
+    color: colors.light.scheme.$blue800,
+
+    ':hover': {
+      backgroundColor: colors.light.scheme.$blue50,
+    },
+  },
+]);

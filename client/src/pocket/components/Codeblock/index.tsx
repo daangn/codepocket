@@ -34,20 +34,36 @@ const Codeblock: React.FC<CodeblockProps> = ({
 
   return (
     <li className={style.codeItem}>
-      <header className={style.codeItemHeader}>
-        <div className={style.codeItemHeaderInfo}>
-          <div className={style.codeItemHeaderCodeName}>
-            <Icon icon="code" />
-            <span>{codeName}</span>
-          </div>
-          {!isAnonymous && (
-            <div className={style.codeItemHeaderCodeAuthor}>
-              <Icon icon="profile" />
-              <span>{codeAuthor}</span>
-            </div>
-          )}
+      <div className={style.codeItemHeaderInfo}>
+        <div className={style.codeItemHeaderCodeName}>
+          <Icon icon="code" />
+          <span>{codeName}</span>
         </div>
-
+        {!isAnonymous && (
+          <div className={style.codeItemHeaderCodeAuthor}>
+            <Icon icon="profile" />
+            <span>{codeAuthor}</span>
+          </div>
+        )}
+      </div>
+      <div
+        className={style.codeItemCode({
+          haveManyCode,
+          toggled,
+        })}
+        onClick={toggle}
+      >
+        <SyntaxHighlighter
+          ref={syntaxHighlighterRef}
+          showLineNumbers
+          wrapLongLines={false}
+          language="javascript"
+          style={githubGist}
+        >
+          {code}
+        </SyntaxHighlighter>
+      </div>
+      <div className={style.codeItemBottom}>
         <div className={style.codeItemHeaderButtons}>
           <button
             type="button"
@@ -70,23 +86,6 @@ const Codeblock: React.FC<CodeblockProps> = ({
             </button>
           </a>
         </div>
-      </header>
-      <div
-        className={style.codeItemCode({
-          haveManyCode,
-          toggled,
-        })}
-        onClick={toggle}
-      >
-        <SyntaxHighlighter
-          ref={syntaxHighlighterRef}
-          showLineNumbers
-          wrapLongLines={false}
-          language="javascript"
-          style={githubGist}
-        >
-          {code}
-        </SyntaxHighlighter>
       </div>
     </li>
   );
