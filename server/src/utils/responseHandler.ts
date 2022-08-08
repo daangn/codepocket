@@ -18,6 +18,7 @@ const CustomResponseStatuses = {
   4004: { message: '이미 존재하는 스토리예요', status: 400 },
   4005: { message: '존재하지 않는 파일이예요', status: 404 },
   4006: { message: '삭제할 코드가 없어요', status: 404 },
+  4007: { message: '없는 코드를 지정하셨어요', status: 404 },
 
   5000: { message: '데이터베이스에 문제가 생겼어요', status: 500 },
   5001: { message: '슬랙에 문제가 생겼어요', status: 500 },

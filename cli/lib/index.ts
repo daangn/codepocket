@@ -16,7 +16,6 @@ const pushCommand = new Command('push')
 
 const pullCommand = new Command('pull')
   .description('입력받은 개발자의 코드를 codepocket에서 가져와요. 저장될 경로를 지정할 수 있어요')
-  .argument('<author>', '코드를 작성한 사람을 입력해주세요')
   .argument('<codename>', '코드이름을 입력해주세요')
   .option('-p, --path <path>', '코드가 복사될 경로를 입력해주세요')
   .action(pullCommandAction);

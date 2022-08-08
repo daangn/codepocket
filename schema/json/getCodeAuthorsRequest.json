@@ -1,0 +1,22 @@
+{
+  "title": "getCodeAuthorsRequest",
+  "type": "object",
+  "properties": {
+    "query": {
+      "type": "object",
+      "properties": {
+        "codeName": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "codeName"
+      ]
+    }
+  },
+  "additionalProperties": true,
+  "required": [
+    "query"
+  ]
+}
