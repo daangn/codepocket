@@ -1,0 +1,20 @@
+{
+  "title": "getCodeAuthorsResponse",
+  "type": "object",
+  "properties": {
+    "message": {
+      "type": "string"
+    },
+    "codeAuthors": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "message",
+    "codeAuthors"
+  ]
+}
