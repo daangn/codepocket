@@ -14,7 +14,7 @@ interface PushCodeType<Response> {
 
 export default async <T, Response>(request: T, modules: PushCodeType<Response>) => {
   if (!pushCodeRequestValidate(request)) throw modules.validateErrorFunc();
-  const { pocketToken, codeName, code } = request.body;
+  const { pocketToken, codeName, code, isAnonymous } = request.body;
 
   const codeAuthor = await modules.getAuthorName({ pocketToken });
 
@@ -38,6 +38,7 @@ export default async <T, Response>(request: T, modules: PushCodeType<Response>) 
     code,
     codeName,
     codeAuthor,
+    isAnonymous,
     isAlreadyPushedCode,
     slackChatChannel: slackInfo.uploadedChatChannel,
     slackChatTimeStamp: slackInfo.uploadedChatTimeStamp,
