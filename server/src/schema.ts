@@ -53,6 +53,7 @@ export const CodeSchema = new Schema<Code>({
   code: String,
   codeName: String,
   codeAuthor: String,
+  isAnonymous: Boolean,
   uploadedChatChannel: String,
   uploadedChatTimeStamp: String,
   createdAt: Date,

@@ -75,11 +75,11 @@ export const pushCode =
             await server.store.Code.findOneAndUpdate(
               {
                 codeAuthor,
-                isAnonymous,
                 codeName,
               },
               {
                 code,
+                isAnonymous,
                 uploadedChatChannel: slackChatChannel,
                 uploadedChatTimeStamp: slackChatTimeStamp,
                 updatedAt: new Date(),
