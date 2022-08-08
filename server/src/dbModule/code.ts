@@ -64,6 +64,7 @@ export const pushCode =
     code,
     codeName,
     codeAuthor,
+    isAnonymous,
     isAlreadyPushedCode,
     slackChatChannel,
     slackChatTimeStamp,
@@ -78,6 +79,7 @@ export const pushCode =
               },
               {
                 code,
+                isAnonymous,
                 uploadedChatChannel: slackChatChannel,
                 uploadedChatTimeStamp: slackChatTimeStamp,
                 updatedAt: new Date(),
@@ -88,6 +90,7 @@ export const pushCode =
               code,
               codeName,
               codeAuthor,
+              isAnonymous,
               uploadedChatChannel: slackChatChannel,
               uploadedChatTimeStamp: slackChatTimeStamp,
               createdAt: new Date(),

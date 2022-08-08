@@ -13,13 +13,17 @@
         },
         "code": {
           "type": "string"
+        },
+        "isAnonymous": {
+          "type": "boolean"
         }
       },
       "additionalProperties": false,
       "required": [
         "pocketToken",
         "codeName",
-        "code"
+        "code",
+        "isAnonymous"
       ]
     }
   },

@@ -33,6 +33,7 @@ export interface PushCodeParams {
   code: string;
   codeName: string;
   codeAuthor: string;
+  isAnonymous: boolean;
   isAlreadyPushedCode: boolean;
   slackChatChannel?: string;
   slackChatTimeStamp?: any;

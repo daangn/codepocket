@@ -12,6 +12,7 @@ export interface Code {
   code: string;
   codeName: string;
   codeAuthor: string;
+  isAnonymous: boolean;
   uploadedChatChannel?: string;
   uploadedChatTimeStamp?: string;
   createdAt: Date;
@@ -52,6 +53,7 @@ export const CodeSchema = new Schema<Code>({
   code: String,
   codeName: String,
   codeAuthor: String,
+  isAnonymous: Boolean,
   uploadedChatChannel: String,
   uploadedChatTimeStamp: String,
   createdAt: Date,
