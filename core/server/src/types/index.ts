@@ -5,6 +5,10 @@ export interface PocketToken {
   pocketToken: string;
 }
 
+export interface CodeName {
+  codeName: string;
+}
+
 export interface CodeInfo {
   codeName: string;
   codeAuthor: string;
