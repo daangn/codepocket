@@ -12,9 +12,15 @@ export interface CodeblockProps {
   codeAuthor: string;
   codeName: string;
   code: string;
+  isAnonymous: boolean;
 }
 
-const Codeblock: React.FC<CodeblockProps> = ({ codeAuthor, codeName, code }: CodeblockProps) => {
+const Codeblock: React.FC<CodeblockProps> = ({
+  codeAuthor,
+  codeName,
+  code,
+  isAnonymous,
+}: CodeblockProps) => {
   const [toggled, setToggled] = useState<boolean>(false);
   const { isCopied, copyToClipboard } = useClipboard({ text: code });
   const syntaxHighlighterRef = useRef<React.Component<SyntaxHighlighterProps>>(null);
@@ -32,7 +38,8 @@ const Codeblock: React.FC<CodeblockProps> = ({ codeAuthor, codeName, code }: Cod
         <div className={style.codeItemHeaderInfo}>
           <Icon icon="code" />
           <span>
-            {codeAuthor}/{codeName}
+            {isAnonymous && `${codeAuthor}/`}
+            {codeName}
           </span>
         </div>
 
