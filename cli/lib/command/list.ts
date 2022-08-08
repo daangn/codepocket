@@ -16,7 +16,16 @@ export default async ({ fileName, author }: { fileName?: string; author?: string
     })(),
   );
   if (error) return logger.error(chalk.yellow(error.message));
-  const names = result.codeNames.join('\n');
-  const authors = [...new Set(result.authors)].join(', ');
-  return logger.info(`${chalk.green(authors || '모두')}의 코드들입니다🥕\n${names}`);
+
+  const authors = [
+    ...new Set(result.codeInfos.filter((code) => !code.isAnonymous).map((code) => code.codeAuthor)),
+  ];
+
+  const codeInfoList = result.codeInfos
+    .sort()
+    .map((code) => `${code.isAnonymous ? '' : code.codeAuthor}/${code.codeName}`)
+    .join('\r\n');
+  return logger.info(
+    `${chalk.green(authors.length === 1 ? authors[0] : '모두')}의 코드들입니다🥕\n${codeInfoList}`,
+  );
 };
