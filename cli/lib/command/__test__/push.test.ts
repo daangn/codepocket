@@ -1,5 +1,6 @@
 import chalk from 'chalk';
 import fs from 'fs';
+import inquirer from 'inquirer';
 
 import { pushCodeHandler } from '../../__mocks__/handlers';
 import server from '../../__mocks__/server';
@@ -11,10 +12,22 @@ jest.mock('chalk', () => ({
   green: jest.fn(),
 }));
 
+jest.mock('inquirer', () => ({
+  prompt: jest.fn(),
+}));
+
 const chalkYellowMock = chalk.yellow as jest.MockedFunction<typeof chalk.yellow>;
 const chalkGreenMock = chalk.green as jest.MockedFunction<typeof chalk.green>;
 chalkYellowMock.mockImplementation((value: unknown) => value as string);
 chalkGreenMock.mockImplementation((value: unknown) => value as string);
+
+const inquirerMock = inquirer.prompt as jest.MockedFunction<typeof inquirer.prompt>;
+inquirerMock.mockImplementation(
+  () =>
+    new Promise((res) => {
+      res({ isAnonymous: true });
+    }) as any,
+);
 
 const consoleErrorSpy = jest.spyOn(logger, 'error');
 const consoleLogSpy = jest.spyOn(logger, 'info');
