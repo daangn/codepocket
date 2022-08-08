@@ -36,13 +36,15 @@ const Codeblock: React.FC<CodeblockProps> = ({
     <li className={style.codeItem}>
       <header className={style.codeItemHeader}>
         <div className={style.codeItemHeaderInfo}>
-          <Icon icon="code" />
-          <span>{codeName}</span>
+          <div className={style.codeItemHeaderCodeName}>
+            <Icon icon="code" />
+            <span>{codeName}</span>
+          </div>
           {!isAnonymous && (
-            <>
+            <div className={style.codeItemHeaderCodeAuthor}>
               <Icon icon="profile" />
               <span>{codeAuthor}</span>
-            </>
+            </div>
           )}
         </div>
 

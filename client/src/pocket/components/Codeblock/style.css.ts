@@ -16,7 +16,6 @@ export const codeItem = style([
 
 export const codeItemHeader = style([
   u.fullWidth,
-  u.flex,
   u.flexAlignCenter,
   { height: rem(50), justifyContent: 'space-between' },
   m.small({
@@ -28,10 +27,13 @@ export const codeItemHeader = style([
 ]);
 
 export const codeItemHeaderInfo = style([
-  u.flex,
   u.flexAlignCenter,
-  { fontWeight: 'bold', columnGap: rem(7), fontSize: rem(20), padding: rem(5) },
+  { fontWeight: 'bold', columnGap: rem(30), fontSize: rem(20), padding: rem(5) },
 ]);
+
+export const codeItemHeaderCodeName = style([u.flexCenter, { columnGap: rem(7) }]);
+
+export const codeItemHeaderCodeAuthor = style([u.flexCenter, { columnGap: rem(7) }]);
 
 export const codeItemHeaderButtons = style([
   u.flex,
@@ -43,7 +45,6 @@ export const codeItemHeaderButtons = style([
 export const codeItemButtonBase = style([
   u.borderRadius,
   u.cursorPointer,
-  u.flex,
   u.flexAlignCenter,
   {
     width: rem(100),
