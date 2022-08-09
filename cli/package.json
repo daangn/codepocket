@@ -19,7 +19,7 @@
   "scripts": {
     "build": "nanobundle build",
     "pocket": "NODE_ENV=development yarn node -r tsm ./lib/index.ts",
-    "prepublish": "yarn build",
+    "prepare": "yarn build",
     "test": "NODE_ENV=development jest --silent --verbose",
     "test:log": "NODE_ENV=development jest"
   },
@@ -46,6 +46,6 @@
   },
   "packageManager": "yarn@3.2.1",
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
+    "access": "public"
   }
 }

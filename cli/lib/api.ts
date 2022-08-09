@@ -10,7 +10,7 @@ import {
 import { to } from 'await-to-js';
 import axios, { AxiosResponse } from 'axios';
 
-import { BASE_DEFAULT_URL, POCKET_DEV_SERVER, POCKET_PROD_SERVER } from './env';
+import { BASE_DEFAULT_URL, POCKET_PROD_SERVER } from './env';
 
 // Response
 interface ResponseType<T> extends AxiosResponse {
