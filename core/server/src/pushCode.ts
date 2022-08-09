@@ -1,7 +1,7 @@
 import { pushCodeRequestValidate, PushCodeResponse } from '@pocket/schema';
 import { CodeInfo, PocketToken, PushCodeParams } from 'types';
 
-import { SlackConfig, uploadCodeToSlack } from './slack';
+import { postMessageToSlack, SlackConfig, uploadCodeToSlack } from './slack';
 
 interface PushCodeType<Response> {
   validateErrorFunc: () => Response;
@@ -45,12 +45,12 @@ export default async <T, Response>(request: T, modules: PushCodeType<Response>) 
   });
 
   if (modules.slackConfig)
-    await uploadCodeToSlack({
-      code,
+    await postMessageToSlack({
       codeName,
       codeAuthor,
       isAlreadyPushedCode,
       config: modules.slackConfig,
+      uploadedChatURL: slackInfo.uploadedChatURL,
     });
 
   return modules.successResponseFunc({ message: '' });

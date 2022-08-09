@@ -2,10 +2,10 @@ import { GetCodesResponse, getCodesResponseValidate } from '@pocket/schema';
 import useCustomQuery from '@shared/hooks/useCustomQuery';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { CodeType, getCodesUrl } from '../api';
+import { getCodesUrl } from '../api';
 
 const useCodes = () => {
-  const [codes, setCodes] = useState<CodeType[]>([]);
+  const [codes, setCodes] = useState<GetCodesResponse['codes']>([]);
   const [offset, setOffset] = useState<number>(0);
   const [searchText, setSearchText] = useState<string>('');
 

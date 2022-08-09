@@ -12,9 +12,15 @@ export interface CodeblockProps {
   codeAuthor: string;
   codeName: string;
   code: string;
+  isAnonymous: boolean;
 }
 
-const Codeblock: React.FC<CodeblockProps> = ({ codeAuthor, codeName, code }: CodeblockProps) => {
+const Codeblock: React.FC<CodeblockProps> = ({
+  codeAuthor,
+  codeName,
+  code,
+  isAnonymous,
+}: CodeblockProps) => {
   const [toggled, setToggled] = useState<boolean>(false);
   const { isCopied, copyToClipboard } = useClipboard({ text: code });
   const syntaxHighlighterRef = useRef<React.Component<SyntaxHighlighterProps>>(null);
@@ -28,14 +34,36 @@ const Codeblock: React.FC<CodeblockProps> = ({ codeAuthor, codeName, code }: Cod
 
   return (
     <li className={style.codeItem}>
-      <header className={style.codeItemHeader}>
-        <div className={style.codeItemHeaderInfo}>
+      <div className={style.codeItemHeaderInfo}>
+        <div className={style.codeItemHeaderCodeName}>
           <Icon icon="code" />
-          <span>
-            {codeAuthor}/{codeName}
-          </span>
+          <span>{codeName}</span>
         </div>
-
+        {!isAnonymous && (
+          <div className={style.codeItemHeaderCodeAuthor}>
+            <Icon icon="profile" />
+            <span>{codeAuthor}</span>
+          </div>
+        )}
+      </div>
+      <div
+        className={style.codeItemCode({
+          haveManyCode,
+          toggled,
+        })}
+        onClick={toggle}
+      >
+        <SyntaxHighlighter
+          ref={syntaxHighlighterRef}
+          showLineNumbers
+          wrapLongLines={false}
+          language="javascript"
+          style={githubGist}
+        >
+          {code}
+        </SyntaxHighlighter>
+      </div>
+      <div className={style.codeItemBottom}>
         <div className={style.codeItemHeaderButtons}>
           <button
             type="button"
@@ -58,23 +86,6 @@ const Codeblock: React.FC<CodeblockProps> = ({ codeAuthor, codeName, code }: Cod
             </button>
           </a>
         </div>
-      </header>
-      <div
-        className={style.codeItemCode({
-          haveManyCode,
-          toggled,
-        })}
-        onClick={toggle}
-      >
-        <SyntaxHighlighter
-          ref={syntaxHighlighterRef}
-          showLineNumbers
-          wrapLongLines={false}
-          language="javascript"
-          style={githubGist}
-        >
-          {code}
-        </SyntaxHighlighter>
       </div>
     </li>
   );
