@@ -11,6 +11,9 @@
     "code": {
       "type": "string"
     },
+    "isAnonymous": {
+      "type": "boolean"
+    },
     "message": {
       "type": "string"
     }
