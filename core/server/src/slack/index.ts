@@ -15,6 +15,7 @@ interface PoseMessageToSlack {
   codeAuthor: string;
   codeName: string;
   config: SlackConfig;
+  isAnonymous: boolean;
   uploadedChatURL?: string;
 }
 
@@ -23,8 +24,24 @@ interface UploadCodeToSlack {
   codeName: string;
   codeAuthor: string;
   isAlreadyPushedCode: boolean;
+  isAnonymous: boolean;
   config: SlackConfig;
 }
+
+const generateAuthorText = ({
+  isAnonymous,
+  codeAuthor,
+}: {
+  isAnonymous: boolean;
+  codeAuthor: string;
+}) => (!isAnonymous ? `\`${changeFirstToUpperCase(codeAuthor)}\`의 ` : ``);
+const generateInfoText = ({
+  isAlreadyPushedCode,
+  codeName,
+}: {
+  isAlreadyPushedCode: boolean;
+  codeName: string;
+}) => `\`${codeName}\` 코드가 ${isAlreadyPushedCode ? '수정됐어요!' : '올라왔어요!'}`;
 
 export const postMessageToSlack = async ({
   isAlreadyPushedCode,
@@ -32,13 +49,15 @@ export const postMessageToSlack = async ({
   codeName,
   config,
   uploadedChatURL,
+  isAnonymous,
 }: PoseMessageToSlack) => {
   const [postMessageError] = await to(
     postMessageToSlackAPI({
       slackBotToken: config.SLACK_BOT_TOKEN || '',
       channelId: config.CHAPTER_FRONTED_CHANNEL_ID || '',
-      text: `\`${changeFirstToUpperCase(codeAuthor)}\`의 \`${codeName}\` 코드가 ${
-        isAlreadyPushedCode ? '수정됐어요!' : '올라왔어요!'
+      text: `${
+        generateAuthorText({ isAnonymous, codeAuthor }) +
+        generateInfoText({ isAlreadyPushedCode, codeName })
       }\n${uploadedChatURL}`,
     }),
   );
@@ -51,14 +70,16 @@ export const uploadCodeToSlack = async ({
   codeAuthor,
   codeName,
   config,
+  isAnonymous,
   isAlreadyPushedCode,
 }: UploadCodeToSlack) => {
   const [uploadCodeError, uploadCodeResponse] = await to(
     uploadCodeToSlackAPI({
       code,
       codeName,
-      initialComment: `\`${changeFirstToUpperCase(codeAuthor)}\`의 \`${codeName}\` 코드가 ${
-        isAlreadyPushedCode ? '수정됐어요!' : '올라왔어요!'
+      initialComment: `${
+        generateAuthorText({ isAnonymous, codeAuthor }) +
+        generateInfoText({ isAlreadyPushedCode, codeName })
       }`,
       slackBotToken: config.SLACK_BOT_TOKEN || '',
       channelId: config.CODEPOCKET_CHANNEL_ID || '',

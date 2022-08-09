@@ -25,6 +25,7 @@ export default async <T, Response>(request: T, modules: PushCodeType<Response>) 
         code,
         codeName,
         codeAuthor,
+        isAnonymous,
         isAlreadyPushedCode,
         config: modules.slackConfig,
       })
@@ -48,6 +49,7 @@ export default async <T, Response>(request: T, modules: PushCodeType<Response>) 
     await postMessageToSlack({
       codeName,
       codeAuthor,
+      isAnonymous,
       isAlreadyPushedCode,
       config: modules.slackConfig,
       uploadedChatURL: slackInfo.uploadedChatURL,
