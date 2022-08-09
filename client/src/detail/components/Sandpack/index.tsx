@@ -33,6 +33,7 @@ interface SandpackComponentProps {
 interface SandpackWrapperProps {
   codeName: string;
   codeAuthor: string;
+  code: string;
   selectedStory?: SelectedStory;
   pushCode: ({
     codes,
@@ -95,16 +96,14 @@ const SandpackComponent: React.FC<SandpackComponentProps> = (props) => {
 };
 
 const SandpackWrapper: React.FC<SandpackWrapperProps> = (props) => {
-  const { data: codeDataRes } = useCode({ codeAuthor: props.codeAuthor, codeName: props.codeName });
-
   const VERSION = 'latest';
   const dependencies = createObjWithCertainValue(
-    getDependenciesFromText(codeDataRes?.code || ''),
+    getDependenciesFromText(props?.code || ''),
     VERSION,
   );
   const files = {
     [ROOT_FILE]: genrateBaseCode(props.codeName),
-    [`/${props.codeName}`]: codeDataRes?.code || '',
+    [`/${props.codeName}`]: props?.code || '',
     ...props.selectedStory?.codes,
   };
 

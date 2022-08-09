@@ -8,18 +8,30 @@ import { PocketCode } from './api';
 import Sandpack from './components/Sandpack';
 import SandpackLoader from './components/SandpackLoader';
 import StoryNameList from './components/StoryNameList';
+import useCode from './hooks/useCode';
 import useCreateStory from './hooks/useCreateStory';
 import useStory from './hooks/useStory';
 import useStoryNames from './hooks/useStoryNames';
 import * as style from './style.css';
 
 const DetailPage: React.FC = () => {
-  const { codeAuthor, codeName } = useParams<keyof DetailPathParam>();
-  const { data: storyNamesRes } = useStoryNames({ codeAuthor, codeName });
-  const { selectStory, selectedStory, selectedStoryName } = useStory({ codeAuthor, codeName });
-  const { createStory } = useCreateStory({ codeAuthor, codeName, selectStory });
+  const { codeId } = useParams<keyof DetailPathParam>();
+  const { data: codeDataRes } = useCode({ codeId });
+  const { data: storyNamesRes } = useStoryNames({
+    codeAuthor: codeDataRes?.codeAuthor,
+    codeName: codeDataRes?.codeName,
+  });
+  const { selectStory, selectedStory, selectedStoryName } = useStory({
+    codeAuthor: codeDataRes?.codeAuthor,
+    codeName: codeDataRes?.codeName,
+  });
+  const { createStory } = useCreateStory({
+    codeAuthor: codeDataRes?.codeAuthor,
+    codeName: codeDataRes?.codeName,
+    selectStory,
+  });
 
-  if (!codeAuthor || !codeName) return <></>;
+  if (!codeDataRes?.codeAuthor || !codeDataRes?.codeName) return <></>;
   return (
     <div className={style.wrapper}>
       <div className={style.codeBlock}>
@@ -30,16 +42,17 @@ const DetailPage: React.FC = () => {
             </Link>
           </div>
           <h1 className={style.title}>
-            {codeAuthor}
+            {codeDataRes?.codeAuthor}
             <span className={style.highlight}> / </span>
-            {codeName}
+            {codeDataRes?.codeName}
           </h1>
         </header>
         <article className={style.article}>
           <AsyncBoundary pendingFallback={<SandpackLoader />} rejectedFallback={SandpackLoader}>
             <Sandpack
-              codeName={codeName}
-              codeAuthor={codeAuthor}
+              code={codeDataRes?.code}
+              codeName={codeDataRes?.codeName}
+              codeAuthor={codeDataRes?.codeAuthor}
               selectedStory={selectedStory}
               pushCode={createStory}
             />

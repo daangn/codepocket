@@ -73,7 +73,7 @@ const Codeblock: React.FC<CodeblockProps> = ({
           >
             {isCopied ? 'COPIED!' : 'COPY'}
           </button>
-          <a href={generateDetailPath({ codeAuthor, codeName })}>
+          <a href={generateDetailPath({ codeId: '' })}>
             <button
               type="button"
               aria-details="코드 상세페이지 이동 버튼"

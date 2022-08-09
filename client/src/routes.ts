@@ -1,6 +1,5 @@
 export interface DetailPathParam {
-  codeAuthor: string;
-  codeName: string;
+  codeId: string;
 }
 
 export interface TokenPathQuery {
@@ -10,9 +9,8 @@ export interface TokenPathQuery {
 export const pocketPath = '/';
 export const generatePocketPath = () => '/';
 
-export const detailPath = `/detail/:codeAuthor/:codeName`;
-export const generateDetailPath = ({ codeAuthor, codeName }: DetailPathParam) =>
-  `/detail/${codeAuthor}/${codeName}`;
+export const detailPath = `/detail/:codeId`;
+export const generateDetailPath = ({ codeId }: DetailPathParam) => `/detail/${codeId}`;
 
 export const authPath = '/auth';
 
