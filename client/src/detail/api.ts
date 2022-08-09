@@ -8,7 +8,7 @@ export interface CodeData {
   uploadedChatTimeStamp: string;
 }
 
-export const getCodeUrl = `/code`;
+export const getCodeUrl = `/code/id`;
 export const getStoryNamesUrl = `/story/names`;
 export const getStoryCodeUrl = `/story/code`;
 export const createStoryUrl = `/story`;
