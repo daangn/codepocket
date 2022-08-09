@@ -5,14 +5,13 @@ import inquirer from 'inquirer';
 import path from 'path';
 
 import { getCodeAuthors, pullCodeAPI } from '../api';
-import { checkaServerEnv, logger } from '../utils';
+import { logger } from '../utils';
 
 export default async (codeName: string, option: { path?: string }) => {
   const ANONYMOUS = '익명이';
 
   const [error] = await to(
     (async () => {
-      checkaServerEnv();
       const optionPath = option.path || '.';
       const currentCommandPath = process.env.INIT_CWD || '';
 

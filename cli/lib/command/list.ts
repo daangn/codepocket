@@ -2,12 +2,11 @@ import { to } from 'await-to-js';
 import chalk from 'chalk';
 
 import { listCodeAPI } from '../api';
-import { checkaServerEnv, logger } from '../utils';
+import { logger } from '../utils';
 
 export default async ({ fileName, author }: { fileName?: string; author?: string }) => {
   const [error, result] = await to(
     (async () => {
-      checkaServerEnv();
       const response = await listCodeAPI({
         codeName: fileName || '',
         codeAuthor: author || '',
