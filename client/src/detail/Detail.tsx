@@ -1,12 +1,10 @@
 import { colors } from '@karrotmarket/design-token';
-import AsyncBoundary from '@shared/components/AsyncBoundary';
 import Icon from '@shared/components/Icon';
 import { Link, useParams } from 'react-router-dom';
 
 import { DetailPathParam, pocketPath } from '../routes';
 import { PocketCode } from './api';
 import Sandpack from './components/Sandpack';
-import SandpackLoader from './components/SandpackLoader';
 import StoryNameList from './components/StoryNameList';
 import useCode from './hooks/useCode';
 import useCreateStory from './hooks/useCreateStory';
@@ -48,15 +46,13 @@ const DetailPage: React.FC = () => {
           </h1>
         </header>
         <article className={style.article}>
-          <AsyncBoundary pendingFallback={<SandpackLoader />} rejectedFallback={SandpackLoader}>
-            <Sandpack
-              code={codeDataRes?.code}
-              codeName={codeDataRes?.codeName}
-              codeAuthor={codeDataRes?.codeAuthor}
-              selectedStory={selectedStory}
-              pushCode={createStory}
-            />
-          </AsyncBoundary>
+          <Sandpack
+            code={codeDataRes?.code}
+            codeName={codeDataRes?.codeName}
+            codeAuthor={codeDataRes?.codeAuthor}
+            selectedStory={selectedStory}
+            pushCode={createStory}
+          />
         </article>
         <StoryNameList
           pocketCodes={(storyNamesRes?.storyNames as PocketCode[]) || []}
