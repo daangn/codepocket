@@ -20,6 +20,10 @@ const CustomResponseStatuses = {
   4006: { message: '삭제할 코드가 없어요', status: 404 },
   4007: { message: '없는 코드를 지정하셨어요', status: 404 },
   4008: { message: '존재하지 않는 코드예요', status: 404 },
+  4009: {
+    message: '이미 같은 이름의 익명 코드가 존재해요. 이름을 바꾸시거나 실명으로 올려주세요',
+    status: 400,
+  },
 
   5000: { message: '데이터베이스에 문제가 생겼어요', status: 500 },
   5001: { message: '슬랙에 문제가 생겼어요', status: 500 },
