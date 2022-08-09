@@ -7,13 +7,13 @@ import {
   PullCodeAPIResponseData,
   ServerResponseData,
 } from '../api';
-import { BASE_DEV_URL } from '../env';
+import { BASE_DEFAULT_URL } from '../env';
 import { generateListCodeResponseMock } from './mockup';
 
 type Error = 'NO' | 'SERVER' | 'NETWORK';
 
 export const pushCodeHandler = (error: Error = 'NO') =>
-  rest.post(`${BASE_DEV_URL}/code`, (_, res, ctx) => {
+  rest.post(`${BASE_DEFAULT_URL}/code`, (_, res, ctx) => {
     if (error === 'SERVER')
       return res(ctx.status(401), ctx.json<ServerResponseData>({ message: '서버 에러 발생' }));
     if (error === 'NETWORK')
@@ -22,7 +22,7 @@ export const pushCodeHandler = (error: Error = 'NO') =>
   });
 
 export const pullCodeHandler = (error: Error = 'NO') =>
-  rest.get(`${BASE_DEV_URL}/code`, (_, res, ctx) => {
+  rest.get(`${BASE_DEFAULT_URL}/code`, (_, res, ctx) => {
     if (error === 'SERVER')
       return res(ctx.status(401), ctx.json<ServerResponseData>({ message: '서버 에러 발생' }));
     if (error === 'NETWORK')
@@ -31,7 +31,7 @@ export const pullCodeHandler = (error: Error = 'NO') =>
   });
 
 export const getCodeAuthorsHandler = () =>
-  rest.get(`${BASE_DEV_URL}/code/authors`, (_, res, ctx) => {
+  rest.get(`${BASE_DEFAULT_URL}/code/authors`, (_, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.json<GetCodeAuthorsResponse>({
@@ -42,7 +42,7 @@ export const getCodeAuthorsHandler = () =>
   });
 
 export const listCodeHandler = (error: Error = 'NO', isAuthor = false) =>
-  rest.get(`${BASE_DEV_URL}/code/list`, (_, res, ctx) => {
+  rest.get(`${BASE_DEFAULT_URL}/code/list`, (_, res, ctx) => {
     if (error === 'SERVER')
       return res(ctx.status(401), ctx.json<ServerResponseData>({ message: '서버 에러 발생' }));
     if (error === 'NETWORK')
@@ -54,7 +54,7 @@ export const listCodeHandler = (error: Error = 'NO', isAuthor = false) =>
   });
 
 export const deleteCodeHandler = (error: Error = 'NO') =>
-  rest.post(`${BASE_DEV_URL}/code/delete`, (_, res, ctx) => {
+  rest.post(`${BASE_DEFAULT_URL}/code/delete`, (_, res, ctx) => {
     if (error === 'SERVER')
       return res(ctx.status(401), ctx.json<ServerResponseData>({ message: '서버 에러 발생' }));
     if (error === 'NETWORK')
