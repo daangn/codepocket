@@ -139,7 +139,7 @@ export const searchCodes =
     const [error, getCodes] = await to(
       (async () =>
         await server.store.Code.find()
-          .or([{ codeName: searchRegex }, { codeAuthor: searchRegex }])
+          .or([{ codeName: searchRegex }, { codeAuthor: searchRegex, isAnonymous: false }])
           .sort({ updatedAt: 'desc' })
           .skip(+limit * +offset)
           .limit(+limit))(),
@@ -147,13 +147,16 @@ export const searchCodes =
 
     if (error) throw new CustomResponse({ customStatus: 5000 });
 
-    const codes = getCodes.map(({ code, codeName, codeAuthor, createdAt, updatedAt }) => ({
-      code,
-      codeName,
-      codeAuthor,
-      createdAt,
-      updatedAt,
-    }));
+    const codes = getCodes.map(
+      ({ code, codeName, codeAuthor, createdAt, updatedAt, isAnonymous }) => ({
+        code,
+        codeName,
+        codeAuthor,
+        createdAt,
+        updatedAt,
+        isAnonymous,
+      }),
+    );
 
     return codes;
   };

@@ -29,6 +29,9 @@
           "updatedAt": {
             "type": "string",
             "format": "date"
+          },
+          "isAnonymous": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false,
@@ -37,7 +40,8 @@
           "codeAuthor",
           "codeName",
           "createdAt",
-          "updatedAt"
+          "updatedAt",
+          "isAnonymous"
         ]
       }
     }
