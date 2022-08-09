@@ -111,6 +111,19 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
     ),
   );
 
+  server.get('/code/authors', (req, reply) =>
+    responseHandler(
+      () =>
+        core.getCodeAuthors(req, {
+          validateErrorFunc: () => new CustomResponse({ customStatus: 4001 }),
+          successResponseFunc: (body) =>
+            new CustomResponse<Schema.GetCodeAuthorsResponse>({ customStatus: 2003, body }),
+          findCodeAuthors: CodeModule.findCodeAuthors(server),
+        }),
+      reply,
+    ),
+  );
+
   server.get('/code/list', (req, reply) =>
     responseHandler(
       () =>

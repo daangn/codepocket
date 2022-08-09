@@ -1,4 +1,4 @@
-import { GetCodeNamesResponse } from '@pocket/schema';
+import { GetCodeAuthorsResponse, GetCodeNamesResponse } from '@pocket/schema';
 import { rest } from 'msw';
 
 import {
@@ -28,6 +28,17 @@ export const pullCodeHandler = (error: Error = 'NO') =>
     if (error === 'NETWORK')
       return res(ctx.status(404), ctx.json<NetworkResponseData>('네트워크 에러 발생'));
     return res(ctx.status(200), ctx.json<PullCodeAPIResponseData>({ code: 'this is code' }));
+  });
+
+export const getCodeAuthorsHandler = () =>
+  rest.get(`${BASE_DEV_URL}/code/authors`, (_, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json<GetCodeAuthorsResponse>({
+        codeAuthors: [{ codeAuthor: 'author', isAnonymous: false }],
+        message: 'success',
+      }),
+    );
   });
 
 export const listCodeHandler = (error: Error = 'NO', isAuthor = false) =>

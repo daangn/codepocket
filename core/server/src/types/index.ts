@@ -5,6 +5,15 @@ export interface PocketToken {
   pocketToken: string;
 }
 
+export interface CodeName {
+  codeName: string;
+}
+
+export interface CodeAuthor {
+  codeAuthor: string;
+  isAnonymous: boolean;
+}
+
 export interface CodeInfo {
   codeName: string;
   codeAuthor: string;

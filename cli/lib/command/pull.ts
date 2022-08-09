@@ -1,18 +1,31 @@
 import { to } from 'await-to-js';
 import chalk from 'chalk';
 import fs from 'fs';
+import inquirer from 'inquirer';
 import path from 'path';
 
-import { pullCodeAPI } from '../api';
+import { getCodeAuthors, pullCodeAPI } from '../api';
 import { checkaServerEnv, logger } from '../utils';
 
-export default async (codeAuthor: string, codeName: string, option: { path?: string }) => {
+export default async (codeName: string, option: { path?: string }) => {
+  const ANONYMOUS = '익명이';
+
   const [error] = await to(
     (async () => {
       checkaServerEnv();
       const optionPath = option.path || '.';
       const currentCommandPath = process.env.INIT_CWD || '';
 
+      const authors = await getCodeAuthors({ codeName });
+      const anonymousAuthor = authors.find((author) => author.isAnonymous)?.codeAuthor;
+      const { selectedAuthor } = await inquirer.prompt({
+        name: 'selectedAuthor',
+        type: 'list',
+        message: '누구의 코드를 가져오시겠어요?',
+        choices: authors.map((author) => (author.isAnonymous ? ANONYMOUS : author.codeAuthor)),
+      });
+
+      const codeAuthor = selectedAuthor !== ANONYMOUS ? selectedAuthor : anonymousAuthor;
       const code = await pullCodeAPI({ codeAuthor, codeName });
       const myPath = path.resolve(currentCommandPath, optionPath);
       if (!fs.existsSync(myPath)) {
