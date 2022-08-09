@@ -5,6 +5,10 @@ export interface PocketToken {
   pocketToken: string;
 }
 
+export interface CodeId {
+  codeId: string;
+}
+
 export interface CodeName {
   codeName: string;
 }
@@ -21,6 +25,10 @@ export interface CodeInfo {
 
 export interface CodeInfoWithAnonymous extends CodeInfo {
   isAnonymous: boolean;
+}
+
+export interface CodeInfoWithCode extends CodeInfoWithAnonymous {
+  code: string;
 }
 
 export interface StoryInfo extends CodeInfo {

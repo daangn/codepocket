@@ -1,0 +1,28 @@
+{
+  "title": "pullCodeResponse",
+  "type": "object",
+  "properties": {
+    "codeAuthor": {
+      "type": "string"
+    },
+    "codeName": {
+      "type": "string"
+    },
+    "code": {
+      "type": "string"
+    },
+    "isAnonymous": {
+      "type": "boolean"
+    },
+    "message": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "codeAuthor",
+    "codeName",
+    "code",
+    "message"
+  ]
+}

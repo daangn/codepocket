@@ -13,6 +13,9 @@
       "items": {
         "type": "object",
         "properties": {
+          "codeId": {
+            "type": "string"
+          },
           "code": {
             "type": "string"
           },
@@ -36,6 +39,7 @@
         },
         "additionalProperties": false,
         "required": [
+          "codeId",
           "code",
           "codeAuthor",
           "codeName",

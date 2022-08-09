@@ -78,6 +78,19 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
     ),
   );
 
+  server.get('/code/id', (req, reply) =>
+    responseHandler(
+      () =>
+        core.getCode(req, {
+          validateErrorFunc: () => new CustomResponse({ customStatus: 4001 }),
+          successResponseFunc: (body) =>
+            new CustomResponse<Schema.GetCodeResponse>({ customStatus: 2007, body }),
+          getCodeById: CodeModule.getCodeById(server),
+        }),
+      reply,
+    ),
+  );
+
   server.post('/code', (req, reply) =>
     responseHandler(
       () =>

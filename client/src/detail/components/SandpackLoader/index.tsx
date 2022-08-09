@@ -1,3 +1,4 @@
+// deprecated : 원하면 삭제해도 됌
 import Icon from '@shared/components/Icon';
 
 import * as style from './style.css';

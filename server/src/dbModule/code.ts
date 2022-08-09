@@ -21,6 +21,20 @@ export const findCode =
     return code;
   };
 
+export const getCodeById =
+  (server: FastifyInstance) =>
+  async ({ codeId }: Types.CodeId) => {
+    const [getCodeByIdError, codeInfo] = await to(
+      (async () => await server.store.Code.findById(codeId))(),
+    );
+
+    if (getCodeByIdError) throw new CustomResponse({ customStatus: 5000 });
+    if (!codeInfo) throw new CustomResponse({ customStatus: 4008 });
+
+    const { codeAuthor, codeName, isAnonymous, code } = codeInfo;
+    return { codeAuthor, codeName, isAnonymous, code };
+  };
+
 export const findCodeAuthors =
   (server: FastifyInstance) =>
   async ({ codeName }: CodeName) => {
@@ -148,7 +162,8 @@ export const searchCodes =
     if (error) throw new CustomResponse({ customStatus: 5000 });
 
     const codes = getCodes.map(
-      ({ code, codeName, codeAuthor, createdAt, updatedAt, isAnonymous }) => ({
+      ({ code, codeName, codeAuthor, createdAt, updatedAt, _id, isAnonymous }) => ({
+        codeId: String(_id),
         code,
         codeName,
         codeAuthor,
