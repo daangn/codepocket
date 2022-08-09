@@ -10,7 +10,7 @@ import {
 import { to } from 'await-to-js';
 import axios, { AxiosResponse } from 'axios';
 
-import { BASE_DEV_URL, BASE_PROD_URL } from './env';
+import { BASE_DEFAULT_URL, POCKET_DEV_SERVER, POCKET_PROD_SERVER } from './env';
 
 // Response
 interface ResponseType<T> extends AxiosResponse {
@@ -35,9 +35,10 @@ type ResponseError = ServerError | NetworkError;
 const isNetworkError = (err: ResponseError): err is NetworkError =>
   typeof err.response.data === 'string';
 
-const axiosInstance = axios.create({
-  baseURL: process.env.NODE_ENV === 'development' ? BASE_DEV_URL : BASE_PROD_URL,
-});
+const baseURL =
+  (process.env.NODE_ENV === 'development' ? POCKET_DEV_SERVER : POCKET_PROD_SERVER) ||
+  BASE_DEFAULT_URL;
+const axiosInstance = axios.create({ baseURL });
 
 export const pushCodeAPI = async (body: PushCodeRequest['body']) => {
   const [err, res] = await to<ResponseType<DefaultResponseData>, ResponseError>(
