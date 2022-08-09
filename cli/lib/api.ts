@@ -36,7 +36,7 @@ const isNetworkError = (err: ResponseError): err is NetworkError =>
   typeof err.response.data === 'string';
 
 const baseURL =
-  (process.env.NODE_ENV === 'development' ? POCKET_DEV_SERVER : POCKET_PROD_SERVER) ||
+  (process.env.NODE_ENV === 'development' ? BASE_DEFAULT_URL : POCKET_PROD_SERVER) ||
   BASE_DEFAULT_URL;
 const axiosInstance = axios.create({ baseURL });
 
