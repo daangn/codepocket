@@ -162,7 +162,8 @@ export const searchCodes =
     if (error) throw new CustomResponse({ customStatus: 5000 });
 
     const codes = getCodes.map(
-      ({ code, codeName, codeAuthor, createdAt, updatedAt, isAnonymous }) => ({
+      ({ code, codeName, codeAuthor, createdAt, updatedAt, _id, isAnonymous }) => ({
+        codeId: String(_id),
         code,
         codeName,
         codeAuthor,
