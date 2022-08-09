@@ -3,11 +3,11 @@ on:
     branches:
       - main
 
-name: codepocket demo 배포
+name: codepocket external 배포
 
 jobs:
-  deploy-codepocket-demo:
-    name: codepocket demo 배포
+  deploy-codepocket-external:
+    name: codepocket external 배포
     runs-on: ubuntu-latest
 
     steps:
@@ -36,4 +36,4 @@ jobs:
         with:
           accountId: ${{ secrets.CF_ACCOUNT_ID }}
           apiToken: ${{ secrets.CF_API_TOKEN }}
-          command: pages publish ./client/dist --project-name=codepocket-demo
+          command: pages publish ./client/dist --project-name=codepocket-external
