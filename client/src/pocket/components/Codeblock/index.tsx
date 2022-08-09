@@ -9,6 +9,7 @@ import { generateDetailPath } from '../../../routes';
 import * as style from './style.css';
 
 export interface CodeblockProps {
+  codeId: string;
   codeAuthor: string;
   codeName: string;
   code: string;
@@ -16,6 +17,7 @@ export interface CodeblockProps {
 }
 
 const Codeblock: React.FC<CodeblockProps> = ({
+  codeId,
   codeAuthor,
   codeName,
   code,
@@ -73,7 +75,7 @@ const Codeblock: React.FC<CodeblockProps> = ({
           >
             {isCopied ? 'COPIED!' : 'COPY'}
           </button>
-          <a href={generateDetailPath({ codeId: '' })}>
+          <a href={generateDetailPath({ codeId })}>
             <button
               type="button"
               aria-details="코드 상세페이지 이동 버튼"
