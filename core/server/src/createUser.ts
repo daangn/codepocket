@@ -1,4 +1,4 @@
-import { createUserRequestValidate, CreateUserResponse } from '@pocket/schema';
+import { createUserRequestValidate, CreateUserResponse } from '@codepocket/schema';
 import stringHash from 'string-hash';
 import { UserInfo, UserInfoWithToken } from 'types';
 

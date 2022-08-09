@@ -1,4 +1,8 @@
-import { VerifyUserRequest, VerifyUserResponse, verifyUserResponseValidate } from '@pocket/schema';
+import {
+  VerifyUserRequest,
+  VerifyUserResponse,
+  verifyUserResponseValidate,
+} from '@codepocket/schema';
 import useCustomMutation from '@shared/hooks/useCustomMutation';
 import { localStorage } from '@shared/utils/localStorage';
 import { useCallback } from 'react';

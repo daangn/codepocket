@@ -1,6 +1,6 @@
 {
-  "name": "@pocket/cli",
-  "version": "0.1.5",
+  "name": "@codepocket/cli",
+  "version": "0.0.1",
   "repository": {
     "type": "git",
     "url": "https://github.com/daangn/codepocket.git"
@@ -24,7 +24,7 @@
     "test:log": "NODE_ENV=development jest"
   },
   "dependencies": {
-    "@pocket/schema": "workspace:^",
+    "@codepocket/schema": "workspace:^",
     "await-to-js": "^3.0.0",
     "axios": "^0.27.2",
     "chalk": "^5.0.1",

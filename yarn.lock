@@ -1895,6 +1895,158 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@codepocket/cli@workspace:cli":
+  version: 0.0.0-use.local
+  resolution: "@codepocket/cli@workspace:cli"
+  dependencies:
+    "@codepocket/schema": "workspace:^"
+    "@swc/core": ^1.2.211
+    "@swc/jest": ^0.2.21
+    "@types/dotenv-safe": ^8
+    "@types/inquirer": ^9
+    "@types/jest": ^28.1.4
+    "@types/node": ^18.0.3
+    await-to-js: ^3.0.0
+    axios: ^0.27.2
+    chalk: ^5.0.1
+    commander: ^9.3.0
+    dotenv-safe: ^8.2.0
+    inquirer: ^9.1.0
+    jest: ^28.1.2
+    msw: ^0.43.1
+    nanobundle: ^0.0.28
+    tsm: ^2.2.2
+  bin:
+    pocket: ./dist/index.mjs
+  languageName: unknown
+  linkType: soft
+
+"@codepocket/client@workspace:client":
+  version: 0.0.0-use.local
+  resolution: "@codepocket/client@workspace:client"
+  dependencies:
+    "@auth0/auth0-react": ^1.10.2
+    "@babel/core": ^7.18.6
+    "@codepocket/schema": "workspace:^"
+    "@codesandbox/sandpack-react": ^1.2.4
+    "@codesandbox/sandpack-themes": ^1.0.0
+    "@karrotmarket/design-token": ^1.1.2
+    "@mdx-js/react": ^1.6.22
+    "@storybook/addon-actions": ^6.5.9
+    "@storybook/addon-docs": ^6.5.9
+    "@storybook/addon-essentials": ^6.5.9
+    "@storybook/addon-interactions": ^6.5.9
+    "@storybook/addon-links": ^6.5.9
+    "@storybook/builder-vite": ^0.1.39
+    "@storybook/react": ^6.5.9
+    "@storybook/testing-library": ^0.0.13
+    "@swc/core": ^1.2.218
+    "@swc/jest": ^0.2.22
+    "@tanstack/react-query": ^4.0.5
+    "@tanstack/react-query-devtools": ^4.0.3
+    "@testing-library/react": ^13.3.0
+    "@types/babel__core": ^7
+    "@types/jest": ^28.1.6
+    "@types/lodash": ^4
+    "@types/react": ^18.0.14
+    "@types/react-dom": ^18.0.6
+    "@types/react-syntax-highlighter": ^15
+    "@vanilla-extract/css": ^1.7.2
+    "@vanilla-extract/recipes": ^0.2.5
+    "@vanilla-extract/vite-plugin": ^3.2.1
+    "@vitejs/plugin-react": ^1.3.0
+    await-to-js: ^3.0.0
+    axios: ^0.27.2
+    babel-loader: ^8.2.5
+    eslint-plugin-react-hooks: ^4.6.0
+    jest: ^28.1.3
+    jest-environment-jsdom: ^28.1.3
+    jotai: ^1.7.7
+    lodash: ^4.17.21
+    msw: ^0.44.2
+    polished: ^4.2.2
+    react: ^18.2.0
+    react-dom: ^18.2.0
+    react-error-boundary: ^3.1.4
+    react-router-dom: ^6.3.0
+    react-syntax-highlighter: ^15.5.0
+    typescript: ^4.7.4
+    vite: ^3.0.3
+    vite-plugin-checker: ^0.4.8
+    vite-plugin-rewrite-all: ^0.1.2
+    vitest: ^0.19.1
+  languageName: unknown
+  linkType: soft
+
+"@codepocket/core-server@workspace:^, @codepocket/core-server@workspace:core/server":
+  version: 0.0.0-use.local
+  resolution: "@codepocket/core-server@workspace:core/server"
+  dependencies:
+    "@codepocket/schema": "workspace:^"
+    gentype: ^4.5.0
+    rescript: ^9.1.4
+    typescript: ^4.7.4
+  languageName: unknown
+  linkType: soft
+
+"@codepocket/monorepo@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "@codepocket/monorepo@workspace:."
+  dependencies:
+    "@types/eslint": ^7
+    "@types/prettier": ^2
+    "@typescript-eslint/eslint-plugin": latest
+    "@typescript-eslint/parser": latest
+    eslint: ^7.32.0 || ^8.2.0
+    eslint-config-airbnb-base: latest
+    eslint-config-prettier: ^8.5.0
+    eslint-plugin-import: ^2.25.2
+    eslint-plugin-json-format: ^2.0.1
+    eslint-plugin-prettier: ^4.2.1
+    eslint-plugin-simple-import-sort: ^7.0.0
+    lerna: ^5.1.6
+    prettier: ^2.7.1
+    typescript: ^4.7.4
+    ultra-runner: ^3.10.5
+  languageName: unknown
+  linkType: soft
+
+"@codepocket/schema@workspace:^, @codepocket/schema@workspace:schema":
+  version: 0.0.0-use.local
+  resolution: "@codepocket/schema@workspace:schema"
+  dependencies:
+    "@types/prettier": ^2
+    ajv: ^8.11.0
+    json-schema-to-ts: ^2.5.5
+    prettier: ^2.7.1
+    tsm: ^2.2.2
+    typescript: ^4.7.4
+  languageName: unknown
+  linkType: soft
+
+"@codepocket/server@workspace:server":
+  version: 0.0.0-use.local
+  resolution: "@codepocket/server@workspace:server"
+  dependencies:
+    "@codepocket/core-server": "workspace:^"
+    "@codepocket/schema": "workspace:^"
+    "@fastify/cors": ^8.0.0
+    "@fastify/mongodb": ^6.0.1
+    "@types/dotenv-safe": ^8
+    "@types/node": ^18.0.6
+    "@types/string-hash": ^1
+    await-to-js: ^3.0.0
+    dotenv-safe: ^8.2.0
+    fastify: ^4.3.0
+    fastify-plugin: ^4.0.0
+    mongoose: ^6.4.6
+    node-fetch: 2
+    nodemon: ^2.0.19
+    string-hash: ^1.1.3
+    ts-node: ^10.9.1
+  languageName: unknown
+  linkType: soft
+
 "@codesandbox/sandpack-client@npm:^1.2.2":
   version: 1.2.2
   resolution: "@codesandbox/sandpack-client@npm:1.2.2"
@@ -4139,158 +4291,6 @@ __metadata:
   checksum: 3490649181878cc8808fb91f3870ef095e5a1fb9647b3ac83740df07379c9d1cf540f24bf2b09d5f26a3a8c805b2c6b9c5be7192bdb9317d0ffffa67426e9f66
   languageName: node
   linkType: hard
-
-"@pocket/cli@workspace:cli":
-  version: 0.0.0-use.local
-  resolution: "@pocket/cli@workspace:cli"
-  dependencies:
-    "@pocket/schema": "workspace:^"
-    "@swc/core": ^1.2.211
-    "@swc/jest": ^0.2.21
-    "@types/dotenv-safe": ^8
-    "@types/inquirer": ^9
-    "@types/jest": ^28.1.4
-    "@types/node": ^18.0.3
-    await-to-js: ^3.0.0
-    axios: ^0.27.2
-    chalk: ^5.0.1
-    commander: ^9.3.0
-    dotenv-safe: ^8.2.0
-    inquirer: ^9.1.0
-    jest: ^28.1.2
-    msw: ^0.43.1
-    nanobundle: ^0.0.28
-    tsm: ^2.2.2
-  bin:
-    pocket: ./dist/index.mjs
-  languageName: unknown
-  linkType: soft
-
-"@pocket/client@workspace:client":
-  version: 0.0.0-use.local
-  resolution: "@pocket/client@workspace:client"
-  dependencies:
-    "@auth0/auth0-react": ^1.10.2
-    "@babel/core": ^7.18.6
-    "@codesandbox/sandpack-react": ^1.2.4
-    "@codesandbox/sandpack-themes": ^1.0.0
-    "@karrotmarket/design-token": ^1.1.2
-    "@mdx-js/react": ^1.6.22
-    "@pocket/schema": "workspace:^"
-    "@storybook/addon-actions": ^6.5.9
-    "@storybook/addon-docs": ^6.5.9
-    "@storybook/addon-essentials": ^6.5.9
-    "@storybook/addon-interactions": ^6.5.9
-    "@storybook/addon-links": ^6.5.9
-    "@storybook/builder-vite": ^0.1.39
-    "@storybook/react": ^6.5.9
-    "@storybook/testing-library": ^0.0.13
-    "@swc/core": ^1.2.218
-    "@swc/jest": ^0.2.22
-    "@tanstack/react-query": ^4.0.5
-    "@tanstack/react-query-devtools": ^4.0.3
-    "@testing-library/react": ^13.3.0
-    "@types/babel__core": ^7
-    "@types/jest": ^28.1.6
-    "@types/lodash": ^4
-    "@types/react": ^18.0.14
-    "@types/react-dom": ^18.0.6
-    "@types/react-syntax-highlighter": ^15
-    "@vanilla-extract/css": ^1.7.2
-    "@vanilla-extract/recipes": ^0.2.5
-    "@vanilla-extract/vite-plugin": ^3.2.1
-    "@vitejs/plugin-react": ^1.3.0
-    await-to-js: ^3.0.0
-    axios: ^0.27.2
-    babel-loader: ^8.2.5
-    eslint-plugin-react-hooks: ^4.6.0
-    jest: ^28.1.3
-    jest-environment-jsdom: ^28.1.3
-    jotai: ^1.7.7
-    lodash: ^4.17.21
-    msw: ^0.44.2
-    polished: ^4.2.2
-    react: ^18.2.0
-    react-dom: ^18.2.0
-    react-error-boundary: ^3.1.4
-    react-router-dom: ^6.3.0
-    react-syntax-highlighter: ^15.5.0
-    typescript: ^4.7.4
-    vite: ^3.0.3
-    vite-plugin-checker: ^0.4.8
-    vite-plugin-rewrite-all: ^0.1.2
-    vitest: ^0.19.1
-  languageName: unknown
-  linkType: soft
-
-"@pocket/core-server@workspace:^, @pocket/core-server@workspace:core/server":
-  version: 0.0.0-use.local
-  resolution: "@pocket/core-server@workspace:core/server"
-  dependencies:
-    "@pocket/schema": "workspace:^"
-    gentype: ^4.5.0
-    rescript: ^9.1.4
-    typescript: ^4.7.4
-  languageName: unknown
-  linkType: soft
-
-"@pocket/monorepo@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "@pocket/monorepo@workspace:."
-  dependencies:
-    "@types/eslint": ^7
-    "@types/prettier": ^2
-    "@typescript-eslint/eslint-plugin": latest
-    "@typescript-eslint/parser": latest
-    eslint: ^7.32.0 || ^8.2.0
-    eslint-config-airbnb-base: latest
-    eslint-config-prettier: ^8.5.0
-    eslint-plugin-import: ^2.25.2
-    eslint-plugin-json-format: ^2.0.1
-    eslint-plugin-prettier: ^4.2.1
-    eslint-plugin-simple-import-sort: ^7.0.0
-    lerna: ^5.1.6
-    prettier: ^2.7.1
-    typescript: ^4.7.4
-    ultra-runner: ^3.10.5
-  languageName: unknown
-  linkType: soft
-
-"@pocket/schema@workspace:^, @pocket/schema@workspace:schema":
-  version: 0.0.0-use.local
-  resolution: "@pocket/schema@workspace:schema"
-  dependencies:
-    "@types/prettier": ^2
-    ajv: ^8.11.0
-    json-schema-to-ts: ^2.5.5
-    prettier: ^2.7.1
-    tsm: ^2.2.2
-    typescript: ^4.7.4
-  languageName: unknown
-  linkType: soft
-
-"@pocket/server@workspace:server":
-  version: 0.0.0-use.local
-  resolution: "@pocket/server@workspace:server"
-  dependencies:
-    "@fastify/cors": ^8.0.0
-    "@fastify/mongodb": ^6.0.1
-    "@pocket/core-server": "workspace:^"
-    "@pocket/schema": "workspace:^"
-    "@types/dotenv-safe": ^8
-    "@types/node": ^18.0.6
-    "@types/string-hash": ^1
-    await-to-js: ^3.0.0
-    dotenv-safe: ^8.2.0
-    fastify: ^4.3.0
-    fastify-plugin: ^4.0.0
-    mongoose: ^6.4.6
-    node-fetch: 2
-    nodemon: ^2.0.19
-    string-hash: ^1.1.3
-    ts-node: ^10.9.1
-  languageName: unknown
-  linkType: soft
 
 "@react-hook/intersection-observer@npm:^3.1.1":
   version: 3.1.1

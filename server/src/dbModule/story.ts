@@ -1,4 +1,4 @@
-import { Types } from '@pocket/core-server';
+import { Types } from '@codepocket/core-server';
 import { to } from 'await-to-js';
 import { FastifyInstance } from 'fastify';
 

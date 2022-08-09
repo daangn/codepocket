@@ -3,7 +3,7 @@
 ## 설치
 
 ```
-npm i -g @pocket/cli
+npm i -g @codepocket/cli
 ```
 
 ## 시작하기

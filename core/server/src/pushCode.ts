@@ -1,4 +1,4 @@
-import { pushCodeRequestValidate, PushCodeResponse } from '@pocket/schema';
+import { pushCodeRequestValidate, PushCodeResponse } from '@codepocket/schema';
 import { CodeInfo, PocketToken, PushCodeParams } from 'types';
 
 import { postMessageToSlack, SlackConfig, uploadCodeToSlack } from './slack';

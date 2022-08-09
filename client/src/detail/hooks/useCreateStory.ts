@@ -3,7 +3,7 @@ import {
   CreateStoryRequest,
   CreateStoryResponse,
   createStoryResponseValidate,
-} from '@pocket/schema';
+} from '@codepocket/schema';
 import useCustomMutation from '@shared/hooks/useCustomMutation';
 import { localStorage } from '@shared/utils/localStorage';
 import { useQueryClient } from '@tanstack/react-query';

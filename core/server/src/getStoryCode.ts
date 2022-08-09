@@ -1,4 +1,4 @@
-import { getStoryCodeRequestValidate, GetStoryCodeResponse } from '@pocket/schema';
+import { getStoryCodeRequestValidate, GetStoryCodeResponse } from '@codepocket/schema';
 import { StoryInfo } from 'types';
 
 interface GetStoryCode<Response> {

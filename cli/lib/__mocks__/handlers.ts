@@ -1,4 +1,4 @@
-import { GetCodeAuthorsResponse, GetCodeNamesResponse } from '@pocket/schema';
+import { GetCodeAuthorsResponse, GetCodeNamesResponse } from '@codepocket/schema';
 import { rest } from 'msw';
 
 import {

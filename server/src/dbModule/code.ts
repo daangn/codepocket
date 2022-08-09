@@ -1,5 +1,5 @@
-import { Types } from '@pocket/core-server';
-import { CodeName } from '@pocket/core-server/dist/types';
+import { Types } from '@codepocket/core-server';
+import { CodeName } from '@codepocket/core-server/dist/types';
 import { to } from 'await-to-js';
 import { FastifyInstance } from 'fastify';
 

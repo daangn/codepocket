@@ -1,5 +1,5 @@
 {
-  "name": "@pocket/server",
+  "name": "@codepocket/server",
   "version": "0.0.0",
   "repository": {
     "type": "git",
@@ -9,10 +9,10 @@
     "dev": "NODE_ENV=development nodemon --exec ts-node --files ./src/index.ts"
   },
   "dependencies": {
+    "@codepocket/core-server": "workspace:^",
+    "@codepocket/schema": "workspace:^",
     "@fastify/cors": "^8.0.0",
     "@fastify/mongodb": "^6.0.1",
-    "@pocket/core-server": "workspace:^",
-    "@pocket/schema": "workspace:^",
     "await-to-js": "^3.0.0",
     "dotenv-safe": "^8.2.0",
     "fastify": "^4.3.0",

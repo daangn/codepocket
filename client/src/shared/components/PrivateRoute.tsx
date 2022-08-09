@@ -1,4 +1,8 @@
-import { VerifyUserRequest, VerifyUserResponse, verifyUserResponseValidate } from '@pocket/schema';
+import {
+  VerifyUserRequest,
+  VerifyUserResponse,
+  verifyUserResponseValidate,
+} from '@codepocket/schema';
 import useCustomMutation from '@shared/hooks/useCustomMutation';
 import { ReactElement, useCallback, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
