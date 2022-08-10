@@ -1,20 +1,21 @@
-# Cli
+# @codepocket/cli
 
-## 설치
+## Install
 
 ```
-npm i -g @codepocket/cli
+$ npm i -g @codepocket/cli
+$ yarn global add @codepocket/cli
 ```
 
-## 시작하기
-
-### 준비사항
+## Required
 
 > 환경변수로 웹에서 발급받은 토큰정보를 넣어주세요
 
 ```
 export POCKET_TOKEN=<token>
 ```
+
+## Commands
 
 ### help
 
@@ -54,6 +55,8 @@ pocket list -a [작성자] -f [파일명]
 | -f, --fileName | 입력된 파일명 이름으로 리스트를 조회할 수 있어요 | pocket list -f code   |
 
 ### delete
+
+> 자신이 올린 코드만 삭제할 수 있어요
 
 ```
 pocket delete <코드명>
