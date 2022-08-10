@@ -13,7 +13,7 @@
     "re:build": "rescript"
   },
   "dependencies": {
-    "@codepocket/schema": "^0.0.1"
+    "@codepocket/schema": "^0.0.3"
   },
   "devDependencies": {
     "gentype": "^4.5.0",
