@@ -26,6 +26,14 @@ $ yarn global add @codepocket/cli
 
 [기여하기](https://github.com/daangn/codepocket/blob/main/CONTRIBUTING.md)
 
+## Packages
+
+- [@codepocket/cli](https://github.com/daangn/codepocket/tree/main/cli)
+- [@codepocket/client](https://github.com/daangn/codepocket/tree/main/client)
+- [@codepocket/core-server](https://github.com/daangn/codepocket/tree/main/core/server)
+- [@codepocket/schema](https://github.com/daangn/codepocket/tree/main/schema)
+- [@codepocket/server](https://github.com/daangn/codepocket/tree/main/server)
+
 ## License
 
 [Apache 2.0](https://github.com/daangn/codepocket/blob/main/LICENSE)
