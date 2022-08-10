@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@codepocket/core-server": "^0.0.1",
-    "@codepocket/schema": "^0.0.1",
+    "@codepocket/schema": "^0.0.3",
     "@fastify/cors": "^8.0.0",
     "@fastify/mongodb": "^6.0.1",
     "await-to-js": "^3.0.0",
