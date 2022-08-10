@@ -25,7 +25,7 @@
     "test:log": "NODE_ENV=development jest"
   },
   "dependencies": {
-    "@codepocket/schema": "^0.0.1",
+    "@codepocket/schema": "^0.0.3",
     "await-to-js": "^3.0.0",
     "axios": "^0.27.2",
     "chalk": "^5.0.1",
