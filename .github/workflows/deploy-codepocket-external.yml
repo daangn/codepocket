@@ -48,5 +48,5 @@ jobs:
             echo "VITE_AUTH0_DOMAIN=\"${VITE_AUTH0_DOMAIN}\"" > ~/.wrangler/config/default.toml
             echo "VITE_AUTH0_CLIENT_ID=\"${VITE_AUTH0_CLIENT_ID}\"" > ~/.wrangler/config/default.toml
             echo "VITE_EMAIL_DOMAIN_NAME=\"${VITE_EMAIL_DOMAIN_NAME}\"" > ~/.wrangler/config/default.toml
-          command: pages publish ./client/dist --project-name=codepocket-external --env production
+          command: pages publish ./client/dist --project-name=codepocket-external
             # yarn wrangler publish ./client/dist --project-name=codepocket-external --env production
