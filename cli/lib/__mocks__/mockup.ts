@@ -1,4 +1,4 @@
-import { GetCodeNamesResponse } from '@pocket/schema';
+import { GetCodeNamesResponse } from '@codepocket/schema';
 
 const generateListCodeItem = (key: string, isAnonymous: boolean) => ({
   codeName: `${key}codeName`,

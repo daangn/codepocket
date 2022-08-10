@@ -2,12 +2,11 @@ import { to } from 'await-to-js';
 import chalk from 'chalk';
 
 import { deleteCodeAPI } from '../api';
-import { checkaServerEnv, logger } from '../utils';
+import { logger } from '../utils';
 
 export default async (codeName: string) => {
   const [error] = await to(
     (async () => {
-      checkaServerEnv();
       const pocketToken = process.env.POCKET_TOKEN || '';
       await deleteCodeAPI({ codeName, pocketToken });
     })(),

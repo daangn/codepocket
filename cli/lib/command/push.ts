@@ -5,7 +5,7 @@ import inquirer from 'inquirer';
 import path from 'path';
 
 import { pushCodeAPI } from '../api';
-import { checkaServerEnv, logger } from '../utils';
+import { logger } from '../utils';
 
 const getFileName = (filePath: string) =>
   filePath
@@ -16,7 +16,6 @@ const getFileName = (filePath: string) =>
 export default async (filePath: string, option: { name?: string }) => {
   const [error] = await to(
     (async () => {
-      checkaServerEnv();
       const isExistPath = fs.existsSync(filePath);
       const isPathIsDir = isExistPath && !fs.lstatSync(filePath).isFile();
       if (!isExistPath || isPathIsDir) throw Error('🚨 올바른 파일 경로를 입력해주세요');

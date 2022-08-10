@@ -1,4 +1,4 @@
-import { deleteCodeRequestValidate, DeleteCodeResponse } from '@pocket/schema';
+import { deleteCodeRequestValidate, DeleteCodeResponse } from '@codepocket/schema';
 import { CodeInfo, PocketToken } from 'types';
 
 interface DeleteCode<Response> {

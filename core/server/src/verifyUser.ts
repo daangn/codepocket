@@ -1,4 +1,4 @@
-import { verifyUserRequestValidate, VerifyUserResponse } from '@pocket/schema';
+import { verifyUserRequestValidate, VerifyUserResponse } from '@codepocket/schema';
 import { PocketToken } from 'types';
 
 interface VerifyUserType<Response> {

@@ -40,7 +40,7 @@ const DetailPage: React.FC = () => {
             </Link>
           </div>
           <h1 className={style.title}>
-            {codeDataRes?.codeAuthor}
+            {!codeDataRes?.isAnonymous && codeDataRes?.codeAuthor}
             <span className={style.highlight}> / </span>
             {codeDataRes?.codeName}
           </h1>

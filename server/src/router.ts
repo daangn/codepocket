@@ -1,5 +1,5 @@
-import * as core from '@pocket/core-server';
-import * as Schema from '@pocket/schema';
+import * as core from '@codepocket/core-server';
+import * as Schema from '@codepocket/schema';
 import { FastifyInstance, FastifyPluginOptions } from 'fastify';
 import fp from 'fastify-plugin';
 

@@ -1,4 +1,8 @@
-import { CreateUserRequest, CreateUserResponse, createUserResponseValidate } from '@pocket/schema';
+import {
+  CreateUserRequest,
+  CreateUserResponse,
+  createUserResponseValidate,
+} from '@codepocket/schema';
 import useCustomMutation from '@shared/hooks/useCustomMutation';
 import { localStorage } from '@shared/utils/localStorage';
 import { useNavigate } from 'react-router-dom';

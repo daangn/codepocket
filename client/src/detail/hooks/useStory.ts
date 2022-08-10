@@ -1,4 +1,4 @@
-import { GetStoryCodeResponse, getStoryCodeResponseValidate } from '@pocket/schema';
+import { GetStoryCodeResponse, getStoryCodeResponseValidate } from '@codepocket/schema';
 import useCustomQuery from '@shared/hooks/useCustomQuery';
 import { useCallback, useEffect, useState } from 'react';
 

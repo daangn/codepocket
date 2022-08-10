@@ -1,6 +1,5 @@
 import { pushCodeRequestValidate, PushCodeResponse } from '@pocket/schema';
 import { CodeInfo, CodeName, PocketToken, PushCodeParams } from 'types';
-
 import { postMessageToSlack, SlackConfig, uploadCodeToSlack } from './slack';
 
 interface PushCodeType<Response> {
