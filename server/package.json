@@ -1,6 +1,6 @@
 {
   "name": "@codepocket/server",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "private": true,
   "repository": {
     "type": "git",
@@ -10,8 +10,8 @@
     "dev": "NODE_ENV=development nodemon --exec ts-node --files ./src/index.ts"
   },
   "dependencies": {
-    "@codepocket/core-server": "^0.0.0",
-    "@codepocket/schema": "^0.0.0",
+    "@codepocket/core-server": "^0.0.1",
+    "@codepocket/schema": "^0.0.1",
     "@fastify/cors": "^8.0.0",
     "@fastify/mongodb": "^6.0.1",
     "await-to-js": "^3.0.0",
