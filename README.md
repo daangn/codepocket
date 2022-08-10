@@ -28,6 +28,8 @@ $ yarn global add @codepocket/cli
 
 ## Packages
 
+> Codepocket monorepo packages
+
 - [@codepocket/cli](https://github.com/daangn/codepocket/tree/main/cli)
 - [@codepocket/client](https://github.com/daangn/codepocket/tree/main/client)
 - [@codepocket/core-server](https://github.com/daangn/codepocket/tree/main/core/server)
