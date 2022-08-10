@@ -13,6 +13,7 @@
     "build": "ultra -r build",
     "dev": "ultra -r dev",
     "format": "eslint --fix . --ext .ts,.tsx,.json",
+    "lerna:publish": "yarn build && lerna publish",
     "lint": "eslint . --ext .ts,.tsx,.json",
     "setting": "yarn && yarn build",
     "test": "ultra -r test"
