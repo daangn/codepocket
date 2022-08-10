@@ -1,3 +1,5 @@
+import './config';
+
 import { Command, program } from 'commander';
 
 import packageJSON from '../package.json' assert { type: 'json' }; // eslint-disable-line
