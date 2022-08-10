@@ -28,6 +28,12 @@ jobs:
 
       - name: client 프로젝트를 빌드해요
         working-directory: ./client
+        env:
+          VITE_BASE_SERVER_URL_DEV: ${{ secrets.VITE_BASE_SERVER_URL_DEV }}
+          VITE_BASE_SERVER_URL_PROD: ${{ secrets.VITE_BASE_SERVER_URL_PROD }}
+          VITE_AUTH0_DOMAIN: ${{ secrets.VITE_AUTH0_DOMAIN }}
+          VITE_AUTH0_CLIENT_ID: ${{ secrets.VITE_AUTH0_CLIENT_ID }}
+          VITE_EMAIL_DOMAIN_NAME: ${{ secrets.VITE_EMAIL_DOMAIN_NAME }}
         run: |
           yarn build
 
@@ -36,17 +42,12 @@ jobs:
         with:
           accountId: ${{ secrets.CF_ACCOUNT_ID }}
           apiToken: ${{ secrets.CF_API_TOKEN }}
-          VITE_BASE_SERVER_URL_DEV: ${{ secrets.VITE_BASE_SERVER_URL_DEV }}
-          VITE_BASE_SERVER_URL_PROD: ${{ secrets.VITE_BASE_SERVER_URL_PROD }}
-          VITE_AUTH0_DOMAIN: ${{ secrets.VITE_AUTH0_DOMAIN }}
-          VITE_AUTH0_CLIENT_ID: ${{ secrets.VITE_AUTH0_CLIENT_ID }}
-          VITE_EMAIL_DOMAIN_NAME: ${{ secrets.VITE_EMAIL_DOMAIN_NAME }}
-          run: |
-            mkdir -p ~/.wrangler/config/
-            echo "VITE_BASE_SERVER_URL_DEV=\"${VITE_BASE_SERVER_URL_DEV}\"" > ~/.wrangler/config/default.toml
-            echo "VITE_BASE_SERVER_URL_PROD=\"${VITE_BASE_SERVER_URL_PROD}\"" > ~/.wrangler/config/default.toml
-            echo "VITE_AUTH0_DOMAIN=\"${VITE_AUTH0_DOMAIN}\"" > ~/.wrangler/config/default.toml
-            echo "VITE_AUTH0_CLIENT_ID=\"${VITE_AUTH0_CLIENT_ID}\"" > ~/.wrangler/config/default.toml
-            echo "VITE_EMAIL_DOMAIN_NAME=\"${VITE_EMAIL_DOMAIN_NAME}\"" > ~/.wrangler/config/default.toml
+          # run: |
+          #   mkdir -p ~/.wrangler/config/
+          #   echo "VITE_BASE_SERVER_URL_DEV=\"${VITE_BASE_SERVER_URL_DEV}\"" > ~/.wrangler/config/default.toml
+          #   echo "VITE_BASE_SERVER_URL_PROD=\"${VITE_BASE_SERVER_URL_PROD}\"" > ~/.wrangler/config/default.toml
+          #   echo "VITE_AUTH0_DOMAIN=\"${VITE_AUTH0_DOMAIN}\"" > ~/.wrangler/config/default.toml
+          #   echo "VITE_AUTH0_CLIENT_ID=\"${VITE_AUTH0_CLIENT_ID}\"" > ~/.wrangler/config/default.toml
+          #   echo "VITE_EMAIL_DOMAIN_NAME=\"${VITE_EMAIL_DOMAIN_NAME}\"" > ~/.wrangler/config/default.toml
           command: pages publish ./client/dist --project-name=codepocket-external
             # yarn wrangler publish ./client/dist --project-name=codepocket-external --env production
