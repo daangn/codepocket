@@ -1,4 +1,4 @@
-import { UploadSlackFileResponse } from '@pocket/schema';
+import { UploadSlackFileResponse } from '@codepocket/schema';
 import { to } from 'await-to-js';
 
 import { postMessageToSlackAPI, uploadCodeToSlackAPI } from './api';

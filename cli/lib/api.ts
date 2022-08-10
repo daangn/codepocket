@@ -6,7 +6,7 @@ import {
   GetCodeNamesResponse,
   PullCodeRequest,
   PushCodeRequest,
-} from '@pocket/schema';
+} from '@codepocket/schema';
 import { to } from 'await-to-js';
 import axios, { AxiosResponse } from 'axios';
 

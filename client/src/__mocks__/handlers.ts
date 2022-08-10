@@ -1,4 +1,4 @@
-import { VerifyUserResponse } from '@pocket/schema';
+import { VerifyUserResponse } from '@codepocket/schema';
 import { rest } from 'msw';
 
 import { BASE_LOCAL_SERVER_URL } from '../shared/constant';
