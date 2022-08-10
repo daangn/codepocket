@@ -1,1 +1,1 @@
-# server2
+# @codepocket/server
