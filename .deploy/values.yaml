@@ -2,7 +2,7 @@ type: v1/appservice
 
 images:
   server:
-    dockerfile: DOCKERFILE.kontrol
+    dockerfile: Dockerfile.kontrol
 
 configs:
   env:

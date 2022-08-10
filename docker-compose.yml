@@ -15,7 +15,7 @@ services:
 
   app:
     build:
-      dockerfile: DOCKERFILE
+      dockerfile: Dockerfile.compose
       context: ./
     depends_on:
       - mongo
