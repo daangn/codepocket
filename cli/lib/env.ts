@@ -1,5 +1,5 @@
 // custom_server는 .env에 있지 않다. 직접 입력받아야하는 변수이다
-export const CUSTOM_SERVER = process.env.CUSTOM_SUERVER;
+export const { CUSTOM_SERVER } = process.env;
 
 export const POCKET_DEV_SERVER = process.env.BASE_SERVER_URL_DEV;
 export const POCKET_PROD_SERVER = process.env.BASE_SERVER_URL_PROD;
