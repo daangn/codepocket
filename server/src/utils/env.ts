@@ -14,3 +14,6 @@ export const env = {
     process.env.CHAPTER_FRONTED_CHANNEL_ID_PROD,
   ),
 } as const;
+
+export const checkSlackPossible =
+  env.SLACK_BOT_TOKEN && env.CHAPTER_FRONTED_CHANNEL_ID && env.CODEPOCKET_CHANNEL_ID;
