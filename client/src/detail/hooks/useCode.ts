@@ -1,4 +1,4 @@
-import { GetCodeResponse, getCodeResponseValidate } from '@pocket/schema';
+import { GetCodeResponse, getCodeResponseValidate } from '@codepocket/schema';
 import useCustomQuery from '@shared/hooks/useCustomQuery';
 
 import { getCodeUrl } from '../api';

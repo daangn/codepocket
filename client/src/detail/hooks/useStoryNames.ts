@@ -1,4 +1,4 @@
-import { GetStoryNamesResponse, getStoryNamesResponseValidate } from '@pocket/schema';
+import { GetStoryNamesResponse, getStoryNamesResponseValidate } from '@codepocket/schema';
 import useCustomQuery from '@shared/hooks/useCustomQuery';
 
 import { getStoryNamesUrl } from '../api';

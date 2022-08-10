@@ -1,4 +1,4 @@
-import { getCodeNamesRequestValidate, GetCodeNamesResponse } from '@pocket/schema';
+import { getCodeNamesRequestValidate, GetCodeNamesResponse } from '@codepocket/schema';
 import { CodeInfoWithAnonymous, FindCodeInfoUsingRegexParams } from 'types';
 
 interface GetCodeNames<Response> {

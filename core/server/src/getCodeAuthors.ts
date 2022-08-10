@@ -1,4 +1,4 @@
-import { getCodeAuthorsRequestValidate, GetCodeAuthorsResponse } from '@pocket/schema';
+import { getCodeAuthorsRequestValidate, GetCodeAuthorsResponse } from '@codepocket/schema';
 import { CodeAuthor, CodeName } from 'types';
 
 interface GetCodeAuthors<Response> {

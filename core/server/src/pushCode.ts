@@ -8,6 +8,7 @@ interface PushCodeType<Response> {
   successResponseFunc: (body: PushCodeResponse) => Response;
   slackConfig?: SlackConfig;
   getAuthorName: ({ pocketToken }: PocketToken) => Promise<string>;
+  checkAnonymousCode: (params: CodeName) => Promise<void>;
   isExistCode: ({ codeName, codeAuthor }: CodeInfo) => Promise<boolean>;
   pushCode: (obj: PushCodeParams) => Promise<void>;
 }
@@ -17,6 +18,8 @@ export default async <T, Response>(request: T, modules: PushCodeType<Response>) 
   const { pocketToken, codeName, code, isAnonymous } = request.body;
 
   const codeAuthor = await modules.getAuthorName({ pocketToken });
+
+  if (isAnonymous) await modules.checkAnonymousCode({ codeName });
 
   const isAlreadyPushedCode = await modules.isExistCode({ codeName, codeAuthor });
 

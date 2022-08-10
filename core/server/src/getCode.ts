@@ -1,4 +1,4 @@
-import { getCodeRequestValidate, GetCodeResponse } from '@pocket/schema';
+import { getCodeRequestValidate, GetCodeResponse } from '@codepocket/schema';
 import { CodeId, CodeInfoWithCode } from 'types';
 
 interface GetCodeType<Response> {

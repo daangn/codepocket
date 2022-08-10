@@ -1,5 +1,5 @@
-import * as core from '@pocket/core-server';
-import * as Schema from '@pocket/schema';
+import * as core from '@codepocket/core-server';
+import * as Schema from '@codepocket/schema';
 import { FastifyInstance, FastifyPluginOptions } from 'fastify';
 import fp from 'fastify-plugin';
 
@@ -103,6 +103,7 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
             CHAPTER_FRONTED_CHANNEL_ID: env.CHAPTER_FRONTED_CHANNEL_ID,
             CODEPOCKET_CHANNEL_ID: env.CODEPOCKET_CHANNEL_ID,
           },
+          checkAnonymousCode: CodeModule.checkAnonymousCode(server),
           getAuthorName: UserModule.getAuthorName(server),
           isExistCode: CodeModule.isExistCode(server),
           pushCode: CodeModule.pushCode(server),

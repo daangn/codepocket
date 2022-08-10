@@ -1,4 +1,4 @@
-import { createStoryRequestValidate, CreateStoryResponse } from '@pocket/schema';
+import { createStoryRequestValidate, CreateStoryResponse } from '@codepocket/schema';
 import { PocketToken, StoryInfo, StoryInfoWithCode } from 'types';
 
 interface CreateStoryType<Response> {

@@ -1,4 +1,4 @@
-import { GetCodesResponse } from '@pocket/schema';
+import { GetCodesResponse } from '@codepocket/schema';
 
 import Codeblock from '../Codeblock';
 import * as style from './style.css';
