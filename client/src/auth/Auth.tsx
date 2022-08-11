@@ -17,9 +17,10 @@ const AuthPage: React.FC = () => {
   const { state: location } = useLocation() as UseLocation;
   const navigate = useNavigate();
   const { verifyUser } = useVerifyUser({ path: location?.path || pocketPath });
-  const { isAuthenticated, user, logout, loginWithPopup, isValidEmailDomain } = useCustomAuth0({
-    domain: EMAIL_DOMAIN_NAME,
-  });
+  const { isAuthenticated, user, isExternalUser, logout, loginWithPopup, isValidEmailDomain } =
+    useCustomAuth0({
+      domain: EMAIL_DOMAIN_NAME,
+    });
   const { createUser } = useCreateUser();
 
   useEffect(() => {
@@ -27,14 +28,18 @@ const AuthPage: React.FC = () => {
   }, [verifyUser]);
 
   useEffect(() => {
-    if (!isAuthenticated || !user || !user.nickname || !user.email) return;
+    if (!isAuthenticated || !user || !user.nickname) return;
     if (!isValidEmailDomain()) {
       window.alert('당근 유저가 아니에요!');
       logout();
       return;
     }
-    createUser({ userName: user.nickname, email: user.email });
-  }, [user, isValidEmailDomain, isAuthenticated, logout, navigate, createUser]);
+
+    const email = !isExternalUser ? user.email : '';
+    if (!email) return;
+
+    createUser({ userName: user.nickname, email });
+  }, [user, isValidEmailDomain, isAuthenticated, logout, navigate, createUser, isExternalUser]);
 
   return (
     <div className={style.wrapper}>
