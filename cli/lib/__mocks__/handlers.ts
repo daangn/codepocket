@@ -7,14 +7,12 @@ import {
   PullCodeAPIResponseData,
   ServerResponseData,
 } from '../api';
-import { BASE_DEFAULT_URL, POCKET_PROD_SERVER } from '../env';
+import { DEV_SERVER } from '../env';
 import { generateListCodeResponseMock } from './mockup';
 
 type Error = 'NO' | 'SERVER' | 'NETWORK';
 
-const baseURL =
-  (process.env.NODE_ENV === 'development' ? BASE_DEFAULT_URL : POCKET_PROD_SERVER) ||
-  BASE_DEFAULT_URL;
+const baseURL = DEV_SERVER;
 
 export const pushCodeHandler = (error: Error = 'NO') =>
   rest.post(`${baseURL}/code`, (_, res, ctx) => {
