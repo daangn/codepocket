@@ -1,5 +1,3 @@
-import './config';
-
 import server from './__mocks__/server';
 
 beforeAll(() => {
