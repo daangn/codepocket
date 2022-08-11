@@ -6,6 +6,7 @@ import { rem } from 'polished';
 
 export const alertContainer = recipe({
   base: [
+    u.fullWidth,
     u.flexAlignCenter,
     u.borderRadius,
     {
