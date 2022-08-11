@@ -1,4 +1,5 @@
 import { colors } from '@karrotmarket/design-token';
+import Alert from '@shared/components/Alert';
 import Icon from '@shared/components/Icon';
 import useClipboard from '@shared/hooks/useClipboard';
 import { act, fireEvent, render, screen } from '@shared/utils/test-utils';
@@ -16,9 +17,15 @@ function TokenPage() {
   return (
     <div className={style.wrapper}>
       <h1 aria-label="제목" className={style.title}>
-        토큰이 발급되었어요!
+        토큰이 발급되었어요.
       </h1>
-      <p className={style.description}>아래 문구를 복사해 cli 환경변수로 등록해주세요!</p>
+      <Alert status="error">
+        <Alert.Title>타이틀이에요</Alert.Title>
+        <Alert.Description>
+          cli에 사용되는 토큰이에요. 아래 토큰을 터미널에 등록해야해요{`\n`}
+          해당 토큰은 이 페이지를 나가면 알 수 없어요.
+        </Alert.Description>
+      </Alert>
       <button
         type="button"
         aria-label="코드 복사 버튼"

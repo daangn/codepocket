@@ -24,16 +24,9 @@ export const wrapper = style([
   }),
 ]);
 
-export const title = style([t.typography.heading4]);
+export const title = style([{ fontWeight: 'bold', fontSize: rem(26) }]);
 
-export const description = style([
-  t.typography.caption1,
-  {
-    color: colors.light.scheme.$gray700,
-  },
-]);
-
-export const clipBoardText = style([t.typography.body2, { fontWeight: 'bold' }]);
+export const clipBoardText = style([u.fullWidth, t.typography.body2, { fontWeight: 'bold' }]);
 export const clipBoardIconBox = style({ paddingTop: rem(4) });
 export const clipBoardContainer = recipe({
   base: [
