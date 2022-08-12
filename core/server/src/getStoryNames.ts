@@ -1,7 +1,7 @@
 import { getStoryNamesRequestValidate, GetStoryNamesResponse } from '@codepocket/schema';
 import { CodeInfo } from 'types';
 
-interface GetStoryNamesType<Response> {
+export interface GetStoryNamesType<Response> {
   validateErrorFunc: () => Response;
   successResponseFunc: (body: GetStoryNamesResponse) => Response;
   getStoryNames: ({ codeAuthor, codeName }: CodeInfo) => Promise<string[]>;

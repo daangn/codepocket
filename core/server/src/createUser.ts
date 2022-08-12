@@ -1,7 +1,7 @@
 import { createUserRequestValidate, CreateUserResponse } from '@codepocket/schema';
 import { PocketToken, UserInfo } from 'types';
 
-interface CreateUserType<Response> {
+export interface CreateUserType<Response> {
   validateErrorFunc: () => Response;
   successResponseFunc: (body: CreateUserResponse) => Response;
   checkExistUser: (params: UserInfo) => Promise<PocketToken | null>;

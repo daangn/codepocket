@@ -3,7 +3,7 @@ import { CodeInfo, CodeName, PocketToken, PushCodeParams } from 'types';
 
 import { postMessageToSlack, SlackConfig, uploadCodeToSlack } from './slack';
 
-interface PushCodeType<Response> {
+export interface PushCodeType<Response> {
   validateErrorFunc: () => Response;
   successResponseFunc: (body: PushCodeResponse) => Response;
   slackConfig?: SlackConfig;

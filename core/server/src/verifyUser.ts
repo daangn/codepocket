@@ -1,7 +1,7 @@
 import { verifyUserRequestValidate, VerifyUserResponse } from '@codepocket/schema';
 import { PocketToken } from 'types';
 
-interface VerifyUserType<Response> {
+export interface VerifyUserType<Response> {
   validateErrorFunc: () => Response;
   successResponseFunc: (body: VerifyUserResponse) => Response;
   getUserName: ({ pocketToken }: PocketToken) => Promise<string>;

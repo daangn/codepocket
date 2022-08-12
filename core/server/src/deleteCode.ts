@@ -1,7 +1,7 @@
 import { deleteCodeRequestValidate, DeleteCodeResponse } from '@codepocket/schema';
 import { CodeInfo, PocketToken } from 'types';
 
-interface DeleteCode<Response> {
+export interface DeleteCodeType<Response> {
   validateErrorFunc: () => Response;
   existCodeErrorFunc: () => Response;
   successResponseFunc: (body: DeleteCodeResponse) => Response;
@@ -10,7 +10,7 @@ interface DeleteCode<Response> {
   deleteCode: (params: CodeInfo) => Promise<void>;
 }
 
-export default async <T, Response>(request: T, modules: DeleteCode<Response>) => {
+export default async <T, Response>(request: T, modules: DeleteCodeType<Response>) => {
   if (!deleteCodeRequestValidate(request)) throw modules.validateErrorFunc();
   const { pocketToken, codeName } = request.body;
 

@@ -1,13 +1,13 @@
 import { getCodesRequestValidate, GetCodesResponse } from '@codepocket/schema';
 import { SearchCodesParam } from 'types';
 
-interface GetCodes<Response> {
+export interface GetCodesType<Response> {
   validateErrorFunc: () => Response;
   successResponseFunc: (body: GetCodesResponse) => Response;
   searchCodes: (params: SearchCodesParam) => Promise<GetCodesResponse['codes']>;
 }
 
-export default async <T, Response>(request: T, modules: GetCodes<Response>) => {
+export default async <T, Response>(request: T, modules: GetCodesType<Response>) => {
   if (!getCodesRequestValidate(request)) throw modules.validateErrorFunc();
   const { limit = '5', offset = '0', search = '' } = request.query;
 

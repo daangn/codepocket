@@ -1,7 +1,7 @@
 import { createStoryRequestValidate, CreateStoryResponse } from '@codepocket/schema';
 import { PocketToken, StoryInfo, StoryInfoWithCode } from 'types';
 
-interface CreateStoryType<Response> {
+export interface CreateStoryType<Response> {
   validateErrorFunc: () => Response;
   successResponseFunc: (body: CreateStoryResponse) => Response;
   isStoryExist: (param: StoryInfo) => Promise<boolean>;

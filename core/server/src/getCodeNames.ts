@@ -1,7 +1,7 @@
 import { getCodeNamesRequestValidate, GetCodeNamesResponse } from '@codepocket/schema';
 import { CodeInfoWithAnonymous, FindCodeInfoUsingRegexParams } from 'types';
 
-interface GetCodeNames<Response> {
+export interface GetCodeNamesType<Response> {
   validateErrorFunc: () => Response;
   successResponseFunc: (body: GetCodeNamesResponse) => Response;
   findCodeInfoUsingRegex: (
@@ -9,7 +9,7 @@ interface GetCodeNames<Response> {
   ) => Promise<CodeInfoWithAnonymous[]>;
 }
 
-export default async <T, Response>(request: T, modules: GetCodeNames<Response>) => {
+export default async <T, Response>(request: T, modules: GetCodeNamesType<Response>) => {
   if (!getCodeNamesRequestValidate(request)) throw modules.validateErrorFunc();
   const { codeAuthor, codeName } = request.query;
 

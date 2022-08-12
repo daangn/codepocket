@@ -1,7 +1,7 @@
 import { pullCodeRequestValidate, PullCodeResponse } from '@codepocket/schema';
 import { CodeInfo } from 'types';
 
-interface PullCodeType<Response> {
+export interface PullCodeType<Response> {
   validateErrorFunc: () => Response;
   successResponseFunc: (body: PullCodeResponse) => Response;
   getCode: (params: CodeInfo) => Promise<string>;
