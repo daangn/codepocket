@@ -15,9 +15,9 @@ jobs:
 
       - name: generate .env
         run: |
-          echo "BASE_SERVER_URL_DEV=$BASE_SERVER_URL_DEV" >> .env
+          echo "POCKET_TOKEN=$POCKET_TOKEN" >> .env
         env:
-          BASE_SERVER_URL_DEV: ${{ secrets.BASE_SERVER_URL_DEV }}
+          POCKET_TOKEN: ${{ secrets.POCKET_TOKEN }}
 
       - name: test all
         run: yarn test
