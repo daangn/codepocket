@@ -1,7 +1,7 @@
 import { colors } from '@karrotmarket/design-token';
 import { Alert, Icon } from '@shared/components';
 import useClipboard from '@shared/hooks/useClipboard';
-import { act, fireEvent, render, screen } from '@shared/utils/test-utils';
+// import { act, fireEvent, render, screen } from '@shared/utils/test-utils';
 import { Link } from 'react-router-dom';
 
 import { pocketPath } from '../routes';
@@ -48,43 +48,43 @@ function TokenPage() {
   );
 }
 
-if (import.meta.vitest) {
-  const { it, vi, expect } = import.meta.vitest;
+// if (import.meta.vitest) {
+//   const { it, vi, expect } = import.meta.vitest;
 
-  const writeTextMock = vi.fn();
-  writeTextMock.mockImplementation((text) => Promise.resolve(text));
-  Object.assign(navigator, {
-    clipboard: { writeText: writeTextMock },
-  });
-  Object.defineProperty(window, 'location', {
-    value: { pathname: '/shell' },
-  });
+//   const writeTextMock = vi.fn();
+//   writeTextMock.mockImplementation((text) => Promise.resolve(text));
+//   Object.assign(navigator, {
+//     clipboard: { writeText: writeTextMock },
+//   });
+//   Object.defineProperty(window, 'location', {
+//     value: { pathname: '/shell' },
+//   });
 
-  it('렌더링 테스트', () => {
-    render(<TokenPage />);
+//   it('렌더링 테스트', () => {
+//     render(<TokenPage />);
 
-    screen.getByLabelText(/제목/);
-  });
+//     screen.getByLabelText(/제목/);
+//   });
 
-  it('클립보드 테스트', async () => {
-    render(<TokenPage />);
+//   it('클립보드 테스트', async () => {
+//     render(<TokenPage />);
 
-    act(() => {
-      const copyButton = screen.getByLabelText(/코드 복사 버튼/);
-      fireEvent.click(copyButton);
-    });
+//     act(() => {
+//       const copyButton = screen.getByLabelText(/코드 복사 버튼/);
+//       fireEvent.click(copyButton);
+//     });
 
-    expect(writeTextMock).toBeCalledTimes(1);
-  });
+//     expect(writeTextMock).toBeCalledTimes(1);
+//   });
 
-  it('메인으로 이동하기 버튼 클릭 테스트', () => {
-    render(<TokenPage />);
+//   it('메인으로 이동하기 버튼 클릭 테스트', () => {
+//     render(<TokenPage />);
 
-    act(() => {
-      const linkButton = screen.getByLabelText(/메인으로 이동하기/);
-      fireEvent.click(linkButton);
-    });
-  });
-}
+//     act(() => {
+//       const linkButton = screen.getByLabelText(/메인으로 이동하기/);
+//       fireEvent.click(linkButton);
+//     });
+//   });
+// }
 
 export default TokenPage;
