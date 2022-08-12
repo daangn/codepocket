@@ -33,8 +33,11 @@ export const description = style([
   },
 ]);
 
-export const clipBoardText = style([t.typography.body2, { fontWeight: 'bold' }]);
-export const clipBoardIconBox = style({ paddingTop: rem(4) });
+export const clipBoardText = style([
+  t.typography.body2,
+  { fontWeight: 'bold', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' },
+]);
+export const clipBoardIconBox = style({ paddingTop: rem(4), paddingLeft: rem(5) });
 export const clipBoardContainer = recipe({
   base: [
     u.borderRadius2,
