@@ -44,15 +44,13 @@ const Modal = ({ children, isOpen: inputIsOpen, closeModal }: ModalInterface) =>
   return (
     <ModalContainer>
       <div className={style.modalContainer({ isOpen })}>
-        <div className={style.modalOverlay({ isAnimation: inputIsOpen })} />
-        <div className={style.modalContentContainer}>
-          <section className={style.modalContent({ isAnimation: inputIsOpen })}>
-            <div className={style.modalCloseButton} onClick={closeModal}>
-              <Icon icon="close" />
-            </div>
-            {children}
-          </section>
-        </div>
+        <div className={style.modalOverlay({ isAnimation: inputIsOpen })} onClick={closeModal} />
+        <section className={style.modalContent({ isAnimation: inputIsOpen })}>
+          <div className={style.modalCloseButton} onClick={closeModal}>
+            <Icon icon="close" />
+          </div>
+          {children}
+        </section>
       </div>
     </ModalContainer>
   );

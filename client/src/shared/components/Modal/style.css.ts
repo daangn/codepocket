@@ -27,14 +27,10 @@ const scaleDown = keyframes({
 });
 
 export const modalContainer = recipe({
-  base: [
-    {
-      zIndex: MODAL_Z_INDEX,
-    },
-  ],
+  base: [u.flexCenter, u.fixedPos, u.top0, u.left0, u.fullSize],
   variants: {
     isOpen: {
-      true: { display: 'block' },
+      true: { display: 'flex' },
       false: { display: 'none' },
     },
   },
@@ -42,7 +38,7 @@ export const modalContainer = recipe({
 
 export const modalOverlay = recipe({
   base: [
-    u.fixedPos,
+    u.positionAbsolute,
     u.top0,
     u.left0,
     u.fullHeight,
@@ -50,6 +46,7 @@ export const modalOverlay = recipe({
     {
       background: colors.light.scheme.$gray900,
       opacity: 0.3,
+      zIndex: MODAL_Z_INDEX,
     },
   ],
   variants: {
@@ -60,19 +57,18 @@ export const modalOverlay = recipe({
   },
 });
 
-export const modalContentContainer = style([u.fixedPos, u.top0, u.left0, u.fullSize, u.flexCenter]);
-
 export const modalContent = recipe({
   base: [
+    u.positionRelative,
     u.flexColumn,
     u.borderRadius2,
-    u.positionRelative,
     {
       width: rem(375),
       height: rem(375),
       // height: 'auto',
       backgroundColor: 'white',
       padding: rem(15),
+      zIndex: MODAL_Z_INDEX,
     },
   ],
   variants: {
