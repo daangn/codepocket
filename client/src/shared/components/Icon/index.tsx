@@ -1,11 +1,12 @@
 import Check, { CheckType } from './Check';
 import Clip from './Clip';
 import Code from './Code';
-import Information from './Information';
+import Information, { InformationType } from './Information';
 import LeftChevron, { LeftChevronType } from './LeftChevron';
 import Profile from './Profile';
 import RightChevron, { RightChevronType } from './RightChevron';
 import Search from './Search';
+import WarningFill, { WarningFillType } from './WarningFill';
 
 /**
  * 사용법
@@ -18,8 +19,9 @@ type AddIconName<T, K> = T & { icon: K };
 type IconType =
   | AddIconName<LeftChevronType, 'leftChevron'>
   | AddIconName<RightChevronType, 'rightChevron'>
+  | AddIconName<WarningFillType, 'warningFill'>
+  | AddIconName<InformationType, 'information'>
   | AddIconName<CheckType, 'check'>
-  | AddIconName<{}, 'information'>
   | AddIconName<{}, 'profile'>
   | AddIconName<{}, 'search'>
   | AddIconName<{}, 'code'>
@@ -28,8 +30,9 @@ type IconType =
 const mapping = {
   leftChevron: (param: LeftChevronType) => LeftChevron(param),
   rightChevron: (param: RightChevronType) => RightChevron(param),
+  warningFill: (param: WarningFillType) => WarningFill(param),
   check: (param: RightChevronType) => Check(param),
-  information: () => Information(),
+  information: (param: InformationType) => Information(param),
   profile: () => Profile(),
   search: () => Search(),
   code: () => Code(),
