@@ -2,8 +2,12 @@ import { getCodeAuthorsRequestValidate, GetCodeAuthorsResponse } from '@codepock
 import { CodeAuthor, CodeName } from 'types';
 
 export interface GetCodeAuthorsType<Response> {
+  /* validator에러 */
   validateErrorFunc?: Response;
+  /* 성공했을 경우 */
   successResponseFunc: (body: GetCodeAuthorsResponse) => Response;
+
+  /* 특정 codeName을 가지고 있는 codeAuthor들을 찾는 함수 */
   findCodeAuthors: (params: CodeName) => Promise<CodeAuthor[]>;
 }
 
