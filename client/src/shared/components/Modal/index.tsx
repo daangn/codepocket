@@ -12,7 +12,7 @@ interface ModalInterface {
   closeModal: () => void;
 }
 
-const ModalContainer = ({ children }: Pick<ModalInterface, 'children'>) => {
+const ModalPortal = ({ children }: Pick<ModalInterface, 'children'>) => {
   const modal = document.querySelector('#modal');
   if (!modal) throw new Error('#modal id div를 찾을 수 없어요');
   return ReactDOM.createPortal(children, modal);
@@ -26,7 +26,7 @@ const ModalContainer = ({ children }: Pick<ModalInterface, 'children'>) => {
       <Alert.Description>설명이에요</Alert.Description>
     </Alert>
  */
-const Modal = ({ children, isOpen: inputIsOpen, closeModal }: ModalInterface) => {
+const ModalContainer = ({ children, isOpen: inputIsOpen, closeModal }: ModalInterface) => {
   const [isOpen, setIsOpen] = useState(inputIsOpen);
 
   useEffect(() => {
@@ -57,7 +57,7 @@ const Modal = ({ children, isOpen: inputIsOpen, closeModal }: ModalInterface) =>
   }, [onKeyPress]);
 
   return (
-    <ModalContainer>
+    <ModalPortal>
       <div className={style.modalContainer({ isOpen })}>
         <div className={style.modalOverlay({ isAnimation: inputIsOpen })} onClick={closeModal} />
         <section className={style.modalContent({ isAnimation: inputIsOpen })}>
@@ -67,8 +67,10 @@ const Modal = ({ children, isOpen: inputIsOpen, closeModal }: ModalInterface) =>
           {children}
         </section>
       </div>
-    </ModalContainer>
+    </ModalPortal>
   );
 };
+
+const Modal = Object.assign(ModalContainer, {});
 
 export default Modal;

@@ -64,7 +64,7 @@ export const modalContent = recipe({
     u.borderRadius2,
     {
       width: rem(375),
-      height: rem(375),
+      minHeight: rem(37.5),
       // height: 'auto',
       backgroundColor: 'white',
       padding: rem(15),

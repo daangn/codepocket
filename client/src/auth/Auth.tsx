@@ -1,5 +1,6 @@
+import { Icon, Modal } from '@shared/components';
 import { EMAIL_DOMAIN_NAME } from '@shared/constant';
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { pocketPath } from '../routes';
@@ -22,6 +23,12 @@ const AuthPage: React.FC = () => {
       domain: EMAIL_DOMAIN_NAME,
     });
   const { createUser } = useCreateUser();
+  const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
+
+  const closeModalWithLogout = useCallback(() => {
+    setIsOpenModal(false);
+    logout();
+  }, [logout]);
 
   useEffect(() => {
     verifyUser();
@@ -29,9 +36,8 @@ const AuthPage: React.FC = () => {
 
   useEffect(() => {
     if (!isAuthenticated || !user || !user.nickname) return;
-    if (!isValidEmailDomain()) {
-      window.alert('당근 유저가 아니에요!');
-      logout();
+    if (isValidEmailDomain()) {
+      setIsOpenModal(true);
       return;
     }
 
@@ -52,6 +58,12 @@ const AuthPage: React.FC = () => {
           로그인 하기
         </button>
       </div>
+      <Modal closeModal={closeModalWithLogout} isOpen={isOpenModal}>
+        <div className={style.modalContent}>
+          <Icon icon="warningFill" color="red" />
+          <div>당근 유저가 아니에요!</div>
+        </div>
+      </Modal>
     </div>
   );
 };
