@@ -84,7 +84,7 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
         connector.getCode(req, {
           successResponseFunc: (body) =>
             new CustomResponse<Schema.GetCodeResponse>({ customStatus: 2007, body }),
-          getCodeById: CodeModule.getCodeById(server),
+          getCodeInfoById: CodeModule.getCodeInfoById(server),
         }),
       reply,
     ),

@@ -21,7 +21,7 @@ export const findCode =
     return code;
   };
 
-export const getCodeById =
+export const getCodeInfoById =
   (server: FastifyInstance) =>
   async ({ codeId }: Types.CodeId) => {
     const [getCodeByIdError, codeInfo] = await to(
