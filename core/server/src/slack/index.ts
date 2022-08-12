@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import { UploadSlackFileResponse } from '@codepocket/schema';
 import { to } from 'await-to-js';
 
@@ -17,6 +18,14 @@ interface PoseMessageToSlack {
   config: SlackConfig;
   isAnonymous: boolean;
   uploadedChatURL?: string;
+}
+
+interface DeleteMessageToSlack<Response> {
+  deleteMessageError: Response;
+  codeAuthor: string;
+  codeName: string;
+  config: SlackConfig;
+  existsCodeResponse: any;
 }
 
 interface UploadCodeToSlack {
@@ -63,6 +72,24 @@ export const postMessageToSlack = async ({
   );
 
   if (postMessageError) throw new Error();
+};
+
+export const deleteMessageToSlack = async <Response>({
+  deleteMessageError,
+  codeAuthor,
+  codeName,
+  config,
+  existsCodeResponse,
+}: DeleteMessageToSlack<Response>) => {
+  const [postMessageError] = await to(
+    postMessageToSlackAPI({
+      slackBotToken: config.SLACK_BOT_TOKEN || '',
+      channelId: existsCodeResponse._id?.uploadedChatChannel || '',
+      threadTs: existsCodeResponse._id?.uploadedChatTimeStamp || '',
+      text: `\`${codeAuthor}\`의 \`${codeName}\` 코드가 삭제되었어요!`,
+    }),
+  );
+  if (postMessageError) throw deleteMessageError;
 };
 
 export const uploadCodeToSlack = async ({
