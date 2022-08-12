@@ -12,6 +12,8 @@ import { to } from 'await-to-js';
 import axios, { AxiosResponse } from 'axios';
 import jwt from 'jsonwebtoken';
 
+import { POCKET_TOKEN } from './env';
+
 // Response
 interface ResponseType<T> extends AxiosResponse {
   data: T;
@@ -36,7 +38,7 @@ const isNetworkError = (err: ResponseError): err is NetworkError =>
   typeof err.response.data === 'string';
 
 const getBaseUrl = () => {
-  const token = process.env.POCKET_TOKEN;
+  const token = POCKET_TOKEN;
   if (!token) throw new Error('발급받은 토큰을 환경변수에 넣어주세요!');
 
   const decoded = jwt.verify(token, 'key') as JwtType;
