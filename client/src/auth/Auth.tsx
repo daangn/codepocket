@@ -36,7 +36,7 @@ const AuthPage: React.FC = () => {
 
   useEffect(() => {
     if (!isAuthenticated || !user || !user.nickname) return;
-    if (isValidEmailDomain()) {
+    if (!isValidEmailDomain()) {
       setIsOpenModal(true);
       return;
     }
