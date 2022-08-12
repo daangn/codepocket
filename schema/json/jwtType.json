@@ -1,0 +1,20 @@
+{
+  "title": "pullCodeRequest",
+  "type": "object",
+  "properties": {
+    "serverUrl": {
+      "type": "string"
+    },
+    "userName": {
+      "type": "string"
+    },
+    "iat": {
+      "type": "number"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "serverUrl",
+    "userName"
+  ]
+}
