@@ -1,5 +1,5 @@
 import { Icon } from '@shared/components';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 
 import * as style from './style.css';
@@ -40,6 +40,21 @@ const Modal = ({ children, isOpen: inputIsOpen, closeModal }: ModalInterface) =>
 
     return () => clearTimeout(timer);
   }, [inputIsOpen]);
+
+  const onKeyPress = useCallback(
+    (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        closeModal();
+      }
+    },
+    [closeModal],
+  );
+
+  useEffect(() => {
+    document.addEventListener('keydown', onKeyPress);
+    return () => document.removeEventListener('keydown', onKeyPress);
+  }, [onKeyPress]);
 
   return (
     <ModalContainer>
