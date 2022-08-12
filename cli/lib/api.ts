@@ -4,13 +4,13 @@ import {
   GetCodeAuthorsResponse,
   GetCodeNamesRequest,
   GetCodeNamesResponse,
+  JwtType,
   PullCodeRequest,
   PushCodeRequest,
 } from '@codepocket/schema';
 import { to } from 'await-to-js';
 import axios, { AxiosResponse } from 'axios';
-
-import { DEV_SERVER, POCKET_SERVER } from './env';
+import jwt from 'jsonwebtoken';
 
 // Response
 interface ResponseType<T> extends AxiosResponse {
@@ -35,7 +35,15 @@ type ResponseError = ServerError | NetworkError;
 const isNetworkError = (err: ResponseError): err is NetworkError =>
   typeof err.response.data === 'string';
 
-const baseURL = process.env.NODE_ENV === 'development' ? DEV_SERVER : POCKET_SERVER;
+const getBaseUrl = () => {
+  const token = process.env.POCKET_TOKEN;
+  if (!token) throw new Error('발급받은 토큰을 환경변수에 넣어주세요!');
+
+  const decoded = jwt.verify(token, 'key') as JwtType;
+  return decoded.serverUrl;
+};
+
+const baseURL = getBaseUrl();
 const axiosInstance = axios.create({ baseURL });
 
 export const pushCodeAPI = async (body: PushCodeRequest['body']) => {
