@@ -2,7 +2,7 @@ import { deleteCodeRequestValidate, DeleteCodeResponse } from '@codepocket/schem
 import { CodeInfo, PocketToken } from 'types';
 
 export interface DeleteCodeType<Response> {
-  validateErrorFunc: () => Response;
+  validateErrorFunc?: Response;
   existCodeErrorFunc: () => Response;
   successResponseFunc: (body: DeleteCodeResponse) => Response;
   getUserName: (params: PocketToken) => Promise<string>;
@@ -11,7 +11,7 @@ export interface DeleteCodeType<Response> {
 }
 
 export default async <T, Response>(request: T, modules: DeleteCodeType<Response>) => {
-  if (!deleteCodeRequestValidate(request)) throw modules.validateErrorFunc();
+  if (!deleteCodeRequestValidate(request)) throw modules.validateErrorFunc;
   const { pocketToken, codeName } = request.body;
 
   const codeAuthor = await modules.getUserName({ pocketToken });

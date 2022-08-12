@@ -14,10 +14,10 @@ import verifyUser, { VerifyUserType } from './verifyUser';
 export * as Types from './types';
 
 interface ConnectorType<Response> {
-  validateErrorFunc: () => Response;
+  validateErrorFunc: Response;
 }
 
-export const connector = <Response>({ validateErrorFunc }: ConnectorType<Response>) => {
+export const createConnector = <Response>({ validateErrorFunc }: ConnectorType<Response>) => {
   return {
     createStory: <T>(request: T, modules: CreateStoryType<Response>) =>
       createStory(request, { ...modules, validateErrorFunc }),

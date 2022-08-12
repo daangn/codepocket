@@ -2,7 +2,7 @@ import { getCodeNamesRequestValidate, GetCodeNamesResponse } from '@codepocket/s
 import { CodeInfoWithAnonymous, FindCodeInfoUsingRegexParams } from 'types';
 
 export interface GetCodeNamesType<Response> {
-  validateErrorFunc: () => Response;
+  validateErrorFunc?: Response;
   successResponseFunc: (body: GetCodeNamesResponse) => Response;
   findCodeInfoUsingRegex: (
     params: FindCodeInfoUsingRegexParams,
@@ -10,7 +10,7 @@ export interface GetCodeNamesType<Response> {
 }
 
 export default async <T, Response>(request: T, modules: GetCodeNamesType<Response>) => {
-  if (!getCodeNamesRequestValidate(request)) throw modules.validateErrorFunc();
+  if (!getCodeNamesRequestValidate(request)) throw modules.validateErrorFunc;
   const { codeAuthor, codeName } = request.query;
 
   const codeNameRegex = new RegExp(codeName || '', 'gi');

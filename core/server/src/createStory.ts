@@ -2,7 +2,7 @@ import { createStoryRequestValidate, CreateStoryResponse } from '@codepocket/sch
 import { PocketToken, StoryInfo, StoryInfoWithCode } from 'types';
 
 export interface CreateStoryType<Response> {
-  validateErrorFunc: () => Response;
+  validateErrorFunc?: Response;
   successResponseFunc: (body: CreateStoryResponse) => Response;
   isStoryExist: (param: StoryInfo) => Promise<boolean>;
   getUserName: (params: PocketToken) => Promise<string>;
@@ -10,7 +10,7 @@ export interface CreateStoryType<Response> {
 }
 
 export default async <T, Response>(request: T, modules: CreateStoryType<Response>) => {
-  if (!createStoryRequestValidate(request)) throw modules.validateErrorFunc();
+  if (!createStoryRequestValidate(request)) throw modules.validateErrorFunc;
   const { pocketToken, codeAuthor, codeName, storyName, codes } = request.body;
 
   const storyAuthor = await modules.getUserName({ pocketToken });

@@ -4,7 +4,7 @@ import { CodeInfo, CodeName, PocketToken, PushCodeParams } from 'types';
 import { postMessageToSlack, SlackConfig, uploadCodeToSlack } from './slack';
 
 export interface PushCodeType<Response> {
-  validateErrorFunc: () => Response;
+  validateErrorFunc?: Response;
   successResponseFunc: (body: PushCodeResponse) => Response;
   slackConfig?: SlackConfig;
   getAuthorName: ({ pocketToken }: PocketToken) => Promise<string>;
@@ -14,7 +14,7 @@ export interface PushCodeType<Response> {
 }
 
 export default async <T, Response>(request: T, modules: PushCodeType<Response>) => {
-  if (!pushCodeRequestValidate(request)) throw modules.validateErrorFunc();
+  if (!pushCodeRequestValidate(request)) throw modules.validateErrorFunc;
   const { pocketToken, codeName, code, isAnonymous } = request.body;
 
   const codeAuthor = await modules.getAuthorName({ pocketToken });

@@ -2,13 +2,13 @@ import { getCodeAuthorsRequestValidate, GetCodeAuthorsResponse } from '@codepock
 import { CodeAuthor, CodeName } from 'types';
 
 export interface GetCodeAuthorsType<Response> {
-  validateErrorFunc: () => Response;
+  validateErrorFunc?: Response;
   successResponseFunc: (body: GetCodeAuthorsResponse) => Response;
   findCodeAuthors: (params: CodeName) => Promise<CodeAuthor[]>;
 }
 
 export default async <T, Response>(request: T, modules: GetCodeAuthorsType<Response>) => {
-  if (!getCodeAuthorsRequestValidate(request)) throw modules.validateErrorFunc();
+  if (!getCodeAuthorsRequestValidate(request)) throw modules.validateErrorFunc;
   const { codeName } = request.query;
 
   const codeAuthors = await modules.findCodeAuthors({ codeName });

@@ -2,13 +2,13 @@ import { verifyUserRequestValidate, VerifyUserResponse } from '@codepocket/schem
 import { PocketToken } from 'types';
 
 export interface VerifyUserType<Response> {
-  validateErrorFunc: () => Response;
+  validateErrorFunc?: Response;
   successResponseFunc: (body: VerifyUserResponse) => Response;
   getUserName: ({ pocketToken }: PocketToken) => Promise<string>;
 }
 
 export default async <T, Response>(request: T, modules: VerifyUserType<Response>) => {
-  if (!verifyUserRequestValidate(request)) throw modules.validateErrorFunc();
+  if (!verifyUserRequestValidate(request)) throw modules.validateErrorFunc;
   const { pocketToken } = request.body;
 
   const userName = await modules.getUserName({ pocketToken });
