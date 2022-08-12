@@ -32,7 +32,7 @@ export const getCodeById =
     if (!codeInfo) throw new CustomResponse({ customStatus: 4008 });
 
     const { codeAuthor, codeName, isAnonymous, code } = codeInfo;
-    return { codeAuthor, codeName, isAnonymous, code };
+    return { codeAuthor: isAnonymous ? '' : codeAuthor, codeName, isAnonymous, code };
   };
 
 export const findCodeAuthors =
@@ -183,5 +183,10 @@ export const searchCodes =
       }),
     );
 
-    return codes;
+    const anonymousCodes = codes.map((code) => ({
+      ...code,
+      codeAuthor: code.isAnonymous ? '' : code.codeAuthor,
+    }));
+
+    return anonymousCodes;
   };
