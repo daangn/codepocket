@@ -38,8 +38,10 @@ export const checkExistUser =
 export const createUser =
   (server: FastifyInstance) =>
   async ({ userName, email }: Types.UserInfo) => {
+    // NOTE: KEY값은 cli/lib/utils.ts의 KEY변수와 동일하게 맞춰주세요
+    const KEY = 'key';
     const encoded = { userName, serverUrl: env.SELF_URL } as JwtType;
-    const token = jwt.sign(encoded, 'key');
+    const token = jwt.sign(encoded, KEY);
 
     const [createUserError] = await to(
       (async () => await server.store.User.create({ userName, email, token }))(),

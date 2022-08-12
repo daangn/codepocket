@@ -15,7 +15,7 @@ jobs:
 
       - name: generate .env
         run: |
-          echo "POCKET_TOKEN=$POCKET_TOKEN" >> .env
+          echo "POCKET_TOKEN=process.env.POCKET_TOKEN" >> .env
         env:
           POCKET_TOKEN: ${{ secrets.POCKET_TOKEN }}
 
