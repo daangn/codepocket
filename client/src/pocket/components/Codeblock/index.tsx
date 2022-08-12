@@ -1,5 +1,5 @@
 import { colors } from '@karrotmarket/design-token';
-import Icon from '@shared/components/Icon';
+import { Icon } from '@shared/components';
 import useClipboard from '@shared/hooks/useClipboard';
 import { useMemo, useRef, useState } from 'react';
 import SyntaxHighlighter, { SyntaxHighlighterProps } from 'react-syntax-highlighter';
