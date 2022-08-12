@@ -1,22 +1,19 @@
 import { createUserRequestValidate, CreateUserResponse } from '@codepocket/schema';
-import stringHash from 'string-hash';
-import { UserInfo, UserInfoWithToken } from 'types';
+import { PocketToken, UserInfo } from 'types';
 
 interface CreateUserType<Response> {
   validateErrorFunc: () => Response;
   successResponseFunc: (body: CreateUserResponse) => Response;
-  checkExistUser: (params: UserInfo) => Promise<boolean>;
-  createUser: (params: UserInfoWithToken) => Promise<void>;
+  checkExistUser: (params: UserInfo) => Promise<PocketToken | null>;
+  createUser: (params: UserInfo) => Promise<PocketToken>;
 }
 
 export default async <T, Response>(request: T, modules: CreateUserType<Response>) => {
   if (!createUserRequestValidate(request)) throw modules.validateErrorFunc();
   const { userName, email } = request.body;
 
-  const pocketToken = String(stringHash(userName));
+  let token = await modules.checkExistUser({ userName, email });
+  if (!token) token = await modules.createUser({ userName, email });
 
-  const isExistUser = await modules.checkExistUser({ userName, email });
-  if (!isExistUser) await modules.createUser({ userName, email, pocketToken });
-
-  return modules.successResponseFunc({ message: '', pocketToken });
+  return modules.successResponseFunc({ message: '', pocketToken: token.pocketToken });
 };
