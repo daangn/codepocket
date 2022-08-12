@@ -15,8 +15,7 @@ jobs:
 
       - name: generate .env
         run: |
-          echo POCKET_TOKEN=${{ secrets.POCKET_TOKEN }} >> .env
-          cat .env
+          export POCKET_TOKEN=${{ secrets.POCKET_TOKEN }}
 
       - name: test all
         run: yarn test
