@@ -2,8 +2,12 @@ import { getCodeNamesRequestValidate, GetCodeNamesResponse } from '@codepocket/s
 import { CodeInfoWithAnonymous, FindCodeInfoUsingRegexParams } from 'types';
 
 export interface GetCodeNamesType<Response> {
+  /* validator에러 */
   validateErrorFunc?: Response;
+  /* 성공했을 경우 */
   successResponseFunc: (body: GetCodeNamesResponse) => Response;
+
+  /* Regex로 코드 정보를 찾아오기 */
   findCodeInfoUsingRegex: (
     params: FindCodeInfoUsingRegexParams,
   ) => Promise<CodeInfoWithAnonymous[]>;
