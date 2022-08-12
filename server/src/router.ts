@@ -1,4 +1,4 @@
-import * as core from '@codepocket/core-server';
+import { createConnector } from '@codepocket/core-server';
 import * as Schema from '@codepocket/schema';
 import { FastifyInstance, FastifyPluginOptions } from 'fastify';
 import fp from 'fastify-plugin';
@@ -10,11 +10,14 @@ import { checkSlackPossible, env } from './utils/env';
 import responseHandler, { CustomResponse } from './utils/responseHandler';
 
 export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
+  const connector = createConnector<CustomResponse>({
+    validateErrorFunc: new CustomResponse({ customStatus: 4001 }),
+  });
+
   server.post('/user', (req, reply) =>
     responseHandler(
       () =>
-        core.createUser(req, {
-          validateErrorFunc: () => new CustomResponse({ customStatus: 4001 }),
+        connector.createUser(req, {
           successResponseFunc: (body) =>
             new CustomResponse<Schema.CreateUserResponse>({ customStatus: 2007, body }),
           checkExistUser: UserModule.checkExistUser(server),
@@ -27,8 +30,7 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
   server.post('/user/auth', (req, reply) =>
     responseHandler(
       () =>
-        core.verifyUser(req, {
-          validateErrorFunc: () => new CustomResponse({ customStatus: 4001 }),
+        connector.verifyUser(req, {
           successResponseFunc: (body) =>
             new CustomResponse<Schema.VerifyUserResponse>({ customStatus: 2000, body }),
           getUserName: UserModule.getAuthorName(server),
@@ -40,8 +42,7 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
   server.get('/story/code', (req, reply) =>
     responseHandler(
       () =>
-        core.getStoryCode(req, {
-          validateErrorFunc: () => new CustomResponse({ customStatus: 4001 }),
+        connector.getStoryCode(req, {
           successResponseFunc: (body) =>
             new CustomResponse<Schema.GetStoryCodeResponse>({ customStatus: 2001, body }),
           getStoryCode: StoryModule.getStoryCode(server),
@@ -53,8 +54,7 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
   server.get('/story/names', (req, reply) =>
     responseHandler(
       () =>
-        core.getStoryNames(req, {
-          validateErrorFunc: () => new CustomResponse({ customStatus: 4001 }),
+        connector.getStoryNames(req, {
           successResponseFunc: (body) =>
             new CustomResponse<Schema.GetStoryNamesResponse>({ customStatus: 2001, body }),
           getStoryNames: StoryModule.getStoryFullNames(server),
@@ -66,8 +66,7 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
   server.post('/story', (req, reply) =>
     responseHandler(
       () =>
-        core.createStory(req, {
-          validateErrorFunc: () => new CustomResponse({ customStatus: 4001 }),
+        connector.createStory(req, {
           successResponseFunc: () =>
             new CustomResponse<Schema.CreateStoryResponse>({ customStatus: 2001 }),
           isStoryExist: StoryModule.existStory(server),
@@ -81,8 +80,7 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
   server.get('/code/id', (req, reply) =>
     responseHandler(
       () =>
-        core.getCode(req, {
-          validateErrorFunc: () => new CustomResponse({ customStatus: 4001 }),
+        connector.getCode(req, {
           successResponseFunc: (body) =>
             new CustomResponse<Schema.GetCodeResponse>({ customStatus: 2007, body }),
           getCodeById: CodeModule.getCodeById(server),
@@ -94,8 +92,7 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
   server.post('/code', (req, reply) =>
     responseHandler(
       () =>
-        core.pushCode(req, {
-          validateErrorFunc: () => new CustomResponse({ customStatus: 4000 }),
+        connector.pushCode(req, {
           successResponseFunc: () =>
             new CustomResponse<Schema.PushCodeResponse>({ customStatus: 2006 }),
           slackConfig: checkSlackPossible
@@ -117,8 +114,7 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
   server.get('/code', (req, reply) =>
     responseHandler(
       () =>
-        core.pullCode(req, {
-          validateErrorFunc: () => new CustomResponse({ customStatus: 4001 }),
+        connector.pullCode(req, {
           successResponseFunc: (body) =>
             new CustomResponse<Schema.PullCodeResponse>({ customStatus: 2004, body }),
           getCode: CodeModule.getCodeCode(server),
@@ -130,8 +126,7 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
   server.get('/code/authors', (req, reply) =>
     responseHandler(
       () =>
-        core.getCodeAuthors(req, {
-          validateErrorFunc: () => new CustomResponse({ customStatus: 4001 }),
+        connector.getCodeAuthors(req, {
           successResponseFunc: (body) =>
             new CustomResponse<Schema.GetCodeAuthorsResponse>({ customStatus: 2003, body }),
           findCodeAuthors: CodeModule.findCodeAuthors(server),
@@ -143,8 +138,7 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
   server.get('/code/list', (req, reply) =>
     responseHandler(
       () =>
-        core.getCodeNames(req, {
-          validateErrorFunc: () => new CustomResponse({ customStatus: 4001 }),
+        connector.getCodeNames(req, {
           successResponseFunc: (body) =>
             new CustomResponse<Schema.GetCodeNamesResponse>({ customStatus: 2003, body }),
           findCodeInfoUsingRegex: CodeModule.findCodeInfoUsingRegex(server),
@@ -156,8 +150,7 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
   server.post('/code/delete', (req, reply) =>
     responseHandler(
       () =>
-        core.deleteCode(req, {
-          validateErrorFunc: () => new CustomResponse({ customStatus: 4001 }),
+        connector.deleteCode(req, {
           existCodeErrorFunc: () => new CustomResponse({ customStatus: 4006 }),
           successResponseFunc: () =>
             new CustomResponse<Schema.DeleteCodeResponse>({ customStatus: 2002 }),
@@ -172,8 +165,7 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
   server.get('/codes', (req, reply) =>
     responseHandler(
       () =>
-        core.getCodes(req, {
-          validateErrorFunc: () => new CustomResponse({ customStatus: 4001 }),
+        connector.getCodes(req, {
           successResponseFunc: (body) =>
             new CustomResponse<Schema.GetCodesResponse>({ customStatus: 2003, body }),
           searchCodes: CodeModule.searchCodes(server),
