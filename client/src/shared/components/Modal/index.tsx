@@ -1,13 +1,15 @@
+import { Icon } from '@shared/components';
 import { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 
 import * as style from './style.css';
 
-export const ANIMATION_DURATION = 100;
+const ANIMATION_DURATION = 100;
 
 interface ModalInterface {
   children?: React.ReactNode;
   isOpen: boolean;
+  closeModal: () => void;
 }
 
 const ModalContainer = ({ children }: Pick<ModalInterface, 'children'>) => {
@@ -24,7 +26,7 @@ const ModalContainer = ({ children }: Pick<ModalInterface, 'children'>) => {
       <Alert.Description>설명이에요</Alert.Description>
     </Alert>
  */
-const Modal = ({ children, isOpen: inputIsOpen }: ModalInterface) => {
+const Modal = ({ children, isOpen: inputIsOpen, closeModal }: ModalInterface) => {
   const [isOpen, setIsOpen] = useState(inputIsOpen);
 
   useEffect(() => {
@@ -44,7 +46,12 @@ const Modal = ({ children, isOpen: inputIsOpen }: ModalInterface) => {
       <div className={style.modalContainer({ isOpen })}>
         <div className={style.modalOverlay({ isAnimation: inputIsOpen })} />
         <div className={style.modalContentContainer}>
-          <section className={style.modalContent({ isAnimation: inputIsOpen })}>{children}</section>
+          <section className={style.modalContent({ isAnimation: inputIsOpen })}>
+            <div className={style.modalCloseButton} onClick={closeModal}>
+              <Icon icon="close" />
+            </div>
+            {children}
+          </section>
         </div>
       </div>
     </ModalContainer>
