@@ -2,8 +2,12 @@ import { getStoryNamesRequestValidate, GetStoryNamesResponse } from '@codepocket
 import { CodeInfo } from 'types';
 
 export interface GetStoryNamesType<Response> {
+  /* validator에러 */
   validateErrorFunc?: Response;
+  /* 성공했을 경우 */
   successResponseFunc: (body: GetStoryNamesResponse) => Response;
+
+  /* 스토리 이름들을 가져오는 함수 */
   getStoryNames: ({ codeAuthor, codeName }: CodeInfo) => Promise<string[]>;
 }
 

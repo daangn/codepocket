@@ -2,8 +2,12 @@ import { pullCodeRequestValidate, PullCodeResponse } from '@codepocket/schema';
 import { CodeInfo } from 'types';
 
 export interface PullCodeType<Response> {
+  /* validator에러 */
   validateErrorFunc?: Response;
+  /* 성공했을 경우 */
   successResponseFunc: (body: PullCodeResponse) => Response;
+
+  /* 코드를 가져오는 함수 */
   getCode: (params: CodeInfo) => Promise<string>;
 }
 

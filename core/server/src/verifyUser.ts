@@ -2,8 +2,12 @@ import { verifyUserRequestValidate, VerifyUserResponse } from '@codepocket/schem
 import { PocketToken } from 'types';
 
 export interface VerifyUserType<Response> {
+  /* validator에러 */
   validateErrorFunc?: Response;
+  /* 성공했을 경우 */
   successResponseFunc: (body: VerifyUserResponse) => Response;
+
+  /* 유저 이름을 가져오는 함수 */
   getUserName: ({ pocketToken }: PocketToken) => Promise<string>;
 }
 
