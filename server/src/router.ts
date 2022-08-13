@@ -77,7 +77,7 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
         connector.createStory(req, {
           successResponseFunc: () =>
             new CustomResponse<Schema.CreateStoryResponse>({ customStatus: 2001 }),
-          existStoryErrorFunc: () => new CustomResponse({ customStatus: 4004 }),
+          existStoryErrorFunc: new CustomResponse({ customStatus: 4004 }),
           isStoryExist: StoryModule.existStory(server),
           getUserName: UserModule.getAuthorName(server),
           createStory: StoryModule.createStory(server),
