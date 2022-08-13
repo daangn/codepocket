@@ -28,28 +28,28 @@ export const createConnector = <Response>({
 }: ConnectorType<Response>) => {
   return {
     createStory: <T>(request: T, modules: CreateStoryType<Response>) =>
-      createStory(request, { ...modules, validateError }),
+      createStory(request, { validateError, ...modules }),
     createUser: <T>(request: T, modules: CreateUserType<Response>) =>
-      createUser(request, { ...modules, validateError }),
+      createUser(request, { validateError, ...modules }),
     deleteCode: <T>(request: T, modules: DeleteCodeType<Response>) =>
-      deleteCode(request, { ...modules, slackConfig, validateError }),
+      deleteCode(request, { slackConfig, validateError, ...modules }),
     getCode: <T>(request: T, modules: GetCodeType<Response>) =>
-      getCode(request, { ...modules, validateError }),
+      getCode(request, { validateError, ...modules }),
     getCodeAuthors: <T>(request: T, modules: GetCodeAuthorsType<Response>) =>
-      getCodeAuthors(request, { ...modules, validateError }),
+      getCodeAuthors(request, { validateError, ...modules }),
     getCodeNames: <T>(request: T, modules: GetCodeNamesType<Response>) =>
-      getCodeNames(request, { ...modules, validateError }),
+      getCodeNames(request, { validateError, ...modules }),
     getCodes: <T>(request: T, modules: GetCodesType<Response>) =>
-      getCodes(request, { ...modules, validateError }),
+      getCodes(request, { validateError, ...modules }),
     getStoryCode: <T>(request: T, modules: GetStoryCodeType<Response>) =>
-      getStoryCode(request, { ...modules, validateError }),
+      getStoryCode(request, { validateError, ...modules }),
     getStoryNames: <T>(request: T, modules: GetStoryNamesType<Response>) =>
-      getStoryNames(request, { ...modules, validateError }),
+      getStoryNames(request, { validateError, ...modules }),
     pullCode: <T>(request: T, modules: PullCodeType<Response>) =>
-      pullCode(request, { ...modules, validateError }),
+      pullCode(request, { validateError, ...modules }),
     pushCode: <T>(request: T, modules: PushCodeType<Response>) =>
-      pushCode(request, { ...modules, slackAPIError, slackConfig, validateError }),
+      pushCode(request, { slackAPIError, slackConfig, validateError, ...modules }),
     verifyUser: <T>(request: T, modules: VerifyUserType<Response>) =>
-      verifyUser(request, { ...modules, validateError }),
+      verifyUser(request, { validateError, ...modules }),
   };
 };
