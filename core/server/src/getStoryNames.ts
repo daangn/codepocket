@@ -11,7 +11,7 @@ export interface GetStoryNamesType<Response> {
 }
 
 export default async <T, Response>(request: T, modules: GetStoryNamesType<Response>) => {
-  if (!getStoryNamesRequestValidate(request)) throw modules.validateErrorFunc();
+  if (!getStoryNamesRequestValidate(request)) throw modules.validateError;
   const { codeId } = request.query;
   const storyNames = await modules.getStoryNames({ codeId });
 

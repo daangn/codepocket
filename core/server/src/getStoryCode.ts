@@ -10,8 +10,8 @@ export interface GetStoryCodeType<Response> {
   getStoryCode: (param: StoryId) => Promise<{ [x: string]: string }>;
 }
 
-export default async <T, Response>(request: T, modules: GetStoryCode<Response>) => {
-  if (!getStoryCodeRequestValidate(request)) throw modules.validateErrorFunc();
+export default async <T, Response>(request: T, modules: GetStoryCodeType<Response>) => {
+  if (!getStoryCodeRequestValidate(request)) throw modules.validateError;
   const { storyId } = request.query;
 
   const codes = await modules.getStoryCode({ storyId });
