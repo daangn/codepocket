@@ -12,6 +12,14 @@ import responseHandler, { CustomResponse } from './utils/responseHandler';
 export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
   const connector = createConnector<CustomResponse>({
     validateErrorFunc: new CustomResponse({ customStatus: 4001 }),
+    slackAPIError: new CustomResponse({ customStatus: 5001 }),
+    slackConfig: checkSlackPossible
+      ? {
+          SLACK_BOT_TOKEN: env.SLACK_BOT_TOKEN,
+          CHAPTER_FRONTED_CHANNEL_ID: env.CHAPTER_FRONTED_CHANNEL_ID,
+          CODEPOCKET_CHANNEL_ID: env.CODEPOCKET_CHANNEL_ID,
+        }
+      : undefined,
   });
 
   server.post('/user', (req, reply) =>
@@ -96,14 +104,8 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
         connector.pushCode(req, {
           successResponseFunc: () =>
             new CustomResponse<Schema.PushCodeResponse>({ customStatus: 2006 }),
-          slackConfig: checkSlackPossible
-            ? {
-                SLACK_BOT_TOKEN: env.SLACK_BOT_TOKEN,
-                CHAPTER_FRONTED_CHANNEL_ID: env.CHAPTER_FRONTED_CHANNEL_ID,
-                CODEPOCKET_CHANNEL_ID: env.CODEPOCKET_CHANNEL_ID,
-              }
-            : undefined,
-          checkAnonymousCode: CodeModule.checkAnonymousCode(server),
+          existAnonymousError: new CustomResponse({ customStatus: 4009 }),
+          isAnonymousCodeExist: CodeModule.isAnonymousCodeExist(server),
           getAuthorName: UserModule.getAuthorName(server),
           isExistCode: CodeModule.isExistCode(server),
           pushCode: CodeModule.pushCode(server),

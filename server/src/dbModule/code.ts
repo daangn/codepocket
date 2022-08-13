@@ -93,14 +93,15 @@ export const getCodeCode =
     return code.code;
   };
 
-export const checkAnonymousCode =
+export const isAnonymousCodeExist =
   (server: FastifyInstance) =>
   async ({ codeName }: Types.CodeName) => {
     const [checkAnonymousCodeError, code] = await to(
       (async () => await server.store.Code.findOne({ codeName, isAnonymous: true }))(),
     );
     if (checkAnonymousCodeError) throw new CustomResponse({ customStatus: 5000 });
-    if (code) throw new CustomResponse({ customStatus: 4009 });
+
+    return !!code;
   };
 
 export const pushCode =

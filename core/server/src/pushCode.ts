@@ -8,15 +8,21 @@ export interface PushCodeType<Response> {
   validateErrorFunc?: Response;
   /* 슬랙 통신이 잘못되었을 경우 에러 */
   slackAPIError?: Response;
+  /* 익명으로 된 동일한 이름의 코드가 있으면 에러 */
+  existAnonymousError: Response;
   /* 성공했을 경우 */
   successResponseFunc: (body: PushCodeResponse) => Response;
 
   /* slack 키 값들 */
   slackConfig?: SlackConfig;
 
+  /* 유저이름 가져오는 함수 */
   getAuthorName: (params: PocketToken) => Promise<string>;
-  checkAnonymousCode: (params: CodeName) => Promise<void>;
+  /* 익명으로 된 동일한 이름의 코드가 있는지 검사하는 함수  */
+  isAnonymousCodeExist: (params: CodeName) => Promise<boolean>;
+  /* 코드가 존재하는지 확인하는 함수 */
   isExistCode: (paramsshel: CodeInfo) => Promise<boolean>;
+  /* 코드를 생성하는 함수 */
   pushCode: (obj: PushCodeParams) => Promise<void>;
 }
 
@@ -26,7 +32,10 @@ export default async <T, Response>(request: T, modules: PushCodeType<Response>) 
 
   const codeAuthor = await modules.getAuthorName({ pocketToken });
 
-  if (isAnonymous) await modules.checkAnonymousCode({ codeName });
+  if (isAnonymous) {
+    const exist = await modules.isAnonymousCodeExist({ codeName });
+    if (exist) throw modules.existAnonymousError;
+  }
 
   const isAlreadyPushedCode = await modules.isExistCode({ codeName, codeAuthor });
 
