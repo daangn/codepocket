@@ -77,8 +77,8 @@ export interface PushCodeParams {
 
 export interface SearchCodesParam {
   searchRegex?: RegExp;
-  limit: string;
-  offset: string;
+  limit: number;
+  offset: number;
 }
 
 export interface FindCodeInfoUsingRegexParams {

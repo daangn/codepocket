@@ -1,9 +1,12 @@
 import { getStoryCodeRequestValidate, GetStoryCodeResponse } from '@codepocket/schema';
 import { StoryId } from 'types';
 
-interface GetStoryCode<Response> {
-  validateErrorFunc: () => Response;
+export interface GetStoryCodeType<Response> {
+  /* validator에러 */
+  validateError?: Response;
+  /* 성공했을 경우 */
   successResponseFunc: (body: GetStoryCodeResponse) => Response;
+  /* 스토리 코드들을 가져오는 함수 */
   getStoryCode: (param: StoryId) => Promise<{ [x: string]: string }>;
 }
 

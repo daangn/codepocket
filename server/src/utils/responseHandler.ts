@@ -1,7 +1,11 @@
 import { to } from 'await-to-js';
 import { FastifyReply } from 'fastify';
 
-const CustomResponseStatuses = {
+interface CustomResponseStatusesType {
+  [key: number]: { message: string; status: number };
+}
+
+const CustomResponseStatuses: CustomResponseStatusesType = {
   2000: { message: '인증에 성공하셨어요', status: 200 },
   2001: { message: '스토리 코드를 반환해요', status: 200 },
   2002: { message: '삭제를 성공했어요', status: 200 },
