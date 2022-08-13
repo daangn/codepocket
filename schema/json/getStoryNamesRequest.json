@@ -5,17 +5,13 @@
     "query": {
       "type": "object",
       "properties": {
-        "codeAuthor": {
-          "type": "string"
-        },
-        "codeName": {
+        "codeId": {
           "type": "string"
         }
       },
       "additionalProperties": false,
       "required": [
-        "codeAuthor",
-        " codeName"
+        "codeId"
       ]
     }
   },

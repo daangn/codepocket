@@ -1,26 +1,23 @@
 import React from 'react';
 
-import { PocketCode, StoryFullName } from '../../api';
 import * as style from './style.css';
 
 interface StoryNameListProps {
-  pocketCodes: PocketCode[];
-  selectedStoryName?: string;
-  selectStory: (storyName: PocketCode) => void;
+  pocketCodes: { storyName: string; storyId: string }[];
+  selectedStoryId?: string;
+  selectStory: (storyName: string) => void;
 }
-
-const getStoryNameFromPocketCode = (name: PocketCode) => name.split('_')[1] as StoryFullName;
 
 const StoryNameList: React.FC<StoryNameListProps> = (props) => (
   <ul className={style.list}>
-    {props.pocketCodes.map((name) => (
-      <li key={name} className={style.item} onClick={() => props.selectStory(name)}>
+    {props.pocketCodes.map(({ storyId, storyName }) => (
+      <li key={storyId} className={style.item} onClick={() => props.selectStory(storyId)}>
         <button
           className={style.storyButton({
-            selected: props.selectedStoryName === getStoryNameFromPocketCode(name),
+            selected: props.selectedStoryId === storyId,
           })}
         >
-          {getStoryNameFromPocketCode(name)}
+          {storyName}
         </button>
       </li>
     ))}

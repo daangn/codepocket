@@ -8,16 +8,17 @@ import useCustomMutation from '@shared/hooks/useCustomMutation';
 import { localStorage } from '@shared/utils/localStorage';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { createStoryUrl, getStoryNamesUrl, StoryFullName } from '../api';
+import { createStoryUrl, getStoryNamesUrl } from '../api';
 
 type CreateStoryBodyType = CreateStoryRequest['body'];
 interface UseCreateStory {
   codeName?: string;
   codeAuthor?: string;
-  selectStory: (name: StoryFullName) => void;
+  codeId: string;
+  selectStory: (name: string) => void;
 }
 
-const useCreateStory = ({ codeAuthor, codeName, selectStory }: UseCreateStory) => {
+const useCreateStory = ({ codeId, selectStory }: UseCreateStory) => {
   const queryClient = useQueryClient();
   const { user } = useAuth0();
   const { mutate: createStoryMutate } = useCustomMutation<
@@ -29,20 +30,19 @@ const useCreateStory = ({ codeAuthor, codeName, selectStory }: UseCreateStory) =
     method: 'POST',
     validator: createStoryResponseValidate,
     options: {
-      onSuccess: async (_, vars) => {
+      onSuccess: async (res) => {
         if (!user) return;
         await queryClient.invalidateQueries([getStoryNamesUrl]);
-        const storyName = `${user.nickname}-${vars.storyName}` as StoryFullName;
-        selectStory(`${codeAuthor}/${codeName}_${storyName}`);
+        selectStory(res.storyId);
       },
     },
   });
 
   const createStory = ({ codes, storyName }: Pick<CreateStoryBodyType, 'codes' | 'storyName'>) => {
     const pocketToken = localStorage.getUserToken();
-    if (!pocketToken || !storyName || !codeName || !codeAuthor) return;
+    if (!pocketToken || !storyName) return;
 
-    createStoryMutate({ codes, storyName, codeName, codeAuthor, pocketToken });
+    createStoryMutate({ codes, storyName, codeId, pocketToken });
   };
 
   return {

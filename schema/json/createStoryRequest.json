@@ -8,10 +8,7 @@
         "pocketToken": {
           "type": "string"
         },
-        "codeAuthor": {
-          "type": "string"
-        },
-        "codeName": {
+        "codeId": {
           "type": "string"
         },
         "storyName": {
@@ -27,8 +24,7 @@
       "additionalProperties": false,
       "required": [
         "pocketToken",
-        "codeAuthor",
-        "codeName",
+        "codeId",
         "storyName",
         "codes"
       ]
