@@ -1,3 +1,5 @@
+import { SlackConfig } from 'slack';
+
 import createStory, { CreateStoryType } from './createStory';
 import createUser, { CreateUserType } from './createUser';
 import deleteCode, { DeleteCodeType } from './deleteCode';
@@ -15,9 +17,15 @@ export * as Types from './types';
 
 interface ConnectorType<Response> {
   validateErrorFunc: Response;
+  slackAPIError?: Response;
+  slackConfig?: SlackConfig;
 }
 
-export const createConnector = <Response>({ validateErrorFunc }: ConnectorType<Response>) => {
+export const createConnector = <Response>({
+  validateErrorFunc,
+  slackAPIError,
+  slackConfig,
+}: ConnectorType<Response>) => {
   return {
     createStory: <T>(request: T, modules: CreateStoryType<Response>) =>
       createStory(request, { ...modules, validateErrorFunc }),
@@ -40,7 +48,7 @@ export const createConnector = <Response>({ validateErrorFunc }: ConnectorType<R
     pullCode: <T>(request: T, modules: PullCodeType<Response>) =>
       pullCode(request, { ...modules, validateErrorFunc }),
     pushCode: <T>(request: T, modules: PushCodeType<Response>) =>
-      pushCode(request, { ...modules, validateErrorFunc }),
+      pushCode(request, { ...modules, slackAPIError, slackConfig, validateErrorFunc }),
     verifyUser: <T>(request: T, modules: VerifyUserType<Response>) =>
       verifyUser(request, { ...modules, validateErrorFunc }),
   };
