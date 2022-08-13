@@ -5,7 +5,7 @@ import { postMessageToSlack, SlackConfig, uploadCodeToSlack } from './slack';
 
 export interface PushCodeType<Response> {
   /* validator에러 */
-  validateErrorFunc?: Response;
+  validateError?: Response;
   /* 슬랙 통신이 잘못되었을 경우 에러 */
   slackAPIError?: Response;
   /* 익명으로 된 동일한 이름의 코드가 있으면 에러 */
@@ -27,7 +27,7 @@ export interface PushCodeType<Response> {
 }
 
 export default async <T, Response>(request: T, modules: PushCodeType<Response>) => {
-  if (!pushCodeRequestValidate(request)) throw modules.validateErrorFunc;
+  if (!pushCodeRequestValidate(request)) throw modules.validateError;
   const { pocketToken, codeName, code, isAnonymous } = request.body;
 
   const codeAuthor = await modules.getAuthorName({ pocketToken });

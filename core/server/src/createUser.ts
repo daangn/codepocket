@@ -3,7 +3,7 @@ import { PocketToken, UserInfo } from 'types';
 
 export interface CreateUserType<Response> {
   /* validator에러 */
-  validateErrorFunc?: Response;
+  validateError?: Response;
   /* 성공했을 경우 */
   successResponseFunc: (body: CreateUserResponse) => Response;
 
@@ -14,7 +14,7 @@ export interface CreateUserType<Response> {
 }
 
 export default async <T, Response>(request: T, modules: CreateUserType<Response>) => {
-  if (!createUserRequestValidate(request)) throw modules.validateErrorFunc;
+  if (!createUserRequestValidate(request)) throw modules.validateError;
   const { userName, email } = request.body;
 
   let token = await modules.getUsetToken({ userName, email });

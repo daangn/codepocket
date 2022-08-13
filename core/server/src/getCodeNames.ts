@@ -3,7 +3,7 @@ import { CodeInfoWithAnonymous, FindCodeInfoUsingRegexParams } from 'types';
 
 export interface GetCodeNamesType<Response> {
   /* validator에러 */
-  validateErrorFunc?: Response;
+  validateError?: Response;
   /* 성공했을 경우 */
   successResponseFunc: (body: GetCodeNamesResponse) => Response;
 
@@ -14,7 +14,7 @@ export interface GetCodeNamesType<Response> {
 }
 
 export default async <T, Response>(request: T, modules: GetCodeNamesType<Response>) => {
-  if (!getCodeNamesRequestValidate(request)) throw modules.validateErrorFunc;
+  if (!getCodeNamesRequestValidate(request)) throw modules.validateError;
   const { codeAuthor, codeName } = request.query;
 
   const codeNameRegex = new RegExp(codeName || '', 'gi');

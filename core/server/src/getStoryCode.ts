@@ -3,7 +3,7 @@ import { StoryInfo } from 'types';
 
 export interface GetStoryCodeType<Response> {
   /* validator에러 */
-  validateErrorFunc?: Response;
+  validateError?: Response;
   /* 성공했을 경우 */
   successResponseFunc: (body: GetStoryCodeResponse) => Response;
 
@@ -12,7 +12,7 @@ export interface GetStoryCodeType<Response> {
 }
 
 export default async <T, Response>(request: T, modules: GetStoryCodeType<Response>) => {
-  if (!getStoryCodeRequestValidate(request)) throw modules.validateErrorFunc;
+  if (!getStoryCodeRequestValidate(request)) throw modules.validateError;
   const { codeAuthor, codeName, storyAuthor, storyName } = request.query;
 
   const codes = await modules.getStoryCodes({ codeAuthor, codeName, storyAuthor, storyName });

@@ -5,7 +5,7 @@ import { CodeInfo, PocketToken } from 'types';
 
 export interface DeleteCodeType<Response> {
   /* validator에러 */
-  validateErrorFunc?: Response;
+  validateError?: Response;
   /* 코드가 존재하지 않을 경우 에러 */
   existCodeErrorFunc: () => Response;
   /* 슬랙 통신이 잘못되었을 경우 에러 */
@@ -23,7 +23,7 @@ export interface DeleteCodeType<Response> {
 }
 
 export default async <T, Response>(request: T, modules: DeleteCodeType<Response>) => {
-  if (!deleteCodeRequestValidate(request)) throw modules.validateErrorFunc;
+  if (!deleteCodeRequestValidate(request)) throw modules.validateError;
   const { pocketToken, codeName } = request.body;
 
   const codeAuthor = await modules.getUserName({ pocketToken });

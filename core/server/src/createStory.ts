@@ -3,7 +3,7 @@ import { PocketToken, StoryInfo, StoryInfoWithCode } from 'types';
 
 export interface CreateStoryType<Response> {
   /* validator에러 */
-  validateErrorFunc?: Response;
+  validateError?: Response;
   /* 존재하는 스토리가 있다면 에러 */
   existStoryErrorFunc: Response;
   /* 성공했을 경우 */
@@ -18,7 +18,7 @@ export interface CreateStoryType<Response> {
 }
 
 export default async <T, Response>(request: T, modules: CreateStoryType<Response>) => {
-  if (!createStoryRequestValidate(request)) throw modules.validateErrorFunc;
+  if (!createStoryRequestValidate(request)) throw modules.validateError;
   const { pocketToken, codeAuthor, codeName, storyName, codes } = request.body;
 
   const storyAuthor = await modules.getUserName({ pocketToken });

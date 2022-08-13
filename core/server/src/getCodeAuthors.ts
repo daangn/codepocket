@@ -3,7 +3,7 @@ import { CodeAuthor, CodeName } from 'types';
 
 export interface GetCodeAuthorsType<Response> {
   /* validator에러 */
-  validateErrorFunc?: Response;
+  validateError?: Response;
   /* 성공했을 경우 */
   successResponseFunc: (body: GetCodeAuthorsResponse) => Response;
 
@@ -12,7 +12,7 @@ export interface GetCodeAuthorsType<Response> {
 }
 
 export default async <T, Response>(request: T, modules: GetCodeAuthorsType<Response>) => {
-  if (!getCodeAuthorsRequestValidate(request)) throw modules.validateErrorFunc;
+  if (!getCodeAuthorsRequestValidate(request)) throw modules.validateError;
   const { codeName } = request.query;
 
   const codeAuthors = await modules.findCodeAuthors({ codeName });

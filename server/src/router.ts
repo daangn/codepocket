@@ -11,7 +11,7 @@ import responseHandler, { CustomResponse } from './utils/responseHandler';
 
 export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
   const connector = createConnector<CustomResponse>({
-    validateErrorFunc: new CustomResponse({ customStatus: 4001 }),
+    validateError: new CustomResponse({ customStatus: 4001 }),
     slackAPIError: new CustomResponse({ customStatus: 5001 }),
     slackConfig: checkSlackPossible
       ? {

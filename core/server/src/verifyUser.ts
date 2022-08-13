@@ -3,7 +3,7 @@ import { PocketToken } from 'types';
 
 export interface VerifyUserType<Response> {
   /* validator에러 */
-  validateErrorFunc?: Response;
+  validateError?: Response;
   /* 성공했을 경우 */
   successResponseFunc: (body: VerifyUserResponse) => Response;
 
@@ -12,7 +12,7 @@ export interface VerifyUserType<Response> {
 }
 
 export default async <T, Response>(request: T, modules: VerifyUserType<Response>) => {
-  if (!verifyUserRequestValidate(request)) throw modules.validateErrorFunc;
+  if (!verifyUserRequestValidate(request)) throw modules.validateError;
   const { pocketToken } = request.body;
 
   const userName = await modules.getUserName({ pocketToken });

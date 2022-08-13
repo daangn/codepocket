@@ -3,7 +3,7 @@ import { SearchCodesParam } from 'types';
 
 export interface GetCodesType<Response> {
   /* validator에러 */
-  validateErrorFunc?: Response;
+  validateError?: Response;
   /* 성공했을 경우 */
   successResponseFunc: (body: GetCodesResponse) => Response;
 
@@ -12,7 +12,7 @@ export interface GetCodesType<Response> {
 }
 
 export default async <T, Response>(request: T, modules: GetCodesType<Response>) => {
-  if (!getCodesRequestValidate(request)) throw modules.validateErrorFunc;
+  if (!getCodesRequestValidate(request)) throw modules.validateError;
   const { limit = '5', offset = '0', search = '' } = request.query;
 
   const searchRegex = new RegExp(search, 'gi');

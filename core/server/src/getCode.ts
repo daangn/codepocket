@@ -3,7 +3,7 @@ import { CodeId, CodeInfoWithCode } from 'types';
 
 export interface GetCodeType<Response> {
   /* validator에러 */
-  validateErrorFunc?: Response;
+  validateError?: Response;
   /* 성공했을 경우 */
   successResponseFunc: (body: GetCodeResponse) => Response;
 
@@ -12,7 +12,7 @@ export interface GetCodeType<Response> {
 }
 
 export default async <T, Response>(request: T, modules: GetCodeType<Response>) => {
-  if (!getCodeRequestValidate(request)) throw modules.validateErrorFunc;
+  if (!getCodeRequestValidate(request)) throw modules.validateError;
   const { codeId } = request.query;
 
   const codeInfo = await modules.getCodeInfoById({ codeId });
