@@ -1,17 +1,17 @@
 import { getStoryNamesRequestValidate, GetStoryNamesResponse } from '@codepocket/schema';
-import { CodeInfo } from 'types';
+import { CodeId, StoryNamesWithCodeId } from 'types';
 
 interface GetStoryNamesType<Response> {
   validateErrorFunc: () => Response;
   successResponseFunc: (body: GetStoryNamesResponse) => Response;
-  getStoryNames: ({ codeAuthor, codeName }: CodeInfo) => Promise<string[]>;
+  getStoryNames: (params: CodeId) => Promise<StoryNamesWithCodeId[]>;
 }
 
 export default async <T, Response>(request: T, modules: GetStoryNamesType<Response>) => {
   if (!getStoryNamesRequestValidate(request)) throw modules.validateErrorFunc();
-  const { codeAuthor, codeName } = request.query;
+  const { codeId } = request.query;
 
-  const storyNames = await modules.getStoryNames({ codeAuthor, codeName });
+  const storyNames = await modules.getStoryNames({ codeId });
 
   return modules.successResponseFunc({ storyNames, message: '' });
 };

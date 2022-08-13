@@ -1,22 +1,22 @@
 import { createStoryRequestValidate, CreateStoryResponse } from '@codepocket/schema';
-import { PocketToken, StoryInfo, StoryInfoWithCode } from 'types';
+import { PocketToken, StoryInfoWithCode, StoryInfoWithCodeId } from 'types';
 
 interface CreateStoryType<Response> {
   validateErrorFunc: () => Response;
   successResponseFunc: (body: CreateStoryResponse) => Response;
-  isStoryExist: (param: StoryInfo) => Promise<boolean>;
+  isStoryExist: (param: StoryInfoWithCodeId) => Promise<boolean>;
   getUserName: (params: PocketToken) => Promise<string>;
-  createStory: (params: StoryInfoWithCode) => Promise<void>;
+  createStory: (params: StoryInfoWithCode) => Promise<string>;
 }
 
 export default async <T, Response>(request: T, modules: CreateStoryType<Response>) => {
   if (!createStoryRequestValidate(request)) throw modules.validateErrorFunc();
-  const { pocketToken, codeAuthor, codeName, storyName, codes } = request.body;
+  const { pocketToken, codeId, storyName, codes } = request.body;
 
   const storyAuthor = await modules.getUserName({ pocketToken });
 
-  await modules.isStoryExist({ codeAuthor, codeName, storyAuthor, storyName });
-  await modules.createStory({ codeAuthor, codeName, storyAuthor, storyName, codes });
+  await modules.isStoryExist({ codeId, storyAuthor, storyName });
+  const storyId = await modules.createStory({ codeId, storyAuthor, storyName, codes });
 
-  return modules.successResponseFunc({ message: '' });
+  return modules.successResponseFunc({ message: '', storyId });
 };
