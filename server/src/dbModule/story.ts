@@ -1,8 +1,10 @@
+/* eslint-disable no-underscore-dangle */
 import { Types } from '@codepocket/core-server';
 import { to } from 'await-to-js';
 import { FastifyInstance } from 'fastify';
 
 import { CustomResponse } from '../utils/responseHandler';
+import { getCodeById } from './code';
 
 export const getStories =
   (server: FastifyInstance) =>
@@ -31,7 +33,8 @@ export const getStory =
 
 export const existStory =
   (server: FastifyInstance) =>
-  async ({ codeAuthor, codeName, storyAuthor, storyName }: Types.StoryInfo) => {
+  async ({ codeId, storyAuthor, storyName }: Types.StoryInfoWithCodeId) => {
+    const { codeAuthor, codeName } = await getCodeById(server)({ codeId });
     const [err, story] = await to(
       (async () =>
         await server.store.Story.findOne({ codeAuthor, codeName, storyAuthor, storyName }))(),
@@ -42,28 +45,34 @@ export const existStory =
 
 export const getStoryFullNames =
   (server: FastifyInstance) =>
-  async ({ codeAuthor, codeName }: Types.CodeInfo) => {
+  async ({ codeId }: Types.CodeId) => {
+    const { codeAuthor, codeName } = await getCodeById(server)({ codeId });
     const stories = await getStories(server)({ codeAuthor, codeName });
 
-    // FIXME: string반환에서 객체 반환으로 바꾸기
-    const storyNames = stories.map(
-      ({ codeAuthor, codeName, storyAuthor, storyName }) =>
-        `${codeAuthor}/${codeName}_${storyAuthor}-${storyName}`,
-    );
+    const storyNames = stories.map(({ storyAuthor, storyName, _id }) => ({
+      storyName: `${storyAuthor}-${storyName}`,
+      storyId: String(_id),
+    }));
     return storyNames;
   };
 
 export const getStoryCode =
   (server: FastifyInstance) =>
-  async ({ codeAuthor, codeName, storyAuthor, storyName }: Types.StoryInfo) => {
-    const story = await getStory(server)({ codeAuthor, codeName, storyAuthor, storyName });
+  async ({ storyId }: Types.StoryId) => {
+    const [getStoryCodeErr, story] = await to(
+      (async () => await server.store.Story.findById(storyId))(),
+    );
+    if (getStoryCodeErr) throw new CustomResponse({ customStatus: 5000 });
+    if (!story) throw new CustomResponse({ customStatus: 4002 });
+
     return JSON.parse(story.codes) as { [x: string]: string };
   };
 
 export const createStory =
   (server: FastifyInstance) =>
-  async ({ codeAuthor, codeName, storyAuthor, storyName, codes }: Types.StoryInfoWithCode) => {
-    const [createError] = await to(
+  async ({ codeId, storyAuthor, storyName, codes }: Types.StoryInfoWithCode) => {
+    const { codeAuthor, codeName } = await getCodeById(server)({ codeId });
+    const [createError, story] = await to(
       (async () =>
         await server.store.Story.create({
           codeName,
@@ -75,4 +84,5 @@ export const createStory =
     );
 
     if (createError) throw new CustomResponse({ customStatus: 5000 });
+    return String(story._id);
   };
