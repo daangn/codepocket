@@ -1,9 +1,9 @@
 import { colors } from '@karrotmarket/design-token';
 import Icon from '@shared/components/Icon';
+import { isUndefined } from 'lodash';
 import { Link, useParams } from 'react-router-dom';
 
 import { DetailPathParam, pocketPath } from '../routes';
-import { PocketCode } from './api';
 import Sandpack from './components/Sandpack';
 import StoryNameList from './components/StoryNameList';
 import useCode from './hooks/useCode';
@@ -15,21 +15,16 @@ import * as style from './style.css';
 const DetailPage: React.FC = () => {
   const { codeId } = useParams<keyof DetailPathParam>();
   const { data: codeDataRes } = useCode({ codeId });
-  const { data: storyNamesRes } = useStoryNames({
-    codeAuthor: codeDataRes?.codeAuthor,
-    codeName: codeDataRes?.codeName,
-  });
-  const { selectStory, selectedStory, selectedStoryName } = useStory({
-    codeAuthor: codeDataRes?.codeAuthor,
-    codeName: codeDataRes?.codeName,
-  });
+  const { data: storyNamesRes } = useStoryNames({ codeId: codeId || '' });
+  const { selectStory, selectedStory, selectedStoryId } = useStory();
   const { createStory } = useCreateStory({
     codeAuthor: codeDataRes?.codeAuthor,
     codeName: codeDataRes?.codeName,
+    codeId: codeId || '',
     selectStory,
   });
 
-  if (!codeDataRes?.codeAuthor || !codeDataRes?.codeName) return <></>;
+  if (isUndefined(codeDataRes?.codeAuthor) || !codeDataRes?.codeName) return <></>;
   return (
     <div className={style.wrapper}>
       <div className={style.codeBlock}>
@@ -55,8 +50,8 @@ const DetailPage: React.FC = () => {
           />
         </article>
         <StoryNameList
-          pocketCodes={(storyNamesRes?.storyNames as PocketCode[]) || []}
-          selectedStoryName={selectedStoryName}
+          pocketCodes={storyNamesRes?.storyNames || []}
+          selectedStoryId={selectedStoryId}
           selectStory={selectStory}
         />
       </div>
