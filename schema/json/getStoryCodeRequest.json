@@ -5,30 +5,14 @@
     "query": {
       "type": "object",
       "properties": {
-        "codeAuthor": {
-          "type": "string"
-        },
-        "codeName": {
-          "type": "string"
-        },
-        "storyAuthor": {
-          "type": "string"
-        },
-        "storyName": {
+        "storyId": {
           "type": "string"
         }
       },
       "additionalProperties": false,
-      "required": [
-        "codeAuthor",
-        "codeName",
-        "storyAuthor",
-        "storyName"
-      ]
+      "required": ["storyId"]
     }
   },
   "additionalProperties": true,
-  "required": [
-    "query"
-  ]
+  "required": ["query"]
 }

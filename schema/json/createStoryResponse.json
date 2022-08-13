@@ -4,10 +4,14 @@
   "properties": {
     "message": {
       "type": "string"
+    },
+    "storyId": {
+      "type": "string"
     }
   },
   "additionalProperties": false,
   "required": [
-    "message"
+    "message",
+    "storyId"
   ]
 }

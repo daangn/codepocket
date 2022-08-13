@@ -8,7 +8,20 @@
     "storyNames": {
       "type": "array",
       "items": {
-        "type": "string"
+        "type": "object",
+        "properties": {
+          "storyName": {
+            "type": "string"
+          },
+          "storyId": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "storyName",
+          "storyId"
+        ]
       }
     }
   },
