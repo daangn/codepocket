@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import { UploadSlackFileResponse } from '@codepocket/schema';
 import { to } from 'await-to-js';
 
@@ -10,22 +11,32 @@ export interface SlackConfig {
   CODEPOCKET_CHANNEL_ID?: string;
 }
 
-interface PoseMessageToSlack {
+interface PostMessageToSlack<Response> {
   isAlreadyPushedCode: boolean;
   codeAuthor: string;
   codeName: string;
   config: SlackConfig;
   isAnonymous: boolean;
   uploadedChatURL?: string;
+  PostMessageError: Response;
 }
 
-interface UploadCodeToSlack {
+interface DeleteMessageToSlack<Response> {
+  codeAuthor: string;
+  codeName: string;
+  config: SlackConfig;
+  existsCodeResponse: any;
+  DeleteMessageError: Response;
+}
+
+interface UploadCodeToSlack<Response> {
   code: string;
   codeName: string;
   codeAuthor: string;
   isAlreadyPushedCode: boolean;
   isAnonymous: boolean;
   config: SlackConfig;
+  UploadCodeError: Response;
 }
 
 const generateAuthorText = ({
@@ -43,14 +54,15 @@ const generateInfoText = ({
   codeName: string;
 }) => `\`${codeName}\` 코드가 ${isAlreadyPushedCode ? '수정됐어요!' : '올라왔어요!'}`;
 
-export const postMessageToSlack = async ({
+export const postMessageToSlack = async <Response>({
   isAlreadyPushedCode,
   codeAuthor,
   codeName,
   config,
   uploadedChatURL,
   isAnonymous,
-}: PoseMessageToSlack) => {
+  PostMessageError,
+}: PostMessageToSlack<Response>) => {
   const [postMessageError] = await to(
     postMessageToSlackAPI({
       slackBotToken: config.SLACK_BOT_TOKEN || '',
@@ -62,17 +74,36 @@ export const postMessageToSlack = async ({
     }),
   );
 
-  if (postMessageError) throw new Error();
+  if (postMessageError) throw PostMessageError;
 };
 
-export const uploadCodeToSlack = async ({
+export const deleteMessageToSlack = async <Response>({
+  codeAuthor,
+  codeName,
+  config,
+  existsCodeResponse,
+  DeleteMessageError,
+}: DeleteMessageToSlack<Response>) => {
+  const [deleteMessageError] = await to(
+    postMessageToSlackAPI({
+      slackBotToken: config.SLACK_BOT_TOKEN || '',
+      channelId: existsCodeResponse._id?.uploadedChatChannel || '',
+      threadTs: existsCodeResponse._id?.uploadedChatTimeStamp || '',
+      text: `\`${codeAuthor}\`의 \`${codeName}\` 코드가 삭제되었어요!`,
+    }),
+  );
+  if (deleteMessageError) throw DeleteMessageError;
+};
+
+export const uploadCodeToSlack = async <Response>({
   code,
   codeAuthor,
   codeName,
   config,
   isAnonymous,
   isAlreadyPushedCode,
-}: UploadCodeToSlack) => {
+  UploadCodeError,
+}: UploadCodeToSlack<Response>) => {
   const [uploadCodeError, uploadCodeResponse] = await to(
     uploadCodeToSlackAPI({
       code,
@@ -86,7 +117,7 @@ export const uploadCodeToSlack = async ({
     }),
   );
 
-  if (uploadCodeError || !uploadCodeResponse.response) throw new Error();
+  if (uploadCodeError || !uploadCodeResponse.response) throw UploadCodeError;
 
   const {
     file: {

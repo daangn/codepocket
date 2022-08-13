@@ -24,7 +24,7 @@ export const getAuthorName =
     return author.userName;
   };
 
-export const checkExistUser =
+export const getUserToken =
   (server: FastifyInstance) =>
   async ({ userName, email }: Types.UserInfo) => {
     const [findAuthorError, author] = await to(

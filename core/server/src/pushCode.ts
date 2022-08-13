@@ -3,40 +3,58 @@ import { CodeInfo, CodeName, PocketToken, PushCodeParams } from 'types';
 
 import { postMessageToSlack, SlackConfig, uploadCodeToSlack } from './slack';
 
-interface PushCodeType<Response> {
-  validateErrorFunc: () => Response;
+export interface PushCodeType<Response> {
+  /* validator에러 */
+  validateError?: Response;
+  /* 슬랙 통신이 잘못되었을 경우 에러 */
+  slackAPIError?: Response;
+  /* 익명으로 된 동일한 이름의 코드가 있으면 에러 */
+  existAnonymousError: Response;
+  /* 성공했을 경우 */
   successResponseFunc: (body: PushCodeResponse) => Response;
+
+  /* slack 키 값들 */
   slackConfig?: SlackConfig;
-  getAuthorName: ({ pocketToken }: PocketToken) => Promise<string>;
-  checkAnonymousCode: (params: CodeName) => Promise<void>;
-  isExistCode: ({ codeName, codeAuthor }: CodeInfo) => Promise<boolean>;
+
+  /* 유저이름 가져오는 함수 */
+  getAuthorName: (params: PocketToken) => Promise<string>;
+  /* 익명으로 된 동일한 이름의 코드가 있는지 검사하는 함수  */
+  isAnonymousCodeExist: (params: CodeName) => Promise<boolean>;
+  /* 코드가 존재하는지 확인하는 함수 */
+  isExistCode: (paramsshel: CodeInfo) => Promise<boolean>;
+  /* 코드를 생성하는 함수 */
   pushCode: (obj: PushCodeParams) => Promise<void>;
 }
 
 export default async <T, Response>(request: T, modules: PushCodeType<Response>) => {
-  if (!pushCodeRequestValidate(request)) throw modules.validateErrorFunc();
+  if (!pushCodeRequestValidate(request)) throw modules.validateError;
   const { pocketToken, codeName, code, isAnonymous } = request.body;
 
   const codeAuthor = await modules.getAuthorName({ pocketToken });
 
-  if (isAnonymous) await modules.checkAnonymousCode({ codeName });
+  if (isAnonymous) {
+    const exist = await modules.isAnonymousCodeExist({ codeName });
+    if (exist) throw modules.existAnonymousError;
+  }
 
   const isAlreadyPushedCode = await modules.isExistCode({ codeName, codeAuthor });
 
-  const slackInfo = modules.slackConfig
-    ? await uploadCodeToSlack({
-        code,
-        codeName,
-        codeAuthor,
-        isAnonymous,
-        isAlreadyPushedCode,
-        config: modules.slackConfig,
-      })
-    : {
-        uploadedChatChannel: undefined,
-        uploadedChatTimeStamp: undefined,
-        uploadedChatURL: undefined,
-      };
+  const slackInfo =
+    modules.slackConfig && modules.slackAPIError
+      ? await uploadCodeToSlack({
+          code,
+          codeName,
+          codeAuthor,
+          isAnonymous,
+          isAlreadyPushedCode,
+          config: modules.slackConfig,
+          UploadCodeError: modules.slackAPIError,
+        })
+      : {
+          uploadedChatChannel: undefined,
+          uploadedChatTimeStamp: undefined,
+          uploadedChatURL: undefined,
+        };
 
   await modules.pushCode({
     code,
@@ -48,7 +66,7 @@ export default async <T, Response>(request: T, modules: PushCodeType<Response>) 
     slackChatTimeStamp: slackInfo.uploadedChatTimeStamp,
   });
 
-  if (modules.slackConfig)
+  if (modules.slackConfig && modules.slackAPIError)
     await postMessageToSlack({
       codeName,
       codeAuthor,
@@ -56,6 +74,7 @@ export default async <T, Response>(request: T, modules: PushCodeType<Response>) 
       isAlreadyPushedCode,
       config: modules.slackConfig,
       uploadedChatURL: slackInfo.uploadedChatURL,
+      PostMessageError: modules.slackAPIError,
     });
 
   return modules.successResponseFunc({ message: '' });
