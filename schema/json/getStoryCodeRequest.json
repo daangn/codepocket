@@ -10,9 +10,13 @@
         }
       },
       "additionalProperties": false,
-      "required": ["storyId"]
+      "required": [
+        "storyId"
+      ]
     }
   },
   "additionalProperties": true,
-  "required": ["query"]
+  "required": [
+    "query"
+  ]
 }
