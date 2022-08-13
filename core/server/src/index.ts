@@ -32,7 +32,7 @@ export const createConnector = <Response>({
     createUser: <T>(request: T, modules: CreateUserType<Response>) =>
       createUser(request, { ...modules, validateErrorFunc }),
     deleteCode: <T>(request: T, modules: DeleteCodeType<Response>) =>
-      deleteCode(request, { ...modules, validateErrorFunc }),
+      deleteCode(request, { ...modules, slackConfig, validateErrorFunc }),
     getCode: <T>(request: T, modules: GetCodeType<Response>) =>
       getCode(request, { ...modules, validateErrorFunc }),
     getCodeAuthors: <T>(request: T, modules: GetCodeAuthorsType<Response>) =>
