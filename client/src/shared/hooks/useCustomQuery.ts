@@ -19,9 +19,14 @@ const fetcher = async <T>({ queryKey }: QueryFunctionContext): Promise<T> => {
   return data;
 };
 
-const useCustomQuery = <Response>({ url, params, options }: CustomQueryInterface<Response>) => {
+const useCustomQuery = <Response>({
+  url,
+  params,
+  validator,
+  options,
+}: CustomQueryInterface<Response>) => {
   const commonOptions: QueryOptions<Response> = { staleTime: 1000000, cacheTime: 1000000 };
-  return useQuery<Response, Error, Response, QueryKey>(
+  const { data, ...others } = useQuery<Response, Error, Response, QueryKey>(
     [url!, params],
     ({ queryKey, meta }) => fetcher({ queryKey, meta }),
     {
@@ -29,6 +34,8 @@ const useCustomQuery = <Response>({ url, params, options }: CustomQueryInterface
       ...options,
     },
   );
+  if (!validator(data)) throw new Error('error');
+  return { data, ...others };
 };
 
 export default useCustomQuery;
