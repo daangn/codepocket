@@ -7,8 +7,7 @@
     "build-storybook": "build-storybook",
     "dev": "NODE_ENV=development vite",
     "preview": "vite preview",
-    "storybook": "start-storybook -p 6006",
-    "test": "vitest"
+    "storybook": "start-storybook -p 6006"
   },
   "dependencies": {
     "@auth0/auth0-react": "^1.10.2",

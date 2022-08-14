@@ -1,5 +1,6 @@
 import Check, { CheckType } from './Check';
 import Clip from './Clip';
+import Close, { CloseType } from './Close';
 import Code from './Code';
 import Information, { InformationType } from './Information';
 import LeftChevron, { LeftChevronType } from './LeftChevron';
@@ -22,6 +23,7 @@ type IconType =
   | AddIconName<WarningFillType, 'warningFill'>
   | AddIconName<InformationType, 'information'>
   | AddIconName<CheckType, 'check'>
+  | AddIconName<CloseType, 'close'>
   | AddIconName<{}, 'profile'>
   | AddIconName<{}, 'search'>
   | AddIconName<{}, 'code'>
@@ -33,6 +35,7 @@ const mapping = {
   warningFill: (param: WarningFillType) => WarningFill(param),
   check: (param: RightChevronType) => Check(param),
   information: (param: InformationType) => Information(param),
+  close: (param: CloseType) => Close(param),
   profile: () => Profile(),
   search: () => Search(),
   code: () => Code(),

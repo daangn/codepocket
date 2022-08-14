@@ -1,6 +1,5 @@
 import { colors } from '@karrotmarket/design-token';
-import Alert from '@shared/components/Alert';
-import Icon from '@shared/components/Icon';
+import { Alert, Icon } from '@shared/components';
 import useClipboard from '@shared/hooks/useClipboard';
 import { act, fireEvent, render, screen } from '@shared/utils/test-utils';
 import { Link } from 'react-router-dom';

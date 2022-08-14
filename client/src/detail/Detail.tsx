@@ -1,5 +1,5 @@
 import { colors } from '@karrotmarket/design-token';
-import Icon from '@shared/components/Icon';
+import { Icon } from '@shared/components';
 import { isUndefined } from 'lodash';
 import { Link, useParams } from 'react-router-dom';
 

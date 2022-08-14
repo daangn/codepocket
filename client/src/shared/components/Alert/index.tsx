@@ -1,5 +1,5 @@
 import { colors } from '@karrotmarket/design-token';
-import Icon from '@shared/components/Icon';
+import { Icon } from '@shared/components';
 
 import * as style from './style.css';
 

@@ -1,4 +1,4 @@
-import Icon from '@shared/components/Icon';
+import { Icon } from '@shared/components';
 import debounce from 'lodash/debounce';
 import { useCallback, useEffect, useState } from 'react';
 

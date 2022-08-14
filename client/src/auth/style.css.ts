@@ -73,3 +73,14 @@ export const button = style([
     width: '90vw',
   }),
 ]);
+
+export const modalContent = style([
+  u.flexColumn,
+  {
+    justifyContent: 'center',
+    alignItems: 'center',
+    rowGap: rem(10),
+    height: rem(100),
+    fontSize: rem(18),
+  },
+]);
