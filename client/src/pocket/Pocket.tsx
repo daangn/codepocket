@@ -1,7 +1,10 @@
-import { CodeList, MoreButton, PendingFallback, Searchbar, SearchHelpText } from './components';
+import { CodeList, MoreButton, Searchbar, SearchHelpText } from './components';
+import CodeblockSkeleton from './components/CodeBlockSkeleton';
 import ErrorMessage from './components/ErrorMessage';
 import useCodes from './hooks/useCodes';
 import * as style from './style.css';
+
+const SKELETON_COUNT = 4;
 
 const PocketPage: React.FC = () => {
   const { codes, error, isLast, searchText, isLoading, changeSearchText, getNextCodes } =
@@ -13,12 +16,10 @@ const PocketPage: React.FC = () => {
       <Searchbar searchText={searchText} changeSearchText={changeSearchText} />
       {searchText ? <SearchHelpText searchText={searchText} /> : null}
       <CodeList codes={codes} />
-      {isLoading ? <PendingFallback /> : null}
-      {isLoading ? <PendingFallback /> : null}
-      {isLoading ? <PendingFallback /> : null}
-      {isLoading ? <PendingFallback /> : null}
-      {isLoading ? <PendingFallback /> : null}
-      {isLoading ? <PendingFallback /> : null}
+      {isLoading &&
+        Array(SKELETON_COUNT)
+          .fill(0)
+          .map(() => <CodeblockSkeleton />)}
       {!isLoading &&
         (!error ? (
           <MoreButton
