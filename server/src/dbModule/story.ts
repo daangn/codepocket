@@ -4,7 +4,7 @@ import { to } from 'await-to-js';
 import { FastifyInstance } from 'fastify';
 
 import { CustomResponse } from '../utils/responseHandler';
-import { getCodeById } from './code';
+import { getCodeInfoById } from './code';
 
 export const getStories =
   (server: FastifyInstance) =>
@@ -34,7 +34,7 @@ export const getStory =
 export const existStory =
   (server: FastifyInstance) =>
   async ({ codeId, storyAuthor, storyName }: Types.StoryInfoWithCodeId) => {
-    const { codeAuthor, codeName } = await getCodeById(server)({ codeId });
+    const { codeAuthor, codeName } = await getCodeInfoById(server)({ codeId });
     const [err, story] = await to(
       (async () =>
         await server.store.Story.findOne({ codeAuthor, codeName, storyAuthor, storyName }))(),
@@ -46,7 +46,7 @@ export const existStory =
 export const getStoryFullNames =
   (server: FastifyInstance) =>
   async ({ codeId }: Types.CodeId) => {
-    const { codeAuthor, codeName } = await getCodeById(server)({ codeId });
+    const { codeAuthor, codeName } = await getCodeInfoById(server)({ codeId });
     const stories = await getStories(server)({ codeAuthor, codeName });
 
     const storyNames = stories.map(({ storyAuthor, storyName, _id }) => ({
@@ -71,7 +71,7 @@ export const getStoryCodes =
 export const createStory =
   (server: FastifyInstance) =>
   async ({ codeId, storyAuthor, storyName, codes }: Types.StoryInfoWithCode) => {
-    const { codeAuthor, codeName } = await getCodeById(server)({ codeId });
+    const { codeAuthor, codeName } = await getCodeInfoById(server)({ codeId });
     const [createError, story] = await to(
       (async () =>
         await server.store.Story.create({
