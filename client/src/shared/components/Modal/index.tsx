@@ -1,5 +1,5 @@
 import { Icon } from '@shared/components';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 
 import * as style from './style.css';
@@ -9,6 +9,7 @@ const ANIMATION_DURATION = 100;
 interface ModalInterface {
   children?: React.ReactNode;
   isOpen: boolean;
+  disableEscape?: boolean;
   closeModal: () => void;
 }
 
@@ -21,34 +22,37 @@ const ModalPortal = ({ children }: Pick<ModalInterface, 'children'>) => {
 /**
  * @description 모달을 띄우고 싶을 때 사용해요
  * @example 
- *  <Alert status={'error' | 'warning' | 'info' | 'success'}>
-      <Alert.Title>타이틀이에요</Alert.Title>
-      <Alert.Description>설명이에요</Alert.Description>
-    </Alert>
+ *  <Modal isOpen={boolean} disableEscape={boolean} closeModal={handleCloseModal}>
+      {children}
+    </Modal>
  */
-const ModalContainer = ({ children, isOpen: inputIsOpen, closeModal }: ModalInterface) => {
+const ModalContainer = ({
+  children,
+  isOpen: inputIsOpen,
+  disableEscape,
+  closeModal,
+}: ModalInterface) => {
   const [isOpen, setIsOpen] = useState(inputIsOpen);
+  const closeTimerRef = useRef<NodeJS.Timeout>();
 
   useEffect(() => {
-    let timer: NodeJS.Timeout;
-
     if (inputIsOpen) {
       setIsOpen(true);
-    } else {
-      timer = setTimeout(() => setIsOpen(false), ANIMATION_DURATION);
+      return () => clearTimeout(closeTimerRef.current);
     }
 
-    return () => clearTimeout(timer);
+    closeTimerRef.current = setTimeout(() => setIsOpen(false), ANIMATION_DURATION);
+    return () => clearTimeout(closeTimerRef.current);
   }, [inputIsOpen]);
 
   const onKeyPress = useCallback(
     (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
+      if (!disableEscape && event.key === 'Escape') {
         event.preventDefault();
         closeModal();
       }
     },
-    [closeModal],
+    [closeModal, disableEscape],
   );
 
   useEffect(() => {
