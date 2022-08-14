@@ -1,6 +1,6 @@
 import { colors } from '@karrotmarket/design-token';
-import { Icon } from '@shared/components';
-import { isUndefined } from 'lodash';
+import { Icon, Modal } from '@shared/components';
+import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
 import { DetailPathParam, pocketPath } from '../routes';
@@ -12,50 +12,70 @@ import useStory from './hooks/useStory';
 import useStoryNames from './hooks/useStoryNames';
 import * as style from './style.css';
 
+// TODO: Suspense 적용하기
 const DetailPage: React.FC = () => {
   const { codeId } = useParams<keyof DetailPathParam>();
-  const { data: codeDataRes } = useCode({ codeId });
-  const { data: storyNamesRes } = useStoryNames({ codeId: codeId || '' });
-  const { selectStory, selectedStory, selectedStoryId } = useStory();
-  const { createStory } = useCreateStory({
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const { data: codeDataRes, error: getCodeError } = useCode({ codeId });
+  const { data: storyNamesRes, error: getStoryNamesError } = useStoryNames({
+    codeId: codeId || '',
+  });
+  const { selectStory, error: getStoryError, selectedStory, selectedStoryId } = useStory();
+  const { createStory, error: createStoryError } = useCreateStory({
     codeAuthor: codeDataRes?.codeAuthor,
     codeName: codeDataRes?.codeName,
     codeId: codeId || '',
     selectStory,
   });
 
-  if (isUndefined(codeDataRes?.codeAuthor) || !codeDataRes?.codeName) return <></>;
+  const closeModal = () => setIsOpenModal(false);
+
+  useEffect(() => {
+    setIsOpenModal(!!getCodeError || !!getStoryNamesError || !!createStoryError || !getStoryError);
+  }, [getCodeError, getStoryNamesError, createStoryError, getStoryError]);
+
   return (
-    <div className={style.wrapper}>
-      <div className={style.codeBlock}>
-        <header className={style.header}>
-          <div className={style.headerIcon}>
-            <Link to={pocketPath}>
-              <Icon icon="leftChevron" color={colors.light.scheme.$blue800} />
-            </Link>
-          </div>
-          <h1 className={style.title}>
-            {!codeDataRes?.isAnonymous && codeDataRes?.codeAuthor}
-            <span className={style.highlight}> / </span>
-            {codeDataRes?.codeName}
-          </h1>
-        </header>
-        <article className={style.article}>
-          <Sandpack
-            code={codeDataRes?.code}
-            codeName={codeDataRes?.codeName}
-            codeAuthor={codeDataRes?.codeAuthor}
-            selectedStory={selectedStory}
-            pushCode={createStory}
+    <>
+      <Modal closeModal={closeModal} isOpen={!!isOpenModal} disableEscape>
+        <div className={style.modalContent}>
+          <Icon icon="warningFill" color="red" />
+          <div>{getCodeError?.response.data.message}</div>
+          <div>{getStoryError?.response.data.message}</div>
+          <div>{createStoryError?.response.data.message}</div>
+          <div>{getStoryNamesError?.response.data.message}</div>
+        </div>
+      </Modal>
+      <div className={style.wrapper}>
+        <div className={style.codeBlock}>
+          <header className={style.header}>
+            <div className={style.headerIcon}>
+              <Link to={pocketPath}>
+                <Icon icon="leftChevron" color={colors.light.scheme.$blue800} />
+              </Link>
+            </div>
+            <h1 className={style.title}>
+              {!codeDataRes?.isAnonymous && codeDataRes?.codeAuthor}
+              <span className={style.highlight}> / </span>
+              {codeDataRes?.codeName}
+            </h1>
+          </header>
+          <article className={style.article}>
+            <Sandpack
+              code={codeDataRes?.code || ''}
+              codeName={codeDataRes?.codeName || ''}
+              codeAuthor={codeDataRes?.codeAuthor || ''}
+              selectedStory={selectedStory}
+              pushCode={createStory}
+            />
+          </article>
+          <StoryNameList
+            pocketCodes={storyNamesRes?.storyNames || []}
+            selectedStoryId={selectedStoryId}
+            selectStory={selectStory}
           />
-        </article>
-        <StoryNameList
-          pocketCodes={storyNamesRes?.storyNames || []}
-          selectedStoryId={selectedStoryId}
-          selectStory={selectStory}
-        />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
