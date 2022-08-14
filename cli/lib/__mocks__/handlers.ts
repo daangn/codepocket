@@ -7,12 +7,12 @@ import {
   PullCodeAPIResponseData,
   ServerResponseData,
 } from '../api';
-import { DEV_SERVER } from '../env';
+import { getBaseUrl } from '../utils';
 import { generateListCodeResponseMock } from './mockup';
 
 type Error = 'NO' | 'SERVER' | 'NETWORK';
 
-const baseURL = DEV_SERVER;
+const baseURL = getBaseUrl();
 
 export const pushCodeHandler = (error: Error = 'NO') =>
   rest.post(`${baseURL}/code`, (_, res, ctx) => {

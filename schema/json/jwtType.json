@@ -1,17 +1,20 @@
 {
-  "title": "createStoryResponse",
+  "title": "pullCodeRequest",
   "type": "object",
   "properties": {
-    "message": {
+    "serverUrl": {
       "type": "string"
     },
-    "storyId": {
+    "userName": {
       "type": "string"
+    },
+    "iat": {
+      "type": "number"
     }
   },
   "additionalProperties": false,
   "required": [
-    "message",
-    "storyId"
+    "serverUrl",
+    "userName"
   ]
 }

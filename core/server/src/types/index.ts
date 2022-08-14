@@ -9,6 +9,10 @@ export interface CodeId {
   codeId: string;
 }
 
+export interface StoryId {
+  storyId: string;
+}
+
 export interface CodeName {
   codeName: string;
 }
@@ -36,8 +40,22 @@ export interface StoryInfo extends CodeInfo {
   storyAuthor: string;
 }
 
-export interface StoryInfoWithCode extends StoryInfo {
+export interface StoryNamesWithCodeId {
+  storyName: string;
+  storyId: string;
+}
+
+export interface StoryInfoWithCode {
+  codeId: string;
+  storyName: string;
+  storyAuthor: string;
   codes: { [x: string]: string };
+}
+
+export interface StoryInfoWithCodeId {
+  codeId: string;
+  storyName: string;
+  storyAuthor: string;
 }
 
 export interface UserInfo {
@@ -59,8 +77,8 @@ export interface PushCodeParams {
 
 export interface SearchCodesParam {
   searchRegex?: RegExp;
-  limit: string;
-  offset: string;
+  limit: number;
+  offset: number;
 }
 
 export interface FindCodeInfoUsingRegexParams {

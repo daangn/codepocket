@@ -1,6 +1,6 @@
 {
   "name": "@codepocket/cli",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "repository": {
     "type": "git",
     "url": "https://github.com/daangn/codepocket.git"
@@ -25,13 +25,14 @@
     "test:log": "NODE_ENV=development jest"
   },
   "dependencies": {
-    "@codepocket/schema": "^0.0.3",
+    "@codepocket/schema": "^0.0.4",
     "await-to-js": "^3.0.0",
     "axios": "^0.27.2",
     "chalk": "^5.0.1",
     "commander": "^9.3.0",
     "dotenv-safe": "^8.2.0",
-    "inquirer": "^9.1.0"
+    "inquirer": "^9.1.0",
+    "jsonwebtoken": "^8.5.1"
   },
   "devDependencies": {
     "@swc/core": "^1.2.211",
@@ -39,6 +40,7 @@
     "@types/dotenv-safe": "^8",
     "@types/inquirer": "^9",
     "@types/jest": "^28.1.4",
+    "@types/jsonwebtoken": "^8",
     "@types/node": "^18.0.3",
     "jest": "^28.1.2",
     "msw": "^0.43.1",

@@ -41,10 +41,7 @@ const AuthPage: React.FC = () => {
       return;
     }
 
-    const email = !isExternalUser ? user.email : '';
-    if (!email) return;
-
-    createUser({ userName: user.nickname, email });
+    createUser({ userName: user.nickname, email: user.email || '' });
   }, [user, isValidEmailDomain, isAuthenticated, logout, navigate, createUser, isExternalUser]);
 
   return (

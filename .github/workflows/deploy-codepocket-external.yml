@@ -2,6 +2,9 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'schema/**'
+      - 'client/**'
 
 name: codepocket external 배포
 
@@ -43,4 +46,3 @@ jobs:
           accountId: ${{ secrets.CF_ACCOUNT_ID }}
           apiToken: ${{ secrets.CF_API_TOKEN }}
           command: pages publish ./client/dist --project-name=codepocket-external
-

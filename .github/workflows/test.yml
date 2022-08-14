@@ -13,11 +13,10 @@ jobs:
       - name: yarn
         run: yarn
 
-      - name: generate .env
+      - name: set env var
         run: |
-          echo "BASE_SERVER_URL_DEV=$BASE_SERVER_URL_DEV" >> .env
-        env:
-          BASE_SERVER_URL_DEV: ${{ secrets.BASE_SERVER_URL_DEV }}
+          echo "POCKET_TOKEN=${{ secrets.POCKET_TOKEN }}" >> $GITHUB_ENV
+          echo $POCKET_TOKEN
 
       - name: test all
         run: yarn test
