@@ -4,7 +4,7 @@ import useCodes from './hooks/useCodes';
 import * as style from './style.css';
 
 const PocketPage: React.FC = () => {
-  const { codes, error, isLast, hasData, searchText, isLoading, changeSearchText, getNextCodes } =
+  const { codes, error, isLast, searchText, isLoading, changeSearchText, getNextCodes } =
     useCodes();
 
   return (
@@ -23,7 +23,8 @@ const PocketPage: React.FC = () => {
         (!error ? (
           <MoreButton
             isLoading={isLoading}
-            hasData={hasData}
+            isSearch={!!searchText}
+            hasCode={!!codes.length}
             isLast={isLast}
             onClick={getNextCodes}
           />

@@ -25,11 +25,6 @@ const useCodes = () => {
 
   const isLast = useMemo(() => data?.isLast, [data?.isLast]);
 
-  const hasData: boolean = useMemo(
-    () => !!(searchText && !codes.length),
-    [codes.length, searchText],
-  );
-
   const getNextCodes = useCallback(() => {
     refetch();
     setOffset((prev) => prev + 1);
@@ -53,6 +48,6 @@ const useCodes = () => {
     setCodes((prevCodes) => [...prevCodes, ...newCodes]);
   }, [searchText]);
 
-  return { codes, error, hasData, searchText, isLast, isLoading, changeSearchText, getNextCodes };
+  return { codes, error, searchText, isLast, isLoading, changeSearchText, getNextCodes };
 };
 export default useCodes;
