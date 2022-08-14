@@ -1,6 +1,6 @@
 {
   "name": "@codepocket/client",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "private": true,
   "scripts": {
     "build": "tsc && vite build",
@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@auth0/auth0-react": "^1.10.2",
-    "@codepocket/schema": "^0.0.3",
+    "@codepocket/schema": "^0.0.4",
     "@codesandbox/sandpack-react": "^1.2.4",
     "@codesandbox/sandpack-themes": "^1.0.0",
     "@karrotmarket/design-token": "^1.1.2",
