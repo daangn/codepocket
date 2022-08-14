@@ -12,10 +12,6 @@ const useCode = ({ codeId }: UseCode) =>
     url: getCodeUrl,
     validator: getCodeResponseValidate,
     params: { codeId: `${codeId}` },
-    options: {
-      suspense: true,
-      useErrorBoundary: true,
-    },
   });
 
 export default useCode;

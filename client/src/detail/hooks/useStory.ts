@@ -15,8 +15,6 @@ const useStory = () => {
       storyId: selectedStoryId,
     },
     options: {
-      suspense: true,
-      useErrorBoundary: true,
       enabled: false,
     },
   });

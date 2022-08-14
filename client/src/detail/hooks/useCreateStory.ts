@@ -21,7 +21,7 @@ interface UseCreateStory {
 const useCreateStory = ({ codeId, selectStory }: UseCreateStory) => {
   const queryClient = useQueryClient();
   const { user } = useAuth0();
-  const { mutate: createStoryMutate } = useCustomMutation<
+  const { mutate: createStoryMutate, error } = useCustomMutation<
     CreateStoryResponse,
     CreateStoryResponse,
     CreateStoryBodyType
@@ -45,9 +45,7 @@ const useCreateStory = ({ codeId, selectStory }: UseCreateStory) => {
     createStoryMutate({ codes, storyName, codeId, pocketToken });
   };
 
-  return {
-    createStory,
-  };
+  return { createStory, error };
 };
 
 export default useCreateStory;
