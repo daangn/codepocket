@@ -58,7 +58,7 @@ const AuthPage: React.FC = () => {
           로그인 하기
         </button>
       </div>
-      <Modal closeModal={closeModalWithLogout} isOpen={isOpenModal}>
+      <Modal closeModal={closeModalWithLogout} isOpen={isOpenModal} disableEscape>
         <div className={style.modalContent}>
           <Icon icon="warningFill" color="red" />
           <div>당근 유저가 아니에요!</div>
