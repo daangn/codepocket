@@ -1944,7 +1944,7 @@ __metadata:
     "@storybook/testing-library": ^0.0.13
     "@swc/core": ^1.2.218
     "@swc/jest": ^0.2.22
-    "@tanstack/react-query": ^4.0.5
+    "@tanstack/react-query": ^4.1.3
     "@tanstack/react-query-devtools": ^4.0.3
     "@testing-library/react": ^13.3.0
     "@types/babel__core": ^7
@@ -5903,9 +5903,9 @@ __metadata:
   linkType: hard
 
 "@tanstack/query-core@npm:^4.0.0-beta.1":
-  version: 4.0.5
-  resolution: "@tanstack/query-core@npm:4.0.5"
-  checksum: 706251eeb84adf585ae838cd9c8120a42c6baf270ac4b142e8df39b56b9c3bacae749a60e82cca7143971f7420a9503a479187b13dfd216fd489ff22d8f46d3e
+  version: 4.1.3
+  resolution: "@tanstack/query-core@npm:4.1.3"
+  checksum: 8b8ac7c8b26df02707ae529f8a934da26d34e351fe956b7e24b104a96d2bf559c0d02a96ed5831dc5819774f1d171dcf6b89a759a9f37093c04ea013fefd7cbd
   languageName: node
   linkType: hard
 
@@ -5920,9 +5920,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/react-query@npm:^4.0.5":
-  version: 4.0.5
-  resolution: "@tanstack/react-query@npm:4.0.5"
+"@tanstack/react-query@npm:^4.1.3":
+  version: 4.1.3
+  resolution: "@tanstack/react-query@npm:4.1.3"
   dependencies:
     "@tanstack/query-core": ^4.0.0-beta.1
     "@types/use-sync-external-store": ^0.0.3
@@ -5936,7 +5936,7 @@ __metadata:
       optional: true
     react-native:
       optional: true
-  checksum: c555d2dce19a57ba254855f19a06e4968ae21a08d5cd8890635d9771f77d5aef2e889b23a300b25d1e09b52edeb3fdf7b4579679c43cf9449692463a45a689b8
+  checksum: 18baf3c0d1d0c93a2a81e2652409479eadb8d11fe00a6c872ee551d69771f86f01ec18388c6e7a167a2ba771153dfc23a09c712a0539ff8fab9fb243a631f950
   languageName: node
   linkType: hard
 

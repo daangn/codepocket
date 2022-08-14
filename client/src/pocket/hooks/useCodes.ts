@@ -9,7 +9,7 @@ const useCodes = () => {
   const [offset, setOffset] = useState<number>(0);
   const [searchText, setSearchText] = useState<string>('');
 
-  const { data, refetch, isLoading } = useCustomQuery<GetCodesResponse>({
+  const { data, error, refetch, isLoading } = useCustomQuery<GetCodesResponse>({
     url: getCodesUrl,
     validator: getCodesResponseValidate,
     params: {
@@ -18,8 +18,6 @@ const useCodes = () => {
       offset: `${offset}`,
     },
     options: {
-      suspense: false,
-      useErrorBoundary: true,
       staleTime: 0,
       cacheTime: 0,
     },
@@ -55,6 +53,6 @@ const useCodes = () => {
     setCodes((prevCodes) => [...prevCodes, ...newCodes]);
   }, [searchText]);
 
-  return { codes, hasData, searchText, isLast, isLoading, changeSearchText, getNextCodes };
+  return { codes, error, hasData, searchText, isLast, isLoading, changeSearchText, getNextCodes };
 };
 export default useCodes;

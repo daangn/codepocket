@@ -1,9 +1,10 @@
 import { CodeList, MoreButton, PendingFallback, Searchbar, SearchHelpText } from './components';
+import ErrorMessage from './components/ErrorMessage';
 import useCodes from './hooks/useCodes';
 import * as style from './style.css';
 
 const PocketPage: React.FC = () => {
-  const { codes, isLast, hasData, searchText, isLoading, changeSearchText, getNextCodes } =
+  const { codes, error, isLast, hasData, searchText, isLoading, changeSearchText, getNextCodes } =
     useCodes();
 
   return (
@@ -13,7 +14,22 @@ const PocketPage: React.FC = () => {
       {searchText ? <SearchHelpText searchText={searchText} /> : null}
       <CodeList codes={codes} />
       {isLoading ? <PendingFallback /> : null}
-      <MoreButton isLoading={isLoading} hasData={hasData} isLast={isLast} onClick={getNextCodes} />
+      {isLoading ? <PendingFallback /> : null}
+      {isLoading ? <PendingFallback /> : null}
+      {isLoading ? <PendingFallback /> : null}
+      {isLoading ? <PendingFallback /> : null}
+      {isLoading ? <PendingFallback /> : null}
+      {!isLoading &&
+        (!error ? (
+          <MoreButton
+            isLoading={isLoading}
+            hasData={hasData}
+            isLast={isLast}
+            onClick={getNextCodes}
+          />
+        ) : (
+          <ErrorMessage message={error.response.data.message} />
+        ))}
     </div>
   );
 };
