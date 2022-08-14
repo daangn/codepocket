@@ -1,6 +1,5 @@
 import { colors } from '@karrotmarket/design-token';
 import { Icon, Modal } from '@shared/components';
-import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
 import { DetailPathParam, pocketPath } from '../routes';
@@ -8,6 +7,7 @@ import Sandpack from './components/Sandpack';
 import StoryNameList from './components/StoryNameList';
 import useCode from './hooks/useCode';
 import useCreateStory from './hooks/useCreateStory';
+import useErrorModal from './hooks/useErrorModal';
 import useStory from './hooks/useStory';
 import useStoryNames from './hooks/useStoryNames';
 import * as style from './style.css';
@@ -15,7 +15,6 @@ import * as style from './style.css';
 // TODO: Suspense 적용하기
 const DetailPage: React.FC = () => {
   const { codeId } = useParams<keyof DetailPathParam>();
-  const [isOpenModal, setIsOpenModal] = useState(false);
   const { data: codeDataRes, error: getCodeError } = useCode({ codeId });
   const { data: storyNamesRes, error: getStoryNamesError } = useStoryNames({
     codeId: codeId || '',
@@ -27,16 +26,13 @@ const DetailPage: React.FC = () => {
     codeId: codeId || '',
     selectStory,
   });
-
-  const closeModal = () => setIsOpenModal(false);
-
-  useEffect(() => {
-    setIsOpenModal(!!getCodeError || !!getStoryNamesError || !!createStoryError || !getStoryError);
-  }, [getCodeError, getStoryNamesError, createStoryError, getStoryError]);
+  const { isModalOpened, closeModal } = useErrorModal({
+    isError: !!getCodeError || !!getStoryNamesError || !!createStoryError || !!getStoryError,
+  });
 
   return (
     <>
-      <Modal closeModal={closeModal} isOpen={!!isOpenModal} disableEscape>
+      <Modal closeModal={closeModal} isOpen={!!isModalOpened} disableEscape>
         <div className={style.modalContent}>
           <Icon icon="warningFill" color="red" />
           <div>{getCodeError?.response.data.message}</div>
