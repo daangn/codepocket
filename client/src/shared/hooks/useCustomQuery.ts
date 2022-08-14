@@ -26,7 +26,7 @@ const useCustomQuery = <Response>({
   options,
 }: CustomQueryInterface<Response>) => {
   const commonOptions: QueryOptions<Response> = { staleTime: 1000000, cacheTime: 1000000 };
-  const { data, ...others } = useQuery<Response, Error, Response, QueryKey>(
+  const { data, isFetched, ...others } = useQuery<Response, Error, Response, QueryKey>(
     [url!, params],
     ({ queryKey, meta }) => fetcher({ queryKey, meta }),
     {
@@ -34,8 +34,9 @@ const useCustomQuery = <Response>({
       ...options,
     },
   );
-  if (!validator(data)) throw new Error('error');
-  return { data, ...others };
+
+  if (!validator(data) && !isFetched) throw new Error('error');
+  return { data, isFetched, ...others };
 };
 
 export default useCustomQuery;

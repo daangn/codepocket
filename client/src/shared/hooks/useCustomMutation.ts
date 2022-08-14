@@ -29,16 +29,13 @@ const useCustomMutation = <Response, Error, Variable, Context = unknown>({
   validator,
   options,
 }: CustomMutationInterface<Response, Error, Variable, Context>) => {
-  const { data, ...others } = useMutation<Response, Error, Variable, Context>(
+  const { data, isSuccess, ...others } = useMutation<Response, Error, Variable, Context>(
     fetcher<Variable>(url, method),
-    {
-      ...options,
-    },
+    { ...options },
   );
 
-  // if (!validator(data)) throw new Error('에러 발생');
-  if (!validator(data)) return { data, ...others };
-  return { data, ...others };
+  if (!validator(data) && isSuccess) throw new Error('error');
+  return { data, isSuccess, ...others };
 };
 
 export default useCustomMutation;
