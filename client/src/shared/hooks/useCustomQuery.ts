@@ -1,8 +1,11 @@
 import { QueryFunctionContext, QueryKey, useQuery, UseQueryOptions } from '@tanstack/react-query';
 
-import { axiosInstance } from '../lib/axios';
+import { APIErrorType, axiosInstance } from '../lib/axios';
 
-type QueryOptions<Response> = Omit<UseQueryOptions<Response, Error, Response, QueryKey>, ''> & {
+type QueryOptions<Response> = Omit<
+  UseQueryOptions<Response, APIErrorType, Response, QueryKey>,
+  ''
+> & {
   initialData?: () => undefined;
 };
 
@@ -21,7 +24,7 @@ const fetcher = async <T>({ queryKey }: QueryFunctionContext): Promise<T> => {
 
 const useCustomQuery = <Response>({ url, params, options }: CustomQueryInterface<Response>) => {
   const commonOptions: QueryOptions<Response> = { staleTime: 1000000, cacheTime: 1000000 };
-  return useQuery<Response, Error, Response, QueryKey>(
+  const { data, ...others } = useQuery<Response, APIErrorType, Response, QueryKey>(
     [url!, params],
     ({ queryKey, meta }) => fetcher({ queryKey, meta }),
     {
@@ -29,6 +32,8 @@ const useCustomQuery = <Response>({ url, params, options }: CustomQueryInterface
       ...options,
     },
   );
+
+  return { data, ...others };
 };
 
 export default useCustomQuery;

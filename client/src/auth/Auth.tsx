@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 import { Icon, Modal } from '@shared/components';
 import { EMAIL_DOMAIN_NAME } from '@shared/constant';
 import React, { useCallback, useEffect, useState } from 'react';
@@ -29,6 +30,16 @@ const AuthPage: React.FC = () => {
     setIsOpenModal(false);
     logout();
   }, [logout]);
+
+  const logoutBeforeLeaveTab = useCallback(() => {
+    if (isOpenModal) logout();
+  }, [isOpenModal, logout]);
+
+  useEffect(() => {
+    window.addEventListener('beforeunload', logoutBeforeLeaveTab);
+
+    () => window.removeEventListener('beforeunload', logoutBeforeLeaveTab);
+  }, [logoutBeforeLeaveTab]);
 
   useEffect(() => {
     verifyUser();

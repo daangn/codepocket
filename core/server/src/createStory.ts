@@ -23,7 +23,8 @@ export default async <T, Response>(request: T, modules: CreateStoryType<Response
 
   const storyAuthor = await modules.getUserName({ pocketToken });
 
-  await modules.isStoryExist({ codeId, storyAuthor, storyName });
+  const isStoryExist = await modules.isStoryExist({ codeId, storyAuthor, storyName });
+  if (isStoryExist) throw modules.existStoryErrorFunc;
   const storyId = await modules.createStory({ codeId, storyAuthor, storyName, codes });
 
   return modules.successResponseFunc({ message: '', storyId });

@@ -12,10 +12,6 @@ const useStoryNames = ({ codeId }: UseStoryNames) =>
     url: getStoryNamesUrl,
     validator: getStoryNamesResponseValidate,
     params: { codeId },
-    options: {
-      suspense: true,
-      useErrorBoundary: true,
-    },
   });
 
 export default useStoryNames;

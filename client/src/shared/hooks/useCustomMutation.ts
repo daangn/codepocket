@@ -1,6 +1,6 @@
 import { useMutation, UseMutationOptions } from '@tanstack/react-query';
 
-import { axiosInstance } from '../lib/axios';
+import { APIErrorType, axiosInstance } from '../lib/axios';
 
 export type MethodType = 'POST' | 'DELETE' | 'PUT' | 'UPDATE';
 
@@ -13,7 +13,7 @@ interface CustomMutationInterface<Response, Error, Variable, Context> {
   url: string;
   method: MethodType;
   validator: (res: Response | undefined) => res is Response;
-  options?: CustomUseMutationOptions<Response, Error, Variable, Context>;
+  options?: CustomUseMutationOptions<Response, APIErrorType<Error>, Variable, Context>;
 }
 
 const fetcher =
@@ -26,19 +26,16 @@ const fetcher =
 const useCustomMutation = <Response, Error, Variable, Context = unknown>({
   url,
   method,
-  validator,
   options,
 }: CustomMutationInterface<Response, Error, Variable, Context>) => {
-  const { data, ...others } = useMutation<Response, Error, Variable, Context>(
-    fetcher<Variable>(url, method),
-    {
-      ...options,
-    },
-  );
+  const { data, isSuccess, ...others } = useMutation<
+    Response,
+    APIErrorType<Error>,
+    Variable,
+    Context
+  >(fetcher<Variable>(url, method), { ...options });
 
-  // if (!validator(data)) throw new Error('에러 발생');
-  if (!validator(data)) return { data, ...others };
-  return { data, ...others };
+  return { data, isSuccess, ...others };
 };
 
 export default useCustomMutation;

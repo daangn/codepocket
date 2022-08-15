@@ -49,4 +49,14 @@ export const highlight = style({
   fontWeight: 'normal',
 });
 
-export const article = style([u.fullWidth, t.mt18]);
+export const article = style([u.fullWidth, t.mt18, { zIndex: -1 }]);
+
+export const modalContent = style([
+  u.flexColumn,
+  {
+    justifyContent: 'center',
+    alignItems: 'center',
+    rowGap: rem(10),
+    fontSize: rem(18),
+  },
+]);

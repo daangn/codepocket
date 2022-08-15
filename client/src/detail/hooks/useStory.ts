@@ -8,15 +8,13 @@ import { SelectedStory } from '../components/Sandpack';
 const useStory = () => {
   const [selectedStory, setSelectedStory] = useState<SelectedStory>();
   const [selectedStoryId, setSelectedStoryId] = useState<string>('');
-  const { refetch: getStory } = useCustomQuery<GetStoryCodeResponse>({
+  const { refetch: getStory, error } = useCustomQuery<GetStoryCodeResponse>({
     url: getStoryCodeUrl,
     validator: getStoryCodeResponseValidate,
     params: {
       storyId: selectedStoryId,
     },
     options: {
-      suspense: true,
-      useErrorBoundary: true,
       enabled: false,
     },
   });
@@ -38,6 +36,6 @@ const useStory = () => {
     getStoryCode();
   }, [selectedStoryId]);
 
-  return { selectedStory, selectedStoryId, selectStory };
+  return { selectedStory, error, selectedStoryId, selectStory };
 };
 export default useStory;

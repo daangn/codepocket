@@ -9,7 +9,7 @@ export const wrapper = style([
   u.flex,
   u.flexColumn,
   u.flexAlignCenter,
-  { margin: '0 auto', width: rem(700) },
+  { margin: '0 auto', width: rem(700), paddingBottom: rem(100) },
   m.medium({
     width: '90%',
   }),

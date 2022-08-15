@@ -27,7 +27,7 @@ const scaleDown = keyframes({
 });
 
 export const modalContainer = recipe({
-  base: [u.flexCenter, u.fixedPos, u.top0, u.left0, u.fullSize],
+  base: [u.flexCenter, u.fixedPos, u.top0, u.left0, u.fullSize, { zIndex: 100 }],
   variants: {
     isOpen: {
       true: { display: 'flex' },

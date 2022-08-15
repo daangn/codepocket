@@ -9,7 +9,7 @@ const useCodes = () => {
   const [offset, setOffset] = useState<number>(0);
   const [searchText, setSearchText] = useState<string>('');
 
-  const { data, refetch, isLoading } = useCustomQuery<GetCodesResponse>({
+  const { data, error, refetch, isLoading } = useCustomQuery<GetCodesResponse>({
     url: getCodesUrl,
     validator: getCodesResponseValidate,
     params: {
@@ -18,19 +18,12 @@ const useCodes = () => {
       offset: `${offset}`,
     },
     options: {
-      suspense: false,
-      useErrorBoundary: true,
       staleTime: 0,
       cacheTime: 0,
     },
   });
 
   const isLast = useMemo(() => data?.isLast, [data?.isLast]);
-
-  const hasData: boolean = useMemo(
-    () => !!(searchText && !codes.length),
-    [codes.length, searchText],
-  );
 
   const getNextCodes = useCallback(() => {
     refetch();
@@ -55,6 +48,6 @@ const useCodes = () => {
     setCodes((prevCodes) => [...prevCodes, ...newCodes]);
   }, [searchText]);
 
-  return { codes, hasData, searchText, isLast, isLoading, changeSearchText, getNextCodes };
+  return { codes, error, searchText, isLast, isLoading, changeSearchText, getNextCodes };
 };
 export default useCodes;
