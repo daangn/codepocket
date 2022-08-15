@@ -53,7 +53,7 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
         connector.getStoryCode(req, {
           successResponseFunc: (body) =>
             new CustomResponse<Schema.GetStoryCodeResponse>({ customStatus: 2001, body }),
-          getStoryCode: StoryModule.getStoryCodes(server),
+          getStoryCode: StoryModule.getStoryCode(server),
         }),
       reply,
     ),

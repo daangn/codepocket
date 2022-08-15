@@ -56,7 +56,7 @@ export const getStoryFullNames =
     return storyNames;
   };
 
-export const getStoryCodes =
+export const getStoryCode =
   (server: FastifyInstance) =>
   async ({ storyId }: Types.StoryId) => {
     const [getStoryCodeErr, story] = await to(
