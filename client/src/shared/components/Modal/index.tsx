@@ -1,9 +1,9 @@
 import { Icon } from '@shared/components';
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
-import ModalProvider, { useModalAction, useModalValue } from './ModalContext';
 import * as style from './style.css';
+import Transition from './Transition';
 
 const ANIMATION_DURATION = 100;
 
@@ -15,11 +15,15 @@ interface ModalInterface {
 }
 
 interface ModalConfirmButtonProps {
-  onConfirm?: () => void;
+  onConfirm: () => void;
 }
 
 interface ModalCancelButtonProps {
-  onCancel?: () => void;
+  onCancel: () => void;
+}
+
+interface ModalCloseButtonProps {
+  onClose: () => void;
 }
 
 const ModalPortal = ({ children }: Pick<ModalInterface, 'children'>) => {
@@ -29,11 +33,8 @@ const ModalPortal = ({ children }: Pick<ModalInterface, 'children'>) => {
 };
 
 const ModalConfirmButton = ({ onConfirm }: ModalConfirmButtonProps) => {
-  const { closeModal } = useModalAction();
-
   const onClickHandler = () => {
-    if (onConfirm) return onConfirm();
-    return closeModal();
+    onConfirm();
   };
 
   return (
@@ -44,11 +45,8 @@ const ModalConfirmButton = ({ onConfirm }: ModalConfirmButtonProps) => {
 };
 
 const ModalCancelButton = ({ onCancel }: ModalCancelButtonProps) => {
-  const { closeModal } = useModalAction();
-
   const onClickHandler = () => {
-    if (onCancel) return onCancel();
-    return closeModal();
+    onCancel();
   };
 
   return (
@@ -58,11 +56,9 @@ const ModalCancelButton = ({ onCancel }: ModalCancelButtonProps) => {
   );
 };
 
-const ModalCloseButton = () => {
-  const { closeModal } = useModalAction();
-
+const ModalCloseButton = ({ onClose }: ModalCloseButtonProps) => {
   return (
-    <div className={style.modalCloseButton} onClick={closeModal}>
+    <div className={style.modalCloseButton} onClick={onClose}>
       <Icon icon="close" />
     </div>
   );
@@ -74,25 +70,6 @@ const ModalWrapper = ({
   isOpen: inputIsOpen,
   closeModal: inputCloseModal,
 }: ModalInterface) => {
-  const { isOpen } = useModalValue();
-  const { openModal, closeModal } = useModalAction();
-  const closeTimerRef = useRef<NodeJS.Timeout>();
-
-  const lazyCloseHandlerForAnim = useCallback(() => {
-    if (!inputIsOpen) {
-      closeTimerRef.current = setTimeout(() => closeModal(), ANIMATION_DURATION);
-      return;
-    }
-    openModal();
-    clearTimeout(closeTimerRef.current);
-  }, [closeModal, inputIsOpen, openModal]);
-
-  useEffect(() => {
-    lazyCloseHandlerForAnim();
-
-    return () => clearTimeout(closeTimerRef.current);
-  }, [lazyCloseHandlerForAnim]);
-
   const onKeyPress = useCallback(
     (event: KeyboardEvent) => {
       if (!disableEscape && event.key === 'Escape') {
@@ -110,23 +87,25 @@ const ModalWrapper = ({
 
   return (
     <ModalPortal>
-      <div className={style.modalContainer({ isOpen })}>
-        <div
-          className={style.modalOverlay({ isAnimation: inputIsOpen })}
-          onClick={inputCloseModal}
-        />
-        <section className={style.modalContent({ isAnimation: inputIsOpen })}>{children}</section>
-      </div>
+      <Transition isOn={inputIsOpen} timeout={ANIMATION_DURATION}>
+        {(status) => (
+          <div className={style.modalContainer({ isOpen: status === 'on' })}>
+            <div
+              className={style.modalOverlay({ isAnimation: inputIsOpen })}
+              onClick={inputCloseModal}
+            />
+            <section className={style.modalContent({ isAnimation: inputIsOpen })}>
+              {children}
+            </section>
+          </div>
+        )}
+      </Transition>
     </ModalPortal>
   );
 };
 
 const ModalContainer = ({ children, ...props }: ModalInterface) => {
-  return (
-    <ModalProvider>
-      <ModalWrapper {...props}>{children}</ModalWrapper>
-    </ModalProvider>
-  );
+  return <ModalWrapper {...props}>{children}</ModalWrapper>;
 };
 
 /**
