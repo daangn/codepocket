@@ -12,4 +12,4 @@ RUN yarn build
 
 EXPOSE 8080
 
-CMD ["yarn", "workspace", "@codepocket/server", "dev"]
+CMD ["yarn", "workspace", "@codepocket/server", "start"]
