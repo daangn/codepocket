@@ -7,7 +7,8 @@
     "url": "https://github.com/daangn/codepocket.git"
   },
   "scripts": {
-    "dev": "NODE_ENV=development nodemon --exec ts-node --files ./src/index.ts"
+    "dev": "NODE_ENV=development nodemon --exec ts-node --files ./src/index.ts",
+    "start": "ts-node --files ./src/index.ts"
   },
   "dependencies": {
     "@codepocket/core-server": "^0.0.3",
