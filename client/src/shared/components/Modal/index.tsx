@@ -78,15 +78,20 @@ const ModalWrapper = ({
   const { openModal, closeModal } = useModalAction();
   const closeTimerRef = useRef<NodeJS.Timeout>();
 
-  useEffect(() => {
-    if (inputIsOpen) {
-      openModal();
-      return () => clearTimeout(closeTimerRef.current);
+  const lazyCloseHandlerForAnim = useCallback(() => {
+    if (!inputIsOpen) {
+      closeTimerRef.current = setTimeout(() => closeModal(), ANIMATION_DURATION);
+      return;
     }
+    openModal();
+    clearTimeout(closeTimerRef.current);
+  }, [closeModal, inputIsOpen, openModal]);
 
-    closeTimerRef.current = setTimeout(() => closeModal(), ANIMATION_DURATION);
+  useEffect(() => {
+    lazyCloseHandlerForAnim();
+
     return () => clearTimeout(closeTimerRef.current);
-  }, [inputIsOpen, closeModal, openModal]);
+  }, [lazyCloseHandlerForAnim]);
 
   const onKeyPress = useCallback(
     (event: KeyboardEvent) => {
