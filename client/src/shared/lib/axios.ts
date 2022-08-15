@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 
-import { BASE_LOCAL_SERVER_URL, BASE_PROD_SERVER_URL } from '../constant';
+import { BASE_SERVER_URL } from '../constant';
 
 export interface ResponseType<T> extends AxiosResponse {
   data: T;
@@ -26,5 +26,5 @@ const transformResponse = (data: string) => {
 
 export const axiosInstance = axios.create({
   transformResponse,
-  baseURL: process.env.NODE_ENV === 'development' ? BASE_LOCAL_SERVER_URL : BASE_PROD_SERVER_URL,
+  baseURL: BASE_SERVER_URL,
 });

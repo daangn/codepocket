@@ -1,19 +1,10 @@
-export const isDevelopment = () => process.env.NODE_ENV === 'development';
-
-const s = (dev: string | undefined, prod: string | undefined) => (isDevelopment() ? dev : prod);
 export const env = {
-  SELF_URL: s(process.env.BASE_SERVER_URL_DEV, process.env.BASE_SERVER_URL_PROD),
-  MONGO_DB_URI: s(process.env.MONGO_DB_URI_DEV, process.env.MONGO_DB_URI_PROD),
-  MONGO_DB_NAME: s(process.env.MONGO_DB_NAME_DEV, process.env.MONGO_DB_NAME_PROD),
-  SLACK_BOT_TOKEN: s(process.env.SLACK_BOT_TOKEN_DEV, process.env.SLACK_BOT_TOKEN_PROD),
-  CODEPOCKET_CHANNEL_ID: s(
-    process.env.CODEPOCKET_CHANNEL_ID_DEV,
-    process.env.CODEPOCKET_CHANNEL_ID_PROD,
-  ),
-  CHAPTER_FRONTED_CHANNEL_ID: s(
-    process.env.CHAPTER_FRONTED_CHANNEL_ID_DEV,
-    process.env.CHAPTER_FRONTED_CHANNEL_ID_PROD,
-  ),
+  SELF_URL: process.env.BASE_SERVER_URL,
+  MONGO_DB_URI: process.env.MONGO_DB_URI,
+  MONGO_DB_NAME: process.env.MONGO_DB_NAME,
+  SLACK_BOT_TOKEN: process.env.SLACK_BOT_TOKEN,
+  CODEPOCKET_CHANNEL_ID: process.env.CODEPOCKET_CHANNEL_ID,
+  CHAPTER_FRONTED_CHANNEL_ID: process.env.CHAPTER_FRONTED_CHANNEL_ID,
 } as const;
 
 export const checkSlackPossible =
