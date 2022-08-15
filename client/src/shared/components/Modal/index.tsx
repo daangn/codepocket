@@ -1,6 +1,6 @@
 import { Icon } from '@shared/components';
+import useKeyboard from '@shared/hooks/useKeyboard';
 import Transition from '@shared/utils/Transition';
-import { useCallback, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
 import * as style from './style.css';
@@ -62,20 +62,16 @@ const ModalWrapper = ({
   isOpen: inputIsOpen,
   closeModal: inputCloseModal,
 }: ModalInterface) => {
-  const onKeyPress = useCallback(
-    (event: KeyboardEvent) => {
-      if (!disableEscape && event.key === 'Escape') {
-        event.preventDefault();
-        inputCloseModal();
-      }
-    },
-    [inputCloseModal, disableEscape],
-  );
-
-  useEffect(() => {
-    document.addEventListener('keydown', onKeyPress);
-    return () => document.removeEventListener('keydown', onKeyPress);
-  }, [onKeyPress]);
+  useKeyboard({
+    keyEvents: [
+      {
+        key: 'Escape',
+        keyEvent: () => {
+          if (!disableEscape) inputCloseModal();
+        },
+      },
+    ],
+  });
 
   return (
     <ModalPortal>
