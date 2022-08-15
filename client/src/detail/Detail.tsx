@@ -35,10 +35,7 @@ const DetailPage: React.FC = () => {
       <Modal closeModal={closeModal} isOpen={!!isModalOpened} disableEscape>
         <div className={style.modalContent}>
           <Icon icon="warningFill" color="red" />
-          <div>{getCodeError?.response.data.message}</div>
-          <div>{getStoryError?.response.data.message}</div>
-          <div>{createStoryError?.response.data.message}</div>
-          <div>{getStoryNamesError?.response.data.message}</div>
+          <div>코드들을 가져오는데 문제가 생겼어요</div>
         </div>
       </Modal>
       <div className={style.wrapper}>
