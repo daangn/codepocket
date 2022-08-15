@@ -1,5 +1,6 @@
 import { colors } from '@karrotmarket/design-token';
 import { Icon, Modal } from '@shared/components';
+import useModal from '@shared/hooks/useModal';
 import { Link, useParams } from 'react-router-dom';
 
 import { DetailPathParam, pocketPath } from '../routes';
@@ -7,7 +8,6 @@ import Sandpack from './components/Sandpack';
 import StoryNameList from './components/StoryNameList';
 import useCode from './hooks/useCode';
 import useCreateStory from './hooks/useCreateStory';
-import useErrorModal from './hooks/useErrorModal';
 import useStory from './hooks/useStory';
 import useStoryNames from './hooks/useStoryNames';
 import * as style from './style.css';
@@ -26,8 +26,8 @@ const DetailPage: React.FC = () => {
     codeId: codeId || '',
     selectStory,
   });
-  const { isModalOpened, closeModal } = useErrorModal({
-    isError: !!getCodeError || !!getStoryNamesError || !!createStoryError || !!getStoryError,
+  const { isModalOpened, closeModal } = useModal({
+    isOpened: !!getCodeError || !!getStoryNamesError || !!createStoryError || !!getStoryError,
   });
 
   return (

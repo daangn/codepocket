@@ -1,19 +1,19 @@
 import { useEffect, useState } from 'react';
 
-interface UseErrorModal {
-  isError: boolean;
+interface UseModal {
+  isOpened: boolean;
 }
 
-const useErrorModal = ({ isError }: UseErrorModal) => {
+const useModal = ({ isOpened }: UseModal) => {
   const [isModalOpened, setIsModalOpened] = useState(false);
 
   const closeModal = () => setIsModalOpened(false);
 
   useEffect(() => {
-    setIsModalOpened(isError);
-  }, [isError]);
+    setIsModalOpened(isOpened);
+  }, [isOpened]);
 
   return { closeModal, isModalOpened };
 };
 
-export default useErrorModal;
+export default useModal;
