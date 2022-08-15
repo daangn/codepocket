@@ -1,9 +1,9 @@
 import { Icon } from '@shared/components';
+import Transition from '@shared/utils/Transition';
 import { useCallback, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
 import * as style from './style.css';
-import Transition from './Transition';
 
 const ANIMATION_DURATION = 100;
 
@@ -33,24 +33,16 @@ const ModalPortal = ({ children }: Pick<ModalInterface, 'children'>) => {
 };
 
 const ModalConfirmButton = ({ onConfirm }: ModalConfirmButtonProps) => {
-  const onClickHandler = () => {
-    onConfirm();
-  };
-
   return (
-    <button className={style.modalConfirmButton} onClick={onClickHandler}>
+    <button className={style.modalConfirmButton} onClick={onConfirm}>
       수락하기
     </button>
   );
 };
 
 const ModalCancelButton = ({ onCancel }: ModalCancelButtonProps) => {
-  const onClickHandler = () => {
-    onCancel();
-  };
-
   return (
-    <button className={style.modalCancelButton} onClick={onClickHandler}>
+    <button className={style.modalCancelButton} onClick={onCancel}>
       취소하기
     </button>
   );
