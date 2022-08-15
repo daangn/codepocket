@@ -10,10 +10,25 @@ yarn set version 3.2.1
 
 ### .env 작성하기
 
-아래와 같이 .env파일을 만들어주세요!
+아래와 같이 .env파일을 만들어주세요!(뒤에 !가 들어가있는 부분은 직접 값을 넣어주셔야해요)
 
 ```
+VITE_BASE_SERVER_URL=http://0.0.0.0:8080
+VITE_AUTH0_DOMAIN=AUTO0 도메인!
+VITE_AUTH0_CLIENT_ID=AUTH0 클라이언트 아이디!
+VITE_EMAIL_DOMAIN_NAME=*
 
+SLACK_BOT_TOKEN_PROD=슬랙 봇 토큰!
+
+CODEPOCKET_CHANNEL_ID=코드 알림이 올라올 슬랙 채널 아이디!
+
+CHAPTER_FRONTED_CHANNEL_ID=코드가 올라올 슬랙 채널 아이디!
+
+MONGO_DB_URI=mongodb://root:example@localhost:27017
+
+MONGO_DB_NAME=codepocket
+
+BASE_SERVER_URL=http://0.0.0.0:8080
 ```
 
 ### Codepocket 구동하기
