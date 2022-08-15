@@ -18,7 +18,7 @@ jobs:
 
       - uses: actions/setup-node@v3
         with:
-          node-version: "16"
+          node-version: '16'
 
       - name: 의존성을 설치해요
         if: steps.yarn-cache.outputs.cache-hit != 'true'
@@ -32,8 +32,7 @@ jobs:
       - name: client 프로젝트를 빌드해요
         working-directory: ./client
         env:
-          VITE_BASE_SERVER_URL_DEV: ${{ secrets.VITE_BASE_SERVER_URL_DEV }}
-          VITE_BASE_SERVER_URL_PROD: ${{ secrets.VITE_BASE_SERVER_URL_PROD }}
+          VITE_BASE_SERVER_URL: ${{ secrets.VITE_BASE_SERVER_URL }}
           VITE_AUTH0_DOMAIN: ${{ secrets.VITE_AUTH0_DOMAIN }}
           VITE_AUTH0_CLIENT_ID: ${{ secrets.VITE_AUTH0_CLIENT_ID }}
           VITE_EMAIL_DOMAIN_NAME: ${{ secrets.VITE_EMAIL_DOMAIN_NAME }}
