@@ -35,7 +35,7 @@ const DetailPage: React.FC = () => {
       <Modal closeModal={closeModal} isOpen={!!isModalOpened} disableEscape>
         <div className={style.modalContent}>
           <Icon icon="warningFill" color="red" />
-          <div>코드들을 가져오는데 문제가 생겼어요</div>
+          <div>올바르지 않은 요청이 발생했어요(한번 더 확인해주세요)</div>
         </div>
       </Modal>
       <div className={style.wrapper}>
