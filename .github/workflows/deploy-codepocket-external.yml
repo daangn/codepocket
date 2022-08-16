@@ -6,11 +6,11 @@ on:
       - 'schema/**'
       - 'client/**'
 
-name: codepocket external 배포
+name: codepocket pages 배포 (external)
 
 jobs:
   deploy-codepocket-external:
-    name: codepocket external 배포
+    name: codepocket pages 배포 (external)
     runs-on: ubuntu-latest
 
     steps:
@@ -18,7 +18,7 @@ jobs:
 
       - uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: '16.16.0'
 
       - name: 의존성을 설치해요
         if: steps.yarn-cache.outputs.cache-hit != 'true'
@@ -44,4 +44,4 @@ jobs:
         with:
           accountId: ${{ secrets.CF_ACCOUNT_ID }}
           apiToken: ${{ secrets.CF_API_TOKEN }}
-          command: pages publish ./client/dist --project-name=codepocket-external
+          command: pages publish ./client/dist --project-name=codepocket
