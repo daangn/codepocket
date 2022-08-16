@@ -85,3 +85,15 @@ export const storyNameInput = recipe({
     },
   },
 });
+
+/* modal */
+export const modalParagraph = style([
+  u.textAlignCenter,
+  t.mb24,
+  t.mt18,
+  {
+    fontSize: rem(20),
+  },
+]);
+
+export const buttonWrapper = style([u.flex, { gap: rem(10) }]);

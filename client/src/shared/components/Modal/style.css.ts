@@ -1,4 +1,5 @@
 import { colors } from '@karrotmarket/design-token';
+import * as m from '@shared/styles/media.css';
 import * as u from '@shared/styles/utils.css';
 import { keyframes, style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
@@ -99,6 +100,54 @@ export const modalCloseButton = style([
     transition: 'background 0.3s ease',
     ':hover': {
       backgroundColor: colors.light.scheme.$gray100,
+    },
+  },
+]);
+
+export const modalDescription = style([
+  {
+    fontSize: rem(16),
+  },
+]);
+
+const modalBaseButton = style([
+  u.fullWidth,
+  u.borderNone,
+  u.borderRadius2,
+  u.cursorPointer,
+  {
+    height: rem(45),
+    fontSize: rem(14),
+    backgroundColor: colors.light.scheme.$blue800,
+    color: 'white',
+    fontWeight: 'bold',
+    transition: 'background 0.2s ease',
+
+    ':hover': {
+      backgroundColor: '#0A86B766',
+    },
+  },
+  m.small({
+    width: '90vw',
+  }),
+]);
+
+export const modalConfirmButton = style([
+  modalBaseButton,
+  {
+    backgroundColor: colors.light.scheme.$blue800,
+    ':hover': {
+      backgroundColor: '#0A86B766',
+    },
+  },
+]);
+
+export const modalCancelButton = style([
+  modalBaseButton,
+  {
+    backgroundColor: colors.light.scheme.$red800,
+    ':hover': {
+      backgroundColor: colors.light.scheme.$red50,
     },
   },
 ]);
