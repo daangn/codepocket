@@ -1,4 +1,3 @@
-import { useAuth0 } from '@auth0/auth0-react';
 import {
   CreateStoryRequest,
   CreateStoryResponse,
@@ -20,7 +19,6 @@ interface UseCreateStory {
 
 const useCreateStory = ({ codeId, selectStory }: UseCreateStory) => {
   const queryClient = useQueryClient();
-  const { user } = useAuth0();
   const { mutate: createStoryMutate, error } = useCustomMutation<
     CreateStoryResponse,
     CreateStoryResponse,
@@ -31,7 +29,6 @@ const useCreateStory = ({ codeId, selectStory }: UseCreateStory) => {
     validator: createStoryResponseValidate,
     options: {
       onSuccess: async (res) => {
-        if (!user) return;
         await queryClient.invalidateQueries([getStoryNamesUrl]);
         selectStory(res.storyId);
       },

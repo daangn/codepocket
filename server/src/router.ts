@@ -6,20 +6,14 @@ import fp from 'fastify-plugin';
 import * as CodeModule from './dbModule/code';
 import * as StoryModule from './dbModule/story';
 import * as UserModule from './dbModule/user';
-import { checkSlackPossible, env } from './utils/env';
+// import { checkSlackPossible, env } from './utils/env';
 import responseHandler, { CustomResponse } from './utils/responseHandler';
 
 export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
   const connector = createConnector<CustomResponse>({
     validateError: new CustomResponse({ customStatus: 4001 }),
     slackAPIError: new CustomResponse({ customStatus: 5001 }),
-    slackConfig: checkSlackPossible
-      ? {
-          SLACK_BOT_TOKEN: env.SLACK_BOT_TOKEN,
-          CHAPTER_FRONTED_CHANNEL_ID: env.CHAPTER_FRONTED_CHANNEL_ID,
-          CODEPOCKET_CHANNEL_ID: env.CODEPOCKET_CHANNEL_ID,
-        }
-      : undefined,
+    slackConfig: undefined,
   });
 
   server.post('/user', (req, reply) =>
