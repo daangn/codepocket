@@ -1,2 +1,10 @@
 types
 index.ts
+
+lib/
+.DS_Store
+.bsb.lock
+.merlin
+
+*.bs.js
+*.gen.ts

@@ -14,7 +14,9 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "yarn compile && yarn tsc",
-    "compile": "yarn node -r tsm ./compile.ts"
+    "compile": "yarn node -r tsm ./compile.ts",
+    "re:build": "rescript",
+    "re:start": "rescript build -w"
   },
   "dependencies": {
     "ajv": "^8.11.0",
@@ -22,7 +24,10 @@
   },
   "devDependencies": {
     "@types/prettier": "^2",
+    "gentype": "^4.5.0",
     "json-schema-to-ts": "^2.5.5",
+    "rescript": "^9.1.4",
+    "rescript-test": "^3.4.1",
     "tsm": "^2.2.2",
     "typescript": "^4.7.4"
   },
