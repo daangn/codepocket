@@ -75,6 +75,7 @@ export const createStory =
     const [createError, story] = await to(
       (async () =>
         await server.store.Story.create({
+          codeId,
           codeName,
           codeAuthor,
           storyName,
@@ -89,12 +90,11 @@ export const createStory =
 
 export const deleteStory =
   (server: FastifyInstance) =>
-  async ({ codeName, codeAuthor, storyName, storyAuthor }: Types.StoryInfo) => {
+  async ({ codeId, storyName, storyAuthor }: Types.StoryInfoWithCodeId) => {
     const [deleteError] = await to(
       (async () =>
         await server.store.Story.deleteOne({
-          codeName,
-          codeAuthor,
+          codeId,
           storyName,
           storyAuthor,
         }))(),
