@@ -1,4 +1,4 @@
-import { colors } from '@karrotmarket/design-token';
+import { vars } from '@seed-design/design-token';
 import * as m from '@shared/styles/media.css';
 import * as t from '@shared/styles/token.css';
 import * as u from '@shared/styles/utils.css';
@@ -60,13 +60,13 @@ export const button = style([
   {
     height: rem(52),
     fontSize: rem(16),
-    backgroundColor: colors.light.scheme.$blue800,
+    backgroundColor: vars.$scale.color.blue500,
     color: 'white',
     fontWeight: 'bold',
     transition: 'background 0.2s ease',
 
     ':hover': {
-      backgroundColor: '#0A86B766',
+      backgroundColor: vars.$scale.color.blue300,
     },
   },
   m.small({
