@@ -1,5 +1,7 @@
-const dependencyRegex = /(?<=import.+(from.+'|')).+(?=')/g;
-export const getDependenciesFromText = (text: string) => [...(text.match(dependencyRegex) || [])];
+const dependencyRegex =
+  /import([ \n\t]*(?:[^ \n\t]+[ \n\t]*,?)?(?:[ \n\t]*(?:[ \n\t]*[^ \n\t"']+[ \n\t]*,?)+)?[ \n\t]*)from[ \n\t]*(['"])([^'"\n]+)(?:['"])/g;
+export const getDependenciesFromText = (text: string) =>
+  [...(text.match(dependencyRegex) || [])].map((dependency) => dependency.split("'")[1]);
 
 export const removeExtension = (filename: string) => filename.split('.')[0];
 
