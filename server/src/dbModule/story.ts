@@ -86,3 +86,19 @@ export const createStory =
     if (createError) throw new CustomResponse({ customStatus: 5000 });
     return String(story._id);
   };
+
+export const deleteStory =
+  (server: FastifyInstance) =>
+  async ({ codeName, codeAuthor, storyName, storyAuthor }: Types.StoryInfo) => {
+    const [deleteError] = await to(
+      (async () =>
+        await server.store.Story.deleteOne({
+          codeName,
+          codeAuthor,
+          storyName,
+          storyAuthor,
+        }))(),
+    );
+
+    if (deleteError) throw new CustomResponse({ customStatus: 5000 });
+  };

@@ -14,6 +14,7 @@ const CustomResponseStatuses: CustomResponseStatusesType = {
   2005: { message: '코드를 성공적으로 넣었어요', status: 200 },
   2006: { message: '코드를 성공적으로 수정했어요', status: 200 },
   2007: { message: '토큰을 성공적으로 가져왔어요', status: 200 },
+  2008: { message: '스토리 코드를 삭제했어요', status: 200 },
 
   4000: { message: '권한이 없어요', status: 401 },
   4001: { message: '적절한 쿼리가 들어오지 않았아요', status: 400 },
