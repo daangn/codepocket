@@ -22,7 +22,8 @@ const useCreateUser = () => {
     validator: createUserResponseValidate,
     options: {
       onSuccess: async (response) => {
-        const { pocketToken: token } = response;
+        const { pocketToken: token, userId } = response;
+        localStorage.setUserId(userId);
         localStorage.setUserToken(token);
         navigate(generateTokenPath({ token }));
       },

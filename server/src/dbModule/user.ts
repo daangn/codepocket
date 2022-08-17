@@ -24,7 +24,7 @@ export const getAuthorName =
     return author.userName;
   };
 
-export const getUserToken =
+export const getUserPrivateInfo =
   (server: FastifyInstance) =>
   async ({ userName, email }: Types.UserInfo) => {
     const [findAuthorError, author] = await to(
@@ -32,7 +32,7 @@ export const getUserToken =
     );
 
     if (findAuthorError) throw new CustomResponse({ customStatus: 5000 });
-    return author ? { pocketToken: author.token } : null;
+    return author ? { pocketToken: author.token, userId: author._id } : null;
   };
 
 export const createUser =
@@ -43,10 +43,10 @@ export const createUser =
     const encoded = { userName, serverUrl: env.SELF_URL } as JwtType;
     const token = jwt.sign(encoded, KEY);
 
-    const [createUserError] = await to(
+    const [createUserError, createUserResponse] = await to(
       (async () => await server.store.User.create({ userName, email, token }))(),
     );
     if (createUserError) throw new CustomResponse({ customStatus: 5000 });
 
-    return { pocketToken: token };
+    return { pocketToken: token, userId: createUserResponse._id };
   };
