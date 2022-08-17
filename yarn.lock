@@ -1934,6 +1934,8 @@ __metadata:
     "@codesandbox/sandpack-themes": ^1.0.0
     "@karrotmarket/design-token": ^1.1.2
     "@mdx-js/react": ^1.6.22
+    "@seed-design/design-token": ^1.0.0-alpha.0
+    "@seed-design/stylesheet": ^1.0.0-beta.1
     "@storybook/addon-actions": ^6.5.9
     "@storybook/addon-docs": ^6.5.9
     "@storybook/addon-essentials": ^6.5.9
@@ -4324,6 +4326,20 @@ __metadata:
     estree-walker: ^2.0.1
     picomatch: ^2.2.2
   checksum: 6bc41f22b1a0f1efec3043899e4d3b6b1497b3dea4d94292d8f83b4cf07a1073ecbaedd562a22d11913ff7659f459677b01b09e9598a98936e746780ecc93a12
+  languageName: node
+  linkType: hard
+
+"@seed-design/design-token@npm:^1.0.0-alpha.0":
+  version: 1.0.0-beta.4
+  resolution: "@seed-design/design-token@npm:1.0.0-beta.4"
+  checksum: 32c41e99c77e794b1ff3f04d7cf05c826c6b4bd3ed9818970f7b48b6108371ebe74f8113d19a515f28fb1d98b0dfe8bc8bf526c03e2f85cc6fc7c2cfe6378b21
+  languageName: node
+  linkType: hard
+
+"@seed-design/stylesheet@npm:^1.0.0-beta.1":
+  version: 1.0.0-beta.4
+  resolution: "@seed-design/stylesheet@npm:1.0.0-beta.4"
+  checksum: e41249f792a7c7e8ba8bd3f7de0a3a21b3504aa96c79ef43db0e7cc30539b278e12218f00f09f5110d16b7aeef61651d1877506c63a69da722e15c197c82d40b
   languageName: node
   linkType: hard
 
