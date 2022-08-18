@@ -6,7 +6,7 @@ import { recipe } from '@vanilla-extract/recipes';
 import { rem } from 'polished';
 
 const MODAL_Z_INDEX = 100;
-const ANIMATION_DURATION_SECOND = 0.1;
+const ANIMATION_DURATION_SECOND = 0.15;
 
 const fadeIn = (to: number) =>
   keyframes({

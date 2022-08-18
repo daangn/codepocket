@@ -7,6 +7,7 @@ import SyntaxHighlighter, { SyntaxHighlighterProps } from 'react-syntax-highligh
 import { githubGist } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
 import { generateDetailPath } from '../../../routes';
+import { useModalDispatch } from '../../contexts/ModalContext';
 import * as style from './style.css';
 
 export interface CodeblockProps {
@@ -30,6 +31,8 @@ const Codeblock: React.FC<CodeblockProps> = ({
   const { isCopied, copyToClipboard } = useClipboard({ text: code });
   const syntaxHighlighterRef = useRef<React.Component<SyntaxHighlighterProps>>(null);
   const isCodeOwner = useMemo(() => userId === localStorage.getUserId(), [userId]);
+
+  const modalDispatch = useModalDispatch();
 
   const toggle = () => setToggled((prev) => !prev);
 
@@ -71,8 +74,18 @@ const Codeblock: React.FC<CodeblockProps> = ({
       </div>
       <div className={style.codeItemBottom}>
         <div className={style.codeItemBottomButtons}>
-          {isCodeOwner && <IconButton icon={<Icon icon="delete" />} />}
-          {isCodeOwner && <IconButton icon={<Icon icon="edit" />} />}
+          {isCodeOwner && (
+            <IconButton
+              onClick={() => modalDispatch({ type: 'TOGGLE_DELETE_MODAL' })}
+              icon={<Icon icon="delete" />}
+            />
+          )}
+          {isCodeOwner && (
+            <IconButton
+              onClick={() => modalDispatch({ type: 'TOGGLE_EDIT_MODAL' })}
+              icon={<Icon icon="edit" />}
+            />
+          )}
         </div>
         <div className={style.codeItemBottomButtons}>
           <button

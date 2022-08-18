@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 
 import * as style from './style.css';
 
-const ANIMATION_DURATION = 100;
+const ANIMATION_DURATION = 150;
 
 interface ModalInterface {
   children?: React.ReactNode;
