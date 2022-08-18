@@ -1,5 +1,5 @@
 import { deleteStoryRequestValidate, DeleteStoryResponse } from '@codepocket/schema';
-import { CodeId, CodeInfo, StoryInfo, StoryInfoWithCodeId } from 'types';
+import { StoryInfoWithCodeId } from 'types';
 
 export interface DeleteStoryType<Response> {
   /* validator에러 */
@@ -9,23 +9,20 @@ export interface DeleteStoryType<Response> {
   /* 성공했을 경우 */
   successResponseFunc: (body: DeleteStoryResponse) => Response;
 
-  /* 코드 이름과 작성자를 가져오는 함수 */
-  getCodeInfo: (params: CodeId) => Promise<CodeInfo>;
   /* 존재하는 스토리인지 확인하는 함수 */
   isExistStory: (params: StoryInfoWithCodeId) => Promise<boolean>;
   /* 스토리를 삭제하는 함수 */
-  deleteStory: (params: StoryInfo) => Promise<void>;
+  deleteStory: (params: StoryInfoWithCodeId) => Promise<void>;
 }
 
 export default async <T, Response>(request: T, modules: DeleteStoryType<Response>) => {
   if (!deleteStoryRequestValidate(request)) throw modules.validateError;
   const { codeId, storyAuthor, storyName } = request.body;
 
-  const codeInfo = await modules.getCodeInfo({ codeId });
   const existStory = await modules.isExistStory({ storyAuthor, storyName, codeId });
   if (!existStory) throw modules.existStoryErrorFunc();
 
-  await modules.deleteStory({ storyAuthor, storyName, ...codeInfo });
+  await modules.deleteStory({ storyAuthor, storyName, codeId });
 
   return modules.successResponseFunc({ message: '' });
 };

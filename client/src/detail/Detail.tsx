@@ -62,6 +62,7 @@ const DetailPage: React.FC = () => {
             />
           </article>
           <StoryNameList
+            codeId={codeId || ''}
             pocketCodes={storyNamesRes?.storyNames || []}
             selectedStoryId={selectedStoryId}
             selectStory={selectStory}

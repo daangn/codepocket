@@ -8,21 +8,27 @@ interface TransitionProps {
 }
 
 function Transition({ children, isOn, timeout = 500 }: TransitionProps) {
-  const closeTimerRef = useRef<NodeJS.Timeout>();
+  const timerRef = useRef<NodeJS.Timeout>();
   const [status, setStatus] = useState<StatusType>(isOn ? 'on' : 'off');
 
   const onTransitionEnd = useCallback(() => {
-    closeTimerRef.current = setTimeout(() => {
+    timerRef.current = setTimeout(() => {
       setStatus('off');
+    }, timeout);
+  }, [setStatus, timeout]);
+
+  const onTransitionStart = useCallback(() => {
+    timerRef.current = setTimeout(() => {
+      setStatus('on');
     }, timeout);
   }, [setStatus, timeout]);
 
   useEffect(() => {
     if (!isOn) return onTransitionEnd();
-    setStatus('on');
+    onTransitionStart();
 
-    return () => clearTimeout(closeTimerRef.current);
-  }, [isOn, onTransitionEnd]);
+    return () => clearTimeout(timerRef.current);
+  }, [isOn, onTransitionEnd, onTransitionStart]);
 
   if (status === 'off') return <></>;
   return <>{children(status)}</>;
