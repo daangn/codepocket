@@ -1,5 +1,5 @@
 import * as Sandpack from '@codesandbox/sandpack-react';
-import { Modal } from '@shared/components';
+import { Icon, IconButton, Modal } from '@shared/components';
 import Transition from '@shared/utils/Transition';
 import React, { useState } from 'react';
 
@@ -78,18 +78,14 @@ const StoryNameList: React.FC<StoryNameListProps> = (props) => {
                     selected: props.selectedStoryId === storyId,
                   })}
                 >
-                  <button
-                    className={style.modifyButton}
+                  <IconButton
+                    icon={<Icon icon="edit" />}
                     onClick={(event) => onClickUpdateBtn(event, storyId)}
-                  >
-                    수정
-                  </button>
-                  <button
-                    className={style.deleteButton}
+                  />
+                  <IconButton
+                    icon={<Icon icon="delete" />}
                     onClick={(event) => onClickDeleteBtn(event, storyId)}
-                  >
-                    삭제
-                  </button>
+                  />
                 </div>
               )}
             </Transition>

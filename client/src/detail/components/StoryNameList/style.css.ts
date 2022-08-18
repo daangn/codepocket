@@ -31,7 +31,7 @@ export const controlButtonsWrapper = recipe({
     u.positionAbsolute,
     u.fullWidth,
     u.flex,
-    { top: rem(-30), zIndex: 'auto' },
+    { top: rem(-30), zIndex: 'auto', justifyContent: 'right', gap: rem(5) },
   ],
   variants: {
     selected: {
