@@ -47,6 +47,7 @@ export const modifyButton = style([
     width: '50%',
     height: rem(30),
     border: 'none',
+    cursor: 'pointer',
   },
 ]);
 

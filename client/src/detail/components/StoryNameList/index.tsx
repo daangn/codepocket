@@ -1,37 +1,67 @@
+import * as Sandpack from '@codesandbox/sandpack-react';
 import { Modal } from '@shared/components';
 import Transition from '@shared/utils/Transition';
 import React, { useState } from 'react';
 
 import useDeleteStory from '../../hooks/useDeleteStory';
+import useUpdateStory from '../../hooks/useUpdateStory';
+import { filterObjValueWithKey, filterObjWithKey } from '../../utils/filterObj';
 import * as style from './style.css';
 
 interface StoryNameListProps {
   codeId: string;
+  codeName: string;
   pocketCodes: { storyName: string; storyId: string }[];
   selectedStoryId?: string;
   selectStory: (storyName: string) => void;
 }
 
-const StoryNameList: React.FC<StoryNameListProps> = (props) => {
-  const [storyWantedDelete, setStoryWantedDelete] = useState('');
-  const { deleteStory } = useDeleteStory({ onSuccessDelete: () => props.selectStory('') });
+interface StoryWantedDelete {
+  modal: 'none' | 'delete' | 'update';
+  storyId?: string;
+}
 
-  const onClickDeleteBtn = (event: React.MouseEvent, storyFullName: string) => {
-    event.stopPropagation();
-    setStoryWantedDelete(storyFullName);
+const ROOT_FILE = '/App.tsx';
+const StoryNameList: React.FC<StoryNameListProps> = (props) => {
+  const {
+    sandpack: { files },
+  } = Sandpack.useSandpack();
+  const [storyWantedDelete, setStoryWantedDelete] = useState<StoryWantedDelete>({ modal: 'none' });
+  const { deleteStory } = useDeleteStory({ onSuccessDelete: () => props.selectStory('') });
+  const { updateStory } = useUpdateStory();
+
+  const getAllCodes = () => {
+    const SANDPACK_FILE_CODE = 'code';
+    const storyNames = [ROOT_FILE, `/${props.codeName}`];
+    const codes = filterObjValueWithKey(filterObjWithKey(files, storyNames), SANDPACK_FILE_CODE);
+    return codes;
   };
 
-  const closeModal = () => setStoryWantedDelete('');
+  const onClickDeleteBtn = (event: React.MouseEvent, storyId: string) => {
+    event.stopPropagation();
+    setStoryWantedDelete({ modal: 'delete', storyId });
+  };
+  const onClickUpdateBtn = (event: React.MouseEvent, storyId: string) => {
+    event.stopPropagation();
+    setStoryWantedDelete({ modal: 'update', storyId });
+  };
+
+  const closeModal = () => setStoryWantedDelete({ modal: 'none' });
   const onCancel = () => closeModal();
   const onConfirm = () => {
-    const [storyAuthor, storyName] = storyWantedDelete.split('-');
-    deleteStory({ codeId: props.codeId, storyAuthor, storyName });
+    const { storyId, modal } = storyWantedDelete;
+    if (!storyId || modal === 'none') return;
+    const [storyAuthor, storyName] =
+      props.pocketCodes.find((c) => c.storyId === storyId)?.storyName.split('-') || '';
+
+    if (modal === 'delete') deleteStory({ codeId: props.codeId, storyAuthor, storyName });
+    else updateStory({ storyId, codes: getAllCodes() });
     closeModal();
   };
 
   return (
     <>
-      <Modal isOpen={!!storyWantedDelete} closeModal={closeModal}>
+      <Modal isOpen={storyWantedDelete.modal !== 'none'} closeModal={closeModal}>
         <p className={style.modalParagraph}>정말로 스토리를 삭제하시겠어요?</p>
         <div className={style.buttonWrapper}>
           <Modal.CancelButton onCancel={onCancel} />
@@ -48,10 +78,15 @@ const StoryNameList: React.FC<StoryNameListProps> = (props) => {
                     selected: props.selectedStoryId === storyId,
                   })}
                 >
-                  <button className={style.modifyButton}>수정</button>
+                  <button
+                    className={style.modifyButton}
+                    onClick={(event) => onClickUpdateBtn(event, storyId)}
+                  >
+                    수정
+                  </button>
                   <button
                     className={style.deleteButton}
-                    onClick={(event) => onClickDeleteBtn(event, storyName)}
+                    onClick={(event) => onClickDeleteBtn(event, storyId)}
                   >
                     삭제
                   </button>
