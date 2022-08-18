@@ -16,10 +16,13 @@ interface ModalInterface {
 
 interface ModalConfirmButtonProps {
   onConfirm: () => void;
+  variant?: 'warn' | 'normal';
+  text?: string;
 }
 
 interface ModalCancelButtonProps {
   onCancel: () => void;
+  text?: string;
 }
 
 interface ModalCloseButtonProps {
@@ -32,18 +35,22 @@ const ModalPortal = ({ children }: Pick<ModalInterface, 'children'>) => {
   return ReactDOM.createPortal(children, modal);
 };
 
-const ModalConfirmButton = ({ onConfirm }: ModalConfirmButtonProps) => {
+const ModalConfirmButton = ({
+  onConfirm,
+  variant = 'normal',
+  text = '수락하기',
+}: ModalConfirmButtonProps) => {
   return (
-    <button className={style.modalConfirmButton} onClick={onConfirm}>
-      수락하기
+    <button className={style.modalConfirmButton({ variant })} onClick={onConfirm}>
+      {text}
     </button>
   );
 };
 
-const ModalCancelButton = ({ onCancel }: ModalCancelButtonProps) => {
+const ModalCancelButton = ({ onCancel, text = '취소하기' }: ModalCancelButtonProps) => {
   return (
     <button className={style.modalCancelButton} onClick={onCancel}>
-      취소하기
+      {text}
     </button>
   );
 };

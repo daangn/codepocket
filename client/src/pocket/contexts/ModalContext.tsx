@@ -1,4 +1,3 @@
-import { Modal } from '@shared/components';
 import React, { createContext, Dispatch, useContext, useReducer } from 'react';
 
 type State = {
@@ -38,27 +37,7 @@ export function ModalProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <ModalStateContext.Provider value={state}>
-      <ModalDispatchContext.Provider value={dispatch}>
-        {
-          <Modal
-            disableEscape
-            isOpen={state.useDeleteModal}
-            closeModal={() => dispatch({ type: 'TOGGLE_DELETE_MODAL' })}
-          >
-            삭제모달이에요
-          </Modal>
-        }
-        {
-          <Modal
-            disableEscape
-            isOpen={state.useEditModal}
-            closeModal={() => dispatch({ type: 'TOGGLE_EDIT_MODAL' })}
-          >
-            수정모달이에요
-          </Modal>
-        }
-        {children}
-      </ModalDispatchContext.Provider>
+      <ModalDispatchContext.Provider value={dispatch}>{children}</ModalDispatchContext.Provider>
     </ModalStateContext.Provider>
   );
 }
