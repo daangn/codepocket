@@ -32,7 +32,7 @@ export const getUserPrivateInfo =
     );
 
     if (findAuthorError) throw new CustomResponse({ customStatus: 5000 });
-    return author ? { pocketToken: author.token, userId: author._id } : null;
+    return author ? { pocketToken: author.token, userId: author.id } : null;
   };
 
 export const createUser =
@@ -48,5 +48,5 @@ export const createUser =
     );
     if (createUserError) throw new CustomResponse({ customStatus: 5000 });
 
-    return { pocketToken: token, userId: createUserResponse._id };
+    return { pocketToken: token, userId: createUserResponse.id };
   };
