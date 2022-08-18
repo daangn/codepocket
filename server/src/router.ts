@@ -159,14 +159,13 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
     ),
   );
 
-  server.delete('/code', (req, reply) =>
+  server.delete('/story', (req, reply) =>
     responseHandler(
       () =>
         connector.deleteStory(req, {
           existStoryErrorFunc: () => new CustomResponse({ customStatus: 4002 }),
           successResponseFunc: () =>
             new CustomResponse<Schema.CreateStoryResponse>({ customStatus: 2008 }),
-          getCodeInfo: CodeModule.getAllCodeInfoById(server),
           isExistStory: StoryModule.existStory(server),
           deleteStory: StoryModule.deleteStory(server),
         }),
