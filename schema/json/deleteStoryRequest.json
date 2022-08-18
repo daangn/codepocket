@@ -1,0 +1,30 @@
+{
+  "title": "deleteStoryRequest",
+  "type": "object",
+  "properties": {
+    "body": {
+      "type": "object",
+      "properties": {
+        "codeId": {
+          "type": "string"
+        },
+        "storyName": {
+          "type": "string"
+        },
+        "storyAuthor": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "codeId",
+        "storyName",
+        "storyAuthor"
+      ]
+    }
+  },
+  "additionalProperties": true,
+  "required": [
+    "body"
+  ]
+}

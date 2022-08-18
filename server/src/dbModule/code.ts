@@ -35,6 +35,20 @@ export const getCodeInfoById =
     return { codeAuthor: isAnonymous ? '' : codeAuthor, codeName, isAnonymous, code };
   };
 
+export const getAllCodeInfoById =
+  (server: FastifyInstance) =>
+  async ({ codeId }: Types.CodeId) => {
+    const [getCodeError, allCodeInfo] = await to(
+      (async () => await server.store.Code.findById(codeId))(),
+    );
+
+    if (getCodeError) throw new CustomResponse({ customStatus: 5000 });
+    if (!allCodeInfo) throw new CustomResponse({ customStatus: 4008 });
+
+    const { codeAuthor, codeName } = allCodeInfo;
+    return { codeAuthor, codeName };
+  };
+
 export const findCodeAuthors =
   (server: FastifyInstance) =>
   async ({ codeName }: CodeName) => {
