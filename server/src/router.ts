@@ -80,6 +80,20 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
     ),
   );
 
+  server.put('/story', (req, reply) =>
+    responseHandler(
+      () =>
+        connector.updateStory(req, {
+          successResponseFunc: () =>
+            new CustomResponse<Schema.UpdateStoryResponse>({ customStatus: 2009 }),
+          existStoryErrorFunc: () => new CustomResponse({ customStatus: 4002 }),
+          isStoryExist: StoryModule.existStory(server),
+          updateStory: StoryModule.updateStory(server),
+        }),
+      reply,
+    ),
+  );
+
   server.get('/code/id', (req, reply) =>
     responseHandler(
       () =>

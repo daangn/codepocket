@@ -1,0 +1,30 @@
+{
+  "title": "updateStoryRequest",
+  "type": "object",
+  "properties": {
+    "body": {
+      "type": "object",
+      "properties": {
+        "pocketToken": {
+          "type": "string"
+        },
+        "storyId": {
+          "type": "string"
+        },
+        "code": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "pocketToken",
+        "storyId",
+        "code"
+      ]
+    }
+  },
+  "additionalProperties": true,
+  "required": [
+    "body"
+  ]
+}
