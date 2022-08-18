@@ -35,7 +35,7 @@ interface SandpackWrapperProps {
   codeName: string;
   codeAuthor: string;
   code: string;
-  selectedStory?: SelectedStory;
+  selectedStoryCodes?: SelectedStory;
   pushCode: ({
     codes,
     storyName,
@@ -112,30 +112,12 @@ const SandpackComponent: React.FC<SandpackComponentProps> = (props) => {
 };
 
 const SandpackWrapper: React.FC<SandpackWrapperProps> = (props) => {
-  const VERSION = 'latest';
-  const dependencies = createObjWithCertainValue(
-    getDependenciesFromText(props?.code || ''),
-    VERSION,
-  );
-  const files = {
-    [ROOT_FILE]: genrateBaseCode(props.codeName),
-    [`/${props.codeName}`]: props?.code || '',
-    ...props.selectedStory?.codes,
-  };
-
   return (
-    <Sandpack.SandpackProvider
-      theme={theme.aquaBlue}
-      template="react-ts"
-      customSetup={{ dependencies }}
-      files={files}
-    >
-      <SandpackComponent
-        codeName={props.codeName}
-        pushCode={props.pushCode}
-        isStory={!!props.selectedStory}
-      />
-    </Sandpack.SandpackProvider>
+    <SandpackComponent
+      codeName={props.codeName}
+      pushCode={props.pushCode}
+      isStory={!!props.selectedStoryCodes}
+    />
   );
 };
 
