@@ -31,6 +31,16 @@ export const getStory =
     return story;
   };
 
+export const updateStory =
+  (server: FastifyInstance) =>
+  async ({ storyId, code }: Types.StoryIdWithCode) => {
+    const [err] = await to(
+      (async () => await server.store.Story.findByIdAndUpdate(storyId, { code }))(),
+    );
+
+    if (err) throw new CustomResponse({ customStatus: 5000 });
+  };
+
 export const existStory =
   (server: FastifyInstance) =>
   async ({ codeId, storyAuthor, storyName }: Types.StoryInfoWithCodeId) => {
