@@ -3,9 +3,15 @@ import React, { createContext, Dispatch, useContext, useReducer } from 'react';
 type State = {
   isDeleteModalOpen: boolean;
   isEditModalOpen: boolean;
+  deleteTargetId: string;
+  editTargetId: string;
 };
 
-type Action = { type: 'TOGGLE_DELETE_MODAL' } | { type: 'TOGGLE_EDIT_MODAL' };
+type Action =
+  | { type: 'TOGGLE_DELETE_MODAL' }
+  | { type: 'TOGGLE_EDIT_MODAL' }
+  | { type: 'SET_DELETE_TARGET_ID'; targetId: string }
+  | { type: 'SET_EDIT_TARGET_ID'; targetId: string };
 
 type ModalDispatch = Dispatch<Action>;
 
@@ -24,6 +30,16 @@ function reducer(state: State, action: Action): State {
         ...state,
         isEditModalOpen: !state.isEditModalOpen,
       };
+    case 'SET_DELETE_TARGET_ID':
+      return {
+        ...state,
+        deleteTargetId: action.targetId,
+      };
+    case 'SET_EDIT_TARGET_ID':
+      return {
+        ...state,
+        editTargetId: action.targetId,
+      };
     default:
       throw new Error('Unhandled action');
   }
@@ -33,6 +49,8 @@ export function ModalProvider({ children }: { children: React.ReactNode }) {
   const [state, dispatch] = useReducer(reducer, {
     isDeleteModalOpen: false,
     isEditModalOpen: false,
+    deleteTargetId: '',
+    editTargetId: '',
   });
 
   return (

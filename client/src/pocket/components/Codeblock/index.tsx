@@ -34,14 +34,15 @@ const Codeblock: React.FC<CodeblockProps> = ({
   const isCodeOwner = useMemo(() => userId === localStorage.getUserId(), [userId]);
 
   const toggle = useCallback(() => setToggled((prev) => !prev), []);
-  const toggleDeleteModal = useCallback(
-    () => modalDispatch({ type: 'TOGGLE_DELETE_MODAL' }),
-    [modalDispatch],
-  );
-  const toggleEditModal = useCallback(
-    () => modalDispatch({ type: 'TOGGLE_EDIT_MODAL' }),
-    [modalDispatch],
-  );
+
+  const handleDeleteButtonClick = useCallback(() => {
+    modalDispatch({ type: 'TOGGLE_DELETE_MODAL' });
+    modalDispatch({ type: 'SET_DELETE_TARGET_ID', targetId: codeId });
+  }, [codeId, modalDispatch]);
+  const handleEditButtonClick = useCallback(() => {
+    modalDispatch({ type: 'TOGGLE_EDIT_MODAL' });
+    modalDispatch({ type: 'SET_EDIT_TARGET_ID', targetId: codeId });
+  }, [codeId, modalDispatch]);
 
   const haveManyCode = useMemo(() => {
     const MANY_CODE_STANDARD_LINE = 500;
@@ -81,8 +82,12 @@ const Codeblock: React.FC<CodeblockProps> = ({
       </div>
       <div className={style.codeItemBottom}>
         <div className={style.codeItemBottomButtons}>
-          {isCodeOwner && <IconButton onClick={toggleDeleteModal} icon={<Icon icon="delete" />} />}
-          {isCodeOwner && <IconButton onClick={toggleEditModal} icon={<Icon icon="edit" />} />}
+          {isCodeOwner && (
+            <IconButton onClick={handleDeleteButtonClick} icon={<Icon icon="delete" />} />
+          )}
+          {isCodeOwner && (
+            <IconButton onClick={handleEditButtonClick} icon={<Icon icon="edit" />} />
+          )}
         </div>
         <div className={style.codeItemBottomButtons}>
           <button
