@@ -5,12 +5,12 @@ import * as style from './style.css';
 
 const DeleteModal = () => {
   const dispatch = useModalDispatch();
-  const { useDeleteModal } = useModalState();
+  const { isDeleteModalOpen } = useModalState();
 
   return (
     <Modal
       disableEscape
-      isOpen={useDeleteModal}
+      isOpen={isDeleteModalOpen}
       closeModal={() => dispatch({ type: 'TOGGLE_DELETE_MODAL' })}
     >
       <div className={style.deleteModalContainer}>

@@ -5,12 +5,12 @@ import * as style from './style.css';
 
 const EditModal = () => {
   const dispatch = useModalDispatch();
-  const { useEditModal } = useModalState();
+  const { isEditModalOpen } = useModalState();
 
   return (
     <Modal
       disableEscape
-      isOpen={useEditModal}
+      isOpen={isEditModalOpen}
       closeModal={() => dispatch({ type: 'TOGGLE_EDIT_MODAL' })}
     >
       <div className={style.editModalContainer}>
