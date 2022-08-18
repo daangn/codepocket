@@ -1,48 +1,33 @@
-import Check, { CheckType } from './Check';
+import type { IconInterface } from './@types';
+import Check from './Check';
 import Clip from './Clip';
-import Close, { CloseType } from './Close';
+import Close from './Close';
 import Code from './Code';
-import Information, { InformationType } from './Information';
-import LeftChevron, { LeftChevronType } from './LeftChevron';
+import Delete from './Delete';
+import Edit from './Edit';
+import Information from './Information';
+import LeftChevron from './LeftChevron';
 import Profile from './Profile';
-import RightChevron, { RightChevronType } from './RightChevron';
+import RightChevron from './RightChevron';
 import Search from './Search';
-import WarningFill, { WarningFillType } from './WarningFill';
-
-/**
- * 사용법
- * 1. IconType에 AddIconName을 이용해서 iconName 추가
- * 2. mapping에 iconName을 key, 컴포넌트를 value로 가지는 속성 추가
- * Icon컴포넌트를 만들 때 icon prop을 지정해주면 해당 icon에 맞는 타입들이 자동으로 설정됨
- */
-type LookUp<U, T> = U extends { icon: T } ? U : never;
-type AddIconName<T, K> = T & { icon: K };
-type IconType =
-  | AddIconName<LeftChevronType, 'leftChevron'>
-  | AddIconName<RightChevronType, 'rightChevron'>
-  | AddIconName<WarningFillType, 'warningFill'>
-  | AddIconName<InformationType, 'information'>
-  | AddIconName<CheckType, 'check'>
-  | AddIconName<CloseType, 'close'>
-  | AddIconName<{}, 'profile'>
-  | AddIconName<{}, 'search'>
-  | AddIconName<{}, 'code'>
-  | AddIconName<{}, 'clip'>;
+import WarningFill from './WarningFill';
 
 const mapping = {
-  leftChevron: (param: LeftChevronType) => LeftChevron(param),
-  rightChevron: (param: RightChevronType) => RightChevron(param),
-  warningFill: (param: WarningFillType) => WarningFill(param),
-  check: (param: RightChevronType) => Check(param),
-  information: (param: InformationType) => Information(param),
-  close: (param: CloseType) => Close(param),
-  profile: () => Profile(),
-  search: () => Search(),
-  code: () => Code(),
-  clip: () => Clip(),
+  leftChevron: LeftChevron,
+  rightChevron: RightChevron,
+  warningFill: WarningFill,
+  check: Check,
+  information: Information,
+  close: Close,
+  profile: Profile,
+  search: Search,
+  code: Code,
+  clip: Clip,
+  delete: Delete,
+  edit: Edit,
 } as const;
 
-const Icon = <T extends keyof typeof mapping>({ icon, ...props }: LookUp<IconType, T>) =>
+const Icon = ({ icon, ...props }: IconInterface & { icon: keyof typeof mapping }) =>
   mapping[icon](props as any);
 
 export default Icon;

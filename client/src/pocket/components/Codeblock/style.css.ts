@@ -108,11 +108,11 @@ export const codeItemBottom = style([
   u.flex,
   {
     marginTop: rem(10),
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
   },
 ]);
 
-export const codeItemHeaderButtons = style([
+export const codeItemBottomButtons = style([
   u.flex,
   {
     columnGap: rem(5),
