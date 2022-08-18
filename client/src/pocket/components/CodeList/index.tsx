@@ -6,9 +6,10 @@ import * as style from './style.css';
 const CodeList: React.FC<{ codes: GetCodesResponse['codes'] }> = ({ codes }) => {
   return (
     <ul className={style.codeList}>
-      {codes.map(({ codeId, code, codeAuthor, codeName, isAnonymous }) => (
+      {codes.map(({ userId, codeId, code, codeAuthor, codeName, isAnonymous }) => (
         <Codeblock
           key={`${codeAuthor}${codeName}`}
+          userId={userId}
           codeId={codeId}
           codeAuthor={codeAuthor}
           code={code}

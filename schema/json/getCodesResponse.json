@@ -25,6 +25,9 @@
           "codeName": {
             "type": "string"
           },
+          "userId": {
+            "type": "string"
+          },
           "createdAt": {
             "type": "string",
             "format": "date"
@@ -43,6 +46,7 @@
           "code",
           "codeAuthor",
           "codeName",
+          "userId",
           "createdAt",
           "updatedAt",
           "isAnonymous"

@@ -1,6 +1,7 @@
 import { colors } from '@karrotmarket/design-token';
-import { Icon } from '@shared/components';
+import { Icon, IconButton } from '@shared/components';
 import useClipboard from '@shared/hooks/useClipboard';
+import { localStorage } from '@shared/utils/localStorage';
 import { useMemo, useRef, useState } from 'react';
 import SyntaxHighlighter, { SyntaxHighlighterProps } from 'react-syntax-highlighter';
 import { githubGist } from 'react-syntax-highlighter/dist/esm/styles/hljs';
@@ -9,6 +10,7 @@ import { generateDetailPath } from '../../../routes';
 import * as style from './style.css';
 
 export interface CodeblockProps {
+  userId: string;
   codeId: string;
   codeAuthor: string;
   codeName: string;
@@ -17,6 +19,7 @@ export interface CodeblockProps {
 }
 
 const Codeblock: React.FC<CodeblockProps> = ({
+  userId,
   codeId,
   codeAuthor,
   codeName,
@@ -26,6 +29,7 @@ const Codeblock: React.FC<CodeblockProps> = ({
   const [toggled, setToggled] = useState<boolean>(false);
   const { isCopied, copyToClipboard } = useClipboard({ text: code });
   const syntaxHighlighterRef = useRef<React.Component<SyntaxHighlighterProps>>(null);
+  const isCodeOwner = useMemo(() => userId === localStorage.getUserId(), [userId]);
 
   const toggle = () => setToggled((prev) => !prev);
 
@@ -66,7 +70,11 @@ const Codeblock: React.FC<CodeblockProps> = ({
         </SyntaxHighlighter>
       </div>
       <div className={style.codeItemBottom}>
-        <div className={style.codeItemHeaderButtons}>
+        <div className={style.codeItemBottomButtons}>
+          {isCodeOwner && <IconButton icon={<Icon icon="delete" />} />}
+          {isCodeOwner && <IconButton icon={<Icon icon="edit" />} />}
+        </div>
+        <div className={style.codeItemBottomButtons}>
           <button
             type="button"
             aria-label="코드 복사 버튼"
