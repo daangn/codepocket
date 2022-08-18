@@ -1,5 +1,5 @@
 import { createStoryRequestValidate, CreateStoryResponse } from '@codepocket/schema';
-import { PocketToken, StoryInfoWithCode, StoryInfoWithCodeId } from 'types';
+import { PocketToken, StoryInfoWithCode, StoryInfoWithCodeId, UserNameWithId } from 'types';
 
 export interface CreateStoryType<Response> {
   /* validator에러 */
@@ -12,7 +12,7 @@ export interface CreateStoryType<Response> {
   /* 스토리가 존재하는지 체크하는 함수 */
   isStoryExist: (param: StoryInfoWithCodeId) => Promise<boolean>;
   /* 토큰으로 유저이름을 가져오는 함수 */
-  getUserName: (params: PocketToken) => Promise<string>;
+  getUserInfo: (params: PocketToken) => Promise<UserNameWithId>;
   /* 스토리 생성 함수 */
   createStory: (params: StoryInfoWithCode) => Promise<string>;
 }
@@ -21,7 +21,7 @@ export default async <T, Response>(request: T, modules: CreateStoryType<Response
   if (!createStoryRequestValidate(request)) throw modules.validateError;
   const { pocketToken, codeId, storyName, codes } = request.body;
 
-  const storyAuthor = await modules.getUserName({ pocketToken });
+  const { userName: storyAuthor } = await modules.getUserInfo({ pocketToken });
 
   const isStoryExist = await modules.isStoryExist({ codeId, storyAuthor, storyName });
   if (isStoryExist) throw modules.existStoryErrorFunc;

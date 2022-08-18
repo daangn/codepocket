@@ -1,5 +1,5 @@
 import { pushCodeRequestValidate, PushCodeResponse } from '@codepocket/schema';
-import { CodeInfo, CodeName, PocketToken, PushCodeParams } from 'types';
+import { CodeInfo, CodeName, PocketToken, PushCodeParams, UserNameWithId } from 'types';
 
 import { postMessageToSlack, SlackConfig, uploadCodeToSlack } from './slack';
 
@@ -17,7 +17,7 @@ export interface PushCodeType<Response> {
   slackConfig?: SlackConfig;
 
   /* 유저이름 가져오는 함수 */
-  getAuthorName: (params: PocketToken) => Promise<string>;
+  getUserInfo: (params: PocketToken) => Promise<UserNameWithId>;
   /* 익명으로 된 동일한 이름의 코드가 있는지 검사하는 함수  */
   isAnonymousCodeExist: (params: CodeName) => Promise<boolean>;
   /* 코드가 존재하는지 확인하는 함수 */
@@ -30,7 +30,7 @@ export default async <T, Response>(request: T, modules: PushCodeType<Response>) 
   if (!pushCodeRequestValidate(request)) throw modules.validateError;
   const { pocketToken, codeName, code, isAnonymous } = request.body;
 
-  const codeAuthor = await modules.getAuthorName({ pocketToken });
+  const { userName: codeAuthor, userId } = await modules.getUserInfo({ pocketToken });
 
   if (isAnonymous) {
     const exist = await modules.isAnonymousCodeExist({ codeName });
@@ -60,6 +60,7 @@ export default async <T, Response>(request: T, modules: PushCodeType<Response>) 
     code,
     codeName,
     codeAuthor,
+    userId,
     isAnonymous,
     isAlreadyPushedCode,
     slackChatChannel: slackInfo.uploadedChatChannel,
