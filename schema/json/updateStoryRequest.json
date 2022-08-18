@@ -5,26 +5,20 @@
     "body": {
       "type": "object",
       "properties": {
-        "pocketToken": {
-          "type": "string"
-        },
         "storyId": {
           "type": "string"
         },
-        "code": {
-          "type": "string"
+        "codes": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
         }
       },
       "additionalProperties": false,
-      "required": [
-        "pocketToken",
-        "storyId",
-        "code"
-      ]
+      "required": ["storyId", "codes"]
     }
   },
   "additionalProperties": true,
-  "required": [
-    "body"
-  ]
+  "required": ["body"]
 }

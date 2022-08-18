@@ -42,7 +42,7 @@ export interface StoryInfo extends CodeInfo {
 
 export interface StoryIdWithCode {
   storyId: string;
-  code: string;
+  codes: { [x: string]: string };
 }
 
 export interface StoryNamesWithCodeId {
