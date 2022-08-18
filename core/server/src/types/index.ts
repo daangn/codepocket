@@ -63,6 +63,11 @@ export interface UserInfo {
   email: string;
 }
 
+export interface UserPrivateInfo {
+  pocketToken: string;
+  userId: string;
+}
+
 export type UserInfoWithToken = UserInfo & PocketToken;
 
 export interface PushCodeParams {

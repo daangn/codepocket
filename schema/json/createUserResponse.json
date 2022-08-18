@@ -7,11 +7,15 @@
     },
     "message": {
       "type": "string"
+    },
+    "userId": {
+      "type": "string"
     }
   },
   "additionalProperties": false,
   "required": [
     "pocketToken",
-    "message"
+    "message",
+    "userId"
   ]
 }

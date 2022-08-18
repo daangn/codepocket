@@ -22,7 +22,7 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
         connector.createUser(req, {
           successResponseFunc: (body) =>
             new CustomResponse<Schema.CreateUserResponse>({ customStatus: 2007, body }),
-          getUsetToken: UserModule.getUserToken(server),
+          getUserPrivateInfo: UserModule.getUserPrivateInfo(server),
           createUser: UserModule.createUser(server),
         }),
       reply,
