@@ -17,11 +17,11 @@ export const findAuthor = (server: FastifyInstance) => async (token: string) => 
   return author;
 };
 
-export const getAuthorName =
+export const getUserInfo =
   (server: FastifyInstance) =>
   async ({ pocketToken }: Types.PocketToken) => {
     const author = await findAuthor(server)(pocketToken);
-    return author.userName;
+    return { userName: author.userName, userId: author.id };
   };
 
 export const getUserPrivateInfo =

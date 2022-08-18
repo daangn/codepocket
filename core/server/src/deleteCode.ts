@@ -1,7 +1,7 @@
 import { deleteCodeRequestValidate, DeleteCodeResponse } from '@codepocket/schema';
 import { SlackConfig } from 'slack';
 // import { deleteMessageToSlack } from 'slack';
-import { CodeInfo, PocketToken } from 'types';
+import { CodeInfo, PocketToken, UserNameWithId } from 'types';
 
 export interface DeleteCodeType<Response> {
   /* validator에러 */
@@ -15,7 +15,7 @@ export interface DeleteCodeType<Response> {
 
   slackConfig?: SlackConfig;
   /* 유저 이름을 가져오는 함수 */
-  getUserName: (params: PocketToken) => Promise<string>;
+  getUserInfo: (params: PocketToken) => Promise<UserNameWithId>;
   /* 존재하는 코드인지 확인하는 함수 */
   isExistCode: (params: CodeInfo) => Promise<boolean>;
   /* 코드를 삭제하는 함수 */
@@ -26,7 +26,7 @@ export default async <T, Response>(request: T, modules: DeleteCodeType<Response>
   if (!deleteCodeRequestValidate(request)) throw modules.validateError;
   const { pocketToken, codeName } = request.body;
 
-  const codeAuthor = await modules.getUserName({ pocketToken });
+  const { userName: codeAuthor } = await modules.getUserInfo({ pocketToken });
   const existCode = await modules.isExistCode({ codeAuthor, codeName });
   if (!existCode) throw modules.existCodeErrorFunc();
 

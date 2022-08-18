@@ -35,7 +35,7 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
         connector.verifyUser(req, {
           successResponseFunc: (body) =>
             new CustomResponse<Schema.VerifyUserResponse>({ customStatus: 2000, body }),
-          getUserName: UserModule.getAuthorName(server),
+          getUserInfo: UserModule.getUserInfo(server),
         }),
       reply,
     ),
@@ -73,7 +73,7 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
             new CustomResponse<Schema.CreateStoryResponse>({ body, customStatus: 2001 }),
           existStoryErrorFunc: new CustomResponse({ customStatus: 4004 }),
           isStoryExist: StoryModule.existStory(server),
-          getUserName: UserModule.getAuthorName(server),
+          getUserInfo: UserModule.getUserInfo(server),
           createStory: StoryModule.createStory(server),
         }),
       reply,
@@ -100,7 +100,7 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
             new CustomResponse<Schema.PushCodeResponse>({ customStatus: 2006 }),
           existAnonymousError: new CustomResponse({ customStatus: 4009 }),
           isAnonymousCodeExist: CodeModule.isAnonymousCodeExist(server),
-          getAuthorName: UserModule.getAuthorName(server),
+          getUserInfo: UserModule.getUserInfo(server),
           isExistCode: CodeModule.isExistCode(server),
           pushCode: CodeModule.pushCode(server),
         }),
@@ -151,7 +151,7 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
           existCodeErrorFunc: () => new CustomResponse({ customStatus: 4006 }),
           successResponseFunc: () =>
             new CustomResponse<Schema.DeleteCodeResponse>({ customStatus: 2002 }),
-          getUserName: UserModule.getAuthorName(server),
+          getUserInfo: UserModule.getUserInfo(server),
           isExistCode: CodeModule.isExistCode(server),
           deleteCode: CodeModule.deleteCode(server),
         }),

@@ -68,12 +68,15 @@ export interface UserPrivateInfo {
   userId: string;
 }
 
+export type UserNameWithId = Pick<UserInfo, 'userName'> & Pick<UserPrivateInfo, 'userId'>;
+
 export type UserInfoWithToken = UserInfo & PocketToken;
 
 export interface PushCodeParams {
   code: string;
   codeName: string;
   codeAuthor: string;
+  userId: string;
   isAnonymous: boolean;
   isAlreadyPushedCode: boolean;
   slackChatChannel?: string;

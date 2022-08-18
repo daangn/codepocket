@@ -1,5 +1,5 @@
 import { verifyUserRequestValidate, VerifyUserResponse } from '@codepocket/schema';
-import { PocketToken } from 'types';
+import { PocketToken, UserNameWithId } from 'types';
 
 export interface VerifyUserType<Response> {
   /* validator에러 */
@@ -8,14 +8,14 @@ export interface VerifyUserType<Response> {
   successResponseFunc: (body: VerifyUserResponse) => Response;
 
   /* 유저 이름을 가져오는 함수 */
-  getUserName: ({ pocketToken }: PocketToken) => Promise<string>;
+  getUserInfo: ({ pocketToken }: PocketToken) => Promise<UserNameWithId>;
 }
 
 export default async <T, Response>(request: T, modules: VerifyUserType<Response>) => {
   if (!verifyUserRequestValidate(request)) throw modules.validateError;
   const { pocketToken } = request.body;
 
-  const userName = await modules.getUserName({ pocketToken });
+  const { userName } = await modules.getUserInfo({ pocketToken });
 
   return modules.successResponseFunc({ validUser: true, userName, message: '' });
 };
