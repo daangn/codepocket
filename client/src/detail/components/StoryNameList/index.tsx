@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 
 import useDeleteStory from '../../hooks/useDeleteStory';
 import useUpdateStory from '../../hooks/useUpdateStory';
-import { filterObjValueWithKey, filterObjWithKey } from '../../utils/filterObj';
+import getAllCodesFromSandpack from '../../utils/getAllCodesFromSandpack';
 import * as style from './style.css';
 
 interface StoryNameListProps {
@@ -21,7 +21,6 @@ interface StoryWantedDelete {
   storyId?: string;
 }
 
-const ROOT_FILE = '/App.tsx';
 const StoryNameList: React.FC<StoryNameListProps> = (props) => {
   const {
     sandpack: { files },
@@ -29,13 +28,6 @@ const StoryNameList: React.FC<StoryNameListProps> = (props) => {
   const [storyWantedDelete, setStoryWantedDelete] = useState<StoryWantedDelete>({ modal: 'none' });
   const { deleteStory } = useDeleteStory({ onSuccessDelete: () => props.selectStory('') });
   const { updateStory } = useUpdateStory();
-
-  const getAllCodes = () => {
-    const SANDPACK_FILE_CODE = 'code';
-    const storyNames = [ROOT_FILE, `/${props.codeName}`];
-    const codes = filterObjValueWithKey(filterObjWithKey(files, storyNames), SANDPACK_FILE_CODE);
-    return codes;
-  };
 
   const onClickDeleteBtn = (event: React.MouseEvent, storyId: string) => {
     event.stopPropagation();
@@ -55,7 +47,8 @@ const StoryNameList: React.FC<StoryNameListProps> = (props) => {
       props.pocketCodes.find((c) => c.storyId === storyId)?.storyName.split('-') || '';
 
     if (modal === 'delete') deleteStory({ codeId: props.codeId, storyAuthor, storyName });
-    else updateStory({ storyId, codes: getAllCodes() });
+    else
+      updateStory({ storyId, codes: getAllCodesFromSandpack({ files, codeName: props.codeName }) });
     closeModal();
   };
 

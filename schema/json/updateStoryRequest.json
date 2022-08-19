@@ -16,9 +16,14 @@
         }
       },
       "additionalProperties": false,
-      "required": ["storyId", "codes"]
+      "required": [
+        "storyId",
+        "codes"
+      ]
     }
   },
   "additionalProperties": true,
-  "required": ["body"]
+  "required": [
+    "body"
+  ]
 }

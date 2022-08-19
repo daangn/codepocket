@@ -11,6 +11,7 @@ import {
   filterObjValueWithKey,
   filterObjWithKey,
 } from '../../utils/filterObj';
+import getAllCodesFromSandpack from '../../utils/getAllCodesFromSandpack';
 import { getDependenciesFromText } from '../../utils/parse';
 import { genrateBaseCode } from '../../utils/textGenerator';
 import * as style from './style.css';
@@ -45,20 +46,12 @@ interface SandpackWrapperProps {
   }) => void;
 }
 
-const ROOT_FILE = '/App.tsx';
 const SandpackComponent: React.FC<SandpackComponentProps> = (props) => {
   const {
     sandpack: { files },
   } = Sandpack.useSandpack();
   const [storyName, setStoryName] = useState('');
   const [isModalOpened, setIsModalOpened] = useState(false);
-
-  const getAllCodes = () => {
-    const SANDPACK_FILE_CODE = 'code';
-    const storyNames = [ROOT_FILE, `/${props.codeName}`];
-    const codes = filterObjValueWithKey(filterObjWithKey(files, storyNames), SANDPACK_FILE_CODE);
-    return codes;
-  };
 
   const changeStoryName = (event: React.ChangeEvent<HTMLInputElement>) => {
     setStoryName(event.target.value);
@@ -74,7 +67,7 @@ const SandpackComponent: React.FC<SandpackComponentProps> = (props) => {
   const closeModal = () => setIsModalOpened(false);
   const onCancel = () => closeModal();
   const onConfirm = () => {
-    const codes = getAllCodes();
+    const codes = getAllCodesFromSandpack({ files, codeName: props.codeName });
     props.pushCode({ codes, storyName });
     setStoryName('');
     closeModal();
