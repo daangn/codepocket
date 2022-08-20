@@ -1,4 +1,5 @@
 import { colors } from '@karrotmarket/design-token';
+import { vars } from '@seed-design/design-token';
 import * as m from '@shared/styles/media.css';
 import * as u from '@shared/styles/utils.css';
 import { keyframes, style } from '@vanilla-extract/css';
@@ -6,7 +7,7 @@ import { recipe } from '@vanilla-extract/recipes';
 import { rem } from 'polished';
 
 const MODAL_Z_INDEX = 100;
-const ANIMATION_DURATION_SECOND = 0.1;
+const ANIMATION_DURATION_SECOND = 0.15;
 
 const fadeIn = (to: number) =>
   keyframes({
@@ -132,22 +133,32 @@ const modalBaseButton = style([
   }),
 ]);
 
-export const modalConfirmButton = style([
-  modalBaseButton,
-  {
-    backgroundColor: colors.light.scheme.$blue800,
-    ':hover': {
-      backgroundColor: '#0A86B766',
+export const modalConfirmButton = recipe({
+  base: [modalBaseButton],
+  variants: {
+    variant: {
+      warn: {
+        backgroundColor: vars.$scale.color.red500,
+        ':hover': {
+          backgroundColor: vars.$scale.color.red300,
+        },
+      },
+      normal: {
+        backgroundColor: vars.$scale.color.blue600,
+        ':hover': {
+          backgroundColor: vars.$scale.color.blue400,
+        },
+      },
     },
   },
-]);
+});
 
 export const modalCancelButton = style([
   modalBaseButton,
   {
-    backgroundColor: colors.light.scheme.$red800,
+    backgroundColor: vars.$scale.color.gray600,
     ':hover': {
-      backgroundColor: colors.light.scheme.$red50,
+      backgroundColor: vars.$scale.color.gray500,
     },
   },
 ]);

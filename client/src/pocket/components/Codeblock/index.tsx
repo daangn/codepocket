@@ -1,12 +1,14 @@
 import { colors } from '@karrotmarket/design-token';
 import { Icon, IconButton } from '@shared/components';
+import { modals } from '@shared/components/GlobalModal';
 import useClipboard from '@shared/hooks/useClipboard';
 import { localStorage } from '@shared/utils/localStorage';
-import { useMemo, useRef, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import SyntaxHighlighter, { SyntaxHighlighterProps } from 'react-syntax-highlighter';
 import { githubGist } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
 import { generateDetailPath } from '../../../routes';
+import { useModalDispatch } from '../../../shared/contexts/ModalContext';
 import * as style from './style.css';
 
 export interface CodeblockProps {
@@ -30,8 +32,18 @@ const Codeblock: React.FC<CodeblockProps> = ({
   const { isCopied, copyToClipboard } = useClipboard({ text: code });
   const syntaxHighlighterRef = useRef<React.Component<SyntaxHighlighterProps>>(null);
   const isCodeOwner = useMemo(() => userId === localStorage.getUserId(), [userId]);
+  const modalDispatch = useModalDispatch();
 
-  const toggle = () => setToggled((prev) => !prev);
+  const toggle = useCallback(() => setToggled((prev) => !prev), []);
+  const openModal = useCallback(
+    (modal: 'delete' | 'edit') =>
+      modalDispatch({
+        type: 'OPEN_MODAL',
+        targetId: codeId,
+        Component: modal === 'delete' ? modals.deleteModal : modals.editModal,
+      }),
+    [codeId, modalDispatch],
+  );
 
   const haveManyCode = useMemo(() => {
     const MANY_CODE_STANDARD_LINE = 500;
@@ -71,8 +83,12 @@ const Codeblock: React.FC<CodeblockProps> = ({
       </div>
       <div className={style.codeItemBottom}>
         <div className={style.codeItemBottomButtons}>
-          {isCodeOwner && <IconButton icon={<Icon icon="delete" />} />}
-          {isCodeOwner && <IconButton icon={<Icon icon="edit" />} />}
+          {isCodeOwner && (
+            <IconButton onClick={() => openModal('delete')} icon={<Icon icon="delete" />} />
+          )}
+          {isCodeOwner && (
+            <IconButton onClick={() => openModal('edit')} icon={<Icon icon="edit" />} />
+          )}
         </div>
         <div className={style.codeItemBottomButtons}>
           <button

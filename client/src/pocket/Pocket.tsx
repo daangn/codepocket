@@ -4,7 +4,14 @@ import ErrorMessage from './components/ErrorMessage';
 import useCodes from './hooks/useCodes';
 import * as style from './style.css';
 
-const SKELETON_COUNT = 4;
+const Skeleton = () => (
+  <>
+    <CodeblockSkeleton />
+    <CodeblockSkeleton />
+    <CodeblockSkeleton />
+    <CodeblockSkeleton />
+  </>
+);
 
 const PocketPage: React.FC = () => {
   const { codes, error, isLast, searchText, isLoading, changeSearchText, getNextCodes } =
@@ -16,10 +23,7 @@ const PocketPage: React.FC = () => {
       <Searchbar searchText={searchText} changeSearchText={changeSearchText} />
       {searchText ? <SearchHelpText searchText={searchText} /> : null}
       <CodeList codes={codes} />
-      {isLoading &&
-        Array(SKELETON_COUNT)
-          .fill(0)
-          .map(() => <CodeblockSkeleton />)}
+      {isLoading && <Skeleton />}
       {!isLoading &&
         (!error ? (
           <MoreButton
