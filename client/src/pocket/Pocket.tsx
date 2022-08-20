@@ -1,7 +1,7 @@
 import { CodeList, MoreButton, Searchbar, SearchHelpText } from './components';
 import CodeblockSkeleton from './components/CodeBlockSkeleton';
 import ErrorMessage from './components/ErrorMessage';
-import FloatingButton from './components/FloatingButton';
+import FloatingActionButton from './components/FloatingActionButton';
 import useCodes from './hooks/useCodes';
 import * as style from './style.css';
 
@@ -20,7 +20,7 @@ const PocketPage: React.FC = () => {
 
   return (
     <>
-      <FloatingButton />
+      <FloatingActionButton />
       <div className={style.wrapper}>
         <h1 className={style.title}>Codepocket</h1>
         <Searchbar searchText={searchText} changeSearchText={changeSearchText} />

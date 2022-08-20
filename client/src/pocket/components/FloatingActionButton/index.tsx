@@ -6,7 +6,7 @@ import * as style from './style.css';
 
 interface FloatingButtonProps {}
 
-const FloatingButton: React.FC<FloatingButtonProps> = () => {
+const FloatingActionButton: React.FC<FloatingButtonProps> = () => {
   const [selected, setSelected] = useState(false);
   const { scrollDir } = useScrollDirection();
 
@@ -25,4 +25,4 @@ const FloatingButton: React.FC<FloatingButtonProps> = () => {
   );
 };
 
-export default FloatingButton;
+export default FloatingActionButton;
