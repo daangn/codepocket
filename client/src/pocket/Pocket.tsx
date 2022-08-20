@@ -26,6 +26,7 @@ const PocketPage: React.FC = () => {
         <Searchbar searchText={searchText} changeSearchText={changeSearchText} />
         {searchText ? <SearchHelpText searchText={searchText} /> : null}
         <CodeList codes={codes} />
+        {isLoading && <Skeleton />}
         {!isLoading &&
           (!error ? (
             <MoreButton
