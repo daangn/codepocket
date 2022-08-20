@@ -5,6 +5,8 @@ import { keyframes } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
 import { rem } from 'polished';
 
+const ANIMATION_DURATION_SECOND = 0.3;
+
 const scaleUp = keyframes({
   '0%': { transform: 'scale(0)' },
   '100%': { transform: 'scale(1)' },
@@ -25,7 +27,7 @@ export const floatingButton = recipe({
       fontSize: 'inherit',
       color: vars.$static.color.staticWhite,
       backgroundColor: vars.$scale.color.blue600,
-      transition: 'all 0.3s',
+      transition: `all ${ANIMATION_DURATION_SECOND}s`,
     },
   ],
   variants: {
@@ -58,7 +60,7 @@ export const wrapper = recipe({
       bottom: rem(50),
       fontSize: rem(50),
       borderRadius: '50%',
-      transition: 'all 0.3s linear',
+      transition: `all ${ANIMATION_DURATION_SECOND}s linear`,
       boxShadow: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)',
     },
     m.medium({
@@ -71,8 +73,8 @@ export const wrapper = recipe({
   ],
   variants: {
     useOnMode: {
-      true: { animation: `0.3s ${scaleUp}` },
-      false: { animation: `0.3s ${scaleDown}` },
+      true: { animation: `${ANIMATION_DURATION_SECOND}s ${scaleUp}` },
+      false: { animation: `${ANIMATION_DURATION_SECOND}s ${scaleDown}` },
     },
   },
 });

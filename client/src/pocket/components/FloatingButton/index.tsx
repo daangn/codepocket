@@ -2,7 +2,7 @@ import Transition from '@shared/utils/Transition';
 import { useState } from 'react';
 
 import useScrollDirection from '../../hooks/useScrollDirection';
-import * as style from './styled.css';
+import * as style from './style.css';
 
 interface FloatingButtonProps {}
 
