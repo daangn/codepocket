@@ -17,12 +17,12 @@ export interface UpdateStoryType<Response> {
 
 export default async <T, Response>(request: T, modules: UpdateStoryType<Response>) => {
   if (!updateStoryRequestValidate(request)) throw modules.validateError;
-  const { storyId, code } = request.body;
+  const { storyId, codes } = request.body;
 
   const existStory = await modules.isStoryExist({ storyId });
   if (!existStory) throw modules.existStoryErrorFunc();
 
-  await modules.updateStory({ code, storyId });
+  await modules.updateStory({ codes, storyId });
 
   return modules.successResponseFunc({ message: '' });
 };

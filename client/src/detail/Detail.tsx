@@ -1,16 +1,21 @@
+import * as Sandpack from '@codesandbox/sandpack-react';
+import * as theme from '@codesandbox/sandpack-themes';
 import { colors } from '@karrotmarket/design-token';
 import { Icon, Modal } from '@shared/components';
 import useModal from '@shared/hooks/useModal';
 import { Link, useParams } from 'react-router-dom';
 
 import { DetailPathParam, pocketPath } from '../routes';
-import Sandpack from './components/Sandpack';
+import SandpackComponent from './components/Sandpack';
 import StoryNameList from './components/StoryNameList';
 import useCode from './hooks/useCode';
 import useCreateStory from './hooks/useCreateStory';
 import useStory from './hooks/useStory';
 import useStoryNames from './hooks/useStoryNames';
 import * as style from './style.css';
+import { createObjWithCertainValue } from './utils/filterObj';
+import { getDependenciesFromText } from './utils/parse';
+import { genrateBaseCode } from './utils/textGenerator';
 
 // TODO: Suspense 적용하기
 const DetailPage: React.FC = () => {
@@ -19,7 +24,7 @@ const DetailPage: React.FC = () => {
   const { data: storyNamesRes, error: getStoryNamesError } = useStoryNames({
     codeId: codeId || '',
   });
-  const { selectStory, error: getStoryError, selectedStory, selectedStoryId } = useStory();
+  const { selectStory, error: getStoryError, selectedStoryCodes, selectedStoryId } = useStory();
   const { createStory, error: createStoryError } = useCreateStory({
     codeAuthor: codeDataRes?.codeAuthor,
     codeName: codeDataRes?.codeName,
@@ -29,6 +34,18 @@ const DetailPage: React.FC = () => {
   const { isModalOpened, closeModal } = useModal({
     isOpened: !!getCodeError || !!getStoryNamesError || !!createStoryError || !!getStoryError,
   });
+
+  const ROOT_FILE = '/App.tsx';
+  const VERSION = 'latest';
+  const dependencies = createObjWithCertainValue(
+    getDependenciesFromText(codeDataRes?.code || ''),
+    VERSION,
+  );
+  const files = {
+    [ROOT_FILE]: genrateBaseCode(codeDataRes?.codeName || ''),
+    [`/${codeDataRes?.codeName}`]: codeDataRes?.code || '',
+    ...selectedStoryCodes?.codes,
+  };
 
   return (
     <>
@@ -52,21 +69,29 @@ const DetailPage: React.FC = () => {
               {codeDataRes?.codeName}
             </h1>
           </header>
-          <article className={style.article}>
-            <Sandpack
-              code={codeDataRes?.code || ''}
+          <Sandpack.SandpackProvider
+            theme={theme.aquaBlue}
+            template="react-ts"
+            customSetup={{ dependencies }}
+            files={files}
+          >
+            <article className={style.article}>
+              <SandpackComponent
+                code={codeDataRes?.code || ''}
+                codeName={codeDataRes?.codeName || ''}
+                codeAuthor={codeDataRes?.codeAuthor || ''}
+                selectedStoryCodes={selectedStoryCodes}
+                pushCode={createStory}
+              />
+            </article>
+            <StoryNameList
+              codeId={codeId || ''}
               codeName={codeDataRes?.codeName || ''}
-              codeAuthor={codeDataRes?.codeAuthor || ''}
-              selectedStory={selectedStory}
-              pushCode={createStory}
+              pocketCodes={storyNamesRes?.storyNames || []}
+              selectedStoryId={selectedStoryId}
+              selectStory={selectStory}
             />
-          </article>
-          <StoryNameList
-            codeId={codeId || ''}
-            pocketCodes={storyNamesRes?.storyNames || []}
-            selectedStoryId={selectedStoryId}
-            selectStory={selectStory}
-          />
+          </Sandpack.SandpackProvider>
         </div>
       </div>
     </>

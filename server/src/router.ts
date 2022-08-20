@@ -87,7 +87,7 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
           successResponseFunc: () =>
             new CustomResponse<Schema.UpdateStoryResponse>({ customStatus: 2009 }),
           existStoryErrorFunc: () => new CustomResponse({ customStatus: 4002 }),
-          isStoryExist: StoryModule.existStory(server),
+          isStoryExist: StoryModule.existStoryWithStoryId(server),
           updateStory: StoryModule.updateStory(server),
         }),
       reply,

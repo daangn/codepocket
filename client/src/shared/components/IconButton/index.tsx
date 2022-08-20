@@ -1,10 +1,11 @@
 import { Icon } from '@shared/components';
+import React from 'react';
 
 import * as style from './style.css';
 
 interface IconButtonInterface {
   icon: ReturnType<typeof Icon>;
-  onClick?: () => void;
+  onClick?: (event: React.MouseEvent) => void;
 }
 
 /**
