@@ -1,20 +1,27 @@
+import Transition from '@shared/utils/Transition';
 import { useState } from 'react';
 
+import useScrollDirection from '../../hooks/useScrollDirection';
 import * as style from './styled.css';
 
 interface FloatingButtonProps {}
 
 const FloatingButton: React.FC<FloatingButtonProps> = () => {
   const [selected, setSelected] = useState(false);
+  const { scrollDir } = useScrollDirection();
 
   const toggleButton = () => setSelected((prev) => !prev);
 
   return (
-    <div className={style.wrapper}>
-      <button className={style.floatingButton({ selected })} onClick={toggleButton}>
-        +
-      </button>
-    </div>
+    <Transition isOn={scrollDir === 'up'} timeout={300}>
+      {() => (
+        <div className={style.wrapper({ useOnMode: scrollDir === 'up' })}>
+          <button className={style.floatingButton({ selected })} onClick={toggleButton}>
+            +
+          </button>
+        </div>
+      )}
+    </Transition>
   );
 };
 
