@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import throttle from 'lodash/throttle';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 type ScrollDirection = 'up' | 'down';
 interface UseScrollDirection {
@@ -7,34 +8,24 @@ interface UseScrollDirection {
 
 const useScrollDirection = (props: UseScrollDirection = { threshold: 10 }) => {
   const [scrollDir, setScrollDir] = useState<ScrollDirection>('up');
+  const prevScrollY = useRef(0);
+
+  const updateScrollDir = useCallback(() => {
+    const currentScrollY = window.pageYOffset;
+    if (Math.abs(currentScrollY - prevScrollY.current) < props.threshold) return;
+
+    setScrollDir(currentScrollY > prevScrollY.current ? 'down' : 'up');
+    prevScrollY.current = currentScrollY;
+  }, [props.threshold]);
+
+  const onScroll = throttle(() => window.requestAnimationFrame(updateScrollDir), 100);
 
   useEffect(() => {
-    let lastScrollY = window.pageYOffset;
-    let ticking = false;
-
-    const updateScrollDir = () => {
-      const scrollY = window.pageYOffset;
-
-      if (Math.abs(scrollY - lastScrollY) < props.threshold) {
-        ticking = false;
-        return;
-      }
-      setScrollDir(scrollY > lastScrollY ? 'down' : 'up');
-      lastScrollY = scrollY > 0 ? scrollY : 0;
-      ticking = false;
-    };
-
-    const onScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(updateScrollDir);
-        ticking = true;
-      }
-    };
+    prevScrollY.current = window.pageYOffset;
 
     window.addEventListener('scroll', onScroll);
-
     return () => window.removeEventListener('scroll', onScroll);
-  }, [scrollDir, props.threshold]);
+  }, [onScroll]);
 
   return { scrollDir };
 };
