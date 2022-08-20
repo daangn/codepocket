@@ -1,9 +1,6 @@
 import { CodeList, MoreButton, Searchbar, SearchHelpText } from './components';
 import CodeblockSkeleton from './components/CodeBlockSkeleton';
-import DeleteModal from './components/DeleteModal';
-import EditModal from './components/EditModal';
 import ErrorMessage from './components/ErrorMessage';
-import { ModalProvider } from './contexts/ModalContext';
 import useCodes from './hooks/useCodes';
 import * as style from './style.css';
 
@@ -21,29 +18,25 @@ const PocketPage: React.FC = () => {
     useCodes();
 
   return (
-    <ModalProvider>
-      <DeleteModal />
-      <EditModal />
-      <div className={style.wrapper}>
-        <h1 className={style.title}>Codepocket</h1>
-        <Searchbar searchText={searchText} changeSearchText={changeSearchText} />
-        {searchText ? <SearchHelpText searchText={searchText} /> : null}
-        <CodeList codes={codes} />
-        {isLoading && <Skeleton />}
-        {!isLoading &&
-          (!error ? (
-            <MoreButton
-              isLoading={isLoading}
-              isSearch={!!searchText}
-              hasCode={!!codes.length}
-              isLast={isLast}
-              onClick={getNextCodes}
-            />
-          ) : (
-            <ErrorMessage message={error.response.data.message} />
-          ))}
-      </div>
-    </ModalProvider>
+    <div className={style.wrapper}>
+      <h1 className={style.title}>Codepocket</h1>
+      <Searchbar searchText={searchText} changeSearchText={changeSearchText} />
+      {searchText ? <SearchHelpText searchText={searchText} /> : null}
+      <CodeList codes={codes} />
+      {isLoading && <Skeleton />}
+      {!isLoading &&
+        (!error ? (
+          <MoreButton
+            isLoading={isLoading}
+            isSearch={!!searchText}
+            hasCode={!!codes.length}
+            isLast={isLast}
+            onClick={getNextCodes}
+          />
+        ) : (
+          <ErrorMessage message={error.response.data.message} />
+        ))}
+    </div>
   );
 };
 

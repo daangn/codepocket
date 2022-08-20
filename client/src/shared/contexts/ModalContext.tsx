@@ -1,17 +1,20 @@
+import { GlobalModal } from '@shared/components';
 import React, { createContext, Dispatch, useContext, useReducer } from 'react';
 
+export interface ModalInterface {
+  closeModal?: () => void;
+  targetId?: string;
+}
+type Component = (props: ModalInterface) => JSX.Element;
 type State = {
-  isDeleteModalOpen: boolean;
-  isEditModalOpen: boolean;
-  deleteTargetId: string;
-  editTargetId: string;
+  ModalComponent: Component | null;
+  isModalOpen: boolean;
+  targetId: string;
 };
 
 type Action =
-  | { type: 'TOGGLE_DELETE_MODAL' }
-  | { type: 'TOGGLE_EDIT_MODAL' }
-  | { type: 'SET_DELETE_TARGET_ID'; targetId: string }
-  | { type: 'SET_EDIT_TARGET_ID'; targetId: string };
+  | { type: 'OPEN_MODAL'; Component: Component; targetId?: string }
+  | { type: 'CLOSE_MODAL' };
 
 type ModalDispatch = Dispatch<Action>;
 
@@ -20,25 +23,19 @@ const ModalDispatchContext = createContext<ModalDispatch | null>(null);
 
 function reducer(state: State, action: Action): State {
   switch (action.type) {
-    case 'TOGGLE_DELETE_MODAL':
+    case 'OPEN_MODAL':
       return {
         ...state,
-        isDeleteModalOpen: !state.isDeleteModalOpen,
+        ModalComponent: action.Component,
+        isModalOpen: true,
+        targetId: action.targetId || '',
       };
-    case 'TOGGLE_EDIT_MODAL':
+    case 'CLOSE_MODAL':
       return {
         ...state,
-        isEditModalOpen: !state.isEditModalOpen,
-      };
-    case 'SET_DELETE_TARGET_ID':
-      return {
-        ...state,
-        deleteTargetId: action.targetId,
-      };
-    case 'SET_EDIT_TARGET_ID':
-      return {
-        ...state,
-        editTargetId: action.targetId,
+        ModalComponent: null,
+        isModalOpen: false,
+        targetId: '',
       };
     default:
       throw new Error('Unhandled action');
@@ -47,15 +44,17 @@ function reducer(state: State, action: Action): State {
 
 export function ModalProvider({ children }: { children: React.ReactNode }) {
   const [state, dispatch] = useReducer(reducer, {
-    isDeleteModalOpen: false,
-    isEditModalOpen: false,
-    deleteTargetId: '',
-    editTargetId: '',
+    ModalComponent: null,
+    isModalOpen: false,
+    targetId: '',
   });
 
   return (
     <ModalStateContext.Provider value={state}>
-      <ModalDispatchContext.Provider value={dispatch}>{children}</ModalDispatchContext.Provider>
+      <ModalDispatchContext.Provider value={dispatch}>
+        <GlobalModal />
+        {children}
+      </ModalDispatchContext.Provider>
     </ModalStateContext.Provider>
   );
 }

@@ -9,7 +9,7 @@ const ANIMATION_DURATION = 150;
 
 interface ModalInterface {
   children?: React.ReactNode;
-  isOpen: boolean;
+  isOpen?: boolean;
   disableEscape?: boolean;
   closeModal: () => void;
 }
@@ -21,7 +21,7 @@ interface ModalConfirmButtonProps {
 }
 
 interface ModalCancelButtonProps {
-  onCancel: () => void;
+  onCancel: (() => void) | undefined;
   text?: string;
 }
 
@@ -47,7 +47,7 @@ const ModalConfirmButton = ({
   );
 };
 
-const ModalCancelButton = ({ onCancel, text = '취소하기' }: ModalCancelButtonProps) => {
+const ModalCancelButton = ({ onCancel = () => {}, text = '취소하기' }: ModalCancelButtonProps) => {
   return (
     <button className={style.modalCancelButton} onClick={onCancel}>
       {text}

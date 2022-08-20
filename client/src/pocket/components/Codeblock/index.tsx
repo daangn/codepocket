@@ -1,5 +1,6 @@
 import { colors } from '@karrotmarket/design-token';
 import { Icon, IconButton } from '@shared/components';
+import { modals } from '@shared/components/GlobalModal';
 import useClipboard from '@shared/hooks/useClipboard';
 import { localStorage } from '@shared/utils/localStorage';
 import { useCallback, useMemo, useRef, useState } from 'react';
@@ -7,7 +8,7 @@ import SyntaxHighlighter, { SyntaxHighlighterProps } from 'react-syntax-highligh
 import { githubGist } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
 import { generateDetailPath } from '../../../routes';
-import { useModalDispatch } from '../../contexts/ModalContext';
+import { useModalDispatch } from '../../../shared/contexts/ModalContext';
 import * as style from './style.css';
 
 export interface CodeblockProps {
@@ -27,22 +28,22 @@ const Codeblock: React.FC<CodeblockProps> = ({
   code,
   isAnonymous,
 }: CodeblockProps) => {
-  const modalDispatch = useModalDispatch();
   const [toggled, setToggled] = useState<boolean>(false);
   const { isCopied, copyToClipboard } = useClipboard({ text: code });
   const syntaxHighlighterRef = useRef<React.Component<SyntaxHighlighterProps>>(null);
   const isCodeOwner = useMemo(() => userId === localStorage.getUserId(), [userId]);
+  const modalDispatch = useModalDispatch();
 
   const toggle = useCallback(() => setToggled((prev) => !prev), []);
-
-  const handleDeleteButtonClick = useCallback(() => {
-    modalDispatch({ type: 'TOGGLE_DELETE_MODAL' });
-    modalDispatch({ type: 'SET_DELETE_TARGET_ID', targetId: codeId });
-  }, [codeId, modalDispatch]);
-  const handleEditButtonClick = useCallback(() => {
-    modalDispatch({ type: 'TOGGLE_EDIT_MODAL' });
-    modalDispatch({ type: 'SET_EDIT_TARGET_ID', targetId: codeId });
-  }, [codeId, modalDispatch]);
+  const openModal = useCallback(
+    (modal: 'delete' | 'edit') =>
+      modalDispatch({
+        type: 'OPEN_MODAL',
+        targetId: codeId,
+        Component: modal === 'delete' ? modals.deleteModal : modals.editModal,
+      }),
+    [codeId, modalDispatch],
+  );
 
   const haveManyCode = useMemo(() => {
     const MANY_CODE_STANDARD_LINE = 500;
@@ -83,10 +84,10 @@ const Codeblock: React.FC<CodeblockProps> = ({
       <div className={style.codeItemBottom}>
         <div className={style.codeItemBottomButtons}>
           {isCodeOwner && (
-            <IconButton onClick={handleDeleteButtonClick} icon={<Icon icon="delete" />} />
+            <IconButton onClick={() => openModal('delete')} icon={<Icon icon="delete" />} />
           )}
           {isCodeOwner && (
-            <IconButton onClick={handleEditButtonClick} icon={<Icon icon="edit" />} />
+            <IconButton onClick={() => openModal('edit')} icon={<Icon icon="edit" />} />
           )}
         </div>
         <div className={style.codeItemBottomButtons}>
