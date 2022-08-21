@@ -1,5 +1,6 @@
-import { GlobalModal } from '@shared/components';
 import React, { createContext, Dispatch, useContext, useReducer } from 'react';
+
+import GlobalModal from './GlobalModal';
 
 export interface ModalInterface {
   closeModal?: () => void;
