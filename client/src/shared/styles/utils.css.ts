@@ -9,6 +9,10 @@ export const positionRelative = style({
   position: 'relative',
 });
 
+export const positionFixed = style({
+  position: 'fixed',
+});
+
 export const keepAll = style({
   wordBreak: 'keep-all',
 });

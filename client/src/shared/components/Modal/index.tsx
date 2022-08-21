@@ -84,7 +84,7 @@ const ModalWrapper = ({
     <ModalPortal>
       <Transition isOn={inputIsOpen} timeout={ANIMATION_DURATION}>
         {(status) => (
-          <div className={style.modalContainer({ isOpen: status === 'on' })}>
+          <div className={style.modalContainer({ isOpen: status !== 'off' })}>
             <div
               className={style.modalOverlay({ isAnimation: inputIsOpen })}
               onClick={inputCloseModal}
