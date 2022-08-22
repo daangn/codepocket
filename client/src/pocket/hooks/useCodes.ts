@@ -1,53 +1,41 @@
-import { GetCodesResponse, getCodesResponseValidate } from '@codepocket/schema';
-import useCustomQuery from '@shared/hooks/useCustomQuery';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { GetCodesResponse } from '@codepocket/schema';
+import useCustomInfiniteQuery from '@shared/hooks/useCustomInfiniteQuery';
+import { useCallback, useState } from 'react';
 
 import { getCodesUrl } from '../api';
 
 const useCodes = () => {
-  const [codes, setCodes] = useState<GetCodesResponse['codes']>([]);
-  const [offset, setOffset] = useState<number>(0);
   const [searchText, setSearchText] = useState<string>('');
 
-  const { data, error, refetch, isLoading } = useCustomQuery<GetCodesResponse>({
+  const { data, error, isLoading, fetchNextPage } = useCustomInfiniteQuery<{
+    data: GetCodesResponse;
+  }>({
     url: getCodesUrl,
-    validator: getCodesResponseValidate,
     params: {
       search: `${searchText}`,
       limit: `5`,
-      offset: `${offset}`,
-    },
-    options: {
-      staleTime: 0,
-      cacheTime: 0,
     },
   });
 
-  const isLast = useMemo(() => data?.isLast, [data?.isLast]);
+  const codes = data?.pages.reduce<any>((acc, page) => [...acc, ...page.data.codes], []) || [];
+  const isLast = data?.pages.at(-1)?.data.isLast;
 
   const getNextCodes = useCallback(() => {
-    refetch();
-    setOffset((prev) => prev + 1);
-  }, [refetch]);
+    fetchNextPage();
+  }, [fetchNextPage]);
 
   const changeSearchText = useCallback((text: string) => {
     setSearchText(text);
   }, []);
 
-  useEffect(() => {
-    const newCodes = data?.codes || [];
-    setCodes((prevCodes) => [...prevCodes, ...newCodes]);
-  }, [data?.codes]);
-
-  useEffect(() => {
-    if (codes.length) {
-      setCodes([]);
-      setOffset(0);
-    }
-    const newCodes = data?.codes || [];
-    setCodes((prevCodes) => [...prevCodes, ...newCodes]);
-  }, [searchText]);
-
-  return { codes, error, searchText, isLast, isLoading, changeSearchText, getNextCodes };
+  return {
+    codes,
+    error,
+    isLast,
+    searchText,
+    isLoading,
+    changeSearchText,
+    getNextCodes,
+  };
 };
 export default useCodes;
