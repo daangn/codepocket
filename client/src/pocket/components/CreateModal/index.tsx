@@ -47,6 +47,7 @@ const ModalContent = ({ closeModal }: ModalContentProps) => {
             autoFocus
             id="codename"
             value={codeName}
+            placeholder="코드이름을 지어주세요(ex. useCode)"
             className={style.createModalTitleInput}
             onChange={onChangeCodeName}
           />

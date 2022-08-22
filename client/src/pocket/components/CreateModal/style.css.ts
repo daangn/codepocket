@@ -5,7 +5,7 @@ import * as u from '@shared/styles/utils.css';
 import { style } from '@vanilla-extract/css';
 import { rem } from 'polished';
 
-export const label = style([{ display: 'block', fontSize: rem(18) }]);
+export const label = style([t.mt12, { display: 'block', fontSize: rem(18) }]);
 
 export const createModalContainer = style([
   { width: rem(700), height: '70vh' },
@@ -24,17 +24,13 @@ export const createModalTitleInput = style([
   },
 ]);
 
-export const createModalContent = style([
-  u.flexColumn,
-  u.fullHeight,
-  { rowGap: rem(10), justifyContent: 'space-around' },
-]);
+export const createModalContent = style([u.flexColumn, u.fullHeight]);
 
-export const createModalButtonContainer = style([u.flex, { columnGap: rem(10) }]);
+export const createModalButtonContainer = style([u.flex, t.mt12, { columnGap: rem(10) }]);
 
 export const createModalHeaderWrapper = style([u.flex, { gap: rem(10) }]);
 
-export const createModalHeaderText = style([t.typography.heading4]);
+export const createModalHeaderText = style([t.typography.heading5]);
 
 export const toggleSwitch = style([
   { position: 'relative', display: 'inline-block', width: rem(60), height: rem(34) },
