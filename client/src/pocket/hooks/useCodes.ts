@@ -1,24 +1,30 @@
 import { GetCodesResponse } from '@codepocket/schema';
 import useCustomInfiniteQuery from '@shared/hooks/useCustomInfiniteQuery';
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import { getCodesUrl } from '../api';
 
+const LIMIT = 5;
 const useCodes = () => {
   const [searchText, setSearchText] = useState<string>('');
 
-  const { data, error, isLoading, fetchNextPage } = useCustomInfiniteQuery<{
-    data: GetCodesResponse;
-  }>({
+  const { data, error, isLoading, fetchNextPage } = useCustomInfiniteQuery<GetCodesResponse>({
     url: getCodesUrl,
     params: {
-      search: `${searchText}`,
-      limit: `5`,
+      search: searchText,
+      limit: LIMIT,
     },
   });
 
-  const codes = data?.pages.reduce<any>((acc, page) => [...acc, ...page.data.codes], []) || [];
-  const isLast = data?.pages.at(-1)?.data.isLast;
+  const isLast = useMemo(() => !!data?.pages.at(-1)?.data.isLast, [data]);
+  const codes = useMemo(
+    () =>
+      data?.pages.reduce<GetCodesResponse['codes']>(
+        (acc, page) => [...acc, ...page.data.codes],
+        [],
+      ) || [],
+    [data],
+  );
 
   const getNextCodes = useCallback(() => {
     fetchNextPage();
