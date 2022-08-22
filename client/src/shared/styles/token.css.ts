@@ -25,6 +25,12 @@ const heading4 = style({
   lineHeight: '120%',
 });
 
+const heading5 = style({
+  fontSize: rem(26),
+  fontWeight: 600,
+  lineHeight: '120%',
+});
+
 const subtitle1 = style({
   fontSize: rem(32),
   fontWeight: 800,
@@ -84,6 +90,7 @@ export const typography = {
   heading2,
   heading3,
   heading4,
+  heading5,
   subtitle1,
   subtitle2,
   subtitle3,
