@@ -13,16 +13,19 @@ const FloatingActionButton: React.FC<FloatingButtonProps> = () => {
   const modalDispatch = useModalDispatch();
   const { scrollDir } = useScrollDirection();
 
-  const toggleButton = () => {
-    if (!selected) modalDispatch({ type: 'OPEN_MODAL', Component: CreateModal });
-    setSelected((prev) => !prev);
+  const toggleButton = () => setSelected((prev) => !prev);
+
+  const onClickButton = () => {
+    toggleButton();
+    if (!selected)
+      modalDispatch({ type: 'OPEN_MODAL', Component: CreateModal, closeModal: toggleButton });
   };
 
   return (
     <Transition isOn={scrollDir === 'up'} timeout={300}>
       {() => (
         <div className={style.wrapper({ useOnMode: scrollDir === 'up' })}>
-          <button className={style.floatingButton({ selected })} onClick={toggleButton}>
+          <button className={style.floatingButton({ selected })} onClick={onClickButton}>
             +
           </button>
         </div>
