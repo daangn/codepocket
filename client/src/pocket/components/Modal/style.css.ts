@@ -7,12 +7,12 @@ import { rem } from 'polished';
 
 export const label = style([t.mt12, { display: 'block', fontSize: rem(18) }]);
 
-export const editModalContainer = style([
+export const modalContainer = style([
   { width: rem(700), height: '70vh' },
   m.medium({ width: '100vw', height: '100vh', padding: rem(10) }),
 ]);
 
-export const editModalTitleInput = style([
+export const modalTitleInput = style([
   u.border,
   u.fullWidth,
   u.borderRadius2,
@@ -24,13 +24,13 @@ export const editModalTitleInput = style([
   },
 ]);
 
-export const editModalContent = style([u.flexColumn, u.fullHeight]);
+export const modalContent = style([u.flexColumn, u.fullHeight]);
 
-export const editModalButtonContainer = style([u.flex, t.mt12, { columnGap: rem(10) }]);
+export const modalButtonContainer = style([u.flex, t.mt12, { columnGap: rem(10) }]);
 
-export const editModalHeaderWrapper = style([u.flex, { gap: rem(10) }]);
+export const modalHeaderWrapper = style([u.flex, { gap: rem(10) }]);
 
-export const editModalHeaderText = style([t.typography.heading5]);
+export const modalHeaderText = style([t.typography.heading5]);
 
 export const toggleSwitch = style([
   { position: 'relative', display: 'inline-block', width: rem(60), height: rem(34) },
