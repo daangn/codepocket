@@ -2,6 +2,8 @@ import { PushCodeRequest, PushCodeResponse, pushCodeResponseValidate } from '@co
 import useCustomMutation from '@shared/hooks/useCustomMutation';
 import { useQueryClient } from '@tanstack/react-query';
 
+import { getCodesUrl } from '../api';
+
 type PushCodeBodyType = PushCodeRequest['body'];
 
 const usePushCode = () => {
@@ -16,7 +18,7 @@ const usePushCode = () => {
     validator: pushCodeResponseValidate,
     options: {
       onSuccess: async () => {
-        await queryClient.invalidateQueries([]);
+        await queryClient.invalidateQueries([getCodesUrl]);
       },
     },
   });
