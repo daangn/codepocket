@@ -12,7 +12,7 @@ const CreateModal = ({ closeModal }: ModalInterface) => {
         files={{ '/App.tsx': '' }}
         style={{ height: '100%' }}
       >
-        <ModalContentTemplate closeModal={closeModal} />
+        <ModalContentTemplate mode="create" closeModal={closeModal} />
       </Sandpack.SandpackProvider>
     </div>
   );

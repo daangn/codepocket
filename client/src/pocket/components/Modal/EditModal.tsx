@@ -16,6 +16,7 @@ const CreateModal = ({ closeModal, targetId }: ModalInterface) => {
         style={{ height: '100%' }}
       >
         <ModalContentTemplate
+          mode="edit"
           closeModal={closeModal}
           codeName={codeInfo?.codeName}
           useAnonymousMode={codeInfo?.isAnonymous}

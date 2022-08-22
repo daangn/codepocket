@@ -3,12 +3,13 @@ import { useActiveCode } from '@codesandbox/sandpack-react';
 import { Modal } from '@shared/components';
 import { localStorage } from '@shared/utils/localStorage';
 import { rem } from 'polished';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import usePushCode from '../../hooks/usePushCode';
 import * as style from './style.css';
 
 interface ModalContentTemplateProps {
+  mode: 'create' | 'edit';
   codeName?: string;
   useAnonymousMode?: boolean;
   closeModal?: () => void;
@@ -19,6 +20,8 @@ const ModalContentTemplate = (props: ModalContentTemplateProps) => {
   const [codeName, setCodeName] = useState('');
   const [useAnonymousMode, setUseAnonymousMode] = useState(false);
   const { pushCode } = usePushCode();
+
+  const text = useMemo(() => (props.mode === 'create' ? '만들기' : '수정하기'), [props.mode]);
 
   useEffect(() => {
     setCodeName(props.codeName || '');
@@ -46,7 +49,7 @@ const ModalContentTemplate = (props: ModalContentTemplateProps) => {
 
   return (
     <div className={style.modalContent}>
-      <h1 className={style.modalHeaderText}>새로운 코드 등록하기</h1>
+      <h1 className={style.modalHeaderText}>코드 {text}</h1>
       <div className={style.modalHeaderWrapper}>
         <div style={{ flexGrow: 8 }}>
           <label className={style.label} htmlFor="codename">
@@ -84,7 +87,7 @@ const ModalContentTemplate = (props: ModalContentTemplateProps) => {
         <Sandpack.SandpackCodeEditor id="code" style={{ height: '100%', fontSize: rem(18) }} />
       </Sandpack.SandpackLayout>
       <div className={style.modalButtonContainer}>
-        <Modal.ConfirmButton text="수정하기" onConfirm={onConfirm} />
+        <Modal.ConfirmButton text={text} onConfirm={onConfirm} />
         <Modal.CancelButton text="닫기" onCancel={props.closeModal} />
       </div>
     </div>
