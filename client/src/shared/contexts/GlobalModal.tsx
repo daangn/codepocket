@@ -15,7 +15,10 @@ const GlobalModal = () => {
   const state = useModalState();
 
   const { ModalComponent, targetId } = state;
-  const closeModal = useCallback(() => dispatch({ type: 'CLOSE_MODAL' }), [dispatch]);
+  const closeModal = useCallback(() => {
+    if (state.closeModal) state.closeModal();
+    dispatch({ type: 'CLOSE_MODAL' });
+  }, [dispatch, state]);
 
   return (
     <Modal isOpen={state.isModalOpen} closeModal={closeModal} disableEscape>
