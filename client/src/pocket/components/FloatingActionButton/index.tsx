@@ -1,9 +1,9 @@
+import { modals } from '@shared/contexts/GlobalModal';
 import { useModalDispatch } from '@shared/contexts/ModalContext';
 import Transition from '@shared/utils/Transition';
 import { useState } from 'react';
 
 import useScrollDirection from '../../hooks/useScrollDirection';
-import CreateModal from '../CreateModal';
 import * as style from './style.css';
 
 interface FloatingButtonProps {}
@@ -18,7 +18,11 @@ const FloatingActionButton: React.FC<FloatingButtonProps> = () => {
   const onClickButton = () => {
     toggleButton();
     if (!selected)
-      modalDispatch({ type: 'OPEN_MODAL', Component: CreateModal, closeModal: toggleButton });
+      modalDispatch({
+        type: 'OPEN_MODAL',
+        Component: modals.createModal,
+        closeModal: toggleButton,
+      });
   };
 
   return (

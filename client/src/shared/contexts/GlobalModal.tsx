@@ -2,10 +2,10 @@ import Modal from '@shared/components/Modal';
 import { useModalDispatch, useModalState } from '@shared/contexts/ModalContext';
 import { useCallback } from 'react';
 
-import DeleteModal from '../../pocket/components/DeleteModal';
-import EditModal from '../../pocket/components/EditModal';
+import { CreateModal, DeleteModal, EditModal } from '../../pocket/components';
 
 export const modals = {
+  createModal: CreateModal,
   deleteModal: DeleteModal,
   editModal: EditModal,
 };
