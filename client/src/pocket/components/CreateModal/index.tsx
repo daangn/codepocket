@@ -6,7 +6,7 @@ import { localStorage } from '@shared/utils/localStorage';
 import { rem } from 'polished';
 import React, { useState } from 'react';
 
-import useCreateCode from '../../hooks/useCreateCode';
+import usePushCode from '../../hooks/usePushCode';
 import * as style from './style.css';
 
 interface ModalContentProps {
@@ -17,11 +17,11 @@ const ModalContent = ({ closeModal }: ModalContentProps) => {
   const { code } = useActiveCode();
   const [codeName, setCodeName] = useState('');
   const [useAnonymousMode, setUseAnonymousMode] = useState(true);
-  const { createCode } = useCreateCode();
+  const { pushCode } = usePushCode();
 
   const onConfirm = () => {
     if (!closeModal) return;
-    createCode({
+    pushCode({
       code,
       codeName,
       isAnonymous: useAnonymousMode,

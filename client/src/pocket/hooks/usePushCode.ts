@@ -4,9 +4,9 @@ import { useQueryClient } from '@tanstack/react-query';
 
 type PushCodeBodyType = PushCodeRequest['body'];
 
-const useCreateCode = () => {
+const usePushCode = () => {
   const queryClient = useQueryClient();
-  const { mutate: createCodeMutate } = useCustomMutation<
+  const { mutate: pushCodeMutate } = useCustomMutation<
     PushCodeResponse,
     { message: string },
     PushCodeBodyType
@@ -21,7 +21,7 @@ const useCreateCode = () => {
     },
   });
 
-  return { createCode: createCodeMutate };
+  return { pushCode: pushCodeMutate };
 };
 
-export default useCreateCode;
+export default usePushCode;

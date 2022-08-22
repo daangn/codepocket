@@ -7,7 +7,7 @@ import { rem } from 'polished';
 import React, { useEffect, useState } from 'react';
 
 import useCode from '../../hooks/useCode';
-import useCreateCode from '../../hooks/useCreateCode';
+import usePushCode from '../../hooks/usePushCode';
 import * as style from './style.css';
 
 interface ModalContentProps {
@@ -20,7 +20,7 @@ const ModalContent = (props: ModalContentProps) => {
   const { code } = useActiveCode();
   const [codeName, setCodeName] = useState('');
   const [useAnonymousMode, setUseAnonymousMode] = useState(false);
-  const { createCode } = useCreateCode();
+  const { pushCode } = usePushCode();
 
   useEffect(() => {
     setCodeName(props.codeName || '');
@@ -32,7 +32,7 @@ const ModalContent = (props: ModalContentProps) => {
 
   const onConfirm = () => {
     if (!props.closeModal) return;
-    createCode({
+    pushCode({
       code,
       codeName,
       isAnonymous: useAnonymousMode,
