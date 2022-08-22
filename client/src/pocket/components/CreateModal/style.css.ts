@@ -1,4 +1,5 @@
 import { vars } from '@seed-design/design-token';
+import * as m from '@shared/styles/media.css';
 import * as t from '@shared/styles/token.css';
 import * as u from '@shared/styles/utils.css';
 import { style } from '@vanilla-extract/css';
@@ -6,7 +7,10 @@ import { rem } from 'polished';
 
 export const label = style([{ display: 'block', fontSize: rem(18) }]);
 
-export const createModalContainer = style([{ width: rem(700), height: '90vh' }]);
+export const createModalContainer = style([
+  { width: rem(700), height: '70vh' },
+  m.medium({ width: '100vw', height: '100vh', padding: rem(10) }),
+]);
 
 export const createModalTitleInput = style([
   u.border,
