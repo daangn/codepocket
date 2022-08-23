@@ -8,14 +8,18 @@ import React, { useEffect, useMemo, useState } from 'react';
 import usePushCode from '../../hooks/usePushCode';
 import * as style from './style.css';
 
-interface ModalContentTemplateProps {
+interface ModalContentProps {
   mode: 'create' | 'edit';
   codeName?: string;
   useAnonymousMode?: boolean;
   closeModal?: () => void;
 }
 
-const ModalContentTemplate = (props: ModalContentTemplateProps) => {
+interface ModalContentTemplateProps extends ModalContentProps {
+  code?: string;
+}
+
+const ModalContent = (props: ModalContentProps) => {
   const { code } = useActiveCode();
   const [codeName, setCodeName] = useState('');
   const [useAnonymousMode, setUseAnonymousMode] = useState(false);
@@ -93,5 +97,17 @@ const ModalContentTemplate = (props: ModalContentTemplateProps) => {
     </div>
   );
 };
+
+const ModalContentTemplate = ({ code, ...props }: ModalContentTemplateProps) => (
+  <div className={style.modalContainer}>
+    <Sandpack.SandpackProvider
+      template="react-ts"
+      files={{ '/App.tsx': code || '' }}
+      style={{ height: '100%' }}
+    >
+      <ModalContent {...props} />
+    </Sandpack.SandpackProvider>
+  </div>
+);
 
 export default ModalContentTemplate;
