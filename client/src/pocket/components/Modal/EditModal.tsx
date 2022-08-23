@@ -1,6 +1,6 @@
 import type { ModalInterface } from '@shared/contexts/ModalContext';
+import useCode from '@shared/hooks/useCode';
 
-import useCode from '../../hooks/useCode';
 import ModalContentTemplate from './Template';
 
 const CreateModal = ({ closeModal, targetId }: ModalInterface) => {

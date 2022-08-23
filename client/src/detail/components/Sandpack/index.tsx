@@ -5,7 +5,6 @@ import { Modal } from '@shared/components';
 import { rem } from 'polished';
 import { useState } from 'react';
 
-import useCode from '../../hooks/useCode';
 import {
   createObjWithCertainValue,
   filterObjValueWithKey,
