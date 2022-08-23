@@ -179,7 +179,7 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
         connector.deleteStory(req, {
           existStoryErrorFunc: () => new CustomResponse({ customStatus: 4002 }),
           successResponseFunc: () =>
-            new CustomResponse<Schema.CreateStoryResponse>({ customStatus: 2008 }),
+            new CustomResponse<Schema.DeleteStoryResponse>({ customStatus: 2008 }),
           isExistStory: StoryModule.existStory(server),
           deleteStory: StoryModule.deleteStory(server),
         }),

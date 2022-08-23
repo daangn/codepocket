@@ -25,6 +25,8 @@
   }
   ```
 - 특이사항
+  - CreateUser Schema
+  - 웹에서 사용
 
 **1.2 유저 인증 `POST` /user/auth**
 
@@ -48,6 +50,8 @@
   }
   ```
 - 특이사항
+  - VerifyUser Schema
+  - 웹에서 사용
 
 ### 2. Code
 
@@ -72,6 +76,8 @@
   }
   ```
 - 특이사항
+  - DeleteCode Schema
+  - cli에서 사용
 
 **2.2 코드 아아디로 삭제 `POST` /code/delete/id**
 
@@ -94,6 +100,8 @@
   }
   ```
 - 특이사항
+  - DeleteCodeById Schema
+  - 웹에서 사용
 
 **2.3 코드만 가져오기 `GET` /code**
 
@@ -117,6 +125,8 @@
   }
   ```
 - 특이사항
+  - PullCode Schema
+  - cli에서 사용
 
 **2.4 코드 저자들 가져오기 `GET` /code/authors**
 
@@ -142,6 +152,8 @@
   }
   ```
 - 특이사항
+  - GetCodeAuthors Schema
+  - cli에서 사용
 
 **2.5 코드 리스트 가져오기 `GET` /code/list**
 
@@ -169,6 +181,8 @@
   }
   ```
 - 특이사항
+  - GetCodeNames Schema
+  - cli에서 사용
 
 **2.6 코드 아이디로 코드 가져오기 `GET` /code/id**
 
@@ -194,6 +208,8 @@
   }
   ```
 - 특이사항
+  - GetCode Schema
+  - 웹에서 사용
 
 **2.7 코드들 가져오기(pagination) `GET` /codes**
 
@@ -228,6 +244,8 @@
   }
   ```
 - 특이사항
+  - GetCodes Schema
+  - 웹에서 사용
 
 **2.8 코드 삽입/수정 `POST` /code**
 
@@ -252,6 +270,8 @@
   }
   ```
 - 특이사항
+  - PushCode Schema
+  - cli에서 사용
 
 ### 3. Story
 
@@ -279,6 +299,8 @@
   }
   ```
 - 특이사항
+  - CreateStory Schema
+  - 웹에서 사용
 
 **3.2 스토리 삭제 `DELETE` /story**
 
@@ -302,6 +324,8 @@
   }
   ```
 - 특이사항
+  - DeleteStory Schema
+  - 웹에서 사용
 
 **3.3 스토리 수정 `PUT` /story**
 
@@ -324,6 +348,8 @@
   }
   ```
 - 특이사항
+  - UpdateStory Schema
+  - 웹에서 사용
 
 **3.4 스토리 코드 가져오기 `GET` /story/code**
 
@@ -346,6 +372,8 @@
   }
   ```
 - 특이사항
+  - GetStoryCode Schema
+  - 웹에서 사용
 
 **3.5 스토리 이름들 가져오기 `GET` /story/names**
 
@@ -371,3 +399,5 @@
   }
   ```
 - 특이사항
+  - GetStoryNames Schema
+  - 웹에서 사용
