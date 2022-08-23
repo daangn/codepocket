@@ -92,6 +92,16 @@ export interface PushCodeParams {
   slackChatTimeStamp?: any;
 }
 
+export interface CreateCodeParams {
+  code: string;
+  codeName: string;
+  codeAuthor: string;
+  userId: string;
+  isAnonymous: boolean;
+  slackChatChannel?: string;
+  slackChatTimeStamp?: any;
+}
+
 export interface SearchCodesParam {
   searchRegex?: RegExp;
   limit: number;

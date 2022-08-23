@@ -1,5 +1,6 @@
 import { SlackConfig } from 'slack';
 
+import createCode, { CreateCodeType } from './createCode';
 import createStory, { CreateStoryType } from './createStory';
 import createUser, { CreateUserType } from './createUser';
 import deleteCode, { DeleteCodeType } from './deleteCode';
@@ -30,6 +31,8 @@ export const createConnector = <Response>({
   slackConfig,
 }: ConnectorType<Response>) => {
   return {
+    createCode: <T>(request: T, modules: CreateCodeType<Response>) =>
+      createCode(request, { validateError, ...modules }),
     createStory: <T>(request: T, modules: CreateStoryType<Response>) =>
       createStory(request, { validateError, ...modules }),
     createUser: <T>(request: T, modules: CreateUserType<Response>) =>
