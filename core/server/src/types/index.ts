@@ -22,6 +22,10 @@ export interface CodeAuthor {
   isAnonymous: boolean;
 }
 
+export interface CodeAuthorWithId extends CodeId {
+  codeAuthor: string;
+}
+
 export interface CodeInfo {
   codeName: string;
   codeAuthor: string;

@@ -173,6 +173,21 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
     ),
   );
 
+  server.post('/code/delete/id', (req, reply) =>
+    responseHandler(
+      () =>
+        connector.deleteCode(req, {
+          existCodeErrorFunc: () => new CustomResponse({ customStatus: 4006 }),
+          successResponseFunc: () =>
+            new CustomResponse<Schema.DeleteCodeByIdRequest>({ customStatus: 2002 }),
+          getUserInfo: UserModule.getUserInfo(server),
+          isExistCode: CodeModule.isExistCodeById(server),
+          deleteCode: CodeModule.deleteCodeById(server),
+        }),
+      reply,
+    ),
+  );
+
   server.delete('/story', (req, reply) =>
     responseHandler(
       () =>
