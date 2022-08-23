@@ -190,11 +190,11 @@ export const deleteCodeById =
   (server: FastifyInstance) =>
   async ({ codeId }: Types.CodeId) => {
     const [deleteCodeError, deleteCodeResponse] = await to(
-      (async () => await server.store.Code.deleteOne({ codeId }))(),
+      (async () => await server.store.Code.findByIdAndDelete({ _id: codeId }))(),
     );
 
     if (deleteCodeError) throw new CustomResponse({ customStatus: 5000 });
-    if (!deleteCodeResponse.deletedCount) throw new CustomResponse({ customStatus: 4006 });
+    if (!deleteCodeResponse?.id) throw new CustomResponse({ customStatus: 4006 });
   };
 
 export const searchCodes =

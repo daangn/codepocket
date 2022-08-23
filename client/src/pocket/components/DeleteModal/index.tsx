@@ -1,12 +1,22 @@
 import { Modal } from '@shared/components';
-import type { ModalInterface } from '@shared/contexts/ModalContext';
+import { ModalInterface } from '@shared/contexts/ModalContext';
+import { localStorage } from '@shared/utils/localStorage';
+import { useCallback, useMemo } from 'react';
 
+import useDeleteCode from '../../hooks/useDeleteCode';
 import * as style from './style.css';
 
 const DeleteModal = ({ closeModal, targetId }: ModalInterface) => {
-  const deleteCode = () => {
-    console.log(targetId);
-  };
+  const { deleteCode: deleteCodeMutation } = useDeleteCode();
+
+  const pocketToken = useMemo(() => localStorage.getUserToken() || '', []);
+  const codeId = useMemo(() => targetId || '', [targetId]);
+
+  const deleteCode = useCallback(() => {
+    if (!closeModal) return;
+    deleteCodeMutation({ codeId, pocketToken });
+    closeModal();
+  }, [closeModal, codeId, deleteCodeMutation, pocketToken]);
 
   return (
     <div className={style.deleteModalContainer}>
