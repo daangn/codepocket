@@ -129,6 +129,35 @@ export const isAnonymousCodeExist =
     return !!code;
   };
 
+export const createCode =
+  (server: FastifyInstance) =>
+  async ({
+    code,
+    codeName,
+    codeAuthor,
+    userId,
+    isAnonymous,
+    slackChatChannel,
+    slackChatTimeStamp,
+  }: Types.CreateCodeParams) => {
+    const [createCodeError] = await to(
+      (async () =>
+        await server.store.Code.create({
+          code,
+          codeName,
+          codeAuthor,
+          userId,
+          isAnonymous,
+          uploadedChatChannel: slackChatChannel,
+          uploadedChatTimeStamp: slackChatTimeStamp,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        }))(),
+    );
+
+    if (createCodeError) throw new CustomResponse({ customStatus: 5000 });
+  };
+
 export const pushCode =
   (server: FastifyInstance) =>
   async ({

@@ -122,6 +122,21 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
     ),
   );
 
+  server.post('/code/create', (req, reply) =>
+    responseHandler(
+      () =>
+        connector.createCode(req, {
+          successResponseFunc: () =>
+            new CustomResponse<Schema.CreateCodeResponse>({ customStatus: 2005 }),
+          existCodeNameError: new CustomResponse({ customStatus: 4010 }),
+          getUserInfo: UserModule.getUserInfo(server),
+          isExistCodeName: CodeModule.isExistCode(server),
+          createCode: CodeModule.createCode(server),
+        }),
+      reply,
+    ),
+  );
+
   server.get('/code', (req, reply) =>
     responseHandler(
       () =>
