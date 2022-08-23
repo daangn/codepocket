@@ -6,8 +6,8 @@ import { getStoryCodeUrl } from '../api';
 import { SelectedStory } from '../components/Sandpack';
 
 const useStory = () => {
-  const [selectedStory, setSelectedStory] = useState<SelectedStory>();
   const [selectedStoryId, setSelectedStoryId] = useState<string>('');
+  const [selectedStoryCodes, setSelectedStoryCodes] = useState<SelectedStory>();
   const { refetch: getStory, error } = useCustomQuery<GetStoryCodeResponse>({
     url: getStoryCodeUrl,
     validator: getStoryCodeResponseValidate,
@@ -25,17 +25,17 @@ const useStory = () => {
   };
 
   const getStoryCode = useCallback(async () => {
-    if (!selectedStoryId) return setSelectedStory(undefined);
+    if (!selectedStoryId) return setSelectedStoryCodes(undefined);
 
     const { data } = await getStory();
     const newSelectedStory = { codes: data?.codes || {} };
-    return setSelectedStory(newSelectedStory);
+    return setSelectedStoryCodes(newSelectedStory);
   }, [getStory, selectedStoryId]);
 
   useEffect(() => {
     getStoryCode();
   }, [selectedStoryId]);
 
-  return { selectedStory, error, selectedStoryId, selectStory };
+  return { selectedStoryCodes, error, selectedStoryId, selectStory };
 };
 export default useStory;

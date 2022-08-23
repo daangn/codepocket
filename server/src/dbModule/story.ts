@@ -31,6 +31,17 @@ export const getStory =
     return story;
   };
 
+export const updateStory =
+  (server: FastifyInstance) =>
+  async ({ storyId, codes }: Types.StoryIdWithCode) => {
+    const [err] = await to(
+      (async () =>
+        await server.store.Story.findByIdAndUpdate(storyId, { codes: JSON.stringify(codes) }))(),
+    );
+
+    if (err) throw new CustomResponse({ customStatus: 5000 });
+  };
+
 export const existStory =
   (server: FastifyInstance) =>
   async ({ codeId, storyAuthor, storyName }: Types.StoryInfoWithCodeId) => {
@@ -39,6 +50,14 @@ export const existStory =
       (async () =>
         await server.store.Story.findOne({ codeAuthor, codeName, storyAuthor, storyName }))(),
     );
+    if (err) throw new CustomResponse({ customStatus: 5000 });
+    return !!story;
+  };
+
+export const existStoryWithStoryId =
+  (server: FastifyInstance) =>
+  async ({ storyId }: Types.StoryId) => {
+    const [err, story] = await to((async () => await server.store.Story.findById(storyId))());
     if (err) throw new CustomResponse({ customStatus: 5000 });
     return !!story;
   };

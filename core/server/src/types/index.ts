@@ -40,6 +40,11 @@ export interface StoryInfo extends CodeInfo {
   storyAuthor: string;
 }
 
+export interface StoryIdWithCode {
+  storyId: string;
+  codes: { [x: string]: string };
+}
+
 export interface StoryNamesWithCodeId {
   storyName: string;
   storyId: string;

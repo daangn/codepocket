@@ -12,6 +12,7 @@ import getStoryCode, { GetStoryCodeType } from './getStoryCode';
 import getStoryNames, { GetStoryNamesType } from './getStoryNames';
 import pullCode, { PullCodeType } from './pullCode';
 import pushCode, { PushCodeType } from './pushCode';
+import updateStory, { UpdateStoryType } from './updateStory';
 import verifyUser, { VerifyUserType } from './verifyUser';
 
 export * as Types from './types';
@@ -52,6 +53,8 @@ export const createConnector = <Response>({
       pullCode(request, { validateError, ...modules }),
     pushCode: <T>(request: T, modules: PushCodeType<Response>) =>
       pushCode(request, { slackAPIError, slackConfig, validateError, ...modules }),
+    updateStory: <T>(request: T, modules: UpdateStoryType<Response>) =>
+      updateStory(request, { validateError, ...modules }),
     verifyUser: <T>(request: T, modules: VerifyUserType<Response>) =>
       verifyUser(request, { validateError, ...modules }),
   };

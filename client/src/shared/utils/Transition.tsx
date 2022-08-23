@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-type StatusType = 'on' | 'off';
+type StatusType = 'on' | 'off' | 'oning' | 'offing';
 interface TransitionProps {
   children: (state: StatusType) => React.ReactNode;
   isOn?: boolean;
@@ -12,12 +12,14 @@ function Transition({ children, isOn, timeout = 500 }: TransitionProps) {
   const [status, setStatus] = useState<StatusType>(isOn ? 'on' : 'off');
 
   const onTransitionEnd = useCallback(() => {
+    setStatus('offing');
     timerRef.current = setTimeout(() => {
       setStatus('off');
     }, timeout);
   }, [setStatus, timeout]);
 
   const onTransitionStart = useCallback(() => {
+    setStatus('oning');
     timerRef.current = setTimeout(() => {
       setStatus('on');
     }, timeout);
