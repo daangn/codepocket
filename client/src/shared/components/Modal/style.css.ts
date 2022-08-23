@@ -65,9 +65,6 @@ export const modalContent = recipe({
     u.flexColumn,
     u.borderRadius2,
     {
-      width: rem(375),
-      minHeight: rem(37.5),
-      // height: 'auto',
       backgroundColor: 'white',
       padding: rem(15),
       zIndex: MODAL_Z_INDEX,
@@ -120,7 +117,7 @@ const modalBaseButton = style([
     height: rem(45),
     fontSize: rem(14),
     backgroundColor: colors.light.scheme.$blue800,
-    color: 'white',
+    color: vars.$static.color.staticWhite,
     fontWeight: 'bold',
     transition: 'background 0.2s ease',
 

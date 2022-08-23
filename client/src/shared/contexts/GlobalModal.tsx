@@ -2,10 +2,10 @@ import Modal from '@shared/components/Modal';
 import { useModalDispatch, useModalState } from '@shared/contexts/ModalContext';
 import { useCallback } from 'react';
 
-import DeleteModal from '../../../pocket/components/DeleteModal';
-import EditModal from '../../../pocket/components/EditModal';
+import { CreateModal, DeleteModal, EditModal } from '../../pocket/components';
 
 export const modals = {
+  createModal: CreateModal,
   deleteModal: DeleteModal,
   editModal: EditModal,
 };
@@ -15,7 +15,10 @@ const GlobalModal = () => {
   const state = useModalState();
 
   const { ModalComponent, targetId } = state;
-  const closeModal = useCallback(() => dispatch({ type: 'CLOSE_MODAL' }), [dispatch]);
+  const closeModal = useCallback(() => {
+    if (state.closeModal) state.closeModal();
+    dispatch({ type: 'CLOSE_MODAL' });
+  }, [dispatch, state]);
 
   return (
     <Modal isOpen={state.isModalOpen} closeModal={closeModal} disableEscape>

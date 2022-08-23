@@ -1,6 +1,6 @@
 import { colors } from '@karrotmarket/design-token';
 import { Icon, IconButton } from '@shared/components';
-import { modals } from '@shared/components/GlobalModal';
+import { modals } from '@shared/contexts/GlobalModal';
 import useClipboard from '@shared/hooks/useClipboard';
 import { localStorage } from '@shared/utils/localStorage';
 import { useCallback, useMemo, useRef, useState } from 'react';

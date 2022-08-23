@@ -1,5 +1,6 @@
-import { GlobalModal } from '@shared/components';
 import React, { createContext, Dispatch, useContext, useReducer } from 'react';
+
+import GlobalModal from './GlobalModal';
 
 export interface ModalInterface {
   closeModal?: () => void;
@@ -7,13 +8,14 @@ export interface ModalInterface {
 }
 type Component = (props: ModalInterface) => JSX.Element;
 type State = {
-  ModalComponent: Component | null;
-  isModalOpen: boolean;
   targetId: string;
+  isModalOpen: boolean;
+  ModalComponent: Component | null;
+  closeModal?: () => void;
 };
 
 type Action =
-  | { type: 'OPEN_MODAL'; Component: Component; targetId?: string }
+  | { type: 'OPEN_MODAL'; Component: Component; targetId?: string; closeModal?: () => void }
   | { type: 'CLOSE_MODAL' };
 
 type ModalDispatch = Dispatch<Action>;
@@ -26,16 +28,18 @@ function reducer(state: State, action: Action): State {
     case 'OPEN_MODAL':
       return {
         ...state,
-        ModalComponent: action.Component,
-        isModalOpen: true,
         targetId: action.targetId || '',
+        isModalOpen: true,
+        ModalComponent: action.Component,
+        closeModal: action.closeModal,
       };
     case 'CLOSE_MODAL':
       return {
         ...state,
-        ModalComponent: null,
-        isModalOpen: false,
         targetId: '',
+        isModalOpen: false,
+        ModalComponent: null,
+        closeModal: undefined,
       };
     default:
       throw new Error('Unhandled action');

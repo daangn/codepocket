@@ -1,3 +1,5 @@
+import { modals } from '@shared/contexts/GlobalModal';
+import { useModalDispatch } from '@shared/contexts/ModalContext';
 import Transition from '@shared/utils/Transition';
 import { useState } from 'react';
 
@@ -8,15 +10,26 @@ interface FloatingButtonProps {}
 
 const FloatingActionButton: React.FC<FloatingButtonProps> = () => {
   const [selected, setSelected] = useState(false);
+  const modalDispatch = useModalDispatch();
   const { scrollDir } = useScrollDirection();
 
   const toggleButton = () => setSelected((prev) => !prev);
+
+  const onClickButton = () => {
+    toggleButton();
+    if (!selected)
+      modalDispatch({
+        type: 'OPEN_MODAL',
+        Component: modals.createModal,
+        closeModal: toggleButton,
+      });
+  };
 
   return (
     <Transition isOn={scrollDir === 'up'} timeout={300}>
       {() => (
         <div className={style.wrapper({ useOnMode: scrollDir === 'up' })}>
-          <button className={style.floatingButton({ selected })} onClick={toggleButton}>
+          <button className={style.floatingButton({ selected })} onClick={onClickButton}>
             +
           </button>
         </div>

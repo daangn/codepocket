@@ -19,12 +19,12 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <BrowserRouter>
       <Auth0Provider domain={AUTH0_DOMAIN} clientId={AUTH0_CLIENT_ID}>
-        <ModalProvider>
-          <QueryClientProvider client={queryClient}>
+        <QueryClientProvider client={queryClient}>
+          <ModalProvider>
             <App />
             {isDev && <ReactQueryDevtools initialIsOpen={false} />}
-          </QueryClientProvider>
-        </ModalProvider>
+          </ModalProvider>
+        </QueryClientProvider>
       </Auth0Provider>
     </BrowserRouter>
   </React.StrictMode>,
