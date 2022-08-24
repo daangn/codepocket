@@ -6,7 +6,7 @@ import fp from 'fastify-plugin';
 import * as CodeModule from './dbModule/code';
 import * as StoryModule from './dbModule/story';
 import * as UserModule from './dbModule/user';
-// import { checkSlackPossible, env } from './utils/env';
+import { env } from './utils/env';
 import responseHandler, { CustomResponse } from './utils/responseHandler';
 
 export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
@@ -117,6 +117,12 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
           getUserInfo: UserModule.getUserInfo(server),
           isExistCode: CodeModule.isExistCode(server),
           pushCode: CodeModule.pushCode(server),
+          slackConfig: {
+            BASE_WEB_URL: env.WEB_URL,
+            CHAPTER_FRONTED_CHANNEL_ID: env.CHAPTER_FRONTED_CHANNEL_ID,
+            CODEPOCKET_CHANNEL_ID: env.CODEPOCKET_CHANNEL_ID,
+            SLACK_BOT_TOKEN: env.SLACK_BOT_TOKEN,
+          },
         }),
       reply,
     ),

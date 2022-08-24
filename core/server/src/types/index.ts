@@ -82,6 +82,7 @@ export type UserNameWithId = Pick<UserInfo, 'userName'> & Pick<UserPrivateInfo, 
 export type UserInfoWithToken = UserInfo & PocketToken;
 
 export interface PushCodeParams {
+  id?: string;
   code: string;
   codeName: string;
   codeAuthor: string;
