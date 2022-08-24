@@ -41,7 +41,7 @@ export const titleWrapper = style([
 export const title = style([
   t.typography.heading2,
   {
-    animation: `1.25s ${k.fadeInAndComeDown}`,
+    animation: `1.25s ${k.fadeInWithSinkDown}`,
   },
   m.small({
     fontSize: rem(40),

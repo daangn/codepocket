@@ -14,7 +14,7 @@ export const fadeOut = (from: number) =>
     '100%': { opacity: 0 },
   });
 
-export const fadeInAndComeDown = keyframes({
+export const fadeInWithSinkDown = keyframes({
   '0%': { opacity: 0, transform: 'translateY(-40px)' },
   '100%': { opacity: 1, transform: 'translateY(0)' },
 });
