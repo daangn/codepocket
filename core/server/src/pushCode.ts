@@ -23,7 +23,7 @@ export interface PushCodeType<Response> {
   /* 코드가 존재하는지 확인하는 함수 */
   isExistCode: (paramsshel: CodeInfo) => Promise<boolean>;
   /* 코드를 생성하는 함수 */
-  pushCode: (obj: PushCodeParams) => Promise<void>;
+  pushCode: (obj: PushCodeParams) => Promise<PushCodeParams>;
 }
 
 export default async <T, Response>(request: T, modules: PushCodeType<Response>) => {
@@ -56,7 +56,7 @@ export default async <T, Response>(request: T, modules: PushCodeType<Response>) 
           uploadedChatURL: undefined,
         };
 
-  await modules.pushCode({
+  const { id: codeId } = await modules.pushCode({
     code,
     codeName,
     codeAuthor,
@@ -69,6 +69,7 @@ export default async <T, Response>(request: T, modules: PushCodeType<Response>) 
 
   if (modules.slackConfig && modules.slackAPIError)
     await postMessageToSlack({
+      codeId: codeId || '',
       codeName,
       codeAuthor,
       isAnonymous,

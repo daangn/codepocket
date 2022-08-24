@@ -130,7 +130,7 @@ export const pushCode =
     slackChatChannel,
     slackChatTimeStamp,
   }: Types.PushCodeParams) => {
-    const [pushCodeError] = await to(
+    const [pushCodeError, pushCodeResponse] = await to(
       isAlreadyPushedCode
         ? (async () =>
             await server.store.Code.findOneAndUpdate(
@@ -162,6 +162,7 @@ export const pushCode =
     );
 
     if (pushCodeError) throw new CustomResponse({ customStatus: 5000 });
+    return pushCodeResponse;
   };
 
 export const deleteCode =
