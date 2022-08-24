@@ -1,4 +1,4 @@
-import { colors } from '@karrotmarket/design-token';
+import { vars } from '@seed-design/design-token';
 import { Icon, IconButton } from '@shared/components';
 import { modals } from '@shared/contexts/GlobalModal';
 import useClipboard from '@shared/hooks/useClipboard';
@@ -97,7 +97,7 @@ const Codeblock: React.FC<CodeblockProps> = ({
             className={style.codeItemHeaderCopyButton}
             onClick={copyToClipboard}
           >
-            {isCopied ? 'COPIED!' : 'COPY'}
+            {isCopied ? 'COPIED' : 'COPY'}
           </button>
           <a href={generateDetailPath({ codeId })}>
             <button
@@ -107,7 +107,7 @@ const Codeblock: React.FC<CodeblockProps> = ({
             >
               <span>DETAIL</span>
               <span className={style.rightChevronIcon}>
-                <Icon icon="rightChevron" color={colors.light.scheme.$blue800} />
+                <Icon icon="rightChevron" color={vars.$scale.color.blue700} />
               </span>
             </button>
           </a>

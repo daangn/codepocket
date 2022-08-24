@@ -1,6 +1,6 @@
 import * as Sandpack from '@codesandbox/sandpack-react';
 import * as theme from '@codesandbox/sandpack-themes';
-import { colors } from '@karrotmarket/design-token';
+import { vars } from '@seed-design/design-token';
 import { Icon, Modal } from '@shared/components';
 import useCode from '@shared/hooks/useCode';
 import useModal from '@shared/hooks/useModal';
@@ -60,7 +60,7 @@ const DetailPage: React.FC = () => {
           <header className={style.header}>
             <div className={style.headerIcon}>
               <Link to={pocketPath}>
-                <Icon icon="leftChevron" color={colors.light.scheme.$blue800} />
+                <Icon icon="leftChevron" color={vars.$scale.color.blue800} />
               </Link>
             </div>
             <h1 className={style.title}>

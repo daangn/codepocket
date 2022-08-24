@@ -1,4 +1,4 @@
-import { colors } from '@karrotmarket/design-token';
+import { vars } from '@seed-design/design-token';
 import * as u from '@shared/styles/utils.css';
 import { style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
@@ -24,24 +24,37 @@ export const container = recipe({
       },
       false: {
         transform: `translateY(${rem(8)})`,
-        border: `2px solid ${colors.light.scheme.$blue800}`,
         height: rem(45),
       },
     },
   },
 });
 
-export const searchbox = style([
-  u.fullWidth,
-  u.fullHeight,
-  u.borderRadius2,
-  u.borderNone,
-  {
-    padding: rem(10),
-    paddingRight: rem(40),
-    backgroundColor: colors.light.scheme.$gray100,
+export const searchbox = recipe({
+  base: [
+    u.fullWidth,
+    u.fullHeight,
+    u.borderRadius2,
+    u.borderNone,
+    {
+      padding: rem(10),
+      paddingRight: rem(40),
+      backgroundColor: vars.$scale.color.gray100,
+
+      ':focus': {
+        outline: 'none',
+        border: `2px solid ${vars.$scale.color.blue500}`,
+      },
+    },
+  ],
+  variants: {
+    isScrollTop: {
+      false: {
+        border: `2px solid ${vars.$scale.color.blue500}`,
+      },
+    },
   },
-]);
+});
 
 export const searchicon = style([
   u.right0,

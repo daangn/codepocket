@@ -1,18 +1,18 @@
-import { colors } from '@karrotmarket/design-token';
+import { vars } from '@seed-design/design-token';
 import * as m from '@shared/styles/media.css';
 import * as u from '@shared/styles/utils.css';
 import { keyframes, style } from '@vanilla-extract/css';
 import { rem } from 'polished';
 
 const gradation = keyframes({
-  '0%': { backgroundColor: colors.light.scheme.$gray100 },
-  '50%': { backgroundColor: colors.light.scheme.$gray300 },
-  '100%': { backgroundColor: colors.light.scheme.$gray100 },
+  '0%': { backgroundColor: vars.$scale.color.gray100 },
+  '50%': { backgroundColor: vars.$scale.color.gray300 },
+  '100%': { backgroundColor: vars.$scale.color.gray100 },
 });
 
 export const gradationAnim = style([
   {
-    backgroundColor: colors.light.scheme.$gray100,
+    backgroundColor: vars.$scale.color.gray100,
     animation: `2s infinite ${gradation}`,
   },
 ]);

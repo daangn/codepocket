@@ -1,4 +1,4 @@
-import { colors } from '@karrotmarket/design-token';
+import { vars } from '@seed-design/design-token';
 import * as u from '@shared/styles/utils.css';
 import { style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
@@ -17,10 +17,10 @@ export const alertContainer = recipe({
   ],
   variants: {
     status: {
-      error: { background: colors.light.scheme.$red50 },
-      info: { background: colors.light.scheme.$blue50 },
-      success: { background: colors.light.scheme.$green50 },
-      warning: { background: colors.light.scheme.$carrot100 },
+      error: { background: vars.$scale.color.red100 },
+      info: { background: vars.$scale.color.blue100 },
+      success: { background: vars.$scale.color.green50 },
+      warning: { background: vars.$scale.color.carrot100 },
     },
   },
 });

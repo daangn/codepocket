@@ -1,4 +1,4 @@
-import { colors } from '@karrotmarket/design-token';
+import { vars } from '@seed-design/design-token';
 import * as m from '@shared/styles/media.css';
 import * as t from '@shared/styles/token.css';
 import * as u from '@shared/styles/utils.css';
@@ -29,7 +29,7 @@ export const title = style([t.typography.heading4]);
 export const description = style([
   t.typography.caption1,
   {
-    color: colors.light.scheme.$gray700,
+    color: vars.$scale.color.gray700,
   },
 ]);
 
@@ -48,18 +48,18 @@ export const clipBoardContainer = recipe({
       border: 'none',
       padding: rem(10),
       height: rem(52),
-      backgroundColor: colors.light.scheme.$gray100,
+      backgroundColor: vars.$scale.color.gray100,
       justifyContent: 'space-between',
       transition: 'background 0.2s ease, border 0.2s ease',
 
       ':hover': {
-        backgroundColor: colors.light.scheme.$gray400,
+        backgroundColor: vars.$scale.color.gray300,
       },
     },
   ],
   variants: {
     isCopied: {
-      true: { border: `${rem(2)} solid ${colors.light.scheme.$blue800}` },
+      true: { border: `${rem(2)} solid ${vars.$scale.color.blue600}` },
       false: { border: `${rem(2)} solid white` },
     },
   },
@@ -73,13 +73,13 @@ export const linkButton = style([
   {
     height: rem(52),
     fontSize: rem(16),
-    backgroundColor: colors.light.scheme.$blue800,
+    backgroundColor: vars.$scale.color.blue500,
     color: 'white',
     fontWeight: 'bold',
     transition: 'background 0.2s ease',
 
     ':hover': {
-      backgroundColor: '#0A86B799',
+      backgroundColor: vars.$scale.color.blue600,
     },
   },
 ]);

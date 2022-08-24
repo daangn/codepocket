@@ -38,7 +38,9 @@ const Searchbar: React.FC<SearchbarInterface> = ({ changeSearchText }) => {
         placeholder="찾고 싶은 코드나 작성자 이름을 입력해보세요!"
         value={text}
         onChange={onChangeSearchbar}
-        className={style.searchbox}
+        className={style.searchbox({
+          isScrollTop,
+        })}
         autoFocus
       />
       <span className={style.searchicon}>

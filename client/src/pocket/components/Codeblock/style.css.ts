@@ -1,4 +1,4 @@
-import { colors } from '@karrotmarket/design-token';
+import { vars } from '@seed-design/design-token';
 import * as m from '@shared/styles/media.css';
 import * as u from '@shared/styles/utils.css';
 import { style } from '@vanilla-extract/css';
@@ -65,7 +65,7 @@ export const codeItemCode = recipe({
           pointerEvents: 'none',
         },
         ':hover': {
-          border: `1px solid ${colors.light.scheme.$blue800}`,
+          border: `1px solid ${vars.$scale.color.blue700}`,
           cursor: 'pointer',
         },
       },
@@ -98,8 +98,8 @@ export const toggler = style([
 ]);
 
 export const rightChevronIcon = style({
-  color: colors.light.scheme.$blue800,
-  transform: 'scale(0.7)',
+  color: vars.$scale.color.blue700,
+  transform: 'scale(0.5)',
   width: rem(12),
   height: rem(20),
 });
@@ -140,12 +140,13 @@ export const codeItemButtonBase = style([
 export const codeItemHeaderCopyButton = style([
   codeItemButtonBase,
   {
-    width: rem(70),
-    border: `1px solid ${colors.light.scheme.$gray700}`,
-    color: colors.light.scheme.$gray700,
+    width: rem(80),
+    backgroundColor: vars.$scale.color.gray300,
+    color: vars.$scale.color.gray900,
+    border: 'none',
 
     ':hover': {
-      backgroundColor: colors.light.scheme.$gray100,
+      backgroundColor: vars.$scale.color.gray200,
     },
   },
   m.medium({
@@ -156,11 +157,12 @@ export const codeItemHeaderCopyButton = style([
 export const codeItemHeaderDetailButton = style([
   codeItemButtonBase,
   {
-    border: `1px solid ${colors.light.scheme.$blue800}`,
-    color: colors.light.scheme.$blue800,
+    border: 'none',
+    backgroundColor: vars.$scale.color.blue50,
+    color: vars.$scale.color.blue700,
 
     ':hover': {
-      backgroundColor: colors.light.scheme.$blue50,
+      backgroundColor: vars.$scale.color.blue100,
     },
   },
 ]);
