@@ -1,14 +1,10 @@
 import { vars } from '@seed-design/design-token';
+import * as k from '@shared/styles/keyframes.css';
 import * as m from '@shared/styles/media.css';
 import * as t from '@shared/styles/token.css';
 import * as u from '@shared/styles/utils.css';
-import { keyframes, style } from '@vanilla-extract/css';
+import { style } from '@vanilla-extract/css';
 import { rem } from 'polished';
-
-const fadeIn = keyframes({
-  '0%': { opacity: 0, transform: 'translateY(-40px)' },
-  '100%': { opacity: 1, transform: 'translateY(0)' },
-});
 
 export const wrapper = style([
   u.positionRelative,
@@ -45,7 +41,7 @@ export const titleWrapper = style([
 export const title = style([
   t.typography.heading2,
   {
-    animation: `1.25s ${fadeIn}`,
+    animation: `1.25s ${k.fadeInWithSinkDown}`,
   },
   m.small({
     fontSize: rem(40),
