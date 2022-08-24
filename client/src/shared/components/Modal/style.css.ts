@@ -1,32 +1,14 @@
 import { colors } from '@karrotmarket/design-token';
 import { vars } from '@seed-design/design-token';
+import * as k from '@shared/styles/keyframes.css';
 import * as m from '@shared/styles/media.css';
 import * as u from '@shared/styles/utils.css';
-import { keyframes, style } from '@vanilla-extract/css';
+import { style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
 import { rem } from 'polished';
 
 const MODAL_Z_INDEX = 100;
 const ANIMATION_DURATION_SECOND = 0.15;
-
-const fadeIn = (to: number) =>
-  keyframes({
-    '0%': { opacity: 0 },
-    '100%': { opacity: to },
-  });
-const fadeOut = (from: number) =>
-  keyframes({
-    '0%': { opacity: from },
-    '100%': { opacity: 0 },
-  });
-const scaleUp = keyframes({
-  '0%': { transform: 'scale(0)' },
-  '100%': { transform: 'scale(1)' },
-});
-const scaleDown = keyframes({
-  '0%': { transform: 'scale(1)' },
-  '100%': { transform: 'scale(0)' },
-});
 
 export const modalContainer = recipe({
   base: [u.flexCenter, u.fixedPos, u.top0, u.left0, u.fullSize, { zIndex: 100 }],
@@ -53,8 +35,8 @@ export const modalOverlay = recipe({
   ],
   variants: {
     isAnimation: {
-      false: { animation: `${ANIMATION_DURATION_SECOND}s ${fadeOut(0.3)}` },
-      true: { animation: `${ANIMATION_DURATION_SECOND}s ${fadeIn(0.3)}` },
+      false: { animation: `${ANIMATION_DURATION_SECOND}s ${k.fadeOut(0.3)}` },
+      true: { animation: `${ANIMATION_DURATION_SECOND}s ${k.fadeIn(0.3)}` },
     },
   },
 });
@@ -73,14 +55,14 @@ export const modalContent = recipe({
   variants: {
     isAnimation: {
       false: {
-        animation: `${ANIMATION_DURATION_SECOND}s ${fadeOut(
-          1,
-        )}, ${ANIMATION_DURATION_SECOND}s ${scaleDown}`,
+        animation: `${ANIMATION_DURATION_SECOND}s ${k.fadeOut(1)}, ${ANIMATION_DURATION_SECOND}s ${
+          k.scaleDown
+        }`,
       },
       true: {
-        animation: `${ANIMATION_DURATION_SECOND}s ${fadeIn(
-          1,
-        )}, ${ANIMATION_DURATION_SECOND}s ${scaleUp}`,
+        animation: `${ANIMATION_DURATION_SECOND}s ${k.fadeIn(1)}, ${ANIMATION_DURATION_SECOND}s ${
+          k.scaleUp
+        }`,
       },
     },
   },

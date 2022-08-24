@@ -1,20 +1,11 @@
 import { vars } from '@seed-design/design-token';
+import * as k from '@shared/styles/keyframes.css';
 import * as m from '@shared/styles/media.css';
 import * as u from '@shared/styles/utils.css';
-import { keyframes } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
 import { rem } from 'polished';
 
 const ANIMATION_DURATION_SECOND = 0.3;
-
-const scaleUp = keyframes({
-  '0%': { transform: 'scale(0)' },
-  '100%': { transform: 'scale(1)' },
-});
-const scaleDown = keyframes({
-  '0%': { transform: 'scale(1)' },
-  '100%': { transform: 'scale(0)' },
-});
 
 export const floatingButton = recipe({
   base: [
@@ -73,8 +64,8 @@ export const wrapper = recipe({
   ],
   variants: {
     useOnMode: {
-      true: { animation: `${ANIMATION_DURATION_SECOND}s ${scaleUp}` },
-      false: { animation: `${ANIMATION_DURATION_SECOND}s ${scaleDown}` },
+      true: { animation: `${ANIMATION_DURATION_SECOND}s ${k.scaleUp}` },
+      false: { animation: `${ANIMATION_DURATION_SECOND}s ${k.scaleDown}` },
     },
   },
 });

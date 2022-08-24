@@ -1,19 +1,11 @@
 import { vars } from '@seed-design/design-token';
+import * as k from '@shared/styles/keyframes.css';
 import * as m from '@shared/styles/media.css';
 import * as t from '@shared/styles/token.css';
 import * as u from '@shared/styles/utils.css';
-import { keyframes, style } from '@vanilla-extract/css';
+import { style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
 import { rem } from 'polished';
-
-const scaleUp = keyframes({
-  '0%': { top: rem(0), zIndex: -1 },
-  '100%': { top: rem(-30), zIndex: -1 },
-});
-const scaleDown = keyframes({
-  '0%': { top: rem(-30), zIndex: -1 },
-  '100%': { top: rem(0), zIndex: -1 },
-});
 
 export const list = style([
   u.flex,
@@ -35,8 +27,8 @@ export const controlButtonsWrapper = recipe({
   ],
   variants: {
     selected: {
-      true: { animation: `0.1s ${scaleUp}` },
-      false: { animation: `0.1s ${scaleDown}` },
+      true: { animation: `0.1s ${k.jumpUp}` },
+      false: { animation: `0.1s ${k.sinkDown}` },
     },
   },
 });
