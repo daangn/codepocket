@@ -94,6 +94,21 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
     ),
   );
 
+  server.put('/code/update', (req, reply) =>
+    responseHandler(
+      () =>
+        connector.updateCode(req, {
+          successResponseFunc: () =>
+            new CustomResponse<Schema.UpdateCodeResponse>({ customStatus: 2006 }),
+          notExistCodeError: new CustomResponse({ customStatus: 4008 }),
+          getUserInfo: UserModule.getUserInfo(server),
+          checkExistCodeWithCodeId: CodeModule.checkExistCodeWithCodeId(server),
+          updateCode: CodeModule.updateCode(server),
+        }),
+      reply,
+    ),
+  );
+
   server.get('/code/id', (req, reply) =>
     responseHandler(
       () =>
@@ -123,6 +138,21 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
             CODEPOCKET_CHANNEL_ID: env.CODEPOCKET_CHANNEL_ID,
             SLACK_BOT_TOKEN: env.SLACK_BOT_TOKEN,
           },
+        }),
+      reply,
+    ),
+  );
+
+  server.post('/code/create', (req, reply) =>
+    responseHandler(
+      () =>
+        connector.createCode(req, {
+          successResponseFunc: () =>
+            new CustomResponse<Schema.CreateCodeResponse>({ customStatus: 2005 }),
+          existCodeNameError: new CustomResponse({ customStatus: 4010 }),
+          getUserInfo: UserModule.getUserInfo(server),
+          isExistCodeName: CodeModule.isExistCode(server),
+          createCode: CodeModule.createCode(server),
         }),
       reply,
     ),
