@@ -94,6 +94,21 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
     ),
   );
 
+  server.put('/code/update', (req, reply) =>
+    responseHandler(
+      () =>
+        connector.updateCode(req, {
+          successResponseFunc: () =>
+            new CustomResponse<Schema.UpdateCodeResponse>({ customStatus: 2006 }),
+          notExistCodeError: new CustomResponse({ customStatus: 4008 }),
+          getUserInfo: UserModule.getUserInfo(server),
+          checkExistCodeWithCodeId: CodeModule.checkExistCodeWithCodeId(server),
+          updateCode: CodeModule.updateCode(server),
+        }),
+      reply,
+    ),
+  );
+
   server.get('/code/id', (req, reply) =>
     responseHandler(
       () =>
