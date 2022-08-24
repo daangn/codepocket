@@ -1,7 +1,7 @@
 import {
   DeleteCodeByIdRequest,
-  DeleteCodeResponse,
-  deleteCodeResponseValidate,
+  DeleteCodeByIdResponse,
+  deleteCodeByIdResponseValidate,
 } from '@codepocket/schema';
 import useCustomMutation from '@shared/hooks/useCustomMutation';
 import { useQueryClient } from '@tanstack/react-query';
@@ -13,13 +13,13 @@ type DeleteCodeByIdBodyType = DeleteCodeByIdRequest['body'];
 const useDeleteCode = () => {
   const queryClient = useQueryClient();
   const { mutate: deleteCodeMutate } = useCustomMutation<
-    DeleteCodeResponse,
+    DeleteCodeByIdResponse,
     { message: string },
     DeleteCodeByIdBodyType
   >({
     url: deleteCodeByIdUrl,
     method: 'POST',
-    validator: deleteCodeResponseValidate,
+    validator: deleteCodeByIdResponseValidate,
     options: {
       onSuccess: async () => {
         await queryClient.invalidateQueries([getCodesUrl]);
