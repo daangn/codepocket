@@ -1,15 +1,30 @@
 import type { ModalInterface } from '@shared/contexts/ModalContext';
 import useCode from '@shared/hooks/useCode';
+import { localStorage } from '@shared/utils/localStorage';
 
-import ModalContentTemplate from './Template';
+import usePushCode from '../../hooks/usePushCode';
+import ModalContentTemplate, { OnConfirmModal } from './Template';
 
 const CreateModal = ({ closeModal, targetId }: ModalInterface) => {
   const { data: codeInfo } = useCode({ codeId: targetId });
+  const { pushCode } = usePushCode();
+
+  const onConfirm = ({ code, codeName, isAnonymous }: OnConfirmModal) => {
+    if (!closeModal) return;
+    pushCode({
+      code,
+      codeName,
+      isAnonymous,
+      pocketToken: localStorage.getUserToken() || '',
+    });
+    closeModal();
+  };
 
   return (
     <ModalContentTemplate
       mode="edit"
       code={codeInfo?.code}
+      onConfirm={onConfirm}
       closeModal={closeModal}
       codeName={codeInfo?.codeName}
       useAnonymousMode={codeInfo?.isAnonymous}
