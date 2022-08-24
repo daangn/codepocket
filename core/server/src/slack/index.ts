@@ -6,6 +6,7 @@ import { postMessageToSlackAPI, uploadCodeToSlackAPI } from './api';
 import { changeFirstToUpperCase } from './utils';
 
 export interface SlackConfig {
+  BASE_WEB_URL?: string;
   SLACK_BOT_TOKEN?: string;
   CHAPTER_FRONTED_CHANNEL_ID?: string;
   CODEPOCKET_CHANNEL_ID?: string;
@@ -13,6 +14,7 @@ export interface SlackConfig {
 
 interface PostMessageToSlack<Response> {
   isAlreadyPushedCode: boolean;
+  codeId: string;
   codeAuthor: string;
   codeName: string;
   config: SlackConfig;
@@ -53,9 +55,14 @@ const generateInfoText = ({
   isAlreadyPushedCode: boolean;
   codeName: string;
 }) => `\`${codeName}\` 코드가 ${isAlreadyPushedCode ? '수정됐어요!' : '올라왔어요!'}`;
+const generateSlackLinkText = ({ uploadedChatURL }: { uploadedChatURL: string }) =>
+  `\n코드 보기: ${uploadedChatURL}`;
+const generateWebLinkText = ({ codeId, webBaseUrl }: { codeId: string; webBaseUrl: string }) =>
+  `\n웹으로 보기: ${webBaseUrl}/detail/${codeId}`;
 
 export const postMessageToSlack = async <Response>({
   isAlreadyPushedCode,
+  codeId,
   codeAuthor,
   codeName,
   config,
@@ -69,8 +76,10 @@ export const postMessageToSlack = async <Response>({
       channelId: config.CHAPTER_FRONTED_CHANNEL_ID || '',
       text: `${
         generateAuthorText({ isAnonymous, codeAuthor }) +
-        generateInfoText({ isAlreadyPushedCode, codeName })
-      }\n${uploadedChatURL}`,
+        generateInfoText({ isAlreadyPushedCode, codeName }) +
+        generateSlackLinkText({ uploadedChatURL: uploadedChatURL || '' }) +
+        generateWebLinkText({ codeId, webBaseUrl: config.BASE_WEB_URL || '' })
+      }`,
     }),
   );
 

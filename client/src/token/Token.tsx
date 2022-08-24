@@ -1,4 +1,4 @@
-import { colors } from '@karrotmarket/design-token';
+import { vars } from '@seed-design/design-token';
 import { Alert, Icon } from '@shared/components';
 import useClipboard from '@shared/hooks/useClipboard';
 import { act, fireEvent, render, screen } from '@shared/utils/test-utils';
@@ -33,7 +33,7 @@ function TokenPage() {
         <span className={style.clipBoardText}>{textToCopied}</span>
         <span className={style.clipBoardIconBox}>
           {isCopied ? (
-            <Icon icon="check" color={colors.light.scheme.$blue800} />
+            <Icon icon="check" color={vars.$scale.color.blue700} />
           ) : (
             <Icon icon="clip" />
           )}

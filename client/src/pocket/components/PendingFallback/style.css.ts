@@ -1,4 +1,4 @@
-import { colors } from '@karrotmarket/design-token';
+import { vars } from '@seed-design/design-token';
 import * as k from '@shared/styles/keyframes.css';
 import * as u from '@shared/styles/utils.css';
 import { style } from '@vanilla-extract/css';
@@ -11,7 +11,7 @@ export const pendingFallback = style([
   {
     height: rem(100),
     marginTop: rem(20),
-    backgroundColor: colors.light.scheme.$gray100,
+    backgroundColor: vars.$scale.color.gray100,
     animation: `2s infinite ${k.gradation}`,
   },
 ]);

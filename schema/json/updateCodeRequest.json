@@ -1,0 +1,38 @@
+{
+  "title": "updateCodeRequest",
+  "type": "object",
+  "properties": {
+    "body": {
+      "type": "object",
+      "properties": {
+        "pocketToken": {
+          "type": "string"
+        },
+        "codeId": {
+          "type": "string"
+        },
+        "codeName": {
+          "type": "string"
+        },
+        "code": {
+          "type": "string"
+        },
+        "isAnonymous": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "pocketToken",
+        "codeId",
+        "codeName",
+        "code",
+        "isAnonymous"
+      ]
+    }
+  },
+  "additionalProperties": true,
+  "required": [
+    "body"
+  ]
+}

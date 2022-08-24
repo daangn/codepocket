@@ -1,4 +1,4 @@
-import { colors } from '@karrotmarket/design-token';
+import { vars } from '@seed-design/design-token';
 import { style } from '@vanilla-extract/css';
 
 export const positionAbsolute = style({
@@ -60,11 +60,11 @@ export const cursorNotAllowed = style({
 });
 
 export const border = style({
-  border: `1px solid ${colors.light.scheme.$gray300}`,
+  border: `1px solid ${vars.$scale.color.gray100}`,
 });
 
 export const border2 = style({
-  border: `1px solid ${colors.light.scheme.$gray400}`,
+  border: `1px solid ${vars.$scale.color.gray200}`,
 });
 
 export const borderNone = style({

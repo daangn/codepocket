@@ -82,12 +82,34 @@ export type UserNameWithId = Pick<UserInfo, 'userName'> & Pick<UserPrivateInfo, 
 export type UserInfoWithToken = UserInfo & PocketToken;
 
 export interface PushCodeParams {
+  id?: string;
   code: string;
   codeName: string;
   codeAuthor: string;
   userId: string;
   isAnonymous: boolean;
   isAlreadyPushedCode: boolean;
+  slackChatChannel?: string;
+  slackChatTimeStamp?: any;
+}
+
+export interface CreateCodeParams {
+  code: string;
+  codeName: string;
+  codeAuthor: string;
+  userId: string;
+  isAnonymous: boolean;
+  slackChatChannel?: string;
+  slackChatTimeStamp?: any;
+}
+
+export interface UpdateCodeParams {
+  codeId: string;
+  code: string;
+  codeName: string;
+  codeAuthor: string;
+  userId: string;
+  isAnonymous: boolean;
   slackChatChannel?: string;
   slackChatTimeStamp?: any;
 }

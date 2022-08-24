@@ -1,4 +1,4 @@
-import { colors } from '@karrotmarket/design-token';
+import { vars } from '@seed-design/design-token';
 import * as m from '@shared/styles/media.css';
 import * as t from '@shared/styles/token.css';
 import * as u from '@shared/styles/utils.css';
@@ -34,11 +34,11 @@ export const submitButton = recipe({
       height: rem(52),
       fontSize: rem(16),
       display: 'block',
-      color: colors.light.scheme.$white,
+      color: vars.$static.color.staticWhite,
       transition: 'background 0.2s ease',
 
       ':hover': {
-        backgroundColor: '#0A86B766',
+        backgroundColor: vars.$scale.color.blue400,
       },
     },
     m.small({
@@ -48,11 +48,11 @@ export const submitButton = recipe({
   variants: {
     enable: {
       true: {
-        backgroundColor: colors.light.scheme.$blue800,
+        backgroundColor: vars.$scale.color.blue500,
       },
       false: {
         cursor: 'not-allowed',
-        backgroundColor: colors.light.scheme.$blue50,
+        backgroundColor: vars.$scale.color.blue300,
       },
     },
   },
@@ -76,11 +76,11 @@ export const storyNameInput = recipe({
   variants: {
     enable: {
       true: {
-        backgroundColor: colors.light.scheme.$white,
+        backgroundColor: vars.$static.color.staticWhite,
       },
       false: {
         cursor: 'not-allowed',
-        backgroundColor: colors.light.scheme.$gray100,
+        backgroundColor: vars.$scale.color.gray100,
       },
     },
   },

@@ -100,6 +100,18 @@ export const isExistCode =
     return !!codeInDB?.code || codeInDB?.code === '';
   };
 
+export const checkExistCodeWithCodeId =
+  (server: FastifyInstance) =>
+  async ({ codeId }: Types.CodeId) => {
+    const [findCodeError, code] = await to(
+      (async () => await server.store.Code.findById(codeId))(),
+    );
+
+    if (findCodeError) throw new CustomResponse({ customStatus: 5000 });
+
+    return !!code;
+  };
+
 export const isExistCodeById =
   (server: FastifyInstance) =>
   async ({ codeId, codeAuthor }: Types.CodeAuthorWithId) => {
@@ -129,6 +141,62 @@ export const isAnonymousCodeExist =
     return !!code;
   };
 
+export const createCode =
+  (server: FastifyInstance) =>
+  async ({
+    code,
+    codeName,
+    codeAuthor,
+    userId,
+    isAnonymous,
+    slackChatChannel,
+    slackChatTimeStamp,
+  }: Types.CreateCodeParams) => {
+    const [createCodeError] = await to(
+      (async () =>
+        await server.store.Code.create({
+          code,
+          codeName,
+          codeAuthor,
+          userId,
+          isAnonymous,
+          uploadedChatChannel: slackChatChannel,
+          uploadedChatTimeStamp: slackChatTimeStamp,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        }))(),
+    );
+
+    if (createCodeError) throw new CustomResponse({ customStatus: 5000 });
+  };
+
+export const updateCode =
+  (server: FastifyInstance) =>
+  async ({
+    code,
+    codeId,
+    codeName,
+    userId,
+    isAnonymous,
+    slackChatChannel,
+    slackChatTimeStamp,
+  }: Types.UpdateCodeParams) => {
+    const [updateCodeError] = await to(
+      (async () =>
+        await server.store.Code.findByIdAndUpdate(codeId, {
+          code,
+          userId,
+          codeName,
+          isAnonymous,
+          uploadedChatChannel: slackChatChannel,
+          uploadedChatTimeStamp: slackChatTimeStamp,
+          updatedAt: new Date(),
+        }))(),
+    );
+
+    if (updateCodeError) throw new CustomResponse({ customStatus: 5000 });
+  };
+
 export const pushCode =
   (server: FastifyInstance) =>
   async ({
@@ -141,7 +209,7 @@ export const pushCode =
     slackChatChannel,
     slackChatTimeStamp,
   }: Types.PushCodeParams) => {
-    const [pushCodeError] = await to(
+    const [pushCodeError, pushCodeResponse] = await to(
       isAlreadyPushedCode
         ? (async () =>
             await server.store.Code.findOneAndUpdate(
@@ -173,6 +241,7 @@ export const pushCode =
     );
 
     if (pushCodeError) throw new CustomResponse({ customStatus: 5000 });
+    return pushCodeResponse;
   };
 
 export const deleteCode =

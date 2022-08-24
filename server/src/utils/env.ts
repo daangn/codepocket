@@ -1,5 +1,6 @@
 export const env = {
   SELF_URL: process.env.BASE_SERVER_URL,
+  WEB_URL: process.env.BASE_WEB_URL,
   MONGO_DB_URI: process.env.MONGO_DB_URI,
   MONGO_DB_NAME: process.env.MONGO_DB_NAME,
   SLACK_BOT_TOKEN: process.env.SLACK_BOT_TOKEN,

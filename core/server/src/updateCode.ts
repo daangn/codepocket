@@ -1,43 +1,37 @@
-import { pushCodeRequestValidate, PushCodeResponse } from '@codepocket/schema';
-import { CodeInfo, CodeName, PocketToken, PushCodeParams, UserNameWithId } from 'types';
+import { updateCodeRequestValidate, UpdateCodeResponse } from '@codepocket/schema';
+import { CodeId, PocketToken, UpdateCodeParams, UserNameWithId } from 'types';
 
 import { postMessageToSlack, SlackConfig, uploadCodeToSlack } from './slack';
 
-export interface PushCodeType<Response> {
+export interface UpdateCodeType<Response> {
   /* validator에러 */
   validateError?: Response;
   /* 슬랙 통신이 잘못되었을 경우 에러 */
   slackAPIError?: Response;
-  /* 익명으로 된 동일한 이름의 코드가 있으면 에러 */
-  existAnonymousError: Response;
+  /* 수정하고자 하는 코드가 없으면 에러 */
+  notExistCodeError?: Response;
   /* 성공했을 경우 */
-  successResponseFunc: (body: PushCodeResponse) => Response;
+  successResponseFunc: (body: UpdateCodeResponse) => Response;
 
   /* slack 키 값들 */
   slackConfig?: SlackConfig;
 
   /* 유저이름 가져오는 함수 */
   getUserInfo: (params: PocketToken) => Promise<UserNameWithId>;
-  /* 익명으로 된 동일한 이름의 코드가 있는지 검사하는 함수  */
-  isAnonymousCodeExist: (params: CodeName) => Promise<boolean>;
-  /* 코드가 존재하는지 확인하는 함수 */
-  isExistCode: (paramsshel: CodeInfo) => Promise<boolean>;
+  /* 해당 저자의 동일한 이름의 코드가 있는 검사하는 함수 */
+  checkExistCodeWithCodeId: (params: CodeId) => Promise<boolean>;
   /* 코드를 생성하는 함수 */
-  pushCode: (obj: PushCodeParams) => Promise<PushCodeParams>;
+  updateCode: (obj: UpdateCodeParams) => Promise<void>;
 }
 
-export default async <T, Response>(request: T, modules: PushCodeType<Response>) => {
-  if (!pushCodeRequestValidate(request)) throw modules.validateError;
-  const { pocketToken, codeName, code, isAnonymous } = request.body;
+export default async <T, Response>(request: T, modules: UpdateCodeType<Response>) => {
+  if (!updateCodeRequestValidate(request)) throw modules.validateError;
+  const { pocketToken, codeName, code, isAnonymous, codeId } = request.body;
 
   const { userName: codeAuthor, userId } = await modules.getUserInfo({ pocketToken });
 
-  if (isAnonymous) {
-    const exist = await modules.isAnonymousCodeExist({ codeName });
-    if (exist) throw modules.existAnonymousError;
-  }
-
-  const isAlreadyPushedCode = await modules.isExistCode({ codeName, codeAuthor });
+  const isExistCode = await modules.checkExistCodeWithCodeId({ codeId });
+  if (!isExistCode) throw modules.notExistCodeError;
 
   const slackInfo =
     modules.slackConfig && modules.slackAPIError
@@ -46,7 +40,7 @@ export default async <T, Response>(request: T, modules: PushCodeType<Response>) 
           codeName,
           codeAuthor,
           isAnonymous,
-          isAlreadyPushedCode,
+          isAlreadyPushedCode: true,
           config: modules.slackConfig,
           UploadCodeError: modules.slackAPIError,
         })
@@ -56,24 +50,23 @@ export default async <T, Response>(request: T, modules: PushCodeType<Response>) 
           uploadedChatURL: undefined,
         };
 
-  const { id: codeId } = await modules.pushCode({
+  await modules.updateCode({
     code,
+    codeId,
     codeName,
     codeAuthor,
     userId,
     isAnonymous,
-    isAlreadyPushedCode,
     slackChatChannel: slackInfo.uploadedChatChannel,
     slackChatTimeStamp: slackInfo.uploadedChatTimeStamp,
   });
 
   if (modules.slackConfig && modules.slackAPIError)
     await postMessageToSlack({
-      codeId: codeId || '',
       codeName,
       codeAuthor,
       isAnonymous,
-      isAlreadyPushedCode,
+      isAlreadyPushedCode: true,
       config: modules.slackConfig,
       uploadedChatURL: slackInfo.uploadedChatURL,
       PostMessageError: modules.slackAPIError,

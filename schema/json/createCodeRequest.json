@@ -1,0 +1,34 @@
+{
+  "title": "createCodeRequest",
+  "type": "object",
+  "properties": {
+    "body": {
+      "type": "object",
+      "properties": {
+        "pocketToken": {
+          "type": "string"
+        },
+        "codeName": {
+          "type": "string"
+        },
+        "code": {
+          "type": "string"
+        },
+        "isAnonymous": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "pocketToken",
+        "codeName",
+        "code",
+        "isAnonymous"
+      ]
+    }
+  },
+  "additionalProperties": true,
+  "required": [
+    "body"
+  ]
+}

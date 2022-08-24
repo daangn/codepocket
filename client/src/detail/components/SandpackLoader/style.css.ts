@@ -1,4 +1,4 @@
-import { colors } from '@karrotmarket/design-token';
+import { vars } from '@seed-design/design-token';
 import * as k from '@shared/styles/keyframes.css';
 import * as t from '@shared/styles/token.css';
 import * as u from '@shared/styles/utils.css';
@@ -16,7 +16,7 @@ export const skeletonContainer = style([
 
 export const loader = style({
   border: '16px solid #f3f3f3',
-  borderTop: `16px solid ${colors.light.scheme.$blue800}`,
+  borderTop: `16px solid ${vars.$scale.color.blue700}`,
   borderRadius: '50%',
   width: '120px',
   height: '120px',

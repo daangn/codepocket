@@ -1,18 +1,23 @@
 import * as Sandpack from '@codesandbox/sandpack-react';
 import { useActiveCode } from '@codesandbox/sandpack-react';
 import { Modal } from '@shared/components';
-import { localStorage } from '@shared/utils/localStorage';
 import { rem } from 'polished';
 import React, { useEffect, useMemo, useState } from 'react';
 
-import usePushCode from '../../hooks/usePushCode';
 import * as style from './style.css';
+
+export interface OnConfirmModal {
+  codeName: string;
+  isAnonymous: boolean;
+  code: string;
+}
 
 interface ModalContentProps {
   mode: 'create' | 'edit';
   codeName?: string;
   useAnonymousMode?: boolean;
   closeModal?: () => void;
+  onConfirm: (params: OnConfirmModal) => void;
 }
 
 interface ModalContentTemplateProps extends ModalContentProps {
@@ -23,7 +28,6 @@ const ModalContent = (props: ModalContentProps) => {
   const { code } = useActiveCode();
   const [codeName, setCodeName] = useState('');
   const [useAnonymousMode, setUseAnonymousMode] = useState(false);
-  const { pushCode } = usePushCode();
 
   const text = useMemo(() => (props.mode === 'create' ? '만들기' : '수정하기'), [props.mode]);
 
@@ -35,21 +39,14 @@ const ModalContent = (props: ModalContentProps) => {
     setUseAnonymousMode(!!props.useAnonymousMode);
   }, [props.useAnonymousMode]);
 
-  const onConfirm = () => {
-    if (!props.closeModal) return;
-    pushCode({
-      code,
-      codeName,
-      isAnonymous: useAnonymousMode,
-      pocketToken: localStorage.getUserToken() || '',
-    });
-    props.closeModal();
-  };
-
   const onChangeAnonymousToggle = (event: React.ChangeEvent<HTMLInputElement>) =>
     setUseAnonymousMode(event.target.checked);
   const onChangeCodeName = (event: React.ChangeEvent<HTMLInputElement>) =>
     setCodeName(event.target.value);
+
+  const onConfirm = () => {
+    props.onConfirm({ code, codeName, isAnonymous: useAnonymousMode });
+  };
 
   return (
     <div className={style.modalContent}>

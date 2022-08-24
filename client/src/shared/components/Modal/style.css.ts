@@ -1,4 +1,3 @@
-import { colors } from '@karrotmarket/design-token';
 import { vars } from '@seed-design/design-token';
 import * as k from '@shared/styles/keyframes.css';
 import * as m from '@shared/styles/media.css';
@@ -28,7 +27,7 @@ export const modalOverlay = recipe({
     u.fullHeight,
     u.fullWidth,
     {
-      background: colors.light.scheme.$gray900,
+      background: vars.$scale.color.gray900,
       opacity: 0.3,
       zIndex: MODAL_Z_INDEX,
     },
@@ -79,7 +78,7 @@ export const modalCloseButton = style([
     margin: rem(5),
     transition: 'background 0.3s ease',
     ':hover': {
-      backgroundColor: colors.light.scheme.$gray100,
+      backgroundColor: vars.$scale.color.gray100,
     },
   },
 ]);
@@ -98,7 +97,7 @@ const modalBaseButton = style([
   {
     height: rem(45),
     fontSize: rem(14),
-    backgroundColor: colors.light.scheme.$blue800,
+    backgroundColor: vars.$scale.color.blue700,
     color: vars.$static.color.staticWhite,
     fontWeight: 'bold',
     transition: 'background 0.2s ease',
