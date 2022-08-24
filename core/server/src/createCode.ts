@@ -1,6 +1,7 @@
 import { createCodeRequestValidate, CreateCodeResponse } from '@codepocket/schema';
-import { postMessageToSlack, SlackConfig, uploadCodeToSlack } from 'slack';
 import { CodeInfo, CreateCodeParams, PocketToken, UserNameWithId } from 'types';
+
+import { postMessageToSlack, SlackConfig, uploadCodeToSlack } from './slack';
 
 export interface CreateCodeType<Response> {
   /* validator에러 */
