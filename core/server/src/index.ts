@@ -3,6 +3,7 @@ import { SlackConfig } from 'slack';
 import createStory, { CreateStoryType } from './createStory';
 import createUser, { CreateUserType } from './createUser';
 import deleteCode, { DeleteCodeType } from './deleteCode';
+import deleteCodeById, { DeleteCodeByIdType } from './deleteCodeById';
 import deleteStory, { DeleteStoryType } from './deleteStory';
 import getCode, { GetCodeType } from './getCode';
 import getCodeAuthors, { GetCodeAuthorsType } from './getCodeAuthors';
@@ -35,6 +36,8 @@ export const createConnector = <Response>({
       createUser(request, { validateError, ...modules }),
     deleteCode: <T>(request: T, modules: DeleteCodeType<Response>) =>
       deleteCode(request, { slackConfig, validateError, ...modules }),
+    deleteCodeById: <T>(request: T, modules: DeleteCodeByIdType<Response>) =>
+      deleteCodeById(request, { slackConfig, validateError, ...modules }),
     deleteStory: <T>(request: T, modules: DeleteStoryType<Response>) =>
       deleteStory(request, { validateError, ...modules }),
     getCode: <T>(request: T, modules: GetCodeType<Response>) =>

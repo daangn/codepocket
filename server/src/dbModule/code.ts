@@ -100,6 +100,17 @@ export const isExistCode =
     return !!codeInDB?.code || codeInDB?.code === '';
   };
 
+export const isExistCodeById =
+  (server: FastifyInstance) =>
+  async ({ codeId, codeAuthor }: Types.CodeAuthorWithId) => {
+    const [codeFindOneError, codeInDB] = await to(
+      (async () => await server.store.Code.findOne({ codeId, codeAuthor }))(),
+    );
+
+    if (codeFindOneError) throw new CustomResponse({ customStatus: 5000 });
+    return !!codeInDB?.code || codeInDB?.code === '';
+  };
+
 export const getCodeCode =
   (server: FastifyInstance) =>
   async ({ codeAuthor, codeName }: Types.CodeInfo) => {
@@ -173,6 +184,17 @@ export const deleteCode =
 
     if (deleteCodeError) throw new CustomResponse({ customStatus: 5000 });
     if (!deleteCodeResponse.deletedCount) throw new CustomResponse({ customStatus: 4006 });
+  };
+
+export const deleteCodeById =
+  (server: FastifyInstance) =>
+  async ({ codeId }: Types.CodeId) => {
+    const [deleteCodeError, deleteCodeResponse] = await to(
+      (async () => await server.store.Code.findByIdAndDelete({ _id: codeId }))(),
+    );
+
+    if (deleteCodeError) throw new CustomResponse({ customStatus: 5000 });
+    if (!deleteCodeResponse?.id) throw new CustomResponse({ customStatus: 4006 });
   };
 
 export const searchCodes =

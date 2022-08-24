@@ -1,0 +1,13 @@
+{
+  "title": "deleteCodeByIdResponse",
+  "type": "object",
+  "properties": {
+    "message": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "message"
+  ]
+}
