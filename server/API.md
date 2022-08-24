@@ -273,6 +273,59 @@
   - PushCode Schema
   - cli에서 사용
 
+**2.9 코드 생성 `POST` /code/create**
+
+- Request
+
+  - URL: /code/create
+  - Method: `POST`
+  - Body
+    ```json
+    {
+      "pocketToken": "string",
+      "codeName": "string",
+      "code": "string",
+      "isAnonymous": "boolean"
+    }
+    ```
+
+- Response
+  ```json
+  {
+    "message": "string"
+  }
+  ```
+- 특이사항
+  - CreateCode Schema
+  - 웹에서 사용
+
+**2.10 코드 수정 `PUT` /code/update**
+
+- Request
+
+  - URL: /code/update
+  - Method: `PUT`
+  - Body
+    ```json
+    {
+      "pocketToken": "string",
+      "codeName": "string",
+      "code": "string",
+      "codeId": "string",
+      "isAnonymous": "boolean"
+    }
+    ```
+
+- Response
+  ```json
+  {
+    "message": "string"
+  }
+  ```
+- 특이사항
+  - UpdateCode Schema
+  - 웹에서 사용
+
 ### 3. Story
 
 **3.1 스토리 생성 `POST` /story**
