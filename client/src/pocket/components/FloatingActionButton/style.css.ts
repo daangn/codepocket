@@ -26,8 +26,12 @@ export const floatingButton = recipe({
       borderRadius: '50%',
       fontSize: 'inherit',
       color: vars.$static.color.staticWhite,
-      backgroundColor: vars.$scale.color.blue600,
+      backgroundColor: vars.$scale.color.blue500,
       transition: `all ${ANIMATION_DURATION_SECOND}s`,
+
+      ':hover': {
+        backgroundColor: vars.$scale.color.blue400,
+      },
     },
   ],
   variants: {

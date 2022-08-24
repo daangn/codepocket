@@ -1,4 +1,4 @@
-import { colors } from '@karrotmarket/design-token';
+import { vars } from '@seed-design/design-token';
 import * as u from '@shared/styles/utils.css';
 import { style } from '@vanilla-extract/css';
 import { rem } from 'polished';
@@ -14,7 +14,7 @@ export const buttonBase = style([
     height: rem(70),
     margin: rem(30),
     padding: rem(10),
-    border: '1px solid white',
+    border: `1px solid ${vars.$static.color.staticWhite}`,
   },
 ]);
 
@@ -22,12 +22,12 @@ export const moreButton = style([
   buttonBase,
   u.cursorPointer,
   {
-    backgroundColor: colors.light.scheme.$blue50,
-    color: colors.light.scheme.$blue800,
+    backgroundColor: vars.$scale.color.blue100,
+    color: vars.$scale.color.blue700,
 
     ':hover': {
-      border: `1px solid ${colors.light.scheme.$blue800}`,
-      backgroundColor: '#def8ff',
+      border: `1px solid ${vars.$scale.color.blue600}`,
+      backgroundColor: vars.$scale.color.blue200,
     },
   },
 ]);

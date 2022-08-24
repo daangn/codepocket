@@ -1,4 +1,4 @@
-import { colors } from '@karrotmarket/design-token';
+import { vars } from '@seed-design/design-token';
 import * as u from '@shared/styles/utils.css';
 import { style } from '@vanilla-extract/css';
 import { rem } from 'polished';
@@ -17,6 +17,6 @@ export const lastCodeItemInformation = style([
   u.flexCenter,
   {
     rowGap: rem(10),
-    color: colors.light.scheme.$gray700,
+    color: vars.$scale.color.gray700,
   },
 ]);

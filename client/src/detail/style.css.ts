@@ -1,4 +1,4 @@
-import { colors } from '@karrotmarket/design-token';
+import { vars } from '@seed-design/design-token';
 import * as m from '@shared/styles/media.css';
 import * as t from '@shared/styles/token.css';
 import * as u from '@shared/styles/utils.css';
@@ -45,7 +45,7 @@ export const title = style([
 ]);
 
 export const highlight = style({
-  color: colors.light.scheme.$blue800,
+  color: vars.$scale.color.blue800,
   fontWeight: 'normal',
 });
 

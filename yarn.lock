@@ -1932,7 +1932,6 @@ __metadata:
     "@codepocket/schema": ^0.0.4
     "@codesandbox/sandpack-react": ^1.2.4
     "@codesandbox/sandpack-themes": ^1.0.0
-    "@karrotmarket/design-token": ^1.1.2
     "@mdx-js/react": ^1.6.22
     "@seed-design/design-token": ^1.0.0-alpha.0
     "@seed-design/stylesheet": ^1.0.0-beta.1
@@ -2922,13 +2921,6 @@ __metadata:
     "@jridgewell/resolve-uri": ^3.0.3
     "@jridgewell/sourcemap-codec": ^1.4.10
   checksum: b9537b9630ffb631aef9651a085fe361881cde1772cd482c257fe3c78c8fd5388d681f504a9c9fe1081b1c05e8f75edf55ee10fdb58d92bbaa8dbf6a7bd6b18c
-  languageName: node
-  linkType: hard
-
-"@karrotmarket/design-token@npm:^1.1.2":
-  version: 1.1.2
-  resolution: "@karrotmarket/design-token@npm:1.1.2"
-  checksum: 9ec1524e9a573a07931d40cd4806692f5670721a6ec5247bd0449e0389088822a9a91496bfe422929a35aa12a2d663b1f2537fdba8e1dcebbf6ba6ff139e640c
   languageName: node
   linkType: hard
 

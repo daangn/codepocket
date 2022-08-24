@@ -1,4 +1,4 @@
-import { colors } from '@karrotmarket/design-token';
+import { vars } from '@seed-design/design-token';
 import { Icon } from '@shared/components';
 
 import * as style from './style.css';
@@ -10,10 +10,10 @@ interface AlertInterface {
 
 const AlertIcon = ({ status }: Pick<AlertInterface, 'status'>) => {
   const icon = {
-    error: <Icon icon="warningFill" color={colors.light.scheme.$red800} />,
-    info: <Icon icon="information" color={colors.light.scheme.$blue800} />,
-    success: <Icon icon="check" color={colors.light.scheme.$green500} />,
-    warning: <Icon icon="warningFill" color={colors.light.scheme.$carrot600} />,
+    error: <Icon icon="warningFill" color={vars.$scale.color.red700} />,
+    info: <Icon icon="information" color={vars.$scale.color.blue700} />,
+    success: <Icon icon="check" color={vars.$scale.color.green600} />,
+    warning: <Icon icon="warningFill" color={vars.$scale.color.carrot700} />,
   };
   return icon[status];
 };
