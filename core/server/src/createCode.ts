@@ -1,5 +1,5 @@
 import { createCodeRequestValidate, CreateCodeResponse } from '@codepocket/schema';
-import { CodeInfo, CreateCodeParams, PocketToken, UserNameWithId } from 'types';
+import { CodeId, CodeInfo, CreateCodeParams, PocketToken, UserNameWithId } from 'types';
 
 import { postMessageToSlack, SlackConfig, uploadCodeToSlack } from './slack';
 
@@ -21,7 +21,7 @@ export interface CreateCodeType<Response> {
   /* 해당 저자의 동일한 이름의 코드가 있는 검사하는 함수 */
   isExistCodeName: (params: CodeInfo) => Promise<boolean>;
   /* 코드를 생성하는 함수 */
-  createCode: (obj: CreateCodeParams) => Promise<void>;
+  createCode: (obj: CreateCodeParams) => Promise<CodeId>;
 }
 
 export default async <T, Response>(request: T, modules: CreateCodeType<Response>) => {
@@ -50,7 +50,7 @@ export default async <T, Response>(request: T, modules: CreateCodeType<Response>
           uploadedChatURL: undefined,
         };
 
-  await modules.createCode({
+  const { codeId } = await modules.createCode({
     code,
     codeName,
     codeAuthor,
@@ -62,6 +62,7 @@ export default async <T, Response>(request: T, modules: CreateCodeType<Response>
 
   if (modules.slackConfig && modules.slackAPIError)
     await postMessageToSlack({
+      codeId,
       codeName,
       codeAuthor,
       isAnonymous,
