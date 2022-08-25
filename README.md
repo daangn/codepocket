@@ -1,5 +1,8 @@
 # Codepocket
 
+- [codepocket (외부 공개용)](https://codepocket.pages.dev/)
+- [codepocket-daangn (내부용)](https://codepocket-daangn.pages.dev/)
+
 ## Introduction
 
 > **함께 다양한 코드를 모으고 기여해서 중복 노력이 없는 개발 환경을 만들어요**
