@@ -5,13 +5,15 @@ import { getStoryNamesUrl } from '../api';
 
 interface UseStoryNames {
   codeId: string;
+  onError: () => void;
 }
 
-const useStoryNames = ({ codeId }: UseStoryNames) =>
+const useStoryNames = ({ codeId, onError }: UseStoryNames) =>
   useCustomQuery<GetStoryNamesResponse>({
     url: getStoryNamesUrl,
     validator: getStoryNamesResponseValidate,
     params: { codeId },
+    options: { onError },
   });
 
 export default useStoryNames;
