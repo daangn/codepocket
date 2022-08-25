@@ -13,8 +13,9 @@ const useCustomAuth0 = ({ domain }: UseCustomAuth0Props) => {
     if (isExternalUser) return true;
     if (!user || !user.email) return false;
 
+    const domains = domain.split(',');
     const userDomain = user?.email.split('@')[1];
-    return userDomain === domain;
+    return domains.includes(userDomain);
   }, [domain, isExternalUser, user]);
 
   return {
