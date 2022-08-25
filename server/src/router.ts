@@ -13,7 +13,12 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
   const connector = createConnector<CustomResponse>({
     validateError: new CustomResponse({ customStatus: 4001 }),
     slackAPIError: new CustomResponse({ customStatus: 5001 }),
-    slackConfig: undefined,
+    slackConfig: {
+      BASE_WEB_URL: env.WEB_URL,
+      CHAPTER_FRONTED_CHANNEL_ID: env.CHAPTER_FRONTED_CHANNEL_ID,
+      CODEPOCKET_CHANNEL_ID: env.CODEPOCKET_CHANNEL_ID,
+      SLACK_BOT_TOKEN: env.SLACK_BOT_TOKEN,
+    },
   });
 
   server.post('/user', (req, reply) =>
@@ -132,12 +137,6 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
           getUserInfo: UserModule.getUserInfo(server),
           isExistCode: CodeModule.isExistCode(server),
           pushCode: CodeModule.pushCode(server),
-          slackConfig: {
-            BASE_WEB_URL: env.WEB_URL,
-            CHAPTER_FRONTED_CHANNEL_ID: env.CHAPTER_FRONTED_CHANNEL_ID,
-            CODEPOCKET_CHANNEL_ID: env.CODEPOCKET_CHANNEL_ID,
-            SLACK_BOT_TOKEN: env.SLACK_BOT_TOKEN,
-          },
         }),
       reply,
     ),
