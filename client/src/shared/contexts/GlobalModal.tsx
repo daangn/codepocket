@@ -22,7 +22,9 @@ const GlobalModal = () => {
 
   return (
     <Modal isOpen={state.isModalOpen} closeModal={closeModal} disableEscape>
-      {ModalComponent && <ModalComponent targetId={targetId} closeModal={closeModal} />}
+      {ModalComponent && (
+        <ModalComponent targetId={targetId} closeModal={closeModal} onConfirm={state.onConfirm} />
+      )}
     </Modal>
   );
 };

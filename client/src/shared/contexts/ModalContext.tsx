@@ -3,19 +3,27 @@ import React, { createContext, Dispatch, useContext, useReducer } from 'react';
 import GlobalModal from './GlobalModal';
 
 export interface ModalInterface {
-  closeModal?: () => void;
   targetId?: string;
+  onConfirm?: () => void;
+  closeModal?: () => void;
 }
 type Component = (props: ModalInterface) => JSX.Element;
 type State = {
   targetId: string;
   isModalOpen: boolean;
   ModalComponent: Component | null;
+  onConfirm?: () => void;
   closeModal?: () => void;
 };
 
 type Action =
-  | { type: 'OPEN_MODAL'; Component: Component; targetId?: string; closeModal?: () => void }
+  | {
+      type: 'OPEN_MODAL';
+      Component: Component;
+      targetId?: string;
+      closeModal?: () => void;
+      onConfirm?: () => void;
+    }
   | { type: 'CLOSE_MODAL' };
 
 type ModalDispatch = Dispatch<Action>;
@@ -31,6 +39,7 @@ function reducer(state: State, action: Action): State {
         targetId: action.targetId || '',
         isModalOpen: true,
         ModalComponent: action.Component,
+        onConfirm: action.onConfirm,
         closeModal: action.closeModal,
       };
     case 'CLOSE_MODAL':
@@ -39,6 +48,7 @@ function reducer(state: State, action: Action): State {
         targetId: '',
         isModalOpen: false,
         ModalComponent: null,
+        onConfirm: undefined,
         closeModal: undefined,
       };
     default:
