@@ -12,18 +12,20 @@ function Transition({ children, isOn, timeout = 500 }: TransitionProps) {
   const [status, setStatus] = useState<StatusType>(isOn ? 'on' : 'off');
 
   const onTransitionEnd = useCallback(() => {
+    if (status === 'off') return;
     setStatus('offing');
     timerRef.current = setTimeout(() => {
       setStatus('off');
     }, timeout);
-  }, [setStatus, timeout]);
+  }, [setStatus, timeout, status]);
 
   const onTransitionStart = useCallback(() => {
+    if (status === 'on') return;
     setStatus('oning');
     timerRef.current = setTimeout(() => {
       setStatus('on');
     }, timeout);
-  }, [setStatus, timeout]);
+  }, [setStatus, timeout, status]);
 
   useEffect(() => {
     if (!isOn) return onTransitionEnd();

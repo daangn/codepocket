@@ -2,6 +2,7 @@
 import * as Sandpack from '@codesandbox/sandpack-react';
 import * as theme from '@codesandbox/sandpack-themes';
 import { Modal } from '@shared/components';
+import { useModalDispatch } from '@shared/contexts/ModalContext';
 import { rem } from 'polished';
 import { useState } from 'react';
 
@@ -13,6 +14,7 @@ import {
 import getAllCodesFromSandpack from '../../utils/getAllCodesFromSandpack';
 import { getDependenciesFromText } from '../../utils/parse';
 import { genrateBaseCode } from '../../utils/textGenerator';
+import StoryConfirmModal from '../StoryConfirmModal';
 import * as style from './style.css';
 
 export interface SelectedStory {
@@ -50,37 +52,31 @@ const SandpackComponent: React.FC<SandpackComponentProps> = (props) => {
     sandpack: { files },
   } = Sandpack.useSandpack();
   const [storyName, setStoryName] = useState('');
-  const [isModalOpened, setIsModalOpened] = useState(false);
+  const modalDispatch = useModalDispatch();
 
   const changeStoryName = (event: React.ChangeEvent<HTMLInputElement>) => {
     setStoryName(event.target.value);
+  };
+
+  const onConfirm = () => {
+    const codes = getAllCodesFromSandpack({ files, codeName: props.codeName });
+    props.pushCode({ codes, storyName });
+    setStoryName('');
   };
 
   const createNewStory = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!storyName) return;
 
-    setIsModalOpened(true);
-  };
-
-  const closeModal = () => setIsModalOpened(false);
-  const onCancel = () => closeModal();
-  const onConfirm = () => {
-    const codes = getAllCodesFromSandpack({ files, codeName: props.codeName });
-    props.pushCode({ codes, storyName });
-    setStoryName('');
-    closeModal();
+    modalDispatch({
+      type: 'OPEN_MODAL',
+      Component: StoryConfirmModal,
+      onConfirm,
+    });
   };
 
   return (
     <>
-      <Modal isOpen={isModalOpened} closeModal={closeModal}>
-        <p className={style.modalParagraph}>정말로 스토리를 생성하시겠어요?</p>
-        <div className={style.buttonWrapper}>
-          <Modal.CancelButton onCancel={onCancel} />
-          <Modal.ConfirmButton onConfirm={onConfirm} />
-        </div>
-      </Modal>
       <div className={style.sandpackWrapper}>
         <Sandpack.SandpackLayout style={{ height: '100%' }}>
           <Sandpack.SandpackCodeEditor closableTabs style={{ height: '100%', fontSize: rem(18) }} />

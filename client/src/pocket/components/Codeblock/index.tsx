@@ -1,6 +1,7 @@
 import { vars } from '@seed-design/design-token';
 import { Icon, IconButton } from '@shared/components';
 import { modals } from '@shared/contexts/GlobalModal';
+import { useModalDispatch } from '@shared/contexts/ModalContext';
 import useClipboard from '@shared/hooks/useClipboard';
 import { localStorage } from '@shared/utils/localStorage';
 import { useCallback, useMemo, useRef, useState } from 'react';
@@ -8,7 +9,6 @@ import SyntaxHighlighter, { SyntaxHighlighterProps } from 'react-syntax-highligh
 import { githubGist } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
 import { generateDetailPath } from '../../../routes';
-import { useModalDispatch } from '../../../shared/contexts/ModalContext';
 import * as style from './style.css';
 
 export interface CodeblockProps {

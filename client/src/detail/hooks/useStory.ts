@@ -5,7 +5,11 @@ import { useCallback, useEffect, useState } from 'react';
 import { getStoryCodeUrl } from '../api';
 import { SelectedStory } from '../components/Sandpack';
 
-const useStory = () => {
+interface UseStoryParams {
+  onError: () => void;
+}
+
+const useStory = ({ onError }: UseStoryParams) => {
   const [selectedStoryId, setSelectedStoryId] = useState<string>('');
   const [selectedStoryCodes, setSelectedStoryCodes] = useState<SelectedStory>();
   const { refetch: getStory, error } = useCustomQuery<GetStoryCodeResponse>({
@@ -16,6 +20,7 @@ const useStory = () => {
     },
     options: {
       enabled: false,
+      onError,
     },
   });
 

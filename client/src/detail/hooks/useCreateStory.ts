@@ -15,9 +15,10 @@ interface UseCreateStory {
   codeAuthor?: string;
   codeId: string;
   selectStory: (name: string) => void;
+  onError: () => void;
 }
 
-const useCreateStory = ({ codeId, selectStory }: UseCreateStory) => {
+const useCreateStory = ({ codeId, selectStory, onError }: UseCreateStory) => {
   const queryClient = useQueryClient();
   const { mutate: createStoryMutate, error } = useCustomMutation<
     CreateStoryResponse,
@@ -32,6 +33,7 @@ const useCreateStory = ({ codeId, selectStory }: UseCreateStory) => {
         await queryClient.invalidateQueries([getStoryNamesUrl]);
         selectStory(res.storyId);
       },
+      onError,
     },
   });
 

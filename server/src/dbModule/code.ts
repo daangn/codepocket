@@ -152,7 +152,7 @@ export const createCode =
     slackChatChannel,
     slackChatTimeStamp,
   }: Types.CreateCodeParams) => {
-    const [createCodeError] = await to(
+    const [createCodeError, createCodeResponse] = await to(
       (async () =>
         await server.store.Code.create({
           code,
@@ -168,6 +168,7 @@ export const createCode =
     );
 
     if (createCodeError) throw new CustomResponse({ customStatus: 5000 });
+    return { codeId: createCodeResponse.id };
   };
 
 export const updateCode =

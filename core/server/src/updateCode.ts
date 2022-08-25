@@ -63,6 +63,7 @@ export default async <T, Response>(request: T, modules: UpdateCodeType<Response>
 
   if (modules.slackConfig && modules.slackAPIError)
     await postMessageToSlack({
+      codeId,
       codeName,
       codeAuthor,
       isAnonymous,
