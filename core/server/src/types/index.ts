@@ -52,10 +52,12 @@ export interface StoryIdWithCode {
 export interface StoryNamesWithCodeId {
   storyName: string;
   storyId: string;
+  userId: string;
 }
 
 export interface StoryInfoWithCode {
   codeId: string;
+  userId: string;
   storyName: string;
   storyAuthor: string;
   codes: { [x: string]: string };

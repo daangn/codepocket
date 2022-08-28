@@ -68,7 +68,8 @@ export const getStoryFullNames =
     const { codeAuthor, codeName } = await getCodeInfoById(server)({ codeId });
     const stories = await getStories(server)({ codeAuthor, codeName });
 
-    const storyNames = stories.map(({ storyAuthor, storyName, _id }) => ({
+    const storyNames = stories.map(({ storyAuthor, storyName, userId, _id }) => ({
+      userId,
       storyName: `${storyAuthor}-${storyName}`,
       storyId: String(_id),
     }));
@@ -89,12 +90,13 @@ export const getStoryCode =
 
 export const createStory =
   (server: FastifyInstance) =>
-  async ({ codeId, storyAuthor, storyName, codes }: Types.StoryInfoWithCode) => {
+  async ({ codeId, storyAuthor, storyName, userId, codes }: Types.StoryInfoWithCode) => {
     const { codeAuthor, codeName } = await getCodeInfoById(server)({ codeId });
     const [createError, story] = await to(
       (async () =>
         await server.store.Story.create({
           codeId,
+          userId,
           codeName,
           codeAuthor,
           storyName,

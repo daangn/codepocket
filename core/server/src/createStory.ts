@@ -21,11 +21,11 @@ export default async <T, Response>(request: T, modules: CreateStoryType<Response
   if (!createStoryRequestValidate(request)) throw modules.validateError;
   const { pocketToken, codeId, storyName, codes } = request.body;
 
-  const { userName: storyAuthor } = await modules.getUserInfo({ pocketToken });
+  const { userName: storyAuthor, userId } = await modules.getUserInfo({ pocketToken });
 
   const isStoryExist = await modules.isStoryExist({ codeId, storyAuthor, storyName });
   if (isStoryExist) throw modules.existStoryErrorFunc;
-  const storyId = await modules.createStory({ codeId, storyAuthor, storyName, codes });
+  const storyId = await modules.createStory({ codeId, storyAuthor, storyName, userId, codes });
 
   return modules.successResponseFunc({ message: '', storyId });
 };
