@@ -71,38 +71,37 @@ const StoryNameList: React.FC<StoryNameListProps> = (props) => {
         </div>
       </Modal>
       <ul className={style.list}>
-        {props.pocketCodes.map(
-          ({ storyId, storyName, userId }) =>
-            isValidUserId(userId) && (
-              <li key={storyId} className={style.item} onClick={() => props.selectStory(storyId)}>
-                <Transition isOn={props.selectedStoryId === storyId} timeout={100}>
-                  {() => (
-                    <div
-                      className={style.controlButtonsWrapper({
-                        selected: props.selectedStoryId === storyId,
-                      })}
-                    >
-                      <IconButton
-                        icon={<Icon icon="edit" />}
-                        onClick={(event) => onClickUpdateBtn(event, storyId)}
-                      />
-                      <IconButton
-                        icon={<Icon icon="delete" />}
-                        onClick={(event) => onClickDeleteBtn(event, storyId)}
-                      />
-                    </div>
-                  )}
-                </Transition>
-                <button
-                  className={style.storyButton({
-                    selected: props.selectedStoryId === storyId,
-                  })}
-                >
-                  {storyName}
-                </button>
-              </li>
-            ),
-        )}
+        {props.pocketCodes.map(({ storyId, storyName, userId }) => (
+          <li key={storyId} className={style.item} onClick={() => props.selectStory(storyId)}>
+            {isValidUserId(userId) && (
+              <Transition isOn={props.selectedStoryId === storyId} timeout={100}>
+                {() => (
+                  <div
+                    className={style.controlButtonsWrapper({
+                      selected: props.selectedStoryId === storyId,
+                    })}
+                  >
+                    <IconButton
+                      icon={<Icon icon="edit" />}
+                      onClick={(event) => onClickUpdateBtn(event, storyId)}
+                    />
+                    <IconButton
+                      icon={<Icon icon="delete" />}
+                      onClick={(event) => onClickDeleteBtn(event, storyId)}
+                    />
+                  </div>
+                )}
+              </Transition>
+            )}
+            <button
+              className={style.storyButton({
+                selected: props.selectedStoryId === storyId,
+              })}
+            >
+              {storyName}
+            </button>
+          </li>
+        ))}
       </ul>
     </>
   );
