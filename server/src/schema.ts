@@ -23,6 +23,7 @@ export interface Code {
 export interface Story {
   codes: string;
   codeId: string;
+  userId: string;
   codeName: string;
   codeAuthor: string;
   storyName: string;
@@ -68,6 +69,7 @@ export const StorySchema = new Schema<Story>({
   codeId: String,
   codeName: String,
   codeAuthor: String,
+  userId: String,
   storyName: String,
   storyAuthor: String,
   createdAt: Date,
