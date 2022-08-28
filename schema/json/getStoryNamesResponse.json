@@ -15,12 +15,16 @@
           },
           "storyId": {
             "type": "string"
+          },
+          "userId": {
+            "type": "string"
           }
         },
         "additionalProperties": false,
         "required": [
           "storyName",
-          "storyId"
+          "storyId",
+          "userId"
         ]
       }
     }
