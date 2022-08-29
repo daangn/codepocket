@@ -447,7 +447,8 @@
     "message": "string",
     "storyNames": {
       "storyName": "string",
-      "storyId": "string"
+      "storyId": "string",
+      "userId": "string",
     }[]
   }
   ```
