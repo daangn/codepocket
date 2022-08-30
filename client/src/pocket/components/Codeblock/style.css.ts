@@ -16,6 +16,7 @@ export const codeItem = style([
 
 export const codeItemHeaderInfo = style([
   u.flexAlignCenter,
+  u.fullWidth,
   {
     justifyContent: 'space-between',
     fontWeight: 'bold',
@@ -27,17 +28,20 @@ export const codeItemHeaderInfo = style([
     flexDirection: 'column-reverse',
     alignItems: 'start',
     rowGap: rem(5),
+    fontSize: rem(16),
   }),
   m.small({
-    fontSize: rem(16),
+    fontSize: rem(14),
   }),
 ]);
 
 export const codeItemHeaderCodeName = style([
-  u.flexCenter,
+  u.flex,
+  u.fullWidth,
   { columnGap: rem(7) },
   m.medium({ marginLeft: rem(2) }),
 ]);
+export const codeItemHeaderCodeNameText = style([u.fullWidth, { overflow: 'auto' }]);
 
 export const codeItemHeaderCodeAuthor = style([u.flexCenter, { columnGap: rem(7) }]);
 

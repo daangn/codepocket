@@ -55,7 +55,7 @@ const Codeblock: React.FC<CodeblockProps> = ({
       <div className={style.codeItemHeaderInfo}>
         <div className={style.codeItemHeaderCodeName}>
           <Icon icon="code" />
-          <span>{codeName}</span>
+          <span className={style.codeItemHeaderCodeNameText}>{codeName}</span>
         </div>
         {!isAnonymous && (
           <div className={style.codeItemHeaderCodeAuthor}>
