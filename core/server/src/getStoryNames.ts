@@ -6,6 +6,7 @@ export interface GetStoryNamesType<Response> {
   validateError?: Response;
   /* 성공했을 경우 */
   successResponseFunc: (body: GetStoryNamesResponse) => Response;
+
   /* 스토리 이름들을 가져오는 함수 */
   getStoryNames: (params: CodeId) => Promise<StoryNamesWithCodeId[]>;
 }

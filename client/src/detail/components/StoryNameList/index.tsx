@@ -1,5 +1,6 @@
 import * as Sandpack from '@codesandbox/sandpack-react';
 import { Icon, IconButton, Modal } from '@shared/components';
+import { localStorage } from '@shared/utils/localStorage';
 import Transition from '@shared/utils/Transition';
 import React, { useState } from 'react';
 
@@ -11,7 +12,7 @@ import * as style from './style.css';
 interface StoryNameListProps {
   codeId: string;
   codeName: string;
-  pocketCodes: { storyName: string; storyId: string }[];
+  pocketCodes: { storyName: string; storyId: string; userId: string }[];
   selectedStoryId?: string;
   selectStory: (storyName: string) => void;
 }
@@ -38,6 +39,14 @@ const StoryNameList: React.FC<StoryNameListProps> = (props) => {
     setStoryWantedDelete({ modal: 'update', storyId });
   };
 
+  const isValidUserId = (userId: string) => localStorage.getUserId() === userId;
+
+  const getModalMessage = () => {
+    if (storyWantedDelete.modal === 'delete') return '정말로 스토리를 삭제하시겠어요?';
+    if (storyWantedDelete.modal === 'update') return '정말로 스토리를 수정하시겠어요?';
+    return '';
+  };
+
   const closeModal = () => setStoryWantedDelete({ modal: 'none' });
   const onCancel = () => closeModal();
   const onConfirm = () => {
@@ -55,33 +64,35 @@ const StoryNameList: React.FC<StoryNameListProps> = (props) => {
   return (
     <>
       <Modal isOpen={storyWantedDelete.modal !== 'none'} closeModal={closeModal}>
-        <p className={style.modalParagraph}>정말로 스토리를 삭제하시겠어요?</p>
+        <p className={style.modalParagraph}>{getModalMessage()}</p>
         <div className={style.buttonWrapper}>
           <Modal.CancelButton onCancel={onCancel} />
           <Modal.ConfirmButton onConfirm={onConfirm} />
         </div>
       </Modal>
       <ul className={style.list}>
-        {props.pocketCodes.map(({ storyId, storyName }) => (
+        {props.pocketCodes.map(({ storyId, storyName, userId }) => (
           <li key={storyId} className={style.item} onClick={() => props.selectStory(storyId)}>
-            <Transition isOn={props.selectedStoryId === storyId} timeout={100}>
-              {() => (
-                <div
-                  className={style.controlButtonsWrapper({
-                    selected: props.selectedStoryId === storyId,
-                  })}
-                >
-                  <IconButton
-                    icon={<Icon icon="edit" />}
-                    onClick={(event) => onClickUpdateBtn(event, storyId)}
-                  />
-                  <IconButton
-                    icon={<Icon icon="delete" />}
-                    onClick={(event) => onClickDeleteBtn(event, storyId)}
-                  />
-                </div>
-              )}
-            </Transition>
+            {isValidUserId(userId) && (
+              <Transition isOn={props.selectedStoryId === storyId} timeout={100}>
+                {() => (
+                  <div
+                    className={style.controlButtonsWrapper({
+                      selected: props.selectedStoryId === storyId,
+                    })}
+                  >
+                    <IconButton
+                      icon={<Icon icon="edit" />}
+                      onClick={(event) => onClickUpdateBtn(event, storyId)}
+                    />
+                    <IconButton
+                      icon={<Icon icon="delete" />}
+                      onClick={(event) => onClickDeleteBtn(event, storyId)}
+                    />
+                  </div>
+                )}
+              </Transition>
+            )}
             <button
               className={style.storyButton({
                 selected: props.selectedStoryId === storyId,
