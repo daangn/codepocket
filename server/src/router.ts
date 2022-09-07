@@ -3,13 +3,12 @@ import * as Schema from '@codepocket/schema';
 import { FastifyInstance, FastifyPluginOptions } from 'fastify';
 import fp from 'fastify-plugin';
 
-import * as CodeModule from './dbModule/code';
-import * as StoryModule from './dbModule/story';
-import * as UserModule from './dbModule/user';
+import createDBModule from './dbModule';
 import { env } from './utils/env';
 import responseHandler, { CustomResponse } from './utils/responseHandler';
 
 export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
+  const { CodeModule, StoryModule, UserModule } = createDBModule(server);
   const connector = createConnector<CustomResponse>({
     validateError: new CustomResponse({ customStatus: 4001 }),
     slackAPIError: new CustomResponse({ customStatus: 5001 }),
@@ -27,8 +26,8 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
         connector.createUser(req, {
           successResponseFunc: (body) =>
             new CustomResponse<Schema.CreateUserResponse>({ customStatus: 2007, body }),
-          getUserPrivateInfo: UserModule.getUserPrivateInfo(server),
-          createUser: UserModule.createUser(server),
+          getUserPrivateInfo: UserModule.getUserPrivateInfo,
+          createUser: UserModule.createUser,
         }),
       reply,
     ),
@@ -40,7 +39,7 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
         connector.verifyUser(req, {
           successResponseFunc: (body) =>
             new CustomResponse<Schema.VerifyUserResponse>({ customStatus: 2000, body }),
-          getUserInfo: UserModule.getUserInfo(server),
+          getUserInfo: UserModule.getUserInfo,
         }),
       reply,
     ),
@@ -52,7 +51,7 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
         connector.getStoryCode(req, {
           successResponseFunc: (body) =>
             new CustomResponse<Schema.GetStoryCodeResponse>({ customStatus: 2001, body }),
-          getStoryCode: StoryModule.getStoryCode(server),
+          getStoryCode: StoryModule.getStoryCode,
         }),
       reply,
     ),
@@ -64,7 +63,7 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
         connector.getStoryNames(req, {
           successResponseFunc: (body) =>
             new CustomResponse<Schema.GetStoryNamesResponse>({ customStatus: 2001, body }),
-          getStoryNames: StoryModule.getStoryFullNames(server),
+          getStoryNames: StoryModule.getStoryFullNames,
         }),
       reply,
     ),
@@ -77,9 +76,9 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
           successResponseFunc: (body) =>
             new CustomResponse<Schema.CreateStoryResponse>({ body, customStatus: 2001 }),
           existStoryErrorFunc: new CustomResponse({ customStatus: 4004 }),
-          isStoryExist: StoryModule.isExistStory(server),
-          getUserInfo: UserModule.getUserInfo(server),
-          createStory: StoryModule.createStory(server),
+          isStoryExist: StoryModule.isExistStory,
+          getUserInfo: UserModule.getUserInfo,
+          createStory: StoryModule.createStory,
         }),
       reply,
     ),
@@ -92,8 +91,8 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
           successResponseFunc: () =>
             new CustomResponse<Schema.UpdateStoryResponse>({ customStatus: 2009 }),
           existStoryErrorFunc: () => new CustomResponse({ customStatus: 4002 }),
-          isStoryExist: StoryModule.isExistStoryWithStoryId(server),
-          updateStory: StoryModule.updateStory(server),
+          isStoryExist: StoryModule.isExistStoryWithStoryId,
+          updateStory: StoryModule.updateStory,
         }),
       reply,
     ),
@@ -106,9 +105,9 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
           successResponseFunc: () =>
             new CustomResponse<Schema.UpdateCodeResponse>({ customStatus: 2006 }),
           notExistCodeError: new CustomResponse({ customStatus: 4008 }),
-          getUserInfo: UserModule.getUserInfo(server),
-          checkExistCodeWithCodeId: CodeModule.isExistCodeWithCodeId(server),
-          updateCode: CodeModule.updateCode(server),
+          getUserInfo: UserModule.getUserInfo,
+          checkExistCodeWithCodeId: CodeModule.isExistCodeWithCodeId,
+          updateCode: CodeModule.updateCode,
         }),
       reply,
     ),
@@ -120,7 +119,7 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
         connector.getCode(req, {
           successResponseFunc: (body) =>
             new CustomResponse<Schema.GetCodeResponse>({ customStatus: 2007, body }),
-          getCodeInfoById: CodeModule.getCodeInfoById(server),
+          getCodeInfoById: CodeModule.getCodeInfoById,
         }),
       reply,
     ),
@@ -133,10 +132,10 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
           successResponseFunc: () =>
             new CustomResponse<Schema.PushCodeResponse>({ customStatus: 2006 }),
           existAnonymousError: new CustomResponse({ customStatus: 4009 }),
-          isAnonymousCodeExist: CodeModule.isAnonymousCodeExist(server),
-          getUserInfo: UserModule.getUserInfo(server),
-          isExistCode: CodeModule.isExistCode(server),
-          pushCode: CodeModule.pushCode(server),
+          isAnonymousCodeExist: CodeModule.isAnonymousCodeExist,
+          getUserInfo: UserModule.getUserInfo,
+          isExistCode: CodeModule.isExistCode,
+          pushCode: CodeModule.pushCode,
         }),
       reply,
     ),
@@ -149,9 +148,9 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
           successResponseFunc: () =>
             new CustomResponse<Schema.CreateCodeResponse>({ customStatus: 2005 }),
           existCodeNameError: new CustomResponse({ customStatus: 4010 }),
-          getUserInfo: UserModule.getUserInfo(server),
-          isExistCodeName: CodeModule.isExistCode(server),
-          createCode: CodeModule.createCode(server),
+          getUserInfo: UserModule.getUserInfo,
+          isExistCodeName: CodeModule.isExistCode,
+          createCode: CodeModule.createCode,
         }),
       reply,
     ),
@@ -163,7 +162,7 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
         connector.pullCode(req, {
           successResponseFunc: (body) =>
             new CustomResponse<Schema.PullCodeResponse>({ customStatus: 2004, body }),
-          getCode: CodeModule.getCodeCode(server),
+          getCode: CodeModule.getCodeCode,
         }),
       reply,
     ),
@@ -175,7 +174,7 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
         connector.getCodeAuthors(req, {
           successResponseFunc: (body) =>
             new CustomResponse<Schema.GetCodeAuthorsResponse>({ customStatus: 2003, body }),
-          findCodeAuthors: CodeModule.findCodeAuthors(server),
+          findCodeAuthors: CodeModule.findCodeAuthors,
         }),
       reply,
     ),
@@ -187,7 +186,7 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
         connector.getCodeNames(req, {
           successResponseFunc: (body) =>
             new CustomResponse<Schema.GetCodeNamesResponse>({ customStatus: 2003, body }),
-          findCodeInfoUsingRegex: CodeModule.findCodeInfoUsingRegex(server),
+          findCodeInfoUsingRegex: CodeModule.findCodeInfoUsingRegex,
         }),
       reply,
     ),
@@ -200,9 +199,9 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
           existCodeErrorFunc: () => new CustomResponse({ customStatus: 4006 }),
           successResponseFunc: () =>
             new CustomResponse<Schema.DeleteCodeResponse>({ customStatus: 2002 }),
-          getUserInfo: UserModule.getUserInfo(server),
-          isExistCode: CodeModule.isExistCode(server),
-          deleteCode: CodeModule.deleteCode(server),
+          getUserInfo: UserModule.getUserInfo,
+          isExistCode: CodeModule.isExistCode,
+          deleteCode: CodeModule.deleteCode,
         }),
       reply,
     ),
@@ -215,9 +214,9 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
           existCodeErrorFunc: () => new CustomResponse({ customStatus: 4006 }),
           successResponseFunc: () =>
             new CustomResponse<Schema.DeleteCodeByIdRequest>({ customStatus: 2002 }),
-          getUserInfo: UserModule.getUserInfo(server),
-          isExistCode: CodeModule.isExistCodeById(server),
-          deleteCodeById: CodeModule.deleteCodeById(server),
+          getUserInfo: UserModule.getUserInfo,
+          isExistCode: CodeModule.isExistCodeById,
+          deleteCodeById: CodeModule.deleteCodeById,
         }),
       reply,
     ),
@@ -230,8 +229,8 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
           existStoryErrorFunc: () => new CustomResponse({ customStatus: 4002 }),
           successResponseFunc: () =>
             new CustomResponse<Schema.DeleteStoryResponse>({ customStatus: 2008 }),
-          isExistStory: StoryModule.isExistStory(server),
-          deleteStory: StoryModule.deleteStory(server),
+          isExistStory: StoryModule.isExistStory,
+          deleteStory: StoryModule.deleteStory,
         }),
       reply,
     ),
@@ -243,7 +242,7 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
         connector.getCodes(req, {
           successResponseFunc: (body) =>
             new CustomResponse<Schema.GetCodesResponse>({ customStatus: 2003, body }),
-          searchCodes: CodeModule.searchCodes(server),
+          searchCodes: CodeModule.searchCodes,
         }),
       reply,
     ),
