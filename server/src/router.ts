@@ -77,7 +77,7 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
           successResponseFunc: (body) =>
             new CustomResponse<Schema.CreateStoryResponse>({ body, customStatus: 2001 }),
           existStoryErrorFunc: new CustomResponse({ customStatus: 4004 }),
-          isStoryExist: StoryModule.existStory(server),
+          isStoryExist: StoryModule.isExistStory(server),
           getUserInfo: UserModule.getUserInfo(server),
           createStory: StoryModule.createStory(server),
         }),
@@ -92,7 +92,7 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
           successResponseFunc: () =>
             new CustomResponse<Schema.UpdateStoryResponse>({ customStatus: 2009 }),
           existStoryErrorFunc: () => new CustomResponse({ customStatus: 4002 }),
-          isStoryExist: StoryModule.existStoryWithStoryId(server),
+          isStoryExist: StoryModule.isExistStoryWithStoryId(server),
           updateStory: StoryModule.updateStory(server),
         }),
       reply,
@@ -230,7 +230,7 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
           existStoryErrorFunc: () => new CustomResponse({ customStatus: 4002 }),
           successResponseFunc: () =>
             new CustomResponse<Schema.DeleteStoryResponse>({ customStatus: 2008 }),
-          isExistStory: StoryModule.existStory(server),
+          isExistStory: StoryModule.isExistStory(server),
           deleteStory: StoryModule.deleteStory(server),
         }),
       reply,

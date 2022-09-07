@@ -6,30 +6,35 @@ import { FastifyInstance } from 'fastify';
 import { CustomResponse } from '../utils/responseHandler';
 import { getCodeInfoById } from './code';
 
-export const getStories =
-  (server: FastifyInstance) =>
-  async ({ codeAuthor, codeName }: Types.CodeInfo) => {
-    const [err, stories] = await to(
-      (async () => await server.store.Story.find({ codeAuthor, codeName }))(),
-    );
-    if (err) throw new CustomResponse({ customStatus: 5000 });
-    if (!stories) throw new CustomResponse({ customStatus: 4002 });
+const findStories = async (server: FastifyInstance, { codeAuthor, codeName }: Types.CodeInfo) => {
+  const [err, stories] = await to(
+    (async () => await server.store.Story.find({ codeAuthor, codeName }))(),
+  );
+  if (err) throw new CustomResponse({ customStatus: 5000 });
+  if (!stories) throw new CustomResponse({ customStatus: 4002 });
 
-    return stories;
-  };
+  return stories;
+};
 
-export const getStory =
-  (server: FastifyInstance) =>
-  async ({ codeAuthor, codeName, storyAuthor, storyName }: Types.StoryInfo) => {
-    const [err, story] = await to(
-      (async () =>
-        await server.store.Story.findOne({ codeAuthor, codeName, storyAuthor, storyName }))(),
-    );
-    if (err) throw new CustomResponse({ customStatus: 5000 });
-    if (!story) throw new CustomResponse({ customStatus: 4002 });
+const findOneStory = async (
+  server: FastifyInstance,
+  { codeAuthor, codeName, storyAuthor, storyName }: Types.StoryInfo,
+) => {
+  const [err, story] = await to(
+    (async () =>
+      await server.store.Story.findOne({ codeAuthor, codeName, storyAuthor, storyName }))(),
+  );
+  if (err) throw new CustomResponse({ customStatus: 5000 });
 
-    return story;
-  };
+  return story;
+};
+
+const findOneStoryById = async (server: FastifyInstance, storyId: string) => {
+  const [err, story] = await to((async () => await server.store.Story.findById(storyId))());
+  if (err) throw new CustomResponse({ customStatus: 5000 });
+
+  return story;
+};
 
 export const updateStory =
   (server: FastifyInstance) =>
@@ -42,23 +47,19 @@ export const updateStory =
     if (err) throw new CustomResponse({ customStatus: 5000 });
   };
 
-export const existStory =
+export const isExistStory =
   (server: FastifyInstance) =>
   async ({ codeId, storyAuthor, storyName }: Types.StoryInfoWithCodeId) => {
     const { codeAuthor, codeName } = await getCodeInfoById(server)({ codeId });
-    const [err, story] = await to(
-      (async () =>
-        await server.store.Story.findOne({ codeAuthor, codeName, storyAuthor, storyName }))(),
-    );
-    if (err) throw new CustomResponse({ customStatus: 5000 });
+    const story = await findOneStory(server, { codeAuthor, codeName, storyAuthor, storyName });
+
     return !!story;
   };
 
-export const existStoryWithStoryId =
+export const isExistStoryWithStoryId =
   (server: FastifyInstance) =>
   async ({ storyId }: Types.StoryId) => {
-    const [err, story] = await to((async () => await server.store.Story.findById(storyId))());
-    if (err) throw new CustomResponse({ customStatus: 5000 });
+    const story = await findOneStoryById(server, storyId);
     return !!story;
   };
 
@@ -66,7 +67,7 @@ export const getStoryFullNames =
   (server: FastifyInstance) =>
   async ({ codeId }: Types.CodeId) => {
     const { codeAuthor, codeName } = await getCodeInfoById(server)({ codeId });
-    const stories = await getStories(server)({ codeAuthor, codeName });
+    const stories = await findStories(server, { codeAuthor, codeName });
 
     const storyNames = stories.map(({ storyAuthor, storyName, userId, _id }) => ({
       userId,
@@ -79,10 +80,7 @@ export const getStoryFullNames =
 export const getStoryCode =
   (server: FastifyInstance) =>
   async ({ storyId }: Types.StoryId) => {
-    const [getStoryCodeErr, story] = await to(
-      (async () => await server.store.Story.findById(storyId))(),
-    );
-    if (getStoryCodeErr) throw new CustomResponse({ customStatus: 5000 });
+    const story = await findOneStoryById(server, storyId);
     if (!story) throw new CustomResponse({ customStatus: 4002 });
 
     return JSON.parse(story.codes) as { [x: string]: string };
