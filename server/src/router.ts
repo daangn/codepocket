@@ -107,7 +107,7 @@ export default fp(async (server: FastifyInstance, _: FastifyPluginOptions) => {
             new CustomResponse<Schema.UpdateCodeResponse>({ customStatus: 2006 }),
           notExistCodeError: new CustomResponse({ customStatus: 4008 }),
           getUserInfo: UserModule.getUserInfo(server),
-          checkExistCodeWithCodeId: CodeModule.checkExistCodeWithCodeId(server),
+          checkExistCodeWithCodeId: CodeModule.isExistCodeWithCodeId(server),
           updateCode: CodeModule.updateCode(server),
         }),
       reply,
