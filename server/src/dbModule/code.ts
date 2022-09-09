@@ -297,21 +297,3 @@ export const findCodeInfoUsingRegex =
 
     return codeInfos;
   };
-
-export default (server: FastifyInstance) => ({
-  deleteCode: deleteCode(server),
-  deleteCodeById: deleteCodeById(server),
-  createCode: createCode(server),
-  updateCode: updateCode(server),
-  pushCode: pushCode(server),
-  searchCodes: searchCodes(server),
-  findCodeInfoUsingRegex: findCodeInfoUsingRegex(server),
-  getCodeInfoById: getCodeInfoById(server),
-  getAllCodeInfoById: getAllCodeInfoById(server),
-  isExistCodeWithCodeId: isExistCodeWithCodeId(server),
-  findCodeAuthors: findCodeAuthors(server),
-  isAnonymousCodeExist: isAnonymousCodeExist(server),
-  isExistCodeById: isExistCodeById(server),
-  getCodeCode: getCodeCode(server),
-  isExistCode: isExistCode(server),
-});

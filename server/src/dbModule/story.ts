@@ -121,13 +121,3 @@ export const deleteStory =
 
     if (deleteError) throw new CustomResponse({ customStatus: 5000 });
   };
-
-export default (server: FastifyInstance) => ({
-  isExistStory: isExistStory(server),
-  isExistStoryWithStoryId: isExistStoryWithStoryId(server),
-  getStoryFullNames: getStoryFullNames(server),
-  getStoryCode: getStoryCode(server),
-  createStory: createStory(server),
-  deleteStory: deleteStory(server),
-  updateStory: updateStory(server),
-});

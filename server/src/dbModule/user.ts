@@ -50,10 +50,3 @@ export const createUser =
 
     return { pocketToken: token, userId: createUserResponse.id };
   };
-
-export default (server: FastifyInstance) => ({
-  findAuthor: findAuthor(server),
-  getUserInfo: getUserInfo(server),
-  getUserPrivateInfo: getUserPrivateInfo(server),
-  createUser: createUser(server),
-});
