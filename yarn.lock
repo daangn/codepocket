@@ -2035,6 +2035,7 @@ __metadata:
     "@codepocket/schema": ^0.0.4
     "@fastify/cors": ^8.0.0
     "@fastify/mongodb": ^6.0.1
+    "@fastify/swagger": ^7.5.1
     "@types/dotenv-safe": ^8
     "@types/jsonwebtoken": ^8
     "@types/node": ^18.0.6
@@ -2215,6 +2216,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fastify/accept-negotiator@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@fastify/accept-negotiator@npm:1.0.0"
+  checksum: 9b6be6bfd0f1475e4d06ffbd6359d7cf70841cc8e37abe6fe32f2e0e8185da6077da0d5c6610ade356ed3d4af4d3a642094b4861b123607987491bef2a384957
+  languageName: node
+  linkType: hard
+
 "@fastify/ajv-compiler@npm:^3.1.1":
   version: 3.1.2
   resolution: "@fastify/ajv-compiler@npm:3.1.2"
@@ -2266,6 +2274,35 @@ __metadata:
     fastify-plugin: ^3.0.0
     mongodb: ^4.0.1
   checksum: 369c3212a016772e0e5c309ea139f3e206c9771db4f03f4aa26dafc41f4edb0c0e759e511104fbe648424fd502db6184399ff48615893f806d73c184ff1cb0a1
+  languageName: node
+  linkType: hard
+
+"@fastify/static@npm:^6.0.0":
+  version: 6.5.0
+  resolution: "@fastify/static@npm:6.5.0"
+  dependencies:
+    "@fastify/accept-negotiator": ^1.0.0
+    content-disposition: ^0.5.3
+    fastify-plugin: ^4.0.0
+    glob: ^8.0.1
+    p-limit: ^3.1.0
+    readable-stream: ^4.0.0
+    send: ^0.18.0
+  checksum: 31ef10916847c51fb4c360860f56acee1cbd7a896b66a05440d4eff70473c5b4cdf908b4719a5a22a876617fdc4a4e0fe3673bd5b40c9d61260a90e08abc1d3d
+  languageName: node
+  linkType: hard
+
+"@fastify/swagger@npm:^7.5.1":
+  version: 7.5.1
+  resolution: "@fastify/swagger@npm:7.5.1"
+  dependencies:
+    "@fastify/static": ^6.0.0
+    fastify-plugin: ^4.0.0
+    json-schema-resolver: ^1.3.0
+    openapi-types: ^12.0.0
+    rfdc: ^1.3.0
+    yaml: ^2.1.1
+  checksum: c9063046c2960dd820a8f0cd630c77657af68de70a193196596da18b70f9e1223261bc79ebefd63ff6bb65d9e68e32fe421663b3ca170f633c0075d1e6102bdd
   languageName: node
   linkType: hard
 
@@ -9586,7 +9623,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"content-disposition@npm:0.5.4":
+"content-disposition@npm:0.5.4, content-disposition@npm:^0.5.3":
   version: 0.5.4
   resolution: "content-disposition@npm:0.5.4"
   dependencies:
@@ -15944,6 +15981,17 @@ eslint-config-airbnb-base@latest:
   languageName: node
   linkType: hard
 
+"json-schema-resolver@npm:^1.3.0":
+  version: 1.3.0
+  resolution: "json-schema-resolver@npm:1.3.0"
+  dependencies:
+    debug: ^4.1.1
+    rfdc: ^1.1.4
+    uri-js: ^4.2.2
+  checksum: 9fcbdbd78f440c52077ae7b7c43f455cbd0e554fb9c805497a2384d836730bfbdbe9140ba3b3ddef263efb0eaba3ebe12d0ba3bd9426c15e1c5d3d25afe2a222
+  languageName: node
+  linkType: hard
+
 "json-schema-to-ts@npm:^2.5.5":
   version: 2.5.5
   resolution: "json-schema-to-ts@npm:2.5.5"
@@ -18180,6 +18228,13 @@ eslint-config-airbnb-base@latest:
     is-docker: ^2.1.1
     is-wsl: ^2.2.0
   checksum: e9545bec64cdbf30a0c35c1bdc310344adf8428a117f7d8df3c0af0a0a24c513b304916a6d9b11db0190ff7225c2d578885080b761ed46a3d5f6f1eebb98b63c
+  languageName: node
+  linkType: hard
+
+"openapi-types@npm:^12.0.0":
+  version: 12.0.2
+  resolution: "openapi-types@npm:12.0.2"
+  checksum: 097edc46adb5a8fc2a3419e2e0adbb5516737fd83b4041ec62ee28427e85d9f18c6ead9231b9d1c8f718d86eeccf3c0997437414011d8bb1597387a047493fea
   languageName: node
   linkType: hard
 
@@ -20445,7 +20500,7 @@ eslint-config-airbnb-base@latest:
   languageName: node
   linkType: hard
 
-"rfdc@npm:^1.2.0, rfdc@npm:^1.3.0":
+"rfdc@npm:^1.1.4, rfdc@npm:^1.2.0, rfdc@npm:^1.3.0":
   version: 1.3.0
   resolution: "rfdc@npm:1.3.0"
   checksum: fb2ba8512e43519983b4c61bd3fa77c0f410eff6bae68b08614437bc3f35f91362215f7b4a73cbda6f67330b5746ce07db5dd9850ad3edc91271ad6deea0df32
@@ -20745,7 +20800,7 @@ eslint-config-airbnb-base@latest:
   languageName: node
   linkType: hard
 
-"send@npm:0.18.0":
+"send@npm:0.18.0, send@npm:^0.18.0":
   version: 0.18.0
   resolution: "send@npm:0.18.0"
   dependencies:
@@ -23802,6 +23857,13 @@ eslint-config-airbnb-base@latest:
   version: 1.10.2
   resolution: "yaml@npm:1.10.2"
   checksum: ce4ada136e8a78a0b08dc10b4b900936912d15de59905b2bf415b4d33c63df1d555d23acb2a41b23cf9fb5da41c256441afca3d6509de7247daa062fd2c5ea5f
+  languageName: node
+  linkType: hard
+
+"yaml@npm:^2.1.1":
+  version: 2.1.1
+  resolution: "yaml@npm:2.1.1"
+  checksum: f48bb209918aa57cfaf78ef6448d1a1f8187f45c746f933268b7023dc59e5456004611879126c9bb5ea55b0a2b1c2b392dfde436931ece0c703a3d754562bb96
   languageName: node
   linkType: hard
 
