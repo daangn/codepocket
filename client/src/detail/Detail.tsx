@@ -15,7 +15,7 @@ import useStory from './hooks/useStory';
 import useStoryNames from './hooks/useStoryNames';
 import * as style from './style.css';
 import { createObjWithCertainValue } from './utils/filterObj';
-import { getDependenciesFromText } from './utils/parse';
+import { checkWordInArray, getDependenciesFromText } from './utils/parse';
 import { genrateBaseCode } from './utils/textGenerator';
 
 // TODO: Suspense 적용하기
@@ -39,10 +39,10 @@ const DetailPage: React.FC = () => {
 
   const ROOT_FILE = '/App.tsx';
   const VERSION = 'latest';
-  const dependencies = createObjWithCertainValue(
-    getDependenciesFromText(codeDataRes?.code || ''),
-    VERSION,
-  );
+  const dependencies =
+    codeDataRes && checkWordInArray(codeDataRes.codeName, ['js', 'jsx', 'ts', 'tsx'])
+      ? createObjWithCertainValue(getDependenciesFromText(codeDataRes.code || ''), VERSION)
+      : createObjWithCertainValue(getDependenciesFromText(codeDataRes?.code || ''), VERSION);
   const files = {
     [ROOT_FILE]: genrateBaseCode(codeDataRes?.codeName || ''),
     [`/${codeDataRes?.codeName}`]: codeDataRes?.code || '',
