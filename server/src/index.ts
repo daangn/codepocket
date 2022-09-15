@@ -1,6 +1,7 @@
 import './config';
 
 import cors from '@fastify/cors';
+import swagger from '@fastify/swagger';
 import { to } from 'await-to-js';
 import fastify, { FastifyInstance as H } from 'fastify';
 import { IncomingMessage, Server, ServerResponse } from 'http';
@@ -13,32 +14,45 @@ import { env } from './utils/env';
 const PORT = Number(process.env.PORT) || 8080;
 const server: H<Server, IncomingMessage, ServerResponse> = fastify({ logger: true });
 
-server.register(cors, () => {
-  return (__, callback) => {
-    const corsOptions = { origin: true };
-    callback(null, corsOptions);
-  };
-});
-server.register(route);
-server.register(async () => {
-  const [err, connection] = await to(
-    mongoose.connect(env.MONGO_DB_URI || '', { dbName: env.MONGO_DB_NAME }),
-  );
-  if (err) throw err;
-  server.decorate('store', {
-    User: connection.model('User', UserSchema),
-    Code: connection.model('Code', CodeSchema),
-    Story: connection.model('Story', StorySchema),
-    db: connection,
+const init = async () => {
+  await server.register(swagger, {
+    exposeRoute: true,
+    routePrefix: '/docs',
+    swagger: {
+      info: { title: 'codepocket.server.api', version: '0.0.0' },
+    },
   });
-});
+  server.register(cors, () => {
+    return (__, callback) => {
+      const corsOptions = { origin: true };
+      callback(null, corsOptions);
+    };
+  });
+  server.register(route);
+  server.register(async () => {
+    const [err, connection] = await to(
+      mongoose.connect(env.MONGO_DB_URI || '', { dbName: env.MONGO_DB_NAME }),
+    );
+    if (err) throw err;
+    server.decorate('store', {
+      User: connection.model('User', UserSchema),
+      Code: connection.model('Code', CodeSchema),
+      Story: connection.model('Story', StorySchema),
+      db: connection,
+    });
+  });
 
-const start = async () => {
-  const [err] = await to(server.listen({ port: PORT, host: '0.0.0.0' }));
-  if (err) {
-    server.log.error(err);
-    process.exit(1);
-  }
+  const start = async () => {
+    const [err] = await to(server.listen({ port: PORT, host: '0.0.0.0' }));
+    if (err) {
+      server.log.error(err);
+      process.exit(1);
+    }
+  };
+
+  start();
 };
 
-start();
+(async () => {
+  await init();
+})();
