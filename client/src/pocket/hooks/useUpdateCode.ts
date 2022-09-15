@@ -3,6 +3,7 @@ import {
   UpdateCodeResponse,
   updateCodeResponseValidate,
 } from '@codepocket/schema';
+import { getCodeByIdAPI } from '@shared/api';
 import useCustomMutation from '@shared/hooks/useCustomMutation';
 import { useQueryClient } from '@tanstack/react-query';
 
@@ -10,7 +11,12 @@ import { getCodesUrl } from '../api';
 
 type UpdateCodeBodyType = UpdateCodeRequest['body'];
 
-const useUpdateCode = () => {
+interface UseUpdateCode {
+  codeId?: string;
+  onError?: () => void;
+}
+
+const useUpdateCode = ({ codeId }: UseUpdateCode) => {
   const queryClient = useQueryClient();
   const { mutate: updateCodeMutate } = useCustomMutation<
     UpdateCodeResponse,
@@ -23,6 +29,7 @@ const useUpdateCode = () => {
     options: {
       onSuccess: async () => {
         await queryClient.invalidateQueries([getCodesUrl]);
+        await queryClient.invalidateQueries([getCodeByIdAPI, { codeId }]);
       },
     },
   });

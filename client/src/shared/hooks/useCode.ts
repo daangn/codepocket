@@ -1,4 +1,5 @@
 import { GetCodeResponse, getCodeResponseValidate } from '@codepocket/schema';
+import { getCodeByIdAPI } from '@shared/api';
 import useCustomQuery from '@shared/hooks/useCustomQuery';
 
 interface UseCode {
@@ -8,7 +9,7 @@ interface UseCode {
 
 const useCode = ({ codeId, onError }: UseCode) =>
   useCustomQuery<GetCodeResponse>({
-    url: '/code/id',
+    url: getCodeByIdAPI,
     validator: getCodeResponseValidate,
     params: { codeId: `${codeId}` },
     options: { onError },

@@ -7,7 +7,7 @@ import ModalContentTemplate, { OnConfirmModal } from './Template';
 
 const CreateModal = ({ closeModal, targetId }: ModalInterface) => {
   const { data: codeInfo } = useCode({ codeId: targetId });
-  const { updateCode } = useUpdateCode();
+  const { updateCode } = useUpdateCode({ codeId: targetId });
 
   const onConfirm = ({ code, codeName, isAnonymous }: OnConfirmModal) => {
     if (!closeModal) return;
