@@ -42,7 +42,7 @@ const DetailPage: React.FC = () => {
   const dependencies =
     codeDataRes && checkWordInArray(codeDataRes.codeName, ['js', 'jsx', 'ts', 'tsx'])
       ? createObjWithCertainValue(getDependenciesFromText(codeDataRes.code || ''), VERSION)
-      : createObjWithCertainValue(getDependenciesFromText(codeDataRes?.code || ''), VERSION);
+      : {};
   const files = {
     [ROOT_FILE]: genrateBaseCode(codeDataRes?.codeName || ''),
     [`/${codeDataRes?.codeName}`]: codeDataRes?.code || '',
