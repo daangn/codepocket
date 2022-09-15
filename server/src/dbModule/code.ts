@@ -3,32 +3,45 @@ import { CodeName } from '@codepocket/core-server/dist/types';
 import { to } from 'await-to-js';
 import { FastifyInstance } from 'fastify';
 
+import { Code } from '../schema';
 import { CustomResponse } from '../utils/responseHandler';
 
-export const findCode =
-  (server: FastifyInstance) => async (codeName: string, codeAuthor: string) => {
-    const [codeFindOneError, code] = await to(
-      (async () =>
-        await server.store.Code.findOne({
-          codeName,
-          codeAuthor,
-        }))(),
-    );
+type CodeOptionalType = Partial<Code> & { codeId?: string };
 
-    if (codeFindOneError) throw new CustomResponse({ customStatus: 5000 });
-    if (!code) throw new CustomResponse({ customStatus: 4003 });
+const findOneCode = async (server: FastifyInstance, codeInfo: CodeOptionalType) => {
+  const [codeFindOneError, code] = await to(
+    (async () =>
+      await server.store.Code.findOne({
+        ...codeInfo,
+      }))(),
+  );
 
-    return code;
-  };
+  if (codeFindOneError) throw new CustomResponse({ customStatus: 5000 });
+  return code;
+};
+
+const findCodeById = async (server: FastifyInstance, codeId: string) => {
+  const [findCodeByIdError, codeInfo] = await to(
+    (async () => await server.store.Code.findById(codeId))(),
+  );
+
+  if (findCodeByIdError) throw new CustomResponse({ customStatus: 5000 });
+  return codeInfo;
+};
+
+const findCode = async (server: FastifyInstance, codeInfo: CodeOptionalType) => {
+  const [findCodeError, code] = await to(
+    (async () => await server.store.Code.find({ ...codeInfo }))(),
+  );
+
+  if (findCodeError) throw new CustomResponse({ customStatus: 5000 });
+  return code;
+};
 
 export const getCodeInfoById =
   (server: FastifyInstance) =>
   async ({ codeId }: Types.CodeId) => {
-    const [getCodeByIdError, codeInfo] = await to(
-      (async () => await server.store.Code.findById(codeId))(),
-    );
-
-    if (getCodeByIdError) throw new CustomResponse({ customStatus: 5000 });
+    const codeInfo = await findCodeById(server, codeId);
     if (!codeInfo) throw new CustomResponse({ customStatus: 4008 });
 
     const { codeAuthor, codeName, isAnonymous, code } = codeInfo;
@@ -38,107 +51,84 @@ export const getCodeInfoById =
 export const getAllCodeInfoById =
   (server: FastifyInstance) =>
   async ({ codeId }: Types.CodeId) => {
-    const [getCodeError, allCodeInfo] = await to(
-      (async () => await server.store.Code.findById(codeId))(),
-    );
+    const codeInfo = await findCodeById(server, codeId);
+    if (!codeInfo) throw new CustomResponse({ customStatus: 4008 });
 
-    if (getCodeError) throw new CustomResponse({ customStatus: 5000 });
-    if (!allCodeInfo) throw new CustomResponse({ customStatus: 4008 });
-
-    const { codeAuthor, codeName } = allCodeInfo;
+    const { codeAuthor, codeName } = codeInfo;
     return { codeAuthor, codeName };
+  };
+
+export const isExistCodeWithCodeId =
+  (server: FastifyInstance) =>
+  async ({ codeId }: Types.CodeId) => {
+    const codeInfo = await findCodeById(server, codeId);
+    if (!codeInfo) throw new CustomResponse({ customStatus: 4008 });
+
+    return !!codeInfo;
   };
 
 export const findCodeAuthors =
   (server: FastifyInstance) =>
   async ({ codeName }: CodeName) => {
-    const [findCodeError, code] = await to(
-      (async () => await server.store.Code.find({ codeName }))(),
-    );
-
-    if (findCodeError) throw new CustomResponse({ customStatus: 5000 });
+    const code = await findCode(server, { codeName });
     if (!code.length) throw new CustomResponse({ customStatus: 4007 });
+
     return code.map((code) => ({ codeAuthor: code.codeAuthor, isAnonymous: code.isAnonymous }));
-  };
-
-export const findCodeInfoUsingRegex =
-  (server: FastifyInstance) =>
-  async ({
-    codeAuthorRegex,
-    codeNameRegex,
-    isCodeAuthorExist,
-  }: Types.FindCodeInfoUsingRegexParams) => {
-    const [error, codes] = await to(
-      (async () =>
-        await server.store.Code.find({ codeName: codeNameRegex, codeAuthor: codeAuthorRegex }).sort(
-          {
-            updatedAt: 'desc',
-          },
-        ))(),
-    );
-
-    if (error) throw new CustomResponse({ customStatus: 5000 });
-    const codeInfos = codes
-      .map((code) => ({
-        codeName: code.codeName,
-        codeAuthor: code.codeAuthor,
-        isAnonymous: code.isAnonymous,
-      }))
-      .filter((code) => !isCodeAuthorExist || !code.isAnonymous);
-
-    return codeInfos;
   };
 
 export const isExistCode =
   (server: FastifyInstance) =>
   async ({ codeName, codeAuthor }: Types.CodeInfo) => {
-    const [codeFindOneError, codeInDB] = await to(
-      (async () => await server.store.Code.findOne({ codeName, codeAuthor }))(),
-    );
+    const code = await findOneCode(server, { codeName, codeAuthor });
 
-    if (codeFindOneError) throw new CustomResponse({ customStatus: 5000 });
-    return !!codeInDB?.code || codeInDB?.code === '';
-  };
-
-export const checkExistCodeWithCodeId =
-  (server: FastifyInstance) =>
-  async ({ codeId }: Types.CodeId) => {
-    const [findCodeError, code] = await to(
-      (async () => await server.store.Code.findById(codeId))(),
-    );
-
-    if (findCodeError) throw new CustomResponse({ customStatus: 5000 });
-
-    return !!code;
-  };
-
-export const isExistCodeById =
-  (server: FastifyInstance) =>
-  async ({ codeId, codeAuthor }: Types.CodeAuthorWithId) => {
-    const [codeFindOneError, codeInDB] = await to(
-      (async () => await server.store.Code.findOne({ codeId, codeAuthor }))(),
-    );
-
-    if (codeFindOneError) throw new CustomResponse({ customStatus: 5000 });
-    return !!codeInDB?.code || codeInDB?.code === '';
+    return !!code?.code || code?.code === '';
   };
 
 export const getCodeCode =
   (server: FastifyInstance) =>
   async ({ codeAuthor, codeName }: Types.CodeInfo) => {
-    const code = await findCode(server)(codeName, codeAuthor);
+    const code = await findOneCode(server, { codeName, codeAuthor });
+    if (!code) throw new CustomResponse({ customStatus: 4003 });
+
     return code.code;
+  };
+
+export const isExistCodeById =
+  (server: FastifyInstance) =>
+  async ({ codeId, codeAuthor }: Types.CodeAuthorWithId) => {
+    const code = await findOneCode(server, { codeId, codeAuthor });
+
+    return !!code?.code || code?.code === '';
   };
 
 export const isAnonymousCodeExist =
   (server: FastifyInstance) =>
   async ({ codeName }: Types.CodeName) => {
-    const [checkAnonymousCodeError, code] = await to(
-      (async () => await server.store.Code.findOne({ codeName, isAnonymous: true }))(),
-    );
-    if (checkAnonymousCodeError) throw new CustomResponse({ customStatus: 5000 });
+    const code = await findOneCode(server, { codeName, isAnonymous: true });
 
     return !!code;
+  };
+
+export const deleteCode =
+  (server: FastifyInstance) =>
+  async ({ codeAuthor, codeName }: Types.CodeInfo) => {
+    const [deleteCodeError, deleteCodeResponse] = await to(
+      (async () => await server.store.Code.deleteOne({ codeAuthor, codeName }))(),
+    );
+
+    if (deleteCodeError) throw new CustomResponse({ customStatus: 5000 });
+    if (!deleteCodeResponse.deletedCount) throw new CustomResponse({ customStatus: 4006 });
+  };
+
+export const deleteCodeById =
+  (server: FastifyInstance) =>
+  async ({ codeId }: Types.CodeId) => {
+    const [deleteCodeError, deleteCodeResponse] = await to(
+      (async () => await server.store.Code.findByIdAndDelete({ _id: codeId }))(),
+    );
+
+    if (deleteCodeError) throw new CustomResponse({ customStatus: 5000 });
+    if (!deleteCodeResponse?.id) throw new CustomResponse({ customStatus: 4006 });
   };
 
 export const createCode =
@@ -245,28 +235,6 @@ export const pushCode =
     return pushCodeResponse;
   };
 
-export const deleteCode =
-  (server: FastifyInstance) =>
-  async ({ codeAuthor, codeName }: Types.CodeInfo) => {
-    const [deleteCodeError, deleteCodeResponse] = await to(
-      (async () => await server.store.Code.deleteOne({ codeAuthor, codeName }))(),
-    );
-
-    if (deleteCodeError) throw new CustomResponse({ customStatus: 5000 });
-    if (!deleteCodeResponse.deletedCount) throw new CustomResponse({ customStatus: 4006 });
-  };
-
-export const deleteCodeById =
-  (server: FastifyInstance) =>
-  async ({ codeId }: Types.CodeId) => {
-    const [deleteCodeError, deleteCodeResponse] = await to(
-      (async () => await server.store.Code.findByIdAndDelete({ _id: codeId }))(),
-    );
-
-    if (deleteCodeError) throw new CustomResponse({ customStatus: 5000 });
-    if (!deleteCodeResponse?.id) throw new CustomResponse({ customStatus: 4006 });
-  };
-
 export const searchCodes =
   (server: FastifyInstance) =>
   async ({ searchRegex, limit, offset }: Types.SearchCodesParam) => {
@@ -300,4 +268,32 @@ export const searchCodes =
     }));
 
     return anonymousCodes;
+  };
+
+export const findCodeInfoUsingRegex =
+  (server: FastifyInstance) =>
+  async ({
+    codeAuthorRegex,
+    codeNameRegex,
+    isCodeAuthorExist,
+  }: Types.FindCodeInfoUsingRegexParams) => {
+    const [error, codes] = await to(
+      (async () =>
+        await server.store.Code.find({ codeName: codeNameRegex, codeAuthor: codeAuthorRegex }).sort(
+          {
+            updatedAt: 'desc',
+          },
+        ))(),
+    );
+
+    if (error) throw new CustomResponse({ customStatus: 5000 });
+    const codeInfos = codes
+      .map((code) => ({
+        codeName: code.codeName,
+        codeAuthor: code.codeAuthor,
+        isAnonymous: code.isAnonymous,
+      }))
+      .filter((code) => !isCodeAuthorExist || !code.isAnonymous);
+
+    return codeInfos;
   };

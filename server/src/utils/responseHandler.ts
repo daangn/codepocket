@@ -12,7 +12,7 @@ const CustomResponseStatuses: CustomResponseStatusesType = {
   2003: { message: '코드 이름들을 가져왔어요', status: 200 },
   2004: { message: '코드를 가져왔어요', status: 200 },
   2005: { message: '코드를 성공적으로 넣었어요', status: 200 },
-  2006: { message: '코드를 성공적으로 수정했어요', status: 200 },
+  2006: { message: '코드를 성공적으로 추가했어요', status: 200 },
   2007: { message: '토큰을 성공적으로 가져왔어요', status: 200 },
   2008: { message: '스토리 코드를 삭제했어요', status: 200 },
   2009: { message: '스토리를 성공적으로 수정했어요', status: 200 },
