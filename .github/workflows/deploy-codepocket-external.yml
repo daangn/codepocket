@@ -19,10 +19,10 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '16.16.0'
+          cache: yarn
 
       - name: 의존성을 설치해요
-        if: steps.yarn-cache.outputs.cache-hit != 'true'
-        run: yarn install
+        run: yarn install --immutable 
 
       - name: schema 프로젝트를 빌드해요
         working-directory: ./schema
