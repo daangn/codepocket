@@ -13,7 +13,6 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 
 const queryClient = new QueryClient();
-const isDev = process.env.NODE_ENV === 'development';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -22,7 +21,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <QueryClientProvider client={queryClient}>
           <ModalProvider>
             <App />
-            {isDev && <ReactQueryDevtools initialIsOpen={false} />}
+            <ReactQueryDevtools initialIsOpen={false} />
           </ModalProvider>
         </QueryClientProvider>
       </Auth0Provider>
