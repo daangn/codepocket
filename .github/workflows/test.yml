@@ -9,9 +9,15 @@ jobs:
   Test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: yarn
-        run: yarn
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16.16.0'
+          cache: yarn
+
+      - name: install dependencies
+        run: yarn install --immutable
 
       - name: set env var
         run: |
