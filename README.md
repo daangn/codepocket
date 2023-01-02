@@ -1,11 +1,11 @@
-# Codepocket
+# Codepocket (Deprecated)
 
 - [codepocket (외부 공개용)](https://codepocket.pages.dev/)
 - [codepocket-daangn (내부용)](https://codepocket-daangn.pages.dev/)
 
 ## Introduction
 
-> **함께 다양한 코드를 모으고 기여해서 중복 노력이 없는 개발 환경을 만들어요** 
+> **함께 다양한 코드를 모으고 기여해서 중복 노력이 없는 개발 환경을 만들어요**
 
 Codepocket은 중복 노력을 줄이기 위해서 만들어진 오픈소스 소프트웨어예요.
 코드들을 모아놓는 레지스트리로 아래와 같은 필요에 의해 만들어졌어요
