@@ -12368,9 +12368,9 @@ eslint-config-airbnb-base@latest:
   linkType: hard
 
 "fast-uri@npm:^2.0.0, fast-uri@npm:^2.1.0":
-  version: 2.1.0
-  resolution: "fast-uri@npm:2.1.0"
-  checksum: 60ecece5ab05515729ec04d1732ee68bd4429cab8c06ebf8db512a094a0077ddc5af6a27c75922875bc9e13b58e947832242cdcb2cb23c51dc753412222dca83
+  version: 2.4.7
+  resolution: "fast-uri@npm:2.4.7"
+  checksum: ed05963e40acbaed6357b71bff59a2a26abcc49ee8b04dd2407caa1f0cff3d4a18b315f4a82098299c4b635d21429a128762540c9c312aae69d8e2c80336ffa6
   languageName: node
   linkType: hard
 
