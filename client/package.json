@@ -23,7 +23,7 @@
     "@vanilla-extract/vite-plugin": "^3.2.1",
     "@vitejs/plugin-react": "^1.3.0",
     "await-to-js": "^3.0.0",
-    "axios": "^0.27.2",
+    "axios": "^0.34.0",
     "jotai": "^1.7.7",
     "lodash": "^4.17.21",
     "polished": "^4.2.2",
